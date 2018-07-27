@@ -2,14 +2,17 @@
 
 Python with training wheels: executable pseudocode in any language.
 
+:warning: **This readme does not reflect the current content of this
+repository, which is still lacking content to be imported from elsewhere.**
+
 ## Some observations
 
 First, some observations, in no particular order.
 
 - Python is the best general purpose programming language! Ok, I admit, this is not really an observation, as much as my own opinion which seems to be shared by many.
-- The success of block based programming environments, like [Scratch](https://scratch.mit.edu/), [Blockly](https://blockly-games.appspot.com/), [Edublocks](https://edublocks.org/), and many others, demonstrates that there may be better alternatives for introducing beginners to programming concepts than the traditional text-based environments.
+- The success of block based programming environments, like [Scratch](https://scratch.mit.edu/), [Blockly](https://blockly-games.appspot.com/), and many others, demonstrates that it makes sense to introduce beginners to programming concepts in their native language.
 - Python is often described as *executable pseudocode*. This is close to the truth if your pseudocode is written for an English audience but likely much less so for languages other than English.
-- Edublocks describes itself as *Making the Transition from Scratch to Python easier.* Edublocks is a block-based environment and not a text-based one.
+- [Edublocks](https://edublocks.org/) describes itself as *Making the Transition from Scratch to Python easier.* Edublocks is a block-based environment and not a text-based one.
 - The creators of [Racket](https://racket-lang.org/) clearly believe that having various dialects of a given programming language can be useful in helping to learn programming.
 - Amongst the *best practices* identified by the creators of Blockly is the need for an [exit strategy](https://developers.google.com/blockly/guides/app-integration/best-practices#9_exit_strategy):
 
