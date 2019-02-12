@@ -1,5 +1,3 @@
-[comment]: # (This document is a proposal for the "request for idea" found on 
-
 # AvantPy
 
 _Python with training wheels: executable pseudocode in any language._
@@ -26,19 +24,23 @@ First, some observations, in no particular order.
 [Thonny](https://thonny.org/), [TigerJython](http://jython.tobiaskohn.ch/), etc.,
 or as online environments, such as [Reeborg's World](http://reeborg.ca/reeborg.html).
 
+Finally, I found the blog post [Can’t We All be Reasonable and Speak English?](https://stackoverflow.blog/2014/02/13/cant-we-all-be-reasonable-and-speak-english/) very instructive.
+
 ## What is AvantPy?
 
 - AvantPy is a collection of dialects, each dialect being a superset of Python, designed to make it easier to learn programming concept in a given human language.
 - AvantPy is a preprocessor, that converts programs written either totally or
 in parts in a given dialect, and converts it to standard Python prior to execution.
 - AvantPy also includes tool to analyze Python tracebacks and translate them into easier to understand feedback for users.
-- AvantPy is written as a standard Python package meant to be useable with any "normal" Python environment. 
+- AvantPy is written as a standard Python module/package meant to be usable with any "normal" Python environment.
 - AvantPy also includes a tool to convert programs written in a given dialect into standard Python, showing the differences between the two, thus helping motivated users to make the transition to using standard Python.
 
 In addition, AvantPy **could** possibly include an REPL designed to make use of the above. However, I do not see this as important as the other aspects, and do not believe that it should be implemented until all of the other parts have been implemented.
 
 
 ## What is meant by training wheels?
+
+The very first sentence of this document is _Python with training wheels: executable pseudocode in any language._
 
 To help beginners learning how to ride a bicycle, one sometimes uses [training wheels](https://en.wikipedia.org/wiki/Training_wheels). After a while, the new cyclists ride
 their bicycles without the training wheels needing to touch the ground to offer
@@ -53,7 +55,7 @@ My first program might be:
 imprime("Bonjour !")
 ```
 
-My second program might be
+A while later, I might write a program like the following:
 
 ```py
 répète 3
@@ -85,16 +87,16 @@ for COUNTER_1 in range(3): #répète 3:
    print("Ho !")           #   imprime("Ho !")
 ```
 
-
-Just like Blockly's *exit strategy*, or Edublocks stated goal,
-the final aim of AvantPy is to lead learners to eventually 
-write programs in Python.
+AvantPy aims to leverage the whole Python ecosystem to help people learn programming.
+Some people might never go beyond writing programs in their "local dialect".
+Others might eventually learn to write programs in standard Python: this is
+AvantPy's final aim, which is similar to Blockly's *exit strategy*, or Edublocks stated goal.
 
 ## How could it be implemented?
 
-I created various toy programs [1](https://github.com/aroberge/nonstandard), [2](https://github.com/aroberge/experimental), [3](https://github.com/aroberge/pyextensions) to explore the ideas core to AvantPy starting in 2015, as I briefly described in [this blog post](https://aroberge.blogspot.com/2015/10/from-experimental-import-somethingnew.html) and in subsequent posts. **Note that the description in these
+I created various toy programs [1](https://github.com/aroberge/nonstandard), [2](https://github.com/aroberge/experimental), [3](https://github.com/aroberge/pyextensions) to explore the ideas core to AvantPy, as I briefly described in [this blog post](https://aroberge.blogspot.com/2015/10/from-experimental-import-somethingnew.html) and in subsequent posts. **Note that the description in these
 blog posts is different from the suggested implementation mentioned below.**
-A more accurate description can be [found here](https://aroberge.github.io/pyextensions/docs/html/modules.html); [see also](https://aroberge.github.io/pyextensions/docs/html/index.html).
+A more accurate description of the latest implementation I worked on can be [found here](https://aroberge.github.io/pyextensions/docs/html/modules.html); [see also](https://aroberge.github.io/pyextensions/docs/html/index.html).
 
 The preprocessor needed to convert code written in a given dialect into standard
 Python can be implemented using an import hook using the [importlib](https://docs.python.org/3/library/importlib.html) module.
@@ -112,9 +114,19 @@ the use of a different extension.
 
 ## Why go beyond a translation of keywords?
 
+If one is going to write a preprocessor to translate Python's keywords, it
+might make sense to also translate some Python *idioms* which might not be
+as clear to beginners as other alternatives such as those found in 
+Scratch or Blockly.  This is also keeping in line with Racket's philosophy
+of using different dialect of its core language.
+
+As an example, I describe the motivation for adding a new keyword: `repeat`.
+
 ### Why `repeat`?
 
-In Reeborg's World, I added a non-standard syntactic construction to Python with an additional keyword: `repeat`. [Note to self: this was done on Oct. 10, 2015.] This allows a student to write
+In Reeborg's World, I added a non-standard syntactic construction to Python with an additional keyword: `repeat`; this was also done by Tobias Kohn, who created TigerJython as part of his Ph.D. thesis.
+
+A `repeat` keyword allows a student to write a program like the following:
 
 ```py
 # draw square
@@ -136,7 +148,7 @@ Purists will no doubt object to this addition.  In this section, I explain my re
 
 #### Three types of loops
 
-When writing programs, there are 3 basic cases for writing a loop:
+For an experience programmer, there are 3 basic cases for writing a loop:
 
 1. repeating some instructions for each item of a "collection";
 2. repeating some instructions while or until a certain condition is met;
@@ -318,29 +330,10 @@ for index, item in enumerate(iterable):
    do_something(index, item)
 ```
 
-## Simpler loops?
+## Other simpler loops
 
-### Context
-
-You are teaching beginners about some concepts in computer programming in a Python-like language.
-You have already shown them some "simple" constructs, perhaps like
-```py
-print("Hello World!")
-```
-so that they already know that:
-
-* Some special words (keywords) have a specific meaning in the language
-* Comments on a line are preceded by the `#` character
-* Some special characters cannot appear in "words" (including keywords). For example, the following characters are not allowed in "words":
-
-    [ ] ( ) ; , ' " (space)
-
-  If a "word" is made of of many normal words in the language (English, French, etc.), we use the underscore character, `_`, where a space would appear. Thus, something like `else_if` would be a single "word" (possibly a keyword) in the computer language.
-
-
-### Teaching the concept and syntax of loops
-
-You want to teach the concepts of loops to beginners, and the syntax used for loops in the Python-like language you are using. These beginners have never seen the concept of loops before; if you have not taught such beginners, it is difficult to imagine how such a concept can be difficult to grasp when seen for the first time ... but it might be possible to imagine how a programming language syntax can complicate (or facilitate) the learning process. To this end, I will introduce the concept in a Python-like language where keywords are based on the French language.
+Imagine that you want to teach the concepts of loops to beginners, and the syntax used for loops in the Python-like language you are using. These beginners have never seen the concept of loops before; if you have not taught such beginners, it is difficult to imagine how such a concept can be difficult to grasp when seen for the first time ... but it might be possible to imagine how a programming language syntax can complicate (or facilitate) the learning process. To this end, I will introduce the concept in a Python-like language **where keywords are based on the French language.**
+The reason for choosing keywords written in French should become clear at the end.
 
 A loop is a series of instructions that are repeated. The syntax used is the following:
 
@@ -352,7 +345,7 @@ répéter ? :
     # are indented
 ```
 
-There are four types of loops, identified by a different expression replacing the question mark above.
+For beginners, there are four types of loops, identified by a different expression replacing the question mark above.
 
 ```
 répéter n:      # n is an integer
@@ -437,18 +430,8 @@ This is the approach taken by people using block-based environment
 
 ## More about loops
 
-Computers are very good at repeating instructions. To have them do so, we
-use _loops_.  There are many kinds of loops. We can group them in 4 categories,
-with various sub-categories introduced, in Python, by using either the
-keyword `continue` or `break`. Excluding the sub-categories, and given a set
-of instructions to repeat, the four basic loops categories are:
-
-1. repeat the instructions a fixed number of times
-2. repeat them **while** a condition is satisfied
-3. repeat them **until** a condition is satisfied
-4. repeat them forever
-
-In what follows, I will refer to these categories simply as
+In this section, I show the loops used in Blockly and Scratch.
+In principle, and as mentioned previously, we have 4 different types of loops:
 
 1. repeat n
 2. repeat while condition
@@ -563,112 +546,6 @@ It also includes a loop with a finite number of repetitions set by
 the number of elements in a container
 
 ![](/images/blockly_for_each.png)
-
-### Python loops
-
-Python programmers think of loops as coming in two flavours:
-`for` loop and `while` loops.  Let's see how the four categories we
-have identified are written in Python.
-
-We start with the second case, `repeat while condition`.  It is written as
-
-```py
-while condition:
-    # block of code
-```
-
-which is essentially the simplest syntax one can imagine. The third case,
-`repeat until condition`, is derived from the second using boolean logic
-
-```py
-while not condition:
-    # block of code
-```
-
-Mentally translating `while not condition` into `until condition` is something
-that experienced programmers do effortlessly, but which requires a conscious
-effort for beginners.
-
-The `repeat forever` case is usually written with the following Python idiom
-
-```py
-while True:
-    # block of code
-```
-
-This is something that is normally learned rather than quickly and
-intuitively deduced. Before `True` became a keyword, it used to be written as
-
-```py
-while 1:
-    # block of code
-```
-which required even one more step of mental gymnastics before being understood.
-Of course, once one has learned the idiom, it is trivially recognized.
-
-This leaves us with what we labeled as the first category, `repeat n`.
-Before showing the normal Python syntax for this case, it might be useful
-to consider a more general case.
-
-Often one will write a program where a given series of instructions will
-be applied to a collection.  Here are some examples of how this is done
-with Python:
-
-```py
-# iterating over a list
-for item in [1, 2, 3]:
-    print(item)    # or do something else with the item ...
-
-# iterating over a string:
-for letter in "Python":
-    print(letter)
-
-# iterating over the keys of a dict
-for key in {'a': 1, 'b': 2, 'c': 3}:
-    print(key)
-
-# iterating over a tuple
-for item in (1, 2, 3):
-    print(item)
-
-# iterating over a set:
-for element in {1, 2, 3}:
-    print(element)
-
-# iterating over a file; note that this is not the recommended way
-for line in open('test.txt'):
-    print(line)
-```
-
-The general pattern is
-
-```py
-for item in some_iterable:
-    do_something(item)   # this can be an arbitrary code block
-```
-
-It is a powerful pattern which is definitely one of Python's strengths.
-It also needs to be understood before introducing the very useful
-list comprehensions and generator expressions in Python.
-
-In the absence of a collection that has a set number of items
-Python introduces a special built-in iterable, `range()`,
-which is then used in the generic for loop construct.
-
-```py
-for some_variable in range(n):
-    # block of code
-```
-
-For experienced programmers, reusing such a powerful and relatively
-simple pattern for iterations is great.
-However, I would argue that it is less than ideal for beginners, and certainly
-not as intuitive as the textual descriptions of the blocks used in Scratch
-or Blockly, which would translate in a Python-like language as
-
-```py
-repeat n:
-    # block of code
 
 
 ## Some acknowledgements

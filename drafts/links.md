@@ -32,7 +32,7 @@ https://mail.python.org/pipermail/python-ideas/2016-February/038450.html refers 
 
 ## Blog posts
 
-October 14, 1995 https://aroberge.blogspot.com/2015/10/from-experimental-import-somethingnew.html
+October 14, 2015 https://aroberge.blogspot.com/2015/10/from-experimental-import-somethingnew.html
 
 I wrote the following:
 > I'm not ready yet to bring another suggestion to the python-ideas list ... However ...
@@ -43,7 +43,7 @@ would work in all instances, and not only when a module is imported.   People co
 However, a concrete suggestions along these lines will have to wait for another day...
 
 
-Octobre 14, 1995 - second post https://aroberge.blogspot.com/2015/10/from-experimental-import-somethingnew_14.html
+Octobre 14, 2015 - second post https://aroberge.blogspot.com/2015/10/from-experimental-import-somethingnew_14.html
 
 Feb 5, 2017 https://aroberge.blogspot.com/2017/05/whats-in-name.html
 
