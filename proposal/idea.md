@@ -146,7 +146,8 @@ for some_irrelevant_variable in range(4):
     turn_left()
 ```
 
-Purists will no doubt object to this addition.  In this section, I explain my reasoning for this addition.
+Purists will no doubt object to this addition.  In this section, I explain my reasoning for this addition, first by describing loops as seen by experienced
+Python programmers, followed by how they might be first encountered by beginners.
 
 #### Three types of loops
 
@@ -217,11 +218,13 @@ for some_irrelevant_variable in range(4):
     turn_left()
 ```
 
-Python introduces a special built-in iterable, `range()`, which is then used in the generic for loop construct.  For experienced programmers, re-using such a powerful and relatively simple pattern for iterations is great.  However, I would argue that it is less than ideal for beginners.
+Python introduces a special built-in iterable, `range()`, which is then used in the generic for loop construct.  **For experienced programmers, re-using such a powerful and relatively simple pattern for iterations is great.**  However, I would argue that it is less than ideal for beginners.
 
 #### What's wrong with the for loop
 
-Imagine the situation where students have learned two basic instructions: `move()` and `turn_left()`. You ask them to use these to draw a square:
+Imagine the situation where students have learned two basic instructions: `move()` and `turn_left()` in a programming environment,
+such as [Reeborg's World](http://reeborg.ca/reeborg.html), or similar in
+Python's turtle module. You ask them to use these to draw a square:
 
 ```py
 move()
@@ -236,7 +239,7 @@ turn_left()
 
 You rewrite this to draw their attention to the repeated pattern
 
-```
+```py
 move()
 turn_left()
 
@@ -252,7 +255,7 @@ turn_left()
 
 And show them that, **using repeat** they can write this as:
 
-```
+```py
 repeat 4:
     move()
     turn_left()
@@ -292,7 +295,7 @@ which you can, if desired, also illustrate using Blockly
 
 ![](../images/blockly_example_python.png)
 
-By contrast, if you decide to just use the standard for loop in Python:
+**By contrast**, if you decide to just use the standard for loop in Python:
 
 ```py
 for some_variable in range(4):
@@ -300,39 +303,20 @@ for some_variable in range(4):
     turn_left()
 ```
 
-you will need to explain \(or at least mention\):
+you will need to explain \(or at least mention\) five different **new** concepts:
 
-1. the concept of an indented code block preceded by a colon;
-2. **two** new keywords, `for` and `in`;
+1. the concept of an indented code block preceded by a colon, as for `repeat`;
+2. **two** new keywords, `for` and `in` instead of a single one;
 3. the use of a **variable**, which is some quantity with a completely irrelevant name in this example, except that it cannot be a keyword.
 4. the introduction of a built-in function, `range()`
 5. that a function can have an **argument** and the notation for "passing" arguments to a function.
 
-I believe that, until students have seen that functions can have arguments, such as `take("token")`, and have seen the concept of a variable, it is better to use `repeat` than the standard Python for loop idiom.
-
-I should also mention that I have often seen the following awful construct by Python beginners, some of whom were competent programmers in other languages:
-
-```py
-for i in range(len(some_list)):
-    item = some_list[i]
-    do_something(item)
-```
-
-instead of
-
-```py
-for item in some_list:
-    do_something(item)
-```
-
-I believe that such awful constructs can be avoided if beginners are initially taught to use`repeat` and that the standard for loop idiom for repeating a fixed number of times is not taught until the students have seen some other examples of for loops. By that time, **if** they need the loop index, they would likely be ready to learn the proper Python idiom:
-
-```py
-for index, item in enumerate(iterable):
-   do_something(index, item)
-```
+I believe that, until students have seen that functions can have arguments, such as `take("token")` (example from Reeborg's World), and have seen the concept of a variable, it is better to use `repeat` than the standard Python for loop idiom.
 
 ## Other simpler loops
+
+The `for var in range(n)` Python idiom is not the only one that could benefit from
+a simpler syntax when teaching beginners.
 
 Imagine that you want to teach the concepts of loops to beginners, and the syntax used for loops in the Python-like language you are using. These beginners have never seen the concept of loops before; if you have not taught such beginners, it is difficult to imagine how such a concept can be difficult to grasp when seen for the first time ... but it might be possible to imagine how a programming language syntax can complicate (or facilitate) the learning process. To this end, I will introduce the concept in a Python-like language **where keywords are based on the French language.**
 The reason for choosing keywords written in French should become clear at the end.
@@ -370,7 +354,7 @@ while condition:
 ```
 
 If you know French and what a Python `while` loop is, the answer is obvious.
-If you don't know French, you likely have a 50% chance of being wrong.
+If you know Python but don't know French, you likely have a 50% chance of being wrong.
 If a Chinese version of the above had been given, the probability of error
 would likely have increased to 75%.
 
@@ -399,7 +383,7 @@ repeat until condition:
 while condition:
     # block
 ```
-This is the same question as before, but this time the answer should be completely obvious to someone who knows what a Python `while` loop is.
+This is the same question as before, but this time the answer should be completely obvious to someone who knows English and knows what a Python `while` loop is.
 
 ### Python's version
 
@@ -431,7 +415,6 @@ If the pseudocode is not written in English, the translation process is, at leas
 For absolute beginners who are learning programming concepts (control flow structures, defining functions, etc.), being able to use a language that uses keywords easily understood in their own language can definitely facilitate the learning process.
 This is the approach taken by people using block-based environment
 (Scratch, Blockly, etc.) to help students learn programming concepts.
-
 
 ## More about loops
 
@@ -524,7 +507,6 @@ from [Reeborg's World](http://reeborg.ca/reeborg.html).
 (The color scheme used for individual blocks is different in Reeborg's World
 as compared with that used in Blockly; standard Blockly blocks for loops are
 green whereas they are blue for Reeborg's World.)
-
 
 ![](/images/blockly_example_python.png)
 
