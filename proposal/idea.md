@@ -36,23 +36,18 @@ in parts in a given dialect, and converts it to standard Python prior to executi
 - AvantPy is written as a standard Python module/package meant to be usable with any "normal" Python environment.
 - AvantPy also includes a tool to convert programs written in a given dialect into standard Python, showing the differences between the two, thus helping motivated users to make the transition to using standard Python.
 - AvantPy is supported by a website that includes very basic explanations of
-programming concepts. These explanations can be linked to by tracebacks.
-
+programming concepts for each dialect. These explanations can be linked to by tracebacks.
 
 **AvantPy does not exist yet.** For now, it is a concept inspired by various experiments.
 
 In addition, AvantPy **could** possibly include an REPL designed to make use of the above, something which I have also explored. However, I do not see this as important as the other aspects, and do not believe that it should be worked on until all of the other parts have been properly implemented.
 
-
 ## What is meant by training wheels?
 
-The very first sentence of this document is _Python with training wheels: executable pseudocode in any language._
-
+The very first sentence of this document is _Python with training wheels: executable pseudocode in any language._ 
 To help beginners learning how to ride a bicycle, one sometimes uses [training wheels](https://en.wikipedia.org/wiki/Training_wheels). After a while, the new cyclists ride
 their bicycles without the training wheels needing to touch the ground to offer
-additional support.
-
-This is what AvantPy aims to do for learning Python.
+additional support. This is what AvantPy aims to do for learning Python.
 
 Say that I am a French speaker that learns to program using AvantPy.
 My first program might be:
@@ -70,7 +65,7 @@ si x == 'q'
 
 When I would try to execute such a program, I might get the following error message:
 
-```
+```txt
 Il y a une erreur de syntaxe dans ce programme:
 une instruction débutant avec le mot "si" doit terminer par deux points (:).
 [Relevant link to the documentation on "si" provided here.]
@@ -78,7 +73,7 @@ une instruction débutant avec le mot "si" doit terminer par deux points (:).
 
 The equivalent English version would be
 
-```
+```txt
 There is a syntax error in this program:
 a statement beginning with the word "if" must end with a colon (:).
 [Relevant link to the documentation on "if" provided here.]
