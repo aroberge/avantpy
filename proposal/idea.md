@@ -8,10 +8,9 @@ In this document, submitted in the [Request for Ideas](http://pyfound.blogspot.c
 
 First, some observations, in no particular order.
 
-- _The mission of the Python Software Foundation is to promote, protect, and advance the Python programming language, and to support and **facilitate the growth of a diverse and international community** of Python programmers._ [Emphasis added.]
+- The mission of the Python Software Foundation is to promote, protect, and advance the Python programming language, and to support and **facilitate the growth of a diverse and international community** of Python programmers. [**Emphasis added.**]
 - The success of block based programming environments, like [Scratch](https://scratch.mit.edu/), [Blockly](https://blockly-games.appspot.com/), and many others, demonstrates that it makes sense to introduce beginners to programming concepts in their native language.
 - Python is often described as *executable pseudocode*. This is close to the truth if your pseudocode is written for an English audience who knows basic programming concepts but likely much less so for beginners who are not familiar with English.
-- [Edublocks](https://edublocks.org/) describes itself as *Making the Transition from Scratch to Python easier.* Edublocks is a block-based environment and not a text-based one, and is not usabale in all programming contexts.
 - The creators of [Racket](https://racket-lang.org/) clearly believe that having various dialects of a given programming language can be useful in helping to learn programming, as they include various dialects as default language to be used in the learning journey.
 - Amongst the *best practices* identified by the creators of Blockly is the need for an [exit strategy](https://developers.google.com/blockly/guides/app-integration/best-practices#9_exit_strategy):
 
@@ -91,7 +90,7 @@ if x == 'q':              # si x == 'q':
 AvantPy aims to leverage the whole Python ecosystem to help people learn programming.
 Some people might never go beyond writing programs in their "local dialect".
 Others might eventually learn to write programs in standard Python: this is
-AvantPy's final aim, which is similar to Blockly's *exit strategy*, or Edublocks stated goal, but is not a requirement.
+AvantPy's final aim, which is similar to Blockly's *exit strategy*, but is not an absolute requirement.
 
 ## How could it be implemented?
 
@@ -111,7 +110,7 @@ written in the "French dialect" could end with ".pyfr".
 
 Based on the experiments I have done, both approaches could be used at the same
 time, without causing any problems. My preferred approach would be to require
-the use of a different extension.
+the use of a different file extension.
 
 ## Why go beyond a translation of keywords?
 
@@ -121,12 +120,12 @@ as clear to beginners as other alternatives such as those found in
 Scratch or Blockly.  This is also keeping in line with Racket's philosophy
 of using different dialect of its core language.
 
-As a concrete example, I describe the motivation for adding a new keyword, `repeat`,
-in an English dialect.
+As a concrete example, I begin by describing the motivation for adding a new keyword, `repeat`,
+in an English dialect. I then explain how and why this should be extended to include other constructs, such as loops.
 
 ### Why `repeat`?
 
-In Reeborg's World, I added a non-standard syntactic construction to Python with an additional keyword: `repeat`; this was also done by [Tobias Kohn](https://tobiaskohn.ch/), who created TigerJython as part of his Ph.D. thesis.
+In Reeborg's World, I added a non-standard syntactic construction to Python with an additional keyword: `repeat`; this was also done by [Tobias Kohn](https://tobiaskohn.ch/), who created [TigerJython](http://jython.tobiaskohn.ch/) as part of his Ph.D. thesis.
 
 A `repeat` keyword allows a student to write a program like the following:
 
