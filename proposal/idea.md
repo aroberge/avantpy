@@ -68,7 +68,7 @@ When I would try to execute such a program, I might get the following error mess
 ```txt
 Il y a une erreur de syntaxe dans ce programme:
 une instruction débutant avec le mot "si" doit terminer par deux points (:).
-[Relevant link to the documentation on "si" provided here.]
+[Voir documentation-si.]
 ```
 
 The equivalent English version would be
