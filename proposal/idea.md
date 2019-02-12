@@ -35,7 +35,11 @@ in parts in a given dialect, and converts it to standard Python prior to executi
 - AvantPy is written as a standard Python module/package meant to be usable with any "normal" Python environment.
 - AvantPy also includes a tool to convert programs written in a given dialect into standard Python, showing the differences between the two, thus helping motivated users to make the transition to using standard Python.
 
+
+**AvantPy does not exist yet.** For now, it is a concept inspired by various experimental implementations.
+
 In addition, AvantPy **could** possibly include an REPL designed to make use of the above. However, I do not see this as important as the other aspects, and do not believe that it should be implemented until all of the other parts have been implemented.
+
 
 
 ## What is meant by training wheels?
@@ -258,7 +262,7 @@ repeat 4:
 
 You use this example to explain the concept of an **indented code block** the use of a colon, ":", to precede such a code block, and the introduction of one "special" keyword: `repeat`.
 
-You can show how a pattern like this is "written" using Blockly:[1]
+You can show how a pattern like this is "written" using Blockly:
 
 ![](/images/repeat_blockly.png)
 
@@ -306,7 +310,7 @@ you will need to explain \(or at least mention\):
 4. the introduction of a built-in function, `range()`
 5. that a function can have an **argument** and the notation for "passing" arguments to a function.
 
-I believe that, until students have seen that functions can have arguments, such as `take("token")`, and have seen the concept of a variable, it is better to use `repeat` than the standard Python for loop idiom.[2]
+I believe that, until students have seen that functions can have arguments, such as `take("token")`, and have seen the concept of a variable, it is better to use `repeat` than the standard Python for loop idiom.
 
 I should also mention that I have often seen the following awful construct by Python beginners, some of whom were competent programmers in other languages:
 
@@ -401,6 +405,9 @@ This is the same question as before, but this time the answer should be complete
 
 ### Python's version
 
+As mentioned before, using boolean logic and the `not` keyword, we can write the
+above loops as follows:
+
 ```py
 for variable in range(n):
     # block
@@ -417,7 +424,7 @@ while condition:
 
 For someone who is seeing the concept of loops for the very first time, the translation of any one of these four Python idioms (without seeing the other three) into the corresponding English version is likely not intuitively obvious.
 
-### Observations
+### Executable pseudocode
 
 Python is often described as executable pseudocode. Once people have learned a few idiomatic expressions, like `for variable in range(n)`, translating pseudocode written in English into Python is usually very straightforward.
 
@@ -552,7 +559,7 @@ the number of elements in a container
 
 Many of the ideas discussed above have been suggested before. I know that I have
 been influenced by posts on mailing lists and on blogs. Here I just wish to
-acknowledge a few such discussions.
+acknowledge a few such discussions: **this is a very incomplete list**.
 
 For example, the idea of being able to write Python keywords in various human languaged has been
 discussed many times, including on the [Python ideas list in April 2009](https://mail.python.org/pipermail/python-ideas/2009-April/004179.html).
