@@ -2,7 +2,7 @@
 
 _Python with training wheels: executable pseudocode in any language._
 
-In this document, submitted in the [Request for Ideas]http://pyfound.blogspot.com/2019/01/python-in-education-request-for-ideas.html) phase, I use the name **AvantPy** as a placeholder for the entire concept described.
+In this document, submitted in the [Request for Ideas](http://pyfound.blogspot.com/2019/01/python-in-education-request-for-ideas.html) phase, I use the name **AvantPy** as a placeholder for the entire concept described.
 
 ## Some observations
 
@@ -10,8 +10,8 @@ First, some observations, in no particular order.
 
 - _The mission of the Python Software Foundation is to promote, protect, and advance the Python programming language, and to support and **facilitate the growth of a diverse and international community** of Python programmers._ [Emphasis added.]
 - The success of block based programming environments, like [Scratch](https://scratch.mit.edu/), [Blockly](https://blockly-games.appspot.com/), and many others, demonstrates that it makes sense to introduce beginners to programming concepts in their native language.
-- Python is often described as *executable pseudocode*. This is close to the truth if your pseudocode is written for an English audience but likely much less so for languages other than English.
-- [Edublocks](https://edublocks.org/) describes itself as *Making the Transition from Scratch to Python easier.* Edublocks is a block-based environment and not a text-based one.
+- Python is often described as *executable pseudocode*. This is close to the truth if your pseudocode is written for an English audience who knows basic programming concepts but likely much less so for beginners who are not familiar with English.
+- [Edublocks](https://edublocks.org/) describes itself as *Making the Transition from Scratch to Python easier.* Edublocks is a block-based environment and not a text-based one, and is not usabale in all programming contexts.
 - The creators of [Racket](https://racket-lang.org/) clearly believe that having various dialects of a given programming language can be useful in helping to learn programming, as they include various dialects as default language to be used in the learning journey.
 - Amongst the *best practices* identified by the creators of Blockly is the need for an [exit strategy](https://developers.google.com/blockly/guides/app-integration/best-practices#9_exit_strategy):
 
@@ -31,15 +31,17 @@ Finally, I found the blog post [Can’t We All be Reasonable and Speak English?]
 - AvantPy is a collection of dialects, each dialect being a superset of Python, designed to make it easier to learn programming concept in a given human language.
 - AvantPy is a preprocessor, that converts programs written either totally or
 in parts in a given dialect, and converts it to standard Python prior to execution.
-- AvantPy also includes tool to analyze Python tracebacks and translate them into easier to understand feedback for users.
+  - A given program could include a mix of code written in normal Python and in a specific dialect.
+- AvantPy also includes tools to analyze Python tracebacks and translate them into easier to understand feedback for users.
 - AvantPy is written as a standard Python module/package meant to be usable with any "normal" Python environment.
 - AvantPy also includes a tool to convert programs written in a given dialect into standard Python, showing the differences between the two, thus helping motivated users to make the transition to using standard Python.
+- AvantPy is supported by a website that includes very basic explanations of
+programming concepts. These explanations can be linked to by tracebacks.
 
 
-**AvantPy does not exist yet.** For now, it is a concept inspired by various experimental implementations.
+**AvantPy does not exist yet.** For now, it is a concept inspired by various experiments.
 
-In addition, AvantPy **could** possibly include an REPL designed to make use of the above. However, I do not see this as important as the other aspects, and do not believe that it should be implemented until all of the other parts have been implemented.
-
+In addition, AvantPy **could** possibly include an REPL designed to make use of the above, something which I have also explored. However, I do not see this as important as the other aspects, and do not believe that it should be worked on until all of the other parts have been properly implemented.
 
 
 ## What is meant by training wheels?
@@ -62,24 +64,24 @@ imprime("Bonjour !")
 A while later, I might write a program like the following:
 
 ```py
-répète 3
-   imprime("Ho !")
+si x == 'q'
+   imprime("Au revoir !")
 ```
 
 When I would try to execute such a program, I might get the following error message:
 
 ```
 Il y a une erreur de syntaxe dans ce programme:
-une instruction débutant avec le mot "répète" doit terminer par deux points (:).
-[Relevant link to the documentation on "répète" provided here.]
+une instruction débutant avec le mot "si" doit terminer par deux points (:).
+[Relevant link to the documentation on "si" provided here.]
 ```
 
 The equivalent English version would be
 
 ```
 There is a syntax error in this program:
-a statement beginning with the word "repeat" must end with a colon (:).
-[Relevant link to the documentation on "repeat" provided here.]
+a statement beginning with the word "if" must end with a colon (:).
+[Relevant link to the documentation on "if" provided here.]
 ```
 
 Eventually, I might want to learn some "true" Python code.
@@ -87,14 +89,14 @@ I would make use of a tool provided to show me the true Python code correspondin
 to the code written in my given dialect:
 
 ```py
-for COUNTER_1 in range(3): #répète 3:
-   print("Ho !")           #   imprime("Ho !")
+if x == 'q':              # si x == 'q':
+    print("Au revoir !")  #     imprime("Au revoir !")
 ```
 
 AvantPy aims to leverage the whole Python ecosystem to help people learn programming.
 Some people might never go beyond writing programs in their "local dialect".
 Others might eventually learn to write programs in standard Python: this is
-AvantPy's final aim, which is similar to Blockly's *exit strategy*, or Edublocks stated goal.
+AvantPy's final aim, which is similar to Blockly's *exit strategy*, or Edublocks stated goal, but is not a requirement.
 
 ## How could it be implemented?
 
@@ -124,11 +126,12 @@ as clear to beginners as other alternatives such as those found in
 Scratch or Blockly.  This is also keeping in line with Racket's philosophy
 of using different dialect of its core language.
 
-As an example, I describe the motivation for adding a new keyword: `repeat`.
+As a concrete example, I describe the motivation for adding a new keyword, `repeat`,
+in an English dialect.
 
 ### Why `repeat`?
 
-In Reeborg's World, I added a non-standard syntactic construction to Python with an additional keyword: `repeat`; this was also done by Tobias Kohn, who created TigerJython as part of his Ph.D. thesis.
+In Reeborg's World, I added a non-standard syntactic construction to Python with an additional keyword: `repeat`; this was also done by [Tobias Kohn](https://tobiaskohn.ch/), who created TigerJython as part of his Ph.D. thesis.
 
 A `repeat` keyword allows a student to write a program like the following:
 
