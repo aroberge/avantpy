@@ -50,8 +50,8 @@ To help beginners learning how to ride a bicycle, one sometimes uses [training w
 their bicycles without the training wheels needing to touch the ground to offer
 additional support. This is what AvantPy aims to do for learning Python.
 The French word *avant* can be translated as *before* in English; I have chosen
-the word *AvantPy* both to indicate that it would normally be learned
-before standard Python, most often using a language other than English; another reason
+the name *AvantPy* both to indicate that it would normally be learned
+before standard Python and that it most often would be done using a language other than English; another reason
 was that no project with this name existed on pypi.
 
 Say that I am a French speaker that learns to program using AvantPy.
@@ -114,7 +114,7 @@ The preprocessor needed to convert code written in a given dialect into standard
 Python can be implemented using an import hook using
 the [importlib](https://docs.python.org/3/library/importlib.html) module.
 I have done so as a test with a French version of Python and I wrote
-a [blog post about it](https://aroberge.blogspot.com/2015/12/french-python.html).
+a [very brief blog post about it](https://aroberge.blogspot.com/2015/12/french-python.html).
 While I never used it to teach, I was contacted later by someone who wanted to do the same for Spanish, intending to use it to teach beginners; see [pull request](https://github.com/aroberge/experimental/pull/1).
 
 The implementation of translated and easier to understand tracebacks can be done using [`sys.excepthook`](https://docs.python.org/3/library/sys.html#sys.excepthook).
@@ -136,18 +136,18 @@ the use of a different file extension.
 ## Why go beyond a translation of keywords
 
 If one is going to write a preprocessor to translate Python's keywords, it
-might make sense to also translate some Python *idioms* which might not be
+might make sense to also simplify or replace some Python *idioms* which might not be
 as clear to beginners as other alternatives such as those found in
 Scratch or Blockly.  This is also keeping in line with Racket's philosophy
 of using different dialects of its core language, as the students become more proficient.
 
 ***
 
+The rest of this document can be ignored if one wants to focus only on the basic idea.
+
 ***
 
 ## More details
-
-The following can be ignore if one wants to focus only on the basic idea.
 
 As a concrete example, I begin by describing the motivation for adding a new keyword, `repeat`,
 in an English dialect. I then explain how and why this should be extended to include other constructs, such as loops.
