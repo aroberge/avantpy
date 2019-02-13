@@ -47,6 +47,10 @@ The very first sentence of this document is _Python with training wheels: execut
 To help beginners learning how to ride a bicycle, one sometimes uses [training wheels](https://en.wikipedia.org/wiki/Training_wheels). After a while, the new cyclists ride
 their bicycles without the training wheels needing to touch the ground to offer
 additional support. This is what AvantPy aims to do for learning Python.
+The French word *avant* can be translated as *before* in English; I have chosen
+the word *AvantPy* both to indicate that it would normally be learned
+before standard Python, most often using a language other than English; another reason
+was that no project with this name existed on pypi.
 
 Say that I am a French speaker that learns to program using AvantPy.
 My first program might be:
@@ -62,7 +66,7 @@ si x == 'q'
    imprime("Au revoir !")
 ```
 
-When I would try to execute such a program, I might get the following error message:
+When I would try to execute such a program, I would get the following error message:
 
 ```txt
 Il y a une erreur de syntaxe dans ce programme dans la ligne contenant le code suivant:
@@ -98,10 +102,6 @@ Some people might never go beyond writing programs in their "local dialect".
 Others might eventually learn to write programs in standard Python: this is
 AvantPy's final aim, which is similar to Blockly's *exit strategy*, but is not an absolute requirement.
 
-The French word *avant* can be translated as *before* in English; I have chosen
-the word *AvantPy* both to indicate that it would normally be learned
-before standard Python, most often using a language other than English.
-
 ## How could it be implemented?
 
 I created various toy programs [1](https://github.com/aroberge/nonstandard), [2](https://github.com/aroberge/experimental), [3](https://github.com/aroberge/pyextensions) to explore the ideas core to AvantPy, as I briefly described in [this blog post](https://aroberge.blogspot.com/2015/10/from-experimental-import-somethingnew.html) and in subsequent posts. **Note that the description in these
@@ -109,11 +109,12 @@ blog posts is different from the suggested implementation mentioned below.**
 A more accurate description of the latest implementation I worked on can be [found here](https://aroberge.github.io/pyextensions/docs/html/modules.html); [see also](https://aroberge.github.io/pyextensions/docs/html/index.html).
 
 The preprocessor needed to convert code written in a given dialect into standard
-Python can be implemented using an import hook using the [importlib](https://docs.python.org/3/library/importlib.html) module.
+Python can be implemented using an import hook using the [importlib](https://docs.python.org/3/library/importlib.html) module. I have done so as a test with a French version of Python and I wrote a [blog post about it]*https://aroberge.blogspot.com/2015/12/french-python.html). While I never used
+it to teach, I was contacted later by someone who wanted to do the same for Spanish, intending to use it to teach beginners; see [pull request](https://github.com/aroberge/experimental/pull/1)
 
 The implementation of translated and easier to understand tracebacks can be done using [`sys.excepthook`](https://docs.python.org/3/library/sys.html#sys.excepthook).
 I have done something similar before in two different contexts (and using two
-different approaches): a [very basic version](https://github.com/aroberge/rur-ple/blob/master/rur_py/cpu.py#L296) when I created rur-ple in 2004, and 
+different approaches): a [very basic version](https://github.com/aroberge/rur-ple/blob/master/rur_py/cpu.py#L296) when I created rur-ple in 2004, and
 a more involved one done [more recently in Reeborg's World](https://github.com/aroberge/reeborg/blob/master/src/js/runner/runner.js#L173) {This link should point to the Javascript method `RUR.runner.simplify_python_traceback`.}
 
 To identify which dialect is used, two different methods could be used:
@@ -233,7 +234,7 @@ for some_irrelevant_variable in range(4):
 
 Python introduces a special built-in iterable, `range()`, which is then used in the generic `for` loop construct.  **For experienced programmers, re-using such a powerful and relatively simple pattern for iterations is great.**  However, I would argue that it is less than ideal for beginners.
 
-#### What's wrong with the for loop
+### What's wrong with the for loop
 
 Imagine you are teaching beginners using a visual approach designed specifically
 for this, such as the turtle module or Karel the robot. For this example,
@@ -287,9 +288,9 @@ You can show how a pattern like this is "written" using Blockly:
 
 ![](/images/repeat_blockly.png)
 
-which gives another representation of what is meant by a **code block**. 
+which gives another representation of what is meant by a **code block**.
 
-**By contrast**, if you decide to just use the standard for loop in Python:
+By contrast, if you decide to just use the standard for loop in Python:
 
 ```py
 for some_variable in range(4):
@@ -300,7 +301,7 @@ for some_variable in range(4):
 you will need to explain five different concepts:
 
 1. the concept of an indented code block preceded by a colon, as for `repeat`;
-2. **two** new keywords, `for` and `in`;
+2. using **two** keywords, `for` and `in`;
 3. the use of a **variable**, which is some quantity with a completely irrelevant name in this example, except that it cannot be a keyword;
 4. the introduction of a built-in function, `range()`, which, unlike `move()` or `turn_left()`, does not have a visual representation;
 5. that a function can have an **argument** and the notation for "passing" arguments to a function.
@@ -310,8 +311,9 @@ you will need to explain five different concepts:
 The `for var in range(n)` Python idiom is not the only one that could benefit from
 a simpler syntax when teaching beginners.
 
-Imagine that you want to teach the concepts of loops to beginners, and the syntax used for loops in the Python-like language you are using. These beginners have never seen the concept of loops before; if you have not taught such beginners, it is difficult to imagine how such a concept can be difficult to grasp when seen for the first time ... but it might be possible to imagine how a programming language syntax can complicate (or facilitate) the learning process. To this end, I will introduce the concept in a Python-like language **where keywords are based on the French language.**
-The reason for choosing keywords written in French should become clear at the end.
+Imagine that you want to teach the concepts of loops to beginners. I will introduce the concept in a Python-like language **where keywords are based on the French language.**
+The reason for choosing keywords written in French for this exemple
+should become clear shortly.
 
 A loop is a series of instructions that are repeated. The syntax used is the following:
 
@@ -340,6 +342,7 @@ répéter pendant_que condition:
 ```
 
 **A quiz**: which of the above correspond to Python's
+
 ```py
 while condition:
     # block
@@ -347,8 +350,7 @@ while condition:
 
 If you know French and what a Python `while` loop is, the answer is obvious.
 If you know Python but don't know French, you likely have a 50% chance of being wrong.
-If a Chinese version of the above had been given, the probability of error
-would likely have increased to 75%.
+If some other language that didn't use the roman alphabet has been used above instead, the probability of error would likely have increased to 75%.
 
 ## The English version of the four loops
 
