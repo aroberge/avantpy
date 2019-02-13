@@ -5,7 +5,7 @@ _Python with training wheels: executable pseudocode in any language._
 Recently, the Python Software Foundation Board Committee for Python in Education (hereafter referred to as "Committee") posted a [Request for Ideas](http://pyfound.blogspot.com/2019/01/python-in-education-request-for-ideas.html).
 
 This document is an "idea" submitted in response to the **Request for Ideas**. In this document I use the name **AvantPy** as a placeholder for the entire concept described. Any of the ideas mentioned in this document, including the use of the name AvantPy, can be used by the Committee without restriction.
-If the Committee deems some or all of the ideas mentioned here worthy of a **Request for Proposal**, anyone is free to use the information here and include it in their own proposal.
+If the Committee deems some or all of the ideas mentioned here worthy of a **Request for Proposal**, anyone is free to use the information provided here and include it in their own proposal.
 
 ## Some observations
 
@@ -17,10 +17,8 @@ First, some observations, in no particular order.
 - Amongst the *best practices* identified by the creators of Blockly is the need for an [exit strategy](https://developers.google.com/blockly/guides/app-integration/best-practices#9_exit_strategy):
 
     *Block-based programming is often a starting point for programming. In the context of teaching computer programming, it is a gateway drug that gets students addicted, before moving them on to harder things. How long this block-based programming period should last for students is hotly debated, but if your goal is to teach programming it should be temporary.*
-
     ...
-
-    *Block-based programming environments used for teaching programming need to have a concrete plan for graduating their students. A solid exit strategy also goes a long way towards placating those who argue that block-based programming isn't "real programming".*
+    *Block-based programming environments used for teaching programming need to have a concrete plan for graduating their students. A solid **exit strategy** also goes a long way towards placating those who argue that block-based programming isn't "real programming".* [emphasis on exit strategy added]
 - The creators of [Racket](https://racket-lang.org/) clearly believe that having various dialects of a given programming language can be useful in helping to learn programming, as they include various dialects as default language to be used in the learning journey. Right from the beginning, Racket was designed as [a pedagogical programming environment for beginners](http://felleisen.org/matthias/manifesto/Racket__Historically_Speaking.html).
 - In addition to [Idle](https://docs.python.org/3/library/idle.html), there exists various editors or programming environment designed for beginners programmers using Python, either to be used locally as a desktop program, such as [Mu](https://codewith.mu/),
 [Thonny](https://thonny.org/), [TigerJython](http://jython.tobiaskohn.ch/), etc.,
@@ -29,13 +27,14 @@ or as online environments, such as [Reeborg's World](http://reeborg.ca/reeborg.h
 
 ## What is AvantPy
 
-Even though I have created a repository with this name, **AvantPy does not exist yet.** For now, it is an idea inspired by various experiments I have done, most of which are available on Github. Conceptually, AvantPy includes the following.
+Even though I have created a repository with this name, **AvantPy does not exist yet.** For now, it is an idea inspired by the various observations mentioned above and enriched by some experiments I have done, most of which are available on Github. Conceptually, AvantPy includes the following.
 
 - AvantPy is a collection of dialects, each dialect being a superset of Python, designed to make it easier to learn programming concept in a given human language.
+  - Each dialect consists of a translations of most Python keywords, supplemented by a few additional ones intended to make some concepts easier to learn.
 - AvantPy is a preprocessor, that takes a program written either totally or
 in parts in a given dialect, and converts it to standard Python prior to execution.
   - A given program could include a mix of code written in normal Python and in a specific dialect.
-- AvantPy also includes tools to analyze Python tracebacks and translate them into easier to understand feedback for users.
+- AvantPy also includes tools to analyze Python tracebacks and translate them into easier to understand feedback for beginners.
 - AvantPy is written as a standard Python module/package meant to be usable with any "normal" Python environment.
 - AvantPy also includes a tool to convert programs written in a given dialect into standard Python, showing the differences between the two, thus helping motivated users to make the transition to using only standard Python.
 - AvantPy is supported by a website that includes very basic explanations of
@@ -102,17 +101,17 @@ if x == 'q':              # si x == 'q':
 AvantPy aims to leverage the whole Python ecosystem to help people learn programming.
 Some people might never go beyond writing programs in their "local dialect".
 Others might eventually learn to write programs in standard Python: this is
-AvantPy's final aim, which is similar to Blockly's *exit strategy*, but is not an absolute requirement.
+AvantPy's final aim, which is similar to Blockly's *exit strategy*, but is not an absolute requirement on its users.
 
 ## How it could be implemented
 
-I created various toy programs [1](https://github.com/aroberge/nonstandard), [2](https://github.com/aroberge/experimental), [3](https://github.com/aroberge/pyextensions) to explore the ideas core to AvantPy, as I briefly described in [this blog post](https://aroberge.blogspot.com/2015/10/from-experimental-import-somethingnew.html) and in subsequent posts. **Note that the description in these
-blog posts is different from the suggested implementation mentioned below.**
-A more accurate description of the latest implementation I worked on can be [found here](https://aroberge.github.io/pyextensions/docs/html/modules.html); [see also](https://aroberge.github.io/pyextensions/docs/html/index.html).
+I created various toy programs [1](https://github.com/aroberge/nonstandard), [2](https://github.com/aroberge/experimental), [3](https://github.com/aroberge/pyextensions) to explore the ideas core to AvantPy, as I briefly described in [this blog post](https://aroberge.blogspot.com/2015/10/from-experimental-import-somethingnew.html) and in subsequent posts. **Note that the descriptions in these
+blog posts are different from the suggested implementation mentioned below.**
+A more accurate description of the last implementation I worked on can be [found here](https://aroberge.github.io/pyextensions/docs/html/modules.html); [see also](https://aroberge.github.io/pyextensions/docs/html/index.html).
 
 The preprocessor needed to convert code written in a given dialect into standard
-Python can be implemented using an import hook using
-the [importlib](https://docs.python.org/3/library/importlib.html) module.
+Python can be implemented using an import hook;
+see the [importlib](https://docs.python.org/3/library/importlib.html) module.
 I have done so as a test with a French version of Python and I wrote
 a [very brief blog post about it](https://aroberge.blogspot.com/2015/12/french-python.html).
 While I never used it to teach, I was contacted later by someone who wanted to do the same for Spanish, intending to use it to teach beginners; see [pull request](https://github.com/aroberge/experimental/pull/1).
@@ -121,11 +120,12 @@ The implementation of translated and easier to understand tracebacks can be done
 I have done something similar before in two different contexts (and using two
 different approaches): a [very basic version](https://github.com/aroberge/rur-ple/blob/master/rur_py/cpu.py#L296) when I created rur-ple in 2004, and
 a more involved one done [more recently in Reeborg's World](https://github.com/aroberge/reeborg/blob/master/src/js/runner/runner.js#L173) {This link should point to the Javascript method `RUR.runner.simplify_python_traceback`.}
+I have received some feedback from teachers that these simplified tracebacks were useful to learner, as well as requests to add more such simplified tracebacks.
 
 To identify which dialect is used, two different methods could be used:
 
 - a comment pragma, similar to what is done with Racket. For example, the
-first line of a program written in the "French dialect" could be `#lang fr`
+first line of a program written in the "French dialect" could be `#lang fr`.
 - a file extension different than the standard ".py". For example, a program
 written in the "French dialect" could end with ".pyfr".
 
@@ -150,7 +150,7 @@ The rest of this document can be ignored if one wants to focus only on the basic
 ## More details
 
 As a concrete example, I begin by describing the motivation for adding a new keyword, `repeat`,
-in an English dialect. I then explain how and why this should be extended to include other constructs, such as loops.
+in the English dialect of AvantPy. I then explain how and why this should be extended to include other constructs, such as loops.
 
 ## Why `repeat`
 
