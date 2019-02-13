@@ -22,10 +22,11 @@ First, some observations, in no particular order.
 - In addition to [Idle](https://docs.python.org/3/library/idle.html), there exists various editors or programming environment designed for beginners programmers using Python, either to be used locally as a desktop program, such as [Mu](https://codewith.mu/),
 [Thonny](https://thonny.org/), [TigerJython](http://jython.tobiaskohn.ch/), etc.,
 or as online environments, such as [Reeborg's World](http://reeborg.ca/reeborg.html).
-
-Finally, I found the blog post [Can’t We All be Reasonable and Speak English?](https://stackoverflow.blog/2014/02/13/cant-we-all-be-reasonable-and-speak-english/) very instructive.
+- As described in [Can’t We All be Reasonable and Speak English?](https://stackoverflow.blog/2014/02/13/cant-we-all-be-reasonable-and-speak-english/), there are many non-English speaking programming communities; these might benefit from a "localized" version of Python.
 
 ## What is AvantPy?
+
+Even though I have created a repository with this name, **AvantPy does not exist yet.** For now, it is an idea inspired by various experiments I have done, most of which are available on Github. Conceptually, AvantPy includes the following.
 
 - AvantPy is a collection of dialects, each dialect being a superset of Python, designed to make it easier to learn programming concept in a given human language.
 - AvantPy is a preprocessor, that takes a program written either totally or
@@ -33,11 +34,9 @@ in parts in a given dialect, and converts it to standard Python prior to executi
   - A given program could include a mix of code written in normal Python and in a specific dialect.
 - AvantPy also includes tools to analyze Python tracebacks and translate them into easier to understand feedback for users.
 - AvantPy is written as a standard Python module/package meant to be usable with any "normal" Python environment.
-- AvantPy also includes a tool to convert programs written in a given dialect into standard Python, showing the differences between the two, thus helping motivated users to make the transition to using standard Python.
+- AvantPy also includes a tool to convert programs written in a given dialect into standard Python, showing the differences between the two, thus helping motivated users to make the transition to using only standard Python.
 - AvantPy is supported by a website that includes very basic explanations of
 programming concepts for each dialect. These explanations can be linked to by tracebacks.
-
-Even though I have created a repository with this name, **AvantPy does not exist yet.** For now, it is a concept inspired by various experiments I have done, most of which are available on Github.
 
 In addition, AvantPy **could** possibly include an REPL designed to make use of the above, something which I have also explored. However, I do not see this as important as the other aspects, and do not believe that it should be worked on until all of the other parts have been properly implemented.
 
@@ -132,7 +131,7 @@ the use of a different file extension.
 
 If one is going to write a preprocessor to translate Python's keywords, it
 might make sense to also translate some Python *idioms* which might not be
-as clear to beginners as other alternatives such as those found in 
+as clear to beginners as other alternatives such as those found in
 Scratch or Blockly.  This is also keeping in line with Racket's philosophy
 of using different dialect of its core language.
 
