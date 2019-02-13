@@ -104,7 +104,7 @@ Some people might never go beyond writing programs in their "local dialect".
 Others might eventually learn to write programs in standard Python: this is
 AvantPy's final aim, which is similar to Blockly's *exit strategy*, but is not an absolute requirement.
 
-## How could it be implemented
+## How it could be implemented
 
 I created various toy programs [1](https://github.com/aroberge/nonstandard), [2](https://github.com/aroberge/experimental), [3](https://github.com/aroberge/pyextensions) to explore the ideas core to AvantPy, as I briefly described in [this blog post](https://aroberge.blogspot.com/2015/10/from-experimental-import-somethingnew.html) and in subsequent posts. **Note that the description in these
 blog posts is different from the suggested implementation mentioned below.**
@@ -139,7 +139,7 @@ If one is going to write a preprocessor to translate Python's keywords, it
 might make sense to also translate some Python *idioms* which might not be
 as clear to beginners as other alternatives such as those found in
 Scratch or Blockly.  This is also keeping in line with Racket's philosophy
-of using different dialect of its core language.
+of using different dialects of its core language, as the students become more proficient.
 
 ***
 
@@ -357,7 +357,7 @@ If you know French and what a Python `while` loop is, the answer is obvious.
 If you know Python but don't know French, you likely have a 50% chance of being wrong.
 If some other language that didn't use the roman alphabet has been used above instead, the probability of error would likely have increased to 75%.
 
-## The English version of the four loops
+## The English version of the above loops
 
 The four versions above can be written (in a different order) as follows
 in English:
