@@ -29,15 +29,16 @@ or as online environments, such as [Reeborg's World](http://reeborg.ca/reeborg.h
 
 Even though I have created a repository with this name, **AvantPy does not exist yet.** For now, it is an idea inspired by the various observations mentioned above and enriched by some experiments I have done, most of which are available on Github. Conceptually, AvantPy includes the following.
 
-- AvantPy is a collection of dialects, each dialect being a superset of Python, designed to make it easier to learn programming concept in a given human language.
-  - Each dialect consists of a translations of most Python keywords, supplemented by a few additional ones intended to make some concepts easier to learn.
+- AvantPy is a collection of dialects, each dialect being a superset of Python, designed to make it easier to learn programming concepts in a given human language.
+  - Each dialect consists of a translations of most Python keywords in a given human language, supplemented by a few additional keywords intended to make some concepts easier to learn.
 - AvantPy is a preprocessor, that takes a program written either totally or
 in parts in a given dialect, and converts it to standard Python prior to execution.
-  - A given program could include a mix of code written in normal Python and in a specific dialect.
+  - A syntactically valid program can include a mix of code written in normal Python and in a specific dialect. This is to ease the transition to learning Python.
 - AvantPy also includes tools to analyze Python tracebacks and translate them into easier to understand feedback for beginners.
-- AvantPy is written as a standard Python module/package meant to be usable with any "normal" Python environment.
+- AvantPy is written as a standard Python module/package meant to be usable with any "normal" Python environment. Thus, it could be included as a plugin for a given
+editor, or run with a standard Python interpreter from the command line.
 - AvantPy also includes a tool to convert programs written in a given dialect into standard Python, showing the differences between the two, thus helping motivated users to make the transition to using only standard Python.
-- AvantPy is supported by a website that includes very basic explanations of
+- AvantPy is supported by a website, or perhaps by local documentation files, which includes very basic explanations of
 programming concepts for each dialect. These explanations can be linked to by tracebacks.
 
 In addition, AvantPy **could** possibly include an REPL designed to make use of the above, something which I have also explored. However, I do not see this as important as the other aspects, and do not believe that it should be worked on until all of the other parts have been properly implemented.
@@ -51,9 +52,9 @@ additional support. This is what AvantPy aims to do for learning Python.
 The French word *avant* can be translated as *before* in English; I have chosen
 the name *AvantPy* both to indicate that it would normally be learned
 before standard Python and that it most often would be done using a language other than English; another reason
-was that no project with this name existed on pypi.
+was that, of all the other alternative I considered, this was the only name not used for a project hosted on pypi.
 
-Say that I am a French speaker that learns to program using AvantPy.
+Imagine that I am a French speaker that learns to program using AvantPy.
 My first program might be:
 
 ```py
@@ -98,15 +99,17 @@ if x == 'q':              # si x == 'q':
     print("Au revoir !")  #     imprime("Au revoir !")
 ```
 
-AvantPy aims to leverage the whole Python ecosystem to help people learn programming.
+As AvantPy would be implemented as a single Python module/package, it could leverage the whole Python ecosystem to help people learn programming.
 Some people might never go beyond writing programs in their "local dialect".
 Others might eventually learn to write programs in standard Python: this is
-AvantPy's final aim, which is similar to Blockly's *exit strategy*, but is not an absolute requirement on its users.
+AvantPy's final aim, which is similar to Blockly's *exit strategy*, but is not an absolute requirement on its users.  However, it is expected that motivated
+students that want to learn programming using a "real" language would be
+motivated to rapidly make the transition to using standard Python.
 
 ## How it could be implemented
 
 I created various toy programs [1](https://github.com/aroberge/nonstandard), [2](https://github.com/aroberge/experimental), [3](https://github.com/aroberge/pyextensions) to explore the ideas core to AvantPy, as I briefly described in [this blog post](https://aroberge.blogspot.com/2015/10/from-experimental-import-somethingnew.html) and in subsequent posts. **Note that the descriptions in these
-blog posts are different from the suggested implementation mentioned below.**
+blog posts are different from the latest versions I have worked on.**
 A more accurate description of the last implementation I worked on can be [found here](https://aroberge.github.io/pyextensions/docs/html/modules.html); [see also](https://aroberge.github.io/pyextensions/docs/html/index.html).
 
 The preprocessor needed to convert code written in a given dialect into standard
@@ -122,7 +125,7 @@ different approaches): a [very basic version](https://github.com/aroberge/rur-pl
 a more involved one done [more recently in Reeborg's World](https://github.com/aroberge/reeborg/blob/master/src/js/runner/runner.js#L173) {This link should point to the Javascript method `RUR.runner.simplify_python_traceback`.}
 I have received some feedback from teachers that these simplified tracebacks were useful to learner, as well as requests to add more such simplified tracebacks.
 
-To identify which dialect is used, two different methods could be used:
+To identify the dialect in which the program is written, two different methods could be used:
 
 - a comment pragma, similar to what is done with Racket. For example, the
 first line of a program written in the "French dialect" could be `#lang fr`.
@@ -131,7 +134,7 @@ written in the "French dialect" could end with ".pyfr".
 
 Based on the experiments I have done, both approaches could be used at the same
 time, without causing any problems. My preferred approach would be to require
-the use of a different file extension.
+the use of a different file extension; one of the reasons is that this would make it easier to configure standard programming editors to recognize automatically which dialect is used.
 
 ## Why go beyond a translation of keywords
 
