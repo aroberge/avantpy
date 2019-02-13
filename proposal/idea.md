@@ -28,7 +28,7 @@ Finally, I found the blog post [Can’t We All be Reasonable and Speak English?]
 ## What is AvantPy?
 
 - AvantPy is a collection of dialects, each dialect being a superset of Python, designed to make it easier to learn programming concept in a given human language.
-- AvantPy is a preprocessor, that converts programs written either totally or
+- AvantPy is a preprocessor, that takes a program written either totally or
 in parts in a given dialect, and converts it to standard Python prior to execution.
   - A given program could include a mix of code written in normal Python and in a specific dialect.
 - AvantPy also includes tools to analyze Python tracebacks and translate them into easier to understand feedback for users.
@@ -37,7 +37,7 @@ in parts in a given dialect, and converts it to standard Python prior to executi
 - AvantPy is supported by a website that includes very basic explanations of
 programming concepts for each dialect. These explanations can be linked to by tracebacks.
 
-**AvantPy does not exist yet.** For now, it is a concept inspired by various experiments.
+**AvantPy does not exist yet.** For now, it is a concept inspired by various experiments I have done, most of which are available on Github.
 
 In addition, AvantPy **could** possibly include an REPL designed to make use of the above, something which I have also explored. However, I do not see this as important as the other aspects, and do not believe that it should be worked on until all of the other parts have been properly implemented.
 
@@ -65,16 +65,22 @@ si x == 'q'
 When I would try to execute such a program, I might get the following error message:
 
 ```txt
-Il y a une erreur de syntaxe dans ce programme:
-une instruction débutant avec le mot "si" doit terminer par deux points (:).
+Il y a une erreur de syntaxe dans ce programme dans la ligne contenant le code suivant:
+
+    si x == 'q'
+
+Une instruction débutant avec le mot "si" doit terminer par deux points (:).
 [Voir documentation-si.]
 ```
 
 The equivalent English version would be
 
 ```txt
-There is a syntax error in this program:
-a statement beginning with the word "if" must end with a colon (:).
+There is a syntax error in this program at the line containing the following code:
+
+    if x == 'q'
+
+A statement beginning with the word "if" must end with a colon (:).
 [Relevant link to the documentation on "if" provided here.]
 ```
 
@@ -101,10 +107,15 @@ A more accurate description of the latest implementation I worked on can be [fou
 The preprocessor needed to convert code written in a given dialect into standard
 Python can be implemented using an import hook using the [importlib](https://docs.python.org/3/library/importlib.html) module.
 
+The implementation of translated and easier to understand tracebacks can be done using [`sys.excepthook`](https://docs.python.org/3/library/sys.html#sys.excepthook).
+I have done something similar before in two different contexts (and using two
+different approaches): a [very basic version](https://github.com/aroberge/rur-ple/blob/master/rur_py/cpu.py#L296) when I created rur-ple in 2004, and 
+[more recently in Reeborg's World](https://github.com/aroberge/reeborg/blob/master/src/js/runner/runner.js#L173) {This link should point to the Javascript method `RUR.runner.simplify_python_traceback`.}
+
 To identify which dialect is used, two different methods could be used:
 
 - a comment pragma, similar to what is done with Racket. For example, the
-first line of a program written in the "French dialect" would be `#lang fr`
+first line of a program written in the "French dialect" could be `#lang fr`
 - a file extension different than the standard ".py". For example, a program
 written in the "French dialect" could end with ".pyfr".
 
@@ -120,10 +131,16 @@ as clear to beginners as other alternatives such as those found in
 Scratch or Blockly.  This is also keeping in line with Racket's philosophy
 of using different dialect of its core language.
 
+===
+
+# More details
+
+The following can be ignore if one wants to focus only on the basic idea.
+
 As a concrete example, I begin by describing the motivation for adding a new keyword, `repeat`,
 in an English dialect. I then explain how and why this should be extended to include other constructs, such as loops.
 
-### Why `repeat`?
+## Why `repeat`?
 
 In Reeborg's World, I added a non-standard syntactic construction to Python with an additional keyword: `repeat`; this was also done by [Tobias Kohn](https://tobiaskohn.ch/), who created [TigerJython](http://jython.tobiaskohn.ch/) as part of his Ph.D. thesis.
 
@@ -148,7 +165,7 @@ for some_irrelevant_variable in range(4):
 Purists will no doubt object to this addition.  In this section, I explain my reasoning for this addition, first by describing loops as seen by experienced
 Python programmers, followed by how they might be first encountered by beginners.
 
-#### Three types of loops
+### Three types of loops
 
 For an experience programmer, there are 3 basic cases for writing a loop:
 
@@ -158,7 +175,7 @@ For an experience programmer, there are 3 basic cases for writing a loop:
 
 Let's consider them in order.
 
-#### Items in a collection
+### Items in a collection
 
 Here are some examples from Python:
 
@@ -197,7 +214,7 @@ for item in some_iterable:
 
 It is a powerful pattern which is definitely one of Python's strengths. It also needs to be understood before introducing the very useful list comprehensions and generator expressions in Python.
 
-#### While or until a condition is met
+### While or until a condition is met
 
 There are various ways to do this, using a `while` loop.  Here is just one example:
 
@@ -206,7 +223,7 @@ while front_is_clear():
     move()
 ```
 
-#### Repeating a fixed number of times
+### Repeating a fixed number of times
 
 We already have seen an example of repeating a fixed number of times before:
 
