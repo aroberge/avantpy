@@ -2,7 +2,10 @@
 
 _Python with training wheels: executable pseudocode in any language._
 
-In this document, submitted in the [Request for Ideas](http://pyfound.blogspot.com/2019/01/python-in-education-request-for-ideas.html) phase, I use the name **AvantPy** as a placeholder for the entire concept described.
+Recently, the Python Software Foundation Board Committee for Python in Education (hereafter referred to as "Committee") posted a [Request for Ideas](http://pyfound.blogspot.com/2019/01/python-in-education-request-for-ideas.html).
+
+This document is an "idea" submitted in response to the **Request for Ideas**. In this document I use the name **AvantPy** as a placeholder for the entire concept described. Any of the ideas mentioned in this document, including the use of the name AvantPy, can be used by the Committee without restriction.
+If the Committee deems some or all of the ideas mentioned here worthy of a **Request for Proposal**, anyone is free to use the information here and include it in their own proposal.
 
 ## Some observations
 
@@ -11,7 +14,6 @@ First, some observations, in no particular order.
 - The mission of the Python Software Foundation is to promote, protect, and advance the Python programming language, and to support and **facilitate the growth of a diverse and international community** of Python programmers. [**Emphasis added.**]
 - The success of block based programming environments, like [Scratch](https://scratch.mit.edu/), [Blockly](https://blockly-games.appspot.com/), and many others, demonstrates that it makes sense to introduce beginners to programming concepts in their native language.
 - Python is often described as *executable pseudocode*. This is close to the truth if your pseudocode is written for an English audience who knows basic programming concepts but likely much less so for beginners who are not familiar with English.
-- The creators of [Racket](https://racket-lang.org/) clearly believe that having various dialects of a given programming language can be useful in helping to learn programming, as they include various dialects as default language to be used in the learning journey.
 - Amongst the *best practices* identified by the creators of Blockly is the need for an [exit strategy](https://developers.google.com/blockly/guides/app-integration/best-practices#9_exit_strategy):
 
     *Block-based programming is often a starting point for programming. In the context of teaching computer programming, it is a gateway drug that gets students addicted, before moving them on to harder things. How long this block-based programming period should last for students is hotly debated, but if your goal is to teach programming it should be temporary.*
@@ -19,12 +21,13 @@ First, some observations, in no particular order.
     ...
 
     *Block-based programming environments used for teaching programming need to have a concrete plan for graduating their students. A solid exit strategy also goes a long way towards placating those who argue that block-based programming isn't "real programming".*
+- The creators of [Racket](https://racket-lang.org/) clearly believe that having various dialects of a given programming language can be useful in helping to learn programming, as they include various dialects as default language to be used in the learning journey. Right from the beginning, Racket was designed as [a pedagogical programming environment for beginners](http://felleisen.org/matthias/manifesto/Racket__Historically_Speaking.html).
 - In addition to [Idle](https://docs.python.org/3/library/idle.html), there exists various editors or programming environment designed for beginners programmers using Python, either to be used locally as a desktop program, such as [Mu](https://codewith.mu/),
 [Thonny](https://thonny.org/), [TigerJython](http://jython.tobiaskohn.ch/), etc.,
 or as online environments, such as [Reeborg's World](http://reeborg.ca/reeborg.html).
 - As described in [Can’t We All be Reasonable and Speak English?](https://stackoverflow.blog/2014/02/13/cant-we-all-be-reasonable-and-speak-english/), there are many non-English speaking programming communities; these might benefit from a "localized" version of Python.
 
-## What is AvantPy?
+## What is AvantPy
 
 Even though I have created a repository with this name, **AvantPy does not exist yet.** For now, it is an idea inspired by various experiments I have done, most of which are available on Github. Conceptually, AvantPy includes the following.
 
@@ -40,9 +43,9 @@ programming concepts for each dialect. These explanations can be linked to by tr
 
 In addition, AvantPy **could** possibly include an REPL designed to make use of the above, something which I have also explored. However, I do not see this as important as the other aspects, and do not believe that it should be worked on until all of the other parts have been properly implemented.
 
-## What is meant by training wheels?
+## What is meant by training wheels
 
-The very first sentence of this document is _Python with training wheels: executable pseudocode in any language._ 
+The very first sentence of this document is _Python with training wheels: executable pseudocode in any language._
 To help beginners learning how to ride a bicycle, one sometimes uses [training wheels](https://en.wikipedia.org/wiki/Training_wheels). After a while, the new cyclists ride
 their bicycles without the training wheels needing to touch the ground to offer
 additional support. This is what AvantPy aims to do for learning Python.
@@ -101,15 +104,18 @@ Some people might never go beyond writing programs in their "local dialect".
 Others might eventually learn to write programs in standard Python: this is
 AvantPy's final aim, which is similar to Blockly's *exit strategy*, but is not an absolute requirement.
 
-## How could it be implemented?
+## How could it be implemented
 
 I created various toy programs [1](https://github.com/aroberge/nonstandard), [2](https://github.com/aroberge/experimental), [3](https://github.com/aroberge/pyextensions) to explore the ideas core to AvantPy, as I briefly described in [this blog post](https://aroberge.blogspot.com/2015/10/from-experimental-import-somethingnew.html) and in subsequent posts. **Note that the description in these
 blog posts is different from the suggested implementation mentioned below.**
 A more accurate description of the latest implementation I worked on can be [found here](https://aroberge.github.io/pyextensions/docs/html/modules.html); [see also](https://aroberge.github.io/pyextensions/docs/html/index.html).
 
 The preprocessor needed to convert code written in a given dialect into standard
-Python can be implemented using an import hook using the [importlib](https://docs.python.org/3/library/importlib.html) module. I have done so as a test with a French version of Python and I wrote a [blog post about it]*https://aroberge.blogspot.com/2015/12/french-python.html). While I never used
-it to teach, I was contacted later by someone who wanted to do the same for Spanish, intending to use it to teach beginners; see [pull request](https://github.com/aroberge/experimental/pull/1)
+Python can be implemented using an import hook using
+the [importlib](https://docs.python.org/3/library/importlib.html) module.
+I have done so as a test with a French version of Python and I wrote
+a [blog post about it](https://aroberge.blogspot.com/2015/12/french-python.html).
+While I never used it to teach, I was contacted later by someone who wanted to do the same for Spanish, intending to use it to teach beginners; see [pull request](https://github.com/aroberge/experimental/pull/1).
 
 The implementation of translated and easier to understand tracebacks can be done using [`sys.excepthook`](https://docs.python.org/3/library/sys.html#sys.excepthook).
 I have done something similar before in two different contexts (and using two
@@ -127,7 +133,7 @@ Based on the experiments I have done, both approaches could be used at the same
 time, without causing any problems. My preferred approach would be to require
 the use of a different file extension.
 
-## Why go beyond a translation of keywords?
+## Why go beyond a translation of keywords
 
 If one is going to write a preprocessor to translate Python's keywords, it
 might make sense to also translate some Python *idioms* which might not be
@@ -146,7 +152,7 @@ The following can be ignore if one wants to focus only on the basic idea.
 As a concrete example, I begin by describing the motivation for adding a new keyword, `repeat`,
 in an English dialect. I then explain how and why this should be extended to include other constructs, such as loops.
 
-## Why `repeat`?
+## Why `repeat`
 
 In Reeborg's World, I added a non-standard syntactic construction to Python with an additional keyword: `repeat`; this was also done by [Tobias Kohn](https://tobiaskohn.ch/), who created [TigerJython](http://jython.tobiaskohn.ch/) as part of his Ph.D. thesis.
 
@@ -239,7 +245,7 @@ Imagine you are teaching beginners using a visual approach designed specifically
 for this, such as the turtle module or Karel the robot. For this example,
 I will choose a clone of the latter, [Reeborg's World](http://reeborg.ca/reeborg.html).
 
-Students have just learned the two basic instructions: `move()` and `turn_left()` 
+Students have just learned the two basic instructions: `move()` and `turn_left()`
 and are ready to be introduced to their first keywords. They are first asked
 to draw a square:
 
@@ -285,7 +291,7 @@ You need to explain two concepts:
 
 You can show how a pattern like this is "written" using Blockly:
 
-![](/images/repeat_blockly.png)
+![repeat with Blockly](/images/repeat_blockly.png)
 
 which gives another representation of what is meant by a **code block**.
 
@@ -407,28 +413,30 @@ environments to distinguish between these two categories.
 
 ### Examples from Scratch
 
+_Scratch here refers to version 2; recently a newer version of Scratch has become available._
+
 Scratch control blocks includes only 3 of the four categories:
 
-1. repeat n
+- repeat n
 
-![](/images/scratch_repeat_n.png)
+![repeat with Scratch](/images/scratch_repeat_n.png)
 
-3. repeat until condition
+- repeat until condition
 
-![](/images/scratch_repeat_until.png)
+![repeat until with Scratch](/images/scratch_repeat_until.png)
 
-4. repeat forever
+- repeat forever
 
-![](/images/scratch_repeat_forever.png)
+![repeat forever with Scratch](/images/scratch_repeat_forever.png)
 
 Note that the word _repeat_ is absent for the infinite (forever) loop.
 This is not the case for all languages; for example, the French version
 does include the translation of _repeat_ for all 3 types of loops
 including the infinite one.
 
-![](/images/scratch_repeat_forever_fr.png)
-![](/images/scratch_repeat_n_fr.png)
-![](/images/scratch_repeat_until_fr.png)
+![repeat forever in French with Scratch](/images/scratch_repeat_forever_fr.png)
+![repeat in French with Scratch](/images/scratch_repeat_n_fr.png)
+![repeat until in French with Scratch](/images/scratch_repeat_until_fr.png)
 
 To a Python programmer, it may come as a surprise that the `repeat until condition` is
 included but not `repeat while condition`. Given the work that went into designing Scratch,
@@ -438,33 +446,33 @@ one to understand by beginners.
 This might be because Scratch supports
 programs with user interactions, such as mouse or key events,
 
-![](/images/scratch_events.png)
+![scratch events](/images/scratch_events.png)
 
 and that, most often, one might want to keep on repeating **until** a
 certain event takes place.
 
-![](/images/scratch_repeat_until_event.png)
+![repeat until event with scratch](/images/scratch_repeat_until_event.png)
 
 ### Examples from Blockly
 
 Blockly also includes only 3 of the four loop categories, but they are
 not the same as Scratch.
 
-1. repeat n
+- repeat n
 
-![](/images/blockly_repeat_n.png)
+![repeat with Blockly](/images/blockly_repeat_n.png)
 
-2. repeat while condition
+- repeat while condition
 
-![](/images/blockly_repeat_while.png)
+![repeat while with Blockly](/images/blockly_repeat_while.png)
 
-3. repeat until condition
+- repeat until condition
 
-![](/images/blockly_repeat_until.png)
+![repeat until with Blockly](/images/blockly_repeat_until.png)
 
 `repeat while condition` and `repeat until condition` are variants of a single block
 
-![](/images/blockly_repeat_while_until.png)
+![repeat while and until with Blockly](/images/blockly_repeat_while_until.png)
 
 Blockly does not include a `repeat forever` block.
 
@@ -474,13 +482,13 @@ Blockly can translate block configurations into valid code for various
 programming languages including Python.  Here, we show two examples
 from [Reeborg's World](http://reeborg.ca/reeborg.html).
 
-![](/images/blockly_example2_python.png)
+![Blockly to Python first example](/images/blockly_example2_python.png)
 
 (The color scheme used for individual blocks is different in Reeborg's World
 as compared with that used in Blockly; standard Blockly blocks for loops are
 green whereas they are blue for Reeborg's World.)
 
-![](/images/blockly_example_python.png)
+![Blockly to Python second example](/images/blockly_example_python.png)
 
 As we can see, the required indentation of Python's syntax is a very
 natural counterpart to Blockly's structure.
@@ -491,12 +499,12 @@ In addition to a variable-less version of `repeat n`, Blockly makes it
 possible to define a block that is very similar to the more complex
 version of Python's `for var in range(...)`.
 
-![](/images/blockly_for_count.png)
+![Blockly advanced for loop](/images/blockly_for_count.png)
 
 It also includes a loop with a finite number of repetitions set by
 the number of elements in a container
 
-![](/images/blockly_for_each.png)
+![Blockly for each](/images/blockly_for_each.png)
 
 ## Some acknowledgements
 
@@ -515,5 +523,5 @@ definitely not be suitable for beginners.)
 Also on the Python idea's list, I suggested providing a [translation for tracebacks in 2010](https://mail.python.org/pipermail/python-ideas/2010-May/007211.html)
 with this more detailed [comment by Mariano Reingart](https://mail.python.org/pipermail/python-ideas/2010-May/007213.html).
 
-The idea of providing hooks in **Idle** for various "dialects" was 
+The idea of providing hooks in **Idle** for various "dialects" was
 [mentioned by Terry Reddy](https://mail.python.org/pipermail/python-ideas/2015-October/036834.html).
