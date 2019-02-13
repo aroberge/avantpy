@@ -171,15 +171,15 @@ for some_irrelevant_variable in range(4):
 Purists will no doubt object to this addition.  In this section, I explain my reasoning for this addition, first by describing loops as seen by experienced
 Python programmers, followed by how they might be first encountered by beginners.
 
-### Three types of loops
+### What's right with Python's `for` loop
 
-For an experience programmer, there are 3 basic cases for writing a loop:
+For an experienced programmer, there are 3 basic cases for writing a loop:
 
 1. repeating some instructions for each item of a "collection";
-2. repeating some instructions while or until a certain condition is met;
-3. repeating some instructions a fixed number of times.
+2. repeating some instructions a fixed number of times;
+3. repeating some instructions while or until a certain condition is met.
 
-Let's consider them in order.
+The first two cases use a `for` loop in Python. Let's examine them.
 
 ### Items in a collection
 
@@ -220,18 +220,9 @@ for item in some_iterable:
 
 It is a powerful pattern which is definitely one of Python's strengths. It also needs to be understood before introducing the very useful list comprehensions and generator expressions in Python.
 
-### While or until a condition is met
-
-There are various ways to do this, using a `while` loop.  Here is just one example:
-
-```py
-while front_is_clear():
-    move()
-```
-
 ### Repeating a fixed number of times
 
-We already have seen an example of repeating a fixed number of times before:
+We already have mentioned an example of repeating a fixed number of times before:
 
 ```py
 # draw square
@@ -240,13 +231,17 @@ for some_irrelevant_variable in range(4):
     turn_left()
 ```
 
-Python introduces a special built-in iterable, `range()`, which is then used in the generic for loop construct.  **For experienced programmers, re-using such a powerful and relatively simple pattern for iterations is great.**  However, I would argue that it is less than ideal for beginners.
+Python introduces a special built-in iterable, `range()`, which is then used in the generic `for` loop construct.  **For experienced programmers, re-using such a powerful and relatively simple pattern for iterations is great.**  However, I would argue that it is less than ideal for beginners.
 
 #### What's wrong with the for loop
 
-Imagine the situation where students have learned two basic instructions: `move()` and `turn_left()` in a programming environment,
-such as [Reeborg's World](http://reeborg.ca/reeborg.html), or similar in
-Python's turtle module. You ask them to use these to draw a square:
+Imagine you are teaching beginners using a visual approach designed specifically
+for this, such as the turtle module or Karel the robot. For this example,
+I will choose a clone of the latter, [Reeborg's World](http://reeborg.ca/reeborg.html).
+
+Students have just learned the two basic instructions: `move()` and `turn_left()` 
+and are ready to be introduced to their first keywords. They are first asked
+to draw a square:
 
 ```py
 move()
@@ -259,7 +254,7 @@ move()
 turn_left()
 ```
 
-You rewrite this to draw their attention to the repeated pattern
+You rewrite this as follows to draw their attention to the repeated pattern
 
 ```py
 move()
@@ -283,39 +278,16 @@ repeat 4:
     turn_left()
 ```
 
-You use this example to explain the concept of an **indented code block** the use of a colon, ":", to precede such a code block, and the introduction of one "special" keyword: `repeat`.
+You need to explain two concepts:
+
+1. the concept of an indented code block preceded by a colon;
+2. the use of a single keyword: `repeat`
 
 You can show how a pattern like this is "written" using Blockly:
 
 ![](/images/repeat_blockly.png)
 
-which gives another representation of what is meant by a **code block**. The next step might be to teach about defining functions:
-
-```py
-def turn_right():
-    turn_left()
-    turn_left()
-    turn_left()
-```
-
-You can point out to them the repeating use of an indented code block preceded by a colon, and the use of a different keyword, `def`.  You might want to again show them a different representation of such a code block.
-
-![](../images/turn_right_blockly.png)
-
-You can then combine the two concepts:
-
-```py
-def draw_square():
-    repeat 4:
-        move()
-        turn_left()
-
-draw_square()
-```
-
-which you can, if desired, also illustrate using Blockly
-
-![](../images/blockly_example_python.png)
+which gives another representation of what is meant by a **code block**. 
 
 **By contrast**, if you decide to just use the standard for loop in Python:
 
@@ -325,15 +297,13 @@ for some_variable in range(4):
     turn_left()
 ```
 
-you will need to explain \(or at least mention\) five different **new** concepts:
+you will need to explain five different concepts:
 
 1. the concept of an indented code block preceded by a colon, as for `repeat`;
-2. **two** new keywords, `for` and `in` instead of a single one;
-3. the use of a **variable**, which is some quantity with a completely irrelevant name in this example, except that it cannot be a keyword.
-4. the introduction of a built-in function, `range()`
+2. **two** new keywords, `for` and `in`;
+3. the use of a **variable**, which is some quantity with a completely irrelevant name in this example, except that it cannot be a keyword;
+4. the introduction of a built-in function, `range()`, which, unlike `move()` or `turn_left()`, does not have a visual representation;
 5. that a function can have an **argument** and the notation for "passing" arguments to a function.
-
-I believe that, until students have seen that functions can have arguments, such as `take("token")` (example from Reeborg's World), and have seen the concept of a variable, it is better to use `repeat` than the standard Python for loop idiom.
 
 ## Other simpler loops
 
@@ -345,7 +315,7 @@ The reason for choosing keywords written in French should become clear at the en
 
 A loop is a series of instructions that are repeated. The syntax used is the following:
 
-```
+```py
 répéter ? :
     # instructions
     # to be
@@ -355,7 +325,7 @@ répéter ? :
 
 For beginners, there are four types of loops, identified by a different expression replacing the question mark above.
 
-```
+```py
 répéter n:      # n is an integer
     # block
 
@@ -405,6 +375,7 @@ repeat until condition:
 while condition:
     # block
 ```
+
 This is the same question as before, but this time the answer should be completely obvious to someone who knows English and knows what a Python `while` loop is.
 
 ### Executable pseudocode
@@ -502,7 +473,6 @@ Blockly can translate block configurations into valid code for various
 programming languages including Python.  Here, we show two examples
 from [Reeborg's World](http://reeborg.ca/reeborg.html).
 
-
 ![](/images/blockly_example2_python.png)
 
 (The color scheme used for individual blocks is different in Reeborg's World
@@ -526,7 +496,6 @@ It also includes a loop with a finite number of repetitions set by
 the number of elements in a container
 
 ![](/images/blockly_for_each.png)
-
 
 ## Some acknowledgements
 
