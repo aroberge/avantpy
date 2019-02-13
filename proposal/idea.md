@@ -12,7 +12,7 @@ If the Committee deems some or all of the ideas mentioned here worthy of a **Req
 First, some observations, in no particular order.
 
 - The mission of the Python Software Foundation is to promote, protect, and advance the Python programming language, and to support and **facilitate the growth of a diverse and international community** of Python programmers. [**Emphasis added.**]
-- The success of block based programming environments, like [Scratch](https://scratch.mit.edu/), [Blockly](https://blockly-games.appspot.com/), and many others, demonstrates that it makes sense to introduce beginners to programming concepts in their native language.
+- The success of block based programming environments, like [Scratch](https://scratch.mit.edu/), [Blockly](https://blockly-games.appspot.com/), demonstrates that it makes sense to introduce beginners to programming concepts in their native language.
 - Python is often described as *executable pseudocode*. This is close to the truth if your pseudocode is written for an English audience who knows basic programming concepts but likely much less so for beginners who are not familiar with English.
 - Amongst the *best practices* identified by the creators of Blockly is the need for an [exit strategy](https://developers.google.com/blockly/guides/app-integration/best-practices#9_exit_strategy):
 
@@ -25,7 +25,7 @@ First, some observations, in no particular order.
 - In addition to [Idle](https://docs.python.org/3/library/idle.html), there exists various editors or programming environment designed for beginners programmers using Python, either to be used locally as a desktop program, such as [Mu](https://codewith.mu/),
 [Thonny](https://thonny.org/), [TigerJython](http://jython.tobiaskohn.ch/), etc.,
 or as online environments, such as [Reeborg's World](http://reeborg.ca/reeborg.html).
-- As described in [Can’t We All be Reasonable and Speak English?](https://stackoverflow.blog/2014/02/13/cant-we-all-be-reasonable-and-speak-english/), there are many non-English speaking programming communities; these might benefit from a "localized" version of Python.
+- As described in [Can’t We All be Reasonable and Speak English?](https://stackoverflow.blog/2014/02/13/cant-we-all-be-reasonable-and-speak-english/), there are many non-English speaking programming communities; these might currently feel invisible to the main Python community and could possibly benefit from a "localized" version of Python having some official support from the PSF.
 
 ## What is AvantPy
 
@@ -145,7 +145,7 @@ of using different dialects of its core language, as the students become more pr
 
 ***
 
-# More details
+## More details
 
 The following can be ignore if one wants to focus only on the basic idea.
 
@@ -508,8 +508,9 @@ the number of elements in a container
 
 ## Some acknowledgements
 
-Many of the ideas discussed above have been suggested before. I know that I have
-been influenced by posts on mailing lists and on blogs. Here I just wish to
+Many of the ideas discussed above have been suggested elsewhere before.
+I know that I have been influenced by posts on mailing lists and on blogs.
+Here I just wish to
 acknowledge a few such discussions: **this is a very incomplete list**.
 
 For example, the idea of being able to write Python keywords in various human languaged has been
