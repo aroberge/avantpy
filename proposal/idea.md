@@ -19,7 +19,7 @@ First, some observations, in no particular order.
     ...
 
     *Block-based programming environments used for teaching programming need to have a concrete plan for graduating their students. A solid exit strategy also goes a long way towards placating those who argue that block-based programming isn't "real programming".*
-- In addition to Idle, there exists various editors or programming environment designed for beginners programmers using Python, either to be used locally as a desktop program, such as [Mu](https://codewith.mu/),
+- In addition to [Idle](https://docs.python.org/3/library/idle.html), there exists various editors or programming environment designed for beginners programmers using Python, either to be used locally as a desktop program, such as [Mu](https://codewith.mu/),
 [Thonny](https://thonny.org/), [TigerJython](http://jython.tobiaskohn.ch/), etc.,
 or as online environments, such as [Reeborg's World](http://reeborg.ca/reeborg.html).
 
@@ -97,6 +97,10 @@ AvantPy aims to leverage the whole Python ecosystem to help people learn program
 Some people might never go beyond writing programs in their "local dialect".
 Others might eventually learn to write programs in standard Python: this is
 AvantPy's final aim, which is similar to Blockly's *exit strategy*, but is not an absolute requirement.
+
+The French word *avant* be translated as *before* in English; I have chosen
+the word *AvantPy* both to indicate that it would normally be learned
+before standard Python, most often using a language other than English.
 
 ## How could it be implemented?
 
