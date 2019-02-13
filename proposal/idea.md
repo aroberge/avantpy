@@ -98,7 +98,7 @@ Some people might never go beyond writing programs in their "local dialect".
 Others might eventually learn to write programs in standard Python: this is
 AvantPy's final aim, which is similar to Blockly's *exit strategy*, but is not an absolute requirement.
 
-The French word *avant* be translated as *before* in English; I have chosen
+The French word *avant* can be translated as *before* in English; I have chosen
 the word *AvantPy* both to indicate that it would normally be learned
 before standard Python, most often using a language other than English.
 
