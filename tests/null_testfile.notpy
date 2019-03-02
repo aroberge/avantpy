@@ -1,9 +1,0 @@
-#ext null_ast null_source null_bytecode
-
-h = "hello"
-def test_null():
-    assert h == "hello"
-
-if __name__ == "__main__":
-    test_null()
-    print("Success.")

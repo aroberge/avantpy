@@ -1,6 +1,6 @@
 # Phase 1
 
-- [ ] Copy relevant code and tests from experimental repo
+- [x] Copy relevant code and tests from experimental repo
   
   - Ignore console for now
 
@@ -19,3 +19,8 @@
 - [ ] Implement simple error analysis and feedback
 
 - [ ] Implement diff mode showing corresponding Python code
+
+- [ ] Implement conversion tool / comparison
+- [ ] Implement reverse converstion tool
+- [ ] select dialect in console
+- [ ] show translation in console

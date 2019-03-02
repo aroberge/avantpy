@@ -93,35 +93,21 @@ import runpy
 import sys
 import os.path
 
-
 from . import config
 from . import console
 from . import import_hook
-from . import transforms
 
 start_console = console.start_console
 
-# It is assumed that code transformers are third-party modules
-# to be installed in a location from where they can be imported.
-# For this proof of concept, we add a fake site-packages directory
-# where the sample transformers will be located
-
-top_dir = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
-fake_site_pkg = os.path.join(top_dir, "fake_site_pkg")
-
-if not os.path.exists(fake_site_pkg):
-    raise NotImplementedError(
-        "A fake_site_pkg directory must exist for this demo to work correctly."
-    )
-sys.path.insert(0, fake_site_pkg)
-
-dialects = glob.glob(os.path.dirname(__file__)+"/dialects/*.py")
+dialects = glob.glob(os.path.dirname(__file__) + "/dialects/*.py")
 for f in dialects:
-    if os.path.isfile(f) and not f.endswith('__init__.py'):
-        print(f)
+    if os.path.isfile(f) and not f.endswith("__init__.py"):
         name = os.path.basename(f)[:-3]
-        print(name)
+        config.FILE_EXT.append("py" + name)
         dialect = runpy.run_path(f)
+        dialect_dict = {v: k for k, v in dialect[name].items()}
+        config.DICTIONARIES["py" + name] = dialect_dict
+        config.DICTIONARIES[name] = dialect[name]
 
 
 if "-m" in sys.argv:
@@ -160,13 +146,6 @@ if "-m" in sys.argv:
         action="store_true",
     )
 
-    parser.add_argument(
-        "-t",
-        "--transformers",
-        nargs="+",
-        help="Transformers to import if not loading source file",
-    )
-
     args = parser.parse_args()
 
     if args.convert:
@@ -195,7 +174,4 @@ if "-m" in sys.argv:
             print("Could not find module ", args.source, "\n")
             raise
     else:
-        if args.transformers is not None:
-            for tr in args.transformers:
-                console_dict[tr] = transforms.import_transformer(tr)
         start_console(local_vars=console_dict, show_python=show_python)

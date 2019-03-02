@@ -1,15 +1,16 @@
 """A custom importer making use of the import hook capability
 """
 import difflib
+import importlib
 import os.path
 import sys
+import tokenize
 
-import importlib
 from importlib.abc import Loader, MetaPathFinder
 from importlib.util import spec_from_file_location
+from io import StringIO
 
 from . import config
-from . import transforms
 
 
 def import_main(name):
@@ -36,6 +37,7 @@ class AvantpyMetaFinder(MetaPathFinder):
     def find_spec(self, fullname, path, target=None):
         """finds the appropriate properties (spec) of a module, and sets
            its loader."""
+
         if not path:
             path = [os.getcwd()]
         if "." in fullname:
@@ -46,13 +48,17 @@ class AvantpyMetaFinder(MetaPathFinder):
             if os.path.isdir(os.path.join(entry, name)):
                 # this module has child modules
                 filename = os.path.join(entry, name, "__init__.py")
+                if not os.path.exists(filename):
+                    continue
                 submodule_locations = [os.path.join(entry, name)]
             else:
-                filename = os.path.join(entry, name + "." + config.FILE_EXT)
                 submodule_locations = None
-
-            if not os.path.exists(filename):
-                continue
+                for ext in config.FILE_EXT:
+                    filename = os.path.join(entry, name + "." + ext)
+                    if os.path.exists(filename):
+                        break
+                else:
+                    continue
 
             return spec_from_file_location(
                 fullname,
@@ -73,35 +79,22 @@ class AvantpyLoader(Loader):
         self.filename = filename
 
     def exec_module(self, module):
-        """import the source code, transforma it before executing it so that
+        """import the source code, transforms it before executing it so that
            it is known to Python."""
 
-        if not self.filename.endswith(config.FILE_EXT) and not self.filename.endswith(
-            "__init__.py"
-        ):
-            print("Fatal error: AvantpyLoader is asked to load a normal file.")
-            print("filename:", self.filename)
-            print("Expected extension:", config.FILE_EXT)
-            raise SystemExit
-
-        name = module.__name__
         if module.__name__ == config.MAIN_MODULE_NAME:
             module.__name__ = "__main__"
             config.MAIN_MODULE_NAME = None
 
         with open(self.filename) as f:
             source = f.read()
+        original = source
 
-        transforms.identify_requested_transformers(source)
+        extension = self.filename.split(".")[-1]
+        if extension in config.DICTIONARIES:
+            source = translate(source, config.DICTIONARIES[extension])
 
-        if config.TRANSFORMERS:
-            original = source
-            source = transforms.apply_source_transformations(source)
-
-            if config.DIFF and original != source:
-                self.write_html_diff(name, original, source)
-
-        if config.CONVERT and self.filename.endswith(config.FILE_EXT):
+        if config.CONVERT and extension in config.FILE_EXT:
             print("############### Original source: ############\n")
             print(original)
             print("\n############### Converted source: ############\n")
@@ -123,3 +116,17 @@ class AvantpyLoader(Loader):
         with open(html, "w") as the_file:
             the_file.write(diff)
         print("Diff file writen to", html)
+
+
+def translate(source, dictionary):
+    """A dictionary with a one-to-one translation of keywords is used
+    to provide the transformation.
+    """
+    toks = tokenize.generate_tokens(StringIO(source).readline)
+    result = []
+    for toktype, tokvalue, _, _, _ in toks:
+        if toktype == tokenize.NAME and tokvalue in dictionary:
+            result.append((toktype, dictionary[tokvalue]))
+        else:
+            result.append((toktype, tokvalue))
+    return tokenize.untokenize(result)

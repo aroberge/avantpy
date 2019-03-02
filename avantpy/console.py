@@ -4,7 +4,6 @@ import os
 import sys
 
 from . import config
-from . import transforms
 from . import version
 
 
@@ -49,7 +48,7 @@ class PyextensionsInteractiveConsole(code.InteractiveConsole):
             newsource = self.do_transformations(source)
         except SystemExit:
             os._exit(1)
-        except Exception as e:
+        except Exception:
             self.showsyntaxerror(filename="console")
 
         if newsource != source:
@@ -68,9 +67,6 @@ class PyextensionsInteractiveConsole(code.InteractiveConsole):
 
     def show_converted(self, source):
         """Prints the converted source"""
-        if config.AST_TRANSFORMERS and not self.ast_transformation_done:
-            print("\n### Note: AST transformation could not be done.")
-            print("transformers = ", config.AST_TRANSFORMERS, "\n")
         print(" ===")
         for line in source.split("\n"):
             print("|", line)
@@ -80,30 +76,26 @@ class PyextensionsInteractiveConsole(code.InteractiveConsole):
     def showsyntaxerror(self, filename=None):
         """Shows the converted source if different than the original
            and the syntax error"""
-        if not self.identical:
-            self.show_converted(self._source)
+        # if not self.identical:
+        #     self.show_converted(self._source)
         super().showsyntaxerror(filename=filename)
 
     def do_transformations(self, source):
-        """Performs the source and AST transformations on the current content.
+        """Performs the source transformations on the current content.
 
            Returns the transformed source.
         """
-        self.ast_transformation_done = False
-        try:
-            source = transforms.apply_source_transformations(source)
-        except Exception:
-            pass
-        try:
-            source = transforms.apply_ast_transformations(source)
-            self.ast_transformation_done = True
-        except Exception:
-            pass
-        source = self.fix_ending(source)
-
-        self._source = source  # saved in case we need it if we want to show
-        # a syntax error.See showsyntaxerror() above
         return source
+        # self.ast_transformation_done = False
+        # try:
+        #     source = transforms.apply_source_transformations(source)
+        # except Exception:
+        #     pass
+        # source = self.fix_ending(source)
+
+        # self._source = source  # saved in case we need it if we want to show
+        # # a syntax error.See showsyntaxerror() above
+        # return source
 
     def fix_ending(self, source):
         """Ensures that the last blank lines of the transformed source are
@@ -134,14 +126,9 @@ class PyextensionsInteractiveConsole(code.InteractiveConsole):
         return source
 
 
-def import_transformer(name):
-    mod = transforms.import_transformer(name)
-    return mod
-
-
 def start_console(local_vars=None, show_python=False):
     """Starts a console; modified from code.interact"""
-    console_defaults = {"import_transformer": import_transformer}
+    console_defaults = {}  # "import_transformer": import_transformer}
 
     if local_vars is None:
         local_vars = console_defaults
