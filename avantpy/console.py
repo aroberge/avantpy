@@ -3,7 +3,7 @@ import platform
 import os
 import sys
 
-from . import config
+from . import transforms
 from . import version
 
 
@@ -76,8 +76,8 @@ class PyextensionsInteractiveConsole(code.InteractiveConsole):
     def showsyntaxerror(self, filename=None):
         """Shows the converted source if different than the original
            and the syntax error"""
-        # if not self.identical:
-        #     self.show_converted(self._source)
+        if not self.identical:
+            self.show_converted(self._source)
         super().showsyntaxerror(filename=filename)
 
     def do_transformations(self, source):
@@ -85,17 +85,15 @@ class PyextensionsInteractiveConsole(code.InteractiveConsole):
 
            Returns the transformed source.
         """
-        return source
-        # self.ast_transformation_done = False
-        # try:
-        #     source = transforms.apply_source_transformations(source)
-        # except Exception:
-        #     pass
-        # source = self.fix_ending(source)
+        try:
+            source = transforms.translate(source)
+        except Exception:
+            pass
+        source = self.fix_ending(source)
 
-        # self._source = source  # saved in case we need it if we want to show
-        # # a syntax error.See showsyntaxerror() above
-        # return source
+        self._source = source  # saved in case we need it if we want to show
+        # a syntax error.See showsyntaxerror() above
+        return source
 
     def fix_ending(self, source):
         """Ensures that the last blank lines of the transformed source are
@@ -126,9 +124,19 @@ class PyextensionsInteractiveConsole(code.InteractiveConsole):
         return source
 
 
+def select_dialect(lang):
+    '''Selects the dialect to be used in the console'''
+    extension = 'py' + lang 
+    if extension in transforms.FILE_EXT:
+        transforms.CURRENT = extension
+        print("lang %s selected" % lang)
+        return
+    print("unknown dialect: ", lang)
+
+
 def start_console(local_vars=None, show_python=False):
     """Starts a console; modified from code.interact"""
-    console_defaults = {}  # "import_transformer": import_transformer}
+    console_defaults = {"select_dialect": select_dialect}
 
     if local_vars is None:
         local_vars = console_defaults

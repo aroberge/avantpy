@@ -12,7 +12,10 @@ def test_for():
         total += i
     assert total == 45
 
-if __name__ == "__main__":
+def main():
     test_bool()
     test_for()
-    print("Success.")
+    imprimir("Success.")
+
+if __name__ == "__main__":
+    main()

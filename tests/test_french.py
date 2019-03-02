@@ -1,2 +1,1 @@
-from .french_testfile import *
-
+from .french import *

@@ -4,14 +4,11 @@ import difflib
 import importlib
 import os.path
 import sys
-import tokenize
 
 from importlib.abc import Loader, MetaPathFinder
 from importlib.util import spec_from_file_location
-from io import StringIO
 
-from . import config
-
+from . import transforms
 
 def import_main(name):
     """Imports the module that is to be interpreted as the main module.
@@ -25,7 +22,7 @@ def import_main(name):
        Python identifies avantpy as the main script; we artificially
        change this so that "main_script" is properly identified as ``name``.
     """
-    config.MAIN_MODULE_NAME = name
+    transforms.MAIN_MODULE_NAME = name
     return importlib.import_module(name)
 
 
@@ -53,7 +50,7 @@ class AvantpyMetaFinder(MetaPathFinder):
                 submodule_locations = [os.path.join(entry, name)]
             else:
                 submodule_locations = None
-                for ext in config.FILE_EXT:
+                for ext in transforms.FILE_EXT:
                     filename = os.path.join(entry, name + "." + ext)
                     if os.path.exists(filename):
                         break
@@ -82,19 +79,20 @@ class AvantpyLoader(Loader):
         """import the source code, transforms it before executing it so that
            it is known to Python."""
 
-        if module.__name__ == config.MAIN_MODULE_NAME:
+        if module.__name__ == transforms.MAIN_MODULE_NAME:
             module.__name__ = "__main__"
-            config.MAIN_MODULE_NAME = None
+            transforms.MAIN_MODULE_NAME = None
 
         with open(self.filename) as f:
             source = f.read()
         original = source
 
         extension = self.filename.split(".")[-1]
-        if extension in config.DICTIONARIES:
-            source = translate(source, config.DICTIONARIES[extension])
+        if extension in transforms.DICTIONARIES:
+            transforms.CURRENT = extension
+            source = transforms.translate(source)
 
-        if config.CONVERT and extension in config.FILE_EXT:
+        if transforms.CONVERT and extension in transforms.FILE_EXT:
             print("############### Original source: ############\n")
             print(original)
             print("\n############### Converted source: ############\n")
@@ -111,22 +109,11 @@ class AvantpyLoader(Loader):
         tolines = transformed.split("\n")
 
         diff = difflib.HtmlDiff().make_file(
-            fromlines, tolines, name + "." + config.FILE_EXT, name + ".py"
+            fromlines, tolines, name + "." + transforms.FILE_EXT, name + ".py"
         )
         with open(html, "w") as the_file:
             the_file.write(diff)
         print("Diff file writen to", html)
 
 
-def translate(source, dictionary):
-    """A dictionary with a one-to-one translation of keywords is used
-    to provide the transformation.
-    """
-    toks = tokenize.generate_tokens(StringIO(source).readline)
-    result = []
-    for toktype, tokvalue, _, _, _ in toks:
-        if toktype == tokenize.NAME and tokvalue in dictionary:
-            result.append((toktype, dictionary[tokvalue]))
-        else:
-            result.append((toktype, tokvalue))
-    return tokenize.untokenize(result)
+

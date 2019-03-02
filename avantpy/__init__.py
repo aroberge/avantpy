@@ -93,22 +93,25 @@ import runpy
 import sys
 import os.path
 
-from . import config
+from . import transforms
 from . import console
 from . import import_hook
 
 start_console = console.start_console
 
-dialects = glob.glob(os.path.dirname(__file__) + "/dialects/*.py")
-for f in dialects:
-    if os.path.isfile(f) and not f.endswith("__init__.py"):
-        name = os.path.basename(f)[:-3]
-        config.FILE_EXT.append("py" + name)
-        dialect = runpy.run_path(f)
-        dialect_dict = {v: k for k, v in dialect[name].items()}
-        config.DICTIONARIES["py" + name] = dialect_dict
-        config.DICTIONARIES[name] = dialect[name]
+def init_dialects():
+    '''Find known dialects and create corresponding dictionaries'''
+    dialects = glob.glob(os.path.dirname(__file__) + "/dialects/*.py")
+    for f in dialects:
+        if os.path.isfile(f) and not f.endswith("__init__.py"):
+            name = os.path.basename(f)[:-3]
+            transforms.FILE_EXT.append("py" + name)
+            dialect = runpy.run_path(f)
+            dialect_dict = {v: k for k, v in dialect[name].items()}
+            transforms.DICTIONARIES["py" + name] = dialect_dict
+            transforms.DICTIONARIES[name] = dialect[name]
 
+init_dialects()
 
 if "-m" in sys.argv:
     console_dict = {}
@@ -150,15 +153,15 @@ if "-m" in sys.argv:
 
     if args.convert:
         show_python = True
-        config.CONVERT = True
+        transforms.CONVERT = True
     else:
         show_python = False
 
     if args.diff:
-        config.DIFF = True
+        transforms.DIFF = True
 
     if args.file_extension is not None:
-        config.FILE_EXT = args.file_extension
+        transforms.FILE_EXT = args.file_extension
 
     if args.source is not None:
         try:
