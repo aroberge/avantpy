@@ -96,7 +96,6 @@ class ExtensionLoader(Loader):
 
         if config.TRANSFORMERS:
             original = source
-            source = transforms.add_all_imports(source)
             source = transforms.apply_source_transformations(source)
 
             if config.DIFF and original != source:
@@ -109,7 +108,6 @@ class ExtensionLoader(Loader):
             print(source)
             print("=" * 50, "\n")
 
-        source = transforms.apply_ast_transformations(source)
         exec(source, vars(module))
 
     def write_html_diff(self, name, original, transformed):

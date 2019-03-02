@@ -2,12 +2,9 @@
 code transformers. It also contains a function, `transform`, which
 takes care of invoking all known transformers to convert a source code.
 """
-import ast
 import sys
 
 from . import config
-from .unparse import my_unparse
-
 
 class NullTransformer:
     """NullTransformer is a convenience class which can generate instances
@@ -38,9 +35,6 @@ def import_transformer(name):
        custom method.
     """
     if name in config.TRANSFORMERS:
-        if name not in config.AST_TRANSFORMERS:
-            if hasattr(config.TRANSFORMERS[name], "transform_ast"):
-                config.AST_TRANSFORMERS.append(name)
         return config.TRANSFORMERS[name]
 
     # We are adding a transformer built from normal/standard Python code.
@@ -51,12 +45,6 @@ def import_transformer(name):
     sys.meta_path = sys.meta_path[1:]
     try:
         config.TRANSFORMERS[name] = __import__(name)
-        # Some transformers are not allowed in the console.
-        # If an attempt is made to activate one of them in the console,
-        # we replace it by a transformer that does nothing and print a
-        # message specific to that transformer as written in its module.
-        if hasattr(config.TRANSFORMERS[name], "transform_ast"):
-            config.AST_TRANSFORMERS.append(name)
     except ImportError:
         sys.stderr.write(
             "Warning: Import Error in add_transformers: %s not found\n" % name
@@ -89,22 +77,9 @@ def identify_requested_transformers(source):
         if line.startswith("#ext "):
             if not clear:
                 config.TRANSFORMERS.clear()
-                config.AST_TRANSFORMERS.clear()
                 clear = True
             add_transformers(line)
     return None
-
-
-def add_all_imports(source):
-    """Some transformers may require that other modules be imported
-    in the source code for it to work properly.
-    """
-    for name in config.TRANSFORMERS:
-        tr_module = import_transformer(name)
-        if hasattr(tr_module, "add_import"):
-            source = tr_module.add_import() + source
-
-    return source
 
 
 def apply_source_transformations(source):
@@ -153,28 +128,3 @@ def apply_source_transformations(source):
 
     return source
 
-
-def apply_ast_transformations(source):
-    """Used to convert the source code into an AST tree and applying
-       all AST transformer specified in the source code. It returns
-       a (potentially transformed) AST tree.
-
-       "AST transformers" are modules which must contain a function
-
-           transform_ast(tree)
-
-       which return another AST tree.
-    """
-    if not config.AST_TRANSFORMERS:
-        return source
-    tree = ast.parse(source)
-    for name in config.AST_TRANSFORMERS:
-        tr_module = config.TRANSFORMERS[name]
-        try:
-            tree = tr_module.transform_ast(tree)
-        except Exception as e:
-            pass
-            # add verbose option
-            # print(f"Warning: the {name} AST transformation could not be done.")
-
-    return my_unparse(tree)
