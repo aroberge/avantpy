@@ -88,8 +88,11 @@ Python's interactive mode
 
 """
 import argparse
+import glob
+import runpy
 import sys
 import os.path
+
 
 from . import config
 from . import console
@@ -111,6 +114,14 @@ if not os.path.exists(fake_site_pkg):
         "A fake_site_pkg directory must exist for this demo to work correctly."
     )
 sys.path.insert(0, fake_site_pkg)
+
+dialects = glob.glob(os.path.dirname(__file__)+"/dialects/*.py")
+for f in dialects:
+    if os.path.isfile(f) and not f.endswith('__init__.py'):
+        print(f)
+        print(os.path.basename(f)[:-3])
+        dialect = runpy.run_path(f)
+        print(dialect['lang'])
 
 
 if "-m" in sys.argv:

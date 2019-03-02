@@ -9,7 +9,7 @@ from . import version
 
 
 # define banner and prompt here so that they can be imported in tests
-banner = "pyextensions console version {}. [Python version: {}]\n".format(
+banner = "avantpy console version {}. [Python version: {}]\n".format(
     version.__version__, platform.python_version()
 )
 prompt = "->> "
@@ -27,9 +27,6 @@ class PyextensionsInteractiveConsole(code.InteractiveConsole):
     def __init__(self, locals=None, show_python=False):
         self.show_python = show_python
         super().__init__(locals=locals)
-        source = transforms.add_all_imports("").split("\n")
-        for line in source:
-            self.push(line)
 
     def push(self, line):
         """Pushes a transformed line to the interpreter.
