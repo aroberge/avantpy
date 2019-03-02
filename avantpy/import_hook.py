@@ -15,20 +15,20 @@ from . import transforms
 def import_main(name):
     """Imports the module that is to be interpreted as the main module.
 
-       pyextensions is often invoked with a script meant to be run as the
+       avantpy is often invoked with a script meant to be run as the
        main module its source is transformed with the -s (or --source) option,
        as in::
 
-           python -m pyextensions -s name
+           python -m avantpy -s name
 
-       Python identifies pyextensions as the main script; we artificially
+       Python identifies avantpy as the main script; we artificially
        change this so that "main_script" is properly identified as ``name``.
     """
     config.MAIN_MODULE_NAME = name
     return importlib.import_module(name)
 
 
-class ExtensionMetaFinder(MetaPathFinder):
+class AvantpyMetaFinder(MetaPathFinder):
     """A custom finder to locate modules.  The main reason for this code
        is to ensure that our custom loader, which does the code transformations,
        is used."""
@@ -57,16 +57,16 @@ class ExtensionMetaFinder(MetaPathFinder):
             return spec_from_file_location(
                 fullname,
                 filename,
-                loader=ExtensionLoader(filename),
+                loader=AvantpyLoader(filename),
                 submodule_search_locations=submodule_locations,
             )
         return None  # we don't know how to import this
 
 
-sys.meta_path.insert(0, ExtensionMetaFinder())
+sys.meta_path.insert(0, AvantpyMetaFinder())
 
 
-class ExtensionLoader(Loader):
+class AvantpyLoader(Loader):
     """A custom loader which will transform the source prior to its execution"""
 
     def __init__(self, filename):
@@ -79,7 +79,7 @@ class ExtensionLoader(Loader):
         if not self.filename.endswith(config.FILE_EXT) and not self.filename.endswith(
             "__init__.py"
         ):
-            print("Fatal error: ExtensionLoader is asked to load a normal file.")
+            print("Fatal error: AvantpyLoader is asked to load a normal file.")
             print("filename:", self.filename)
             print("Expected extension:", config.FILE_EXT)
             raise SystemExit

@@ -1,5 +1,5 @@
 """
-pyextensions sets up an import hook which
+avantpy sets up an import hook which
 makes it possible to run a file that contains modified Python syntax,
 provided the relevant source transformers can be imported.
 
@@ -9,22 +9,22 @@ provided the relevant source transformers can be imported.
     still accurate. You can confirm this by running one of the following
     two alternatives::
 
-        python -m pyextensions -h
-        python -m pyextensions --help
+        python -m avantpy -h
+        python -m avantpy --help
 
 .. note::
 
-    Every relevant flag specific to pyextensions has a short form and a
+    Every relevant flag specific to avantpy has a short form and a
     long form. In what follows we always show both alternatives.
 
 Basic invocation
 ----------------
 
-The primary role of pyextensions is to run programs that have a modified syntax.
+The primary role of avantpy is to run programs that have a modified syntax.
 This is done by one of the two following alternatives::
 
-    python -m pyextensions -s name
-    python -m pyextensions --source name
+    python -m avantpy -s name
+    python -m avantpy --source name
 
 where ``name`` refers to a file named ``name.notpy``.  Any subsequent
 ``import`` statement will first look for file whose extension is ``notpy`` before
@@ -34,20 +34,20 @@ Normal Python files will bypass the transformations.
 
 A different extension that ``notpy`` can be specified as follows::
 
-    python -m pyextensions -s name -x EXTENSION
-    python -m pyextensions -s name --file_extension EXTENSION
+    python -m avantpy -s name -x EXTENSION
+    python -m avantpy -s name --file_extension EXTENSION
 
 Note that you really should not choose "py" and most definitely not "pyc"
-as the file extension for files to be processed by ``pyextensions``.
+as the file extension for files to be processed by ``avantpy``.
 
 Additional utilities
 --------------------
 
-If you want to view how pyextensions transformed an input file,
+If you want to view how avantpy transformed an input file,
 you can use the ``-d`` or ``--diff`` option::
 
-    python -m pyextensions -s name -d
-    python -m pyextensions --source name --diff
+    python -m avantpy -s name -d
+    python -m avantpy --source name --diff
 
 This will use Python's ``difflib`` module and write the result in a
 file named ``name.html`` in the current directory.
@@ -63,13 +63,13 @@ Quirky console
 .. note::
 
     Python's interpreter console (REPL) is a useful tool for quick demos
-    and code explorations. pyextensions includes a console which works
+    and code explorations. avantpy includes a console which works
     reasonably well in most situations but can fail unexpectedly.
     To understand why, please console the documentation.
 
 The simplest way to invoke pyextension's console is as follows::
 
-    python -m pyextensions
+    python -m avantpy
 
 
 
@@ -117,7 +117,7 @@ if "-m" in sys.argv:
     console_dict = {}
     parser = argparse.ArgumentParser(
         description="""
-        pyextensions sets up an import hook which
+        avantpy sets up an import hook which
         makes it possible to run a file that contains modified Python syntax
         provided the relevant source transformers can be imported.
         """

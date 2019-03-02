@@ -1,3 +1,9 @@
+# WARNING
+
+This file has been copied from another code repository which has been
+used as the starting point for the code.  Its content is currently
+completely inaccurate. It will be used as the basis for the corrected version.
+
 # Important
 
 When running all the tests using pytest, the console test must run first; 
