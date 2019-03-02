@@ -1,7 +1,5 @@
-'''    from __experimental__ import repeat_keyword
-
-introduces `repeat` as a keyword to write simple loops that repeat
-a set number of times.  That is:
+''' repeat_keyword is a transformation that introduces `repeat` as a keyword 
+to write simple loops that repeat a set number of times.  That is:
 
     repeat 3:
         a = 2
