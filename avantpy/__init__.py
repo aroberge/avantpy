@@ -119,9 +119,9 @@ dialects = glob.glob(os.path.dirname(__file__)+"/dialects/*.py")
 for f in dialects:
     if os.path.isfile(f) and not f.endswith('__init__.py'):
         print(f)
-        print(os.path.basename(f)[:-3])
+        name = os.path.basename(f)[:-3]
+        print(name)
         dialect = runpy.run_path(f)
-        print(dialect['lang'])
 
 
 if "-m" in sys.argv:
