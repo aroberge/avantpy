@@ -1,26 +1,46 @@
 # Roadmap
 
-- [x] Copy relevant code and tests from experimental repo
+## Documentation
 
-- [x] Make dialect selection via extension based on two-letter code
+- [ ] Create simple GitHub Pages site
+  - [ ] Add section about invocation
+  - [ ] Explain why **repeat** and other loops
+  - [ ] Explain how to use pytest
+    - [ ] Explain how to create new tests
 
-  - [ ] Add fake uppercase dialect
-  - [x] Detect existing dialects automatically
+## Contributors
 
-- Add loops
+- [ ] Add code of conduct
+- [ ] Add templates for various types of issues
+  - [ ] Bug report
+  - [ ] Feature request or contributions
+  - [ ] Others
+- [ ] Add info about contributors and refer to documentation
 
-  - [x] repeat forever
-  - [x] repeat while condition
-  - [x] repeat until condition
-  - [x] repeat n
+## Developers tools
 
-- [ ] Implement simple error analysis and feedback
+- [ ] Command line option to convert from Python to dialect
+  - This could be useful to quickly create test suites in a new dialect.
+- [ ] Command line option to convert from dialect to Python
+- [ ] Command line option to show code in dialect and Python side by side, highlighting differences
+- [ ] GUI for above
 
-- [ ] Implement diff mode showing corresponding Python code
+## Syntax analysis and feedback
 
-- [ ] Implement conversion tool / comparison
-- [ ] Implement reverse conversion tool
-- [x] select dialect in console
-- [ ] show translation in console
+- [ ] Add hook to replace standard Python tracebacks
+  - [ ] Implement one or two simple error analysis
+  - [ ] Add more in future phase
+- [ ] Use gettext to provide translations
 
-- [ ] Add GUI for various tools, such as file conversion, diff, etc.
+## Testing
+
+- [ ] Add tests for console
+- [ ] Create comprehensive test for given dialect
+- [ ] Add UPPERCASE English dialect
+
+## Beyond a simple implementation
+
+- [ ] Can it be integrated with Idle ?
+- [ ] Can a tool be written to easily enable syntax highlighting for a given dialect in some text editor?
+- [ ] Can it be integrated with Mu?
+- [ ] Can it be integrated with Thonny?
