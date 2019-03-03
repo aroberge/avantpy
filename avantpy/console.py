@@ -124,19 +124,12 @@ class PyextensionsInteractiveConsole(code.InteractiveConsole):
         return source
 
 
-def select_dialect(lang):
-    '''Selects the dialect to be used in the console'''
-    extension = 'py' + lang 
-    if extension in transforms.FILE_EXT:
-        transforms.CURRENT = extension
-        print("lang %s selected" % lang)
-        return
-    print("unknown dialect: ", lang)
-
-
 def start_console(local_vars=None, show_python=False):
     """Starts a console; modified from code.interact"""
-    console_defaults = {"select_dialect": select_dialect}
+    console_defaults = {
+        "set_lang": transforms.set_lang,
+        "set_debug": transforms.set_debug,
+    }
 
     if local_vars is None:
         local_vars = console_defaults
