@@ -40,8 +40,7 @@ editor, or run with a standard Python interpreter from the command line.
 - AvantPy also includes a tool to convert programs written in a given dialect into standard Python, showing the differences between the two, thus helping motivated users to make the transition to using only standard Python.
 - AvantPy is supported by a website, or perhaps by local documentation files, which includes very basic explanations of
 programming concepts for each dialect. These explanations can be linked to by tracebacks.
-
-In addition, AvantPy **could** possibly include an REPL designed to make use of the above, something which I have also explored. However, I do not see this as important as the other aspects, and do not believe that it should be worked on until all of the other parts have been properly implemented.
+- AvantPy also includes a custom REPL.
 
 ## What is meant by training wheels
 
