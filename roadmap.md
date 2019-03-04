@@ -5,7 +5,12 @@
 - [ ] Create simple GitHub Pages site
   - [ ] Get inspiration from what I did for pyextension.
   - [ ] Add section about invocation
-  - [ ] Explain why **repeat** and other loops
+  - [ ] Explain various choices for addition to syntax
+    - [ ] Explain why **repeat** and other loops
+    - [ ] Explain why `function` instead of `lambda`
+    - [ ] If replacing `if __name__ == "__main__"`, explain
+    - [ ] Explain why not `else` in `for` and `while` loops
+      - Actually, it might be possible to replace this by keeping track of loop or if indentation level
   - [ ] Explain how to use pytest
     - [ ] Explain how to create new tests
   - [ ] Explain how to run a single test without using pytest
@@ -45,6 +50,7 @@
 - [ ] Consider using `colorama` as optional dependencies for the console
 - [ ] Add option to restrict processing to single dialect
   - In this case, only load single dialect file; if not found, issue error message and exit.
+- [ ] Think of replacing `__name__ is "__main__"` by a single keyword, perhaps `NotImported`.
 
 ## Integrating with other programs
 

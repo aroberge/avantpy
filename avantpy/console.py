@@ -3,7 +3,7 @@ import platform
 import os
 import sys
 
-from . import transforms
+from . import conversion
 from . import version
 
 
@@ -14,7 +14,7 @@ banner = "avantpy console version {}. [Python version: {}]\n".format(
 prompt = "->> "
 
 
-class PyextensionsInteractiveConsole(code.InteractiveConsole):
+class AvantPyInteractiveConsole(code.InteractiveConsole):
     """A Python console that tries to emulate the normal Python interpreter
        except that it support experimental code transformations.
        It inherits from cPython's ``code.InteractiveConsole``.
@@ -40,7 +40,7 @@ class PyextensionsInteractiveConsole(code.InteractiveConsole):
         value is 1 if more input is required, 0 if the line was dealt
         with in some way (this is the same as runsource()).
         """
-        assert not line.endswith("\n")
+        assert not line.endswith("\n"), "Forbidden trailing newline in console's push method."
         self.buffer.append(line)
         source = "\n".join(self.buffer)
         self.identical = True
@@ -86,7 +86,7 @@ class PyextensionsInteractiveConsole(code.InteractiveConsole):
            Returns the transformed source.
         """
         try:
-            source = transforms.translate(source)
+            source = conversion.to_python(source)
         except Exception:
             pass
         source = self.fix_ending(source)
@@ -127,8 +127,8 @@ class PyextensionsInteractiveConsole(code.InteractiveConsole):
 def start_console(local_vars=None, show_python=False):
     """Starts a console; modified from code.interact"""
     console_defaults = {
-        "set_lang": transforms.set_lang,
-        "set_debug": transforms.set_debug,
+        "set_lang": conversion.set_lang,
+        "set_debug": conversion.set_debug,
     }
 
     if local_vars is None:
@@ -137,6 +137,6 @@ def start_console(local_vars=None, show_python=False):
         local_vars.update(console_defaults)
 
     sys.ps1 = prompt
-    console = PyextensionsInteractiveConsole(locals=local_vars, show_python=show_python)
+    console = AvantPyInteractiveConsole(locals=local_vars, show_python=show_python)
     console.locals.update(console_defaults)
     console.interact(banner=banner)

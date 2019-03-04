@@ -24,7 +24,7 @@ en = {
     'def': 'def',
     'del': 'del',
     'elif': 'elif',
-    'else': 'else',
+    'else': ['else', 'nobreak'],  # Special case
     'except': 'except',
     'finally': 'finally',
     'for': 'for',
@@ -34,7 +34,7 @@ en = {
     'import': 'import',
     'in': 'in',
     'is': 'is',
-    'lambda': 'function',  ## Note this example 
+    'lambda': 'function',  # 
     'nonlocal': 'nonlocal',
     'not': 'not',
     'or': 'or',

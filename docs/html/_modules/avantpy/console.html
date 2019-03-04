@@ -1,0 +1,247 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>avantpy.console &#8212; AvantPy  documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for avantpy.console</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">code</span>
+<span class="kn">import</span> <span class="nn">platform</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">version</span>
+
+
+<span class="c1"># define banner and prompt here so that they can be imported in tests</span>
+<span class="n">banner</span> <span class="o">=</span> <span class="s2">&quot;avantpy console version </span><span class="si">{}</span><span class="s2">. [Python version: </span><span class="si">{}</span><span class="s2">]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="n">version</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span> <span class="n">platform</span><span class="o">.</span><span class="n">python_version</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot;-&gt;&gt; &quot;</span>
+
+
+<div class="viewcode-block" id="AvantPyInteractiveConsole"><a class="viewcode-back" href="../../modules.html#avantpy.console.AvantPyInteractiveConsole">[docs]</a><span class="k">class</span> <span class="nc">AvantPyInteractiveConsole</span><span class="p">(</span><span class="n">code</span><span class="o">.</span><span class="n">InteractiveConsole</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A Python console that tries to emulate the normal Python interpreter</span>
+<span class="sd">       except that it support experimental code transformations.</span>
+<span class="sd">       It inherits from cPython&#39;s ``code.InteractiveConsole``.</span>
+
+<span class="sd">       Like the normal Python&#39;s interactive console, it attempts to evaluate</span>
+<span class="sd">       code entered one line at a time by a user.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">locals</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show_python</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_python</span> <span class="o">=</span> <span class="n">show_python</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="nb">locals</span><span class="o">=</span><span class="nb">locals</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AvantPyInteractiveConsole.push"><a class="viewcode-back" href="../../modules.html#avantpy.console.AvantPyInteractiveConsole.push">[docs]</a>    <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Pushes a transformed line to the interpreter.</span>
+
+<span class="sd">        The line should not have a trailing newline; it may have</span>
+<span class="sd">        internal newlines.  The line is transformed and appended to a buffer.</span>
+<span class="sd">        The interpreter&#39;s runsource() method is called with the</span>
+<span class="sd">        concatenated contents of the buffer as source.  If this</span>
+<span class="sd">        indicates that the command was executed or invalid, the buffer</span>
+<span class="sd">        is reset; otherwise, the command is incomplete, and the buffer</span>
+<span class="sd">        is left as it was after the line was appended.  The return</span>
+<span class="sd">        value is 1 if more input is required, 0 if the line was dealt</span>
+<span class="sd">        with in some way (this is the same as runsource()).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">line</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">identical</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">newsource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_transformations</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">SystemExit</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">_exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">showsyntaxerror</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;console&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">newsource</span> <span class="o">!=</span> <span class="n">source</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">identical</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">more</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">runsource</span><span class="p">(</span><span class="n">newsource</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">SystemExit</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">_exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">more</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resetbuffer</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_python</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">identical</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">show_converted</span><span class="p">(</span><span class="n">newsource</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">more</span></div>
+
+<div class="viewcode-block" id="AvantPyInteractiveConsole.show_converted"><a class="viewcode-back" href="../../modules.html#avantpy.console.AvantPyInteractiveConsole.show_converted">[docs]</a>    <span class="k">def</span> <span class="nf">show_converted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Prints the converted source&quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; ===&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">source</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;|&quot;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; ===&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">identical</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># prevent from showing again</span></div>
+
+<div class="viewcode-block" id="AvantPyInteractiveConsole.showsyntaxerror"><a class="viewcode-back" href="../../modules.html#avantpy.console.AvantPyInteractiveConsole.showsyntaxerror">[docs]</a>    <span class="k">def</span> <span class="nf">showsyntaxerror</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Shows the converted source if different than the original</span>
+<span class="sd">           and the syntax error&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">identical</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_converted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_source</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">showsyntaxerror</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AvantPyInteractiveConsole.do_transformations"><a class="viewcode-back" href="../../modules.html#avantpy.console.AvantPyInteractiveConsole.do_transformations">[docs]</a>    <span class="k">def</span> <span class="nf">do_transformations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Performs the source transformations on the current content.</span>
+
+<span class="sd">           Returns the transformed source.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">source</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fix_ending</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_source</span> <span class="o">=</span> <span class="n">source</span>  <span class="c1"># saved in case we need it if we want to show</span>
+        <span class="c1"># a syntax error.See showsyntaxerror() above</span>
+        <span class="k">return</span> <span class="n">source</span></div>
+
+<div class="viewcode-block" id="AvantPyInteractiveConsole.fix_ending"><a class="viewcode-back" href="../../modules.html#avantpy.console.AvantPyInteractiveConsole.fix_ending">[docs]</a>    <span class="k">def</span> <span class="nf">fix_ending</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Ensures that the last blank lines of the transformed source are</span>
+<span class="sd">        consistent with what was provided by the user.&quot;&quot;&quot;</span>
+
+        <span class="c1"># Some transformations may add or strip an empty line meant to</span>
+        <span class="c1"># end a block, or strip non-empty lines (but with spaces) at the end</span>
+        <span class="c1"># mean to continue a block, etc.</span>
+        <span class="c1"># We ensure that the transformed source has the same combination</span>
+        <span class="c1"># of white spaces and \n characters at the end as the original</span>
+
+        <span class="n">last_lines</span> <span class="o">=</span> <span class="nb">reversed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">)</span>
+        <span class="n">blank_lines</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">last_lines</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+                <span class="n">blank_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="n">blank_lines</span> <span class="o">=</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">blank_lines</span><span class="p">)</span>
+
+        <span class="n">source</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">source</span><span class="p">:</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">blank_lines</span><span class="p">)</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">source</span></div></div>
+
+
+<div class="viewcode-block" id="start_console"><a class="viewcode-back" href="../../modules.html#avantpy.console.start_console">[docs]</a><span class="k">def</span> <span class="nf">start_console</span><span class="p">(</span><span class="n">local_vars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show_python</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Starts a console; modified from code.interact&quot;&quot;&quot;</span>
+    <span class="n">console_defaults</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;set_lang&quot;</span><span class="p">:</span> <span class="n">transforms</span><span class="o">.</span><span class="n">set_lang</span><span class="p">,</span>
+        <span class="s2">&quot;set_debug&quot;</span><span class="p">:</span> <span class="n">transforms</span><span class="o">.</span><span class="n">set_debug</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">local_vars</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">local_vars</span> <span class="o">=</span> <span class="n">console_defaults</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">local_vars</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">console_defaults</span><span class="p">)</span>
+
+    <span class="n">sys</span><span class="o">.</span><span class="n">ps1</span> <span class="o">=</span> <span class="n">prompt</span>
+    <span class="n">console</span> <span class="o">=</span> <span class="n">AvantPyInteractiveConsole</span><span class="p">(</span><span class="nb">locals</span><span class="o">=</span><span class="n">local_vars</span><span class="p">,</span> <span class="n">show_python</span><span class="o">=</span><span class="n">show_python</span><span class="p">)</span>
+    <span class="n">console</span><span class="o">.</span><span class="n">locals</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">console_defaults</span><span class="p">)</span>
+    <span class="n">console</span><span class="o">.</span><span class="n">interact</span><span class="p">(</span><span class="n">banner</span><span class="o">=</span><span class="n">banner</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">AvantPy</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html"> Contents of various modules</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, André Roberge.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

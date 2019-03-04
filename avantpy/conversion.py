@@ -1,4 +1,4 @@
-"""transforms.py
+"""conversion.py
 
 Keeps track of available dialects, and perform require code transformations.
 
@@ -25,7 +25,13 @@ def init_dialects():
             name = os.path.basename(f)[:-3]
             FILE_EXT.append("py" + name)
             dialect = runpy.run_path(f)
-            dialect_dict = {v: k for k, v in dialect[name].items()}
+            dialect_dict = {}
+            for k, v in dialect[name].items():
+                if isinstance(v, str):
+                    dialect_dict[v] = k 
+                else:
+                    for val in v:
+                        dialect_dict[val] = k
             DICTIONARIES["py" + name] = dialect_dict
             DICTIONARIES[name] = dialect[name]
 
@@ -54,19 +60,50 @@ def set_lang(lang):
     print("unknown dialect: ", lang)
 
 
-def translate(source):
-    """A dictionary with a one-to-one translation of keywords is used
+# def translate_nobreak(source):
+#     py_to_lang = DICTIONARIES[CURRENT[2:]]
+#     lines = source.split("\n")
+#     result = []
+#     # nobreak keyword can be either followed by a space or colon
+#     no_break = (py_to_lang['else'][1] + ' ', py_to_lang['else'][1] + ':')
+#     blocks_with_else = ['if', 'for', 'while', 
+#                          py_to_lang['if'], py_to_lang['for'], py_to_lang['while']]
+#     indentations = {}
+#     for line in lines:
+#         stripped = line.lstrip()
+#         first_word = stripped.split(" ")[0]
+#         if first_word in blocks_with_else:
+#             nb_spaces = len(line) - len(stripped)
+#             indentations[nb_spaces] = first_word
+#         if stripped.startswith(no_break):
+#             nb_spaces = len(line) - len(stripped)
+#             if indentations[nb_spaces] in ['for', 'while', py_to_lang['for'], py_to_lang['while']]:
+#                 line.replace(py_to_lang['else'][1], 'else', 1)
+#         result.append(line)
+#     return "\n".join(result)
+
+
+def to_python(source):
+    """A conversion with a one-to-one translation of keywords is used
     to provide the transformation.
     """
     if CURRENT not in DICTIONARIES:
         return source
-    dictionary = DICTIONARIES[CURRENT]
 
-    reverse_dict = DICTIONARIES[CURRENT[2:]]
-    repeat_keyword = reverse_dict["repeat"]
-    while_keyword = reverse_dict["while"]
-    until_keyword = reverse_dict["until"]
-    forever_keyword = reverse_dict["forever"]
+    #source = translate_nobreak(source)
+    lang_to_py = DICTIONARIES[CURRENT]
+    py_to_lang = DICTIONARIES[CURRENT[2:]]
+
+    repeat_keyword = py_to_lang["repeat"]
+    while_keyword = py_to_lang["while"]
+    until_keyword = py_to_lang["until"]
+    forever_keyword = py_to_lang["forever"]
+    nobreak = py_to_lang['else'][1]
+
+    loops_with_else = ['for', 'while', py_to_lang['for'], while_keyword]
+    blocks_with_else = ['if', py_to_lang['if']]
+    blocks_with_else.extend(loops_with_else)
+    indentations = {}
 
     nb = source.count(repeat_keyword)
     if nb != 0:
@@ -80,11 +117,16 @@ def translate(source):
     prev_col = 0
     repeat_loop = False
     repeat_n = False
+    begin_new_line = True
 
     for tok_type, tok_str, start, end, _ in toks:
+        if not tok_str.replace(' ', ''):  # remove leading spaces to prevent problems with handling nobreak
+            continue
         start_line, start_col = start
         end_line, end_col = end
-        # ensure spacing of original file is preserved
+        begin_new_line = (start_line != prev_lineno)
+
+        # ensure spacing of original file is preserved, including space between tokens.
         if not repeat_loop:
             if start_line > prev_lineno:
                 prev_col = 0
@@ -93,6 +135,12 @@ def translate(source):
         prev_col = end_col
         prev_lineno = end_line
         # start substitutions
+
+        if begin_new_line:
+            print(start, tok_str)
+        if begin_new_line and tok_str in blocks_with_else:
+            indentations[start_col] = tok_str
+            print("   Indentations = ", indentations)
 
         if tok_type == tokenize.NAME and tok_str == repeat_keyword:
             repeat_loop = True
@@ -112,11 +160,22 @@ def translate(source):
         elif repeat_n and tok_str ==':':
             result.append("):")
             repeat_n = False
-        elif tok_type == tokenize.NAME and tok_str in dictionary:
-            result.append(dictionary[tok_str])
+        elif tok_type == tokenize.NAME and tok_str in lang_to_py:
+            if tok_str == nobreak:
+                print("tok_str == nobreak")
+                print("current block:", indentations[start_col])
+                if begin_new_line and start_col in indentations and indentations[start_col] in loops_with_else:
+                    print("appending else")
+                    result.append('else')
+                else:
+                    result.append(tok_str)  # do not replace nobreak in if/nobreak clauses
+                    print("appending nobreak: ", tok_str)
+            else:
+                result.append(lang_to_py[tok_str])
         else:
             result.append(tok_str)
     source = "".join(result)
+    print(source)
     if DEBUG:
         print(source)
     return source
@@ -124,9 +183,10 @@ def translate(source):
 ALL_NAMES = []
 
 def get_unique_variable_names(source, nb):
-    '''returns a list of possible variables names that
-       are not found in the original text.'''
-    base_name = 'COUNT_'
+    '''Returns a list of possible variables names that
+       are not found in the original source and have not been used
+       anywhere.'''
+    base_name = '_COUNT_'
     var_names = []
     i = 0
     j = 0

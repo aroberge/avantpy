@@ -15,7 +15,7 @@ es = {
     'def': 'def',
     'del': 'eliminar',
     'elif': 'osi',
-    'else': 'sino',
+    'else': ['sino', 'nointerrumpir'],
     'except': 'excepto',
     'finally': 'finalmente',
     'for': 'para',

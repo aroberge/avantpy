@@ -15,7 +15,7 @@ fr = {
     'def': 'définir',
     'del': 'supprime',
     'elif': 'sinonsi',
-    'else': 'sinon',
+    'else': ['sinon', 'pasinterrompu'],
     'except': 'exception',
     'finally': 'finalement',
     'for': 'pour',

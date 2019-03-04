@@ -8,3 +8,10 @@ avantpy
 
 .. automodule:: avantpy
    :members:
+
+
+console
+-------
+
+.. automodule:: avantpy.console
+   :members:

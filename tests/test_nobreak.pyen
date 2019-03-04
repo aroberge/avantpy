@@ -1,0 +1,36 @@
+'''Testing nobreak keyword.
+
+'''
+
+def test_for_nobreak():
+    x = 0
+    for i in range(3):
+        x += 1
+    nobreak:
+        x = 0
+    assert x == 0
+
+def test_while_nobreak():
+    x = 0
+    while True:
+        x = 2
+        break
+    nobreak:
+        x = 0
+    assert x == 2
+
+# The following would fail with a SyntaxError
+#
+# A different kind of test should be written for this.
+#
+# def test_if_nobreak():
+#     if True:
+#         pass
+#     nobreak:
+#         pass
+
+if __name__ == '__main__':
+    test_for_nobreak()
+    test_while_nobreak()
+    print("Success.")
+

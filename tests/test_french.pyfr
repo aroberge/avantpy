@@ -12,6 +12,20 @@ def test_for():
         total += i
     assert total == 45
 
+def test_si_else():
+    si Vrai:
+        x = 0
+    else:
+        x = 1
+    assert x == 0
+
+def test_if_sinon():
+    if True:
+        x = 0
+    sinon:
+        x = 1
+    assert x == 0
+
 def main():
     test_bool()
     test_for()

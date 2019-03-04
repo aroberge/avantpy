@@ -2,15 +2,16 @@
 from setuptools import setup, find_packages
 from distutils.util import convert_path
 
-## converting readme for pypi
-from pypandoc import convert_file
-def convert_md(filename):
-    return convert_file(filename, 'rst')
+with open('README.md') as f:
+    long_description_ = f.read()
+
+with open("avantpy/version.py") as f:
+    version_ = f.read().split("=")[-1].strip()[1:-1]
 
 setup(name='avantpy',
-    version='0.0.2',
+    version=version_,
     description="Python with training wheels: executable pseudocode in any language.",
-    long_description = convert_md('README.md'),
+    long_description = long_description_,
     classifiers=[
         'Development Status :: 1 - Planning',
         'License :: OSI Approved :: MIT License',

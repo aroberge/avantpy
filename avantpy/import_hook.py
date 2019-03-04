@@ -8,7 +8,7 @@ import sys
 from importlib.abc import Loader, MetaPathFinder
 from importlib.util import spec_from_file_location
 
-from . import transforms
+from . import conversion
 
 
 def import_main(name):
@@ -23,7 +23,7 @@ def import_main(name):
        Python identifies avantpy as the main script; we artificially
        change this so that "main_script" is properly identified as ``name``.
     """
-    transforms.MAIN_MODULE_NAME = name
+    conversion.MAIN_MODULE_NAME = name
     return importlib.import_module(name)
 
 
@@ -43,7 +43,7 @@ class AvantpyMetaFinder(MetaPathFinder):
         else:
             name = fullname
         for entry in path:
-            for ext in transforms.FILE_EXT:
+            for ext in conversion.FILE_EXT:
                 filename = os.path.join(entry, name + "." + ext)
                 if os.path.exists(filename):
                     break
@@ -69,22 +69,22 @@ class AvantpyLoader(Loader):
         self.filename = filename
 
     def exec_module(self, module):
-        """import the source code, transforms it before executing it."""
+        """import the source code, conversion it before executing it."""
 
-        if module.__name__ == transforms.MAIN_MODULE_NAME:
+        if module.__name__ == conversion.MAIN_MODULE_NAME:
             module.__name__ = "__main__"
-            transforms.MAIN_MODULE_NAME = None
+            conversion.MAIN_MODULE_NAME = None
 
         with open(self.filename) as f:
             source = f.read()
         original = source
 
         extension = self.filename.split(".")[-1]
-        if extension in transforms.DICTIONARIES:
-            transforms.CURRENT = extension
-            source = transforms.translate(source)
+        if extension in conversion.DICTIONARIES:
+            conversion.CURRENT = extension
+            source = conversion.to_python(source)
 
-        if transforms.CONVERT:
+        if conversion.CONVERT:
             print("############### Original source: ############\n")
             print(original)
             print("\n############### Converted source: ############\n")
@@ -101,7 +101,7 @@ class AvantpyLoader(Loader):
         tolines = transformed.split("\n")
 
         diff = difflib.HtmlDiff().make_file(
-            fromlines, tolines, name + "." + transforms.FILE_EXT, name + ".py"
+            fromlines, tolines, name + "." + conversion.FILE_EXT, name + ".py"
         )
         with open(html, "w") as the_file:
             the_file.write(diff)

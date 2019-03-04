@@ -16,6 +16,7 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to AvantPy’s documentation!" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -80,6 +81,13 @@ you can use the <code class="docutils literal notranslate"><span class="pre">-d<
 </div>
 <p>This will use Python’s <code class="docutils literal notranslate"><span class="pre">difflib</span></code> module and write the result in a
 file named <code class="docutils literal notranslate"><span class="pre">name.html</span></code> in the current directory.</p>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<ul class="last simple">
+<li>document <code class="docutils literal notranslate"><span class="pre">-c</span></code> (<code class="docutils literal notranslate"><span class="pre">--convert</span></code>)</li>
+<li>Implement <code class="docutils literal notranslate"><span class="pre">-o</span> <span class="pre">[filename]</span></code> (<code class="docutils literal notranslate"><span class="pre">--output</span></code>) and document</li>
+</ul>
+</div>
 </div>
 <div class="section" id="quirky-console">
 <h3>Quirky console<a class="headerlink" href="#quirky-console" title="Permalink to this headline">¶</a></h3>
@@ -94,10 +102,83 @@ unexpected behaviour.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">avantpy</span>
 </pre></div>
 </div>
+<div class="admonition-todo admonition" id="index-1">
+<p class="first admonition-title">Todo</p>
+<ul class="last simple">
+<li>document <code class="docutils literal notranslate"><span class="pre">-c</span></code> when using the console</li>
+<li>document <code class="docutils literal notranslate"><span class="pre">-d</span></code> when using the console</li>
+<li>document <code class="docutils literal notranslate"><span class="pre">-t</span></code> when using the console</li>
+</ul>
+</div>
 </div>
 <div class="section" id="python-s-interactive-mode">
 <h3>Python’s interactive mode<a class="headerlink" href="#python-s-interactive-mode" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-todo admonition" id="index-2">
+<p class="first admonition-title">Todo</p>
+<p class="last">Document Python’s <code class="docutils literal notranslate"><span class="pre">-i</span></code> flag (interactive mode)</p>
 </div>
+</div>
+</div>
+<div class="section" id="module-avantpy.console">
+<span id="console"></span><h2>console<a class="headerlink" href="#module-avantpy.console" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="avantpy.console.AvantPyInteractiveConsole">
+<em class="property">class </em><code class="descclassname">avantpy.console.</code><code class="descname">AvantPyInteractiveConsole</code><span class="sig-paren">(</span><em>locals=None</em>, <em>show_python=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Python console that tries to emulate the normal Python interpreter
+except that it support experimental code transformations.
+It inherits from cPython’s <code class="docutils literal notranslate"><span class="pre">code.InteractiveConsole</span></code>.</p>
+<p>Like the normal Python’s interactive console, it attempts to evaluate
+code entered one line at a time by a user.</p>
+<dl class="method">
+<dt id="avantpy.console.AvantPyInteractiveConsole.do_transformations">
+<code class="descname">do_transformations</code><span class="sig-paren">(</span><em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.do_transformations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.do_transformations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs the source transformations on the current content.</p>
+<p>Returns the transformed source.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.console.AvantPyInteractiveConsole.fix_ending">
+<code class="descname">fix_ending</code><span class="sig-paren">(</span><em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.fix_ending"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.fix_ending" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ensures that the last blank lines of the transformed source are
+consistent with what was provided by the user.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.console.AvantPyInteractiveConsole.push">
+<code class="descname">push</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.push"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.push" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pushes a transformed line to the interpreter.</p>
+<p>The line should not have a trailing newline; it may have
+internal newlines.  The line is transformed and appended to a buffer.
+The interpreter’s runsource() method is called with the
+concatenated contents of the buffer as source.  If this
+indicates that the command was executed or invalid, the buffer
+is reset; otherwise, the command is incomplete, and the buffer
+is left as it was after the line was appended.  The return
+value is 1 if more input is required, 0 if the line was dealt
+with in some way (this is the same as runsource()).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.console.AvantPyInteractiveConsole.show_converted">
+<code class="descname">show_converted</code><span class="sig-paren">(</span><em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.show_converted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.show_converted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints the converted source</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.console.AvantPyInteractiveConsole.showsyntaxerror">
+<code class="descname">showsyntaxerror</code><span class="sig-paren">(</span><em>filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.showsyntaxerror"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.showsyntaxerror" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows the converted source if different than the original
+and the syntax error</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="avantpy.console.start_console">
+<code class="descclassname">avantpy.console.</code><code class="descname">start_console</code><span class="sig-paren">(</span><em>local_vars=None</em>, <em>show_python=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#start_console"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.start_console" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts a console; modified from code.interact</p>
+</dd></dl>
+
 </div>
 </div>
 
@@ -118,11 +199,20 @@ unexpected behaviour.</p>
 
 
 <h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Contents of various modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-avantpy">avantpy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-avantpy.console">console</a></li>
+</ul>
+</li>
+</ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to AvantPy’s documentation!</a></li>
   </ul></li>
 </ul>
 </div>
