@@ -10,6 +10,7 @@ from importlib.util import spec_from_file_location
 
 from . import transforms
 
+
 def import_main(name):
     """Imports the module that is to be interpreted as the main module.
 
@@ -32,7 +33,7 @@ class AvantpyMetaFinder(MetaPathFinder):
        is used."""
 
     def find_spec(self, fullname, path, target=None):
-        """finds the appropriate properties (spec) of a module, and sets
+        """Finds the appropriate properties (spec) of a module, and sets
            its loader."""
 
         if not path:
@@ -42,28 +43,20 @@ class AvantpyMetaFinder(MetaPathFinder):
         else:
             name = fullname
         for entry in path:
-            if os.path.isdir(os.path.join(entry, name)):
-                # this module has child modules
-                filename = os.path.join(entry, name, "__init__.py")
-                if not os.path.exists(filename):
-                    continue
-                submodule_locations = [os.path.join(entry, name)]
+            for ext in transforms.FILE_EXT:
+                filename = os.path.join(entry, name + "." + ext)
+                if os.path.exists(filename):
+                    break
             else:
-                submodule_locations = None
-                for ext in transforms.FILE_EXT:
-                    filename = os.path.join(entry, name + "." + ext)
-                    if os.path.exists(filename):
-                        break
-                else:
-                    continue
+                continue
 
             return spec_from_file_location(
                 fullname,
                 filename,
                 loader=AvantpyLoader(filename),
-                submodule_search_locations=submodule_locations,
+                submodule_search_locations=None,
             )
-        return None  # we don't know how to import this
+        return None  # Not an AvantPy file
 
 
 sys.meta_path.insert(0, AvantpyMetaFinder())
@@ -76,8 +69,7 @@ class AvantpyLoader(Loader):
         self.filename = filename
 
     def exec_module(self, module):
-        """import the source code, transforms it before executing it so that
-           it is known to Python."""
+        """import the source code, transforms it before executing it."""
 
         if module.__name__ == transforms.MAIN_MODULE_NAME:
             module.__name__ = "__main__"
@@ -92,7 +84,7 @@ class AvantpyLoader(Loader):
             transforms.CURRENT = extension
             source = transforms.translate(source)
 
-        if transforms.CONVERT and extension in transforms.FILE_EXT:
+        if transforms.CONVERT:
             print("############### Original source: ############\n")
             print(original)
             print("\n############### Converted source: ############\n")
@@ -114,6 +106,4 @@ class AvantpyLoader(Loader):
         with open(html, "w") as the_file:
             the_file.write(diff)
         print("Diff file writen to", html)
-
-
 

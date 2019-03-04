@@ -3,6 +3,9 @@
 Keeps track of available dialects, and perform require code transformations.
 
 """
+import glob
+import os.path
+import runpy
 import tokenize
 from io import StringIO
 
@@ -13,6 +16,21 @@ DIFF = False
 DICTIONARIES = {}
 CURRENT = None
 DEBUG = False
+
+def init_dialects():
+    '''Find known dialects and create corresponding dictionaries'''
+    dialects = glob.glob(os.path.dirname(__file__) + "/dialects/*.py")
+    for f in dialects:
+        if os.path.isfile(f) and not f.endswith("__init__.py"):
+            name = os.path.basename(f)[:-3]
+            FILE_EXT.append("py" + name)
+            dialect = runpy.run_path(f)
+            dialect_dict = {v: k for k, v in dialect[name].items()}
+            DICTIONARIES["py" + name] = dialect_dict
+            DICTIONARIES[name] = dialect[name]
+
+init_dialects()
+
 
 
 def set_debug(val):

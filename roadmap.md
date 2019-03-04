@@ -3,10 +3,12 @@
 ## Documentation
 
 - [ ] Create simple GitHub Pages site
+  - [ ] Get inspiration from what I did for pyextension.
   - [ ] Add section about invocation
   - [ ] Explain why **repeat** and other loops
   - [ ] Explain how to use pytest
     - [ ] Explain how to create new tests
+  - [ ] Explain how to run a single test without using pytest
 
 ## Contributors
 
@@ -38,9 +40,24 @@
 - [ ] Create comprehensive test for given dialect
 - [ ] Add UPPERCASE English dialect
 
-## Beyond a simple implementation
+## Enhancements
+
+- [ ] Consider using `colorama` as optional dependencies for the console
+- [ ] Add option to restrict processing to single dialect
+  - In this case, only load single dialect file; if not found, issue error message and exit.
+
+## Integrating with other programs
+
+While AvantPy works as a standalone application, it should be possible
+to integrate it with other programs.  
 
 - [ ] Can it be integrated with Idle ?
 - [ ] Can a tool be written to easily enable syntax highlighting for a given dialect in some text editor?
+  - It should be possible to take an existing file for Python, process it to add the keywords from a `xx.py` dialect file, and save it as a new syntax file. Ideally this process should be documented with a complete example showing
+      1. how to find the existing Python file
+      2. how to use the tool to create the new file (say pyfr)
+      3. how to add the newly created file so that it is recognized by the editor.
+
+    I would like to know how to do this for SublimeText and Visual Studio Code..
 - [ ] Can it be integrated with Mu?
 - [ ] Can it be integrated with Thonny?

@@ -1,5 +1,5 @@
 """
-avantpy sets up an import hook which
+AvantPy sets up an import hook which
 makes it possible to run a file that contains modified Python syntax,
 provided the relevant source transformers can be imported.
 
@@ -23,22 +23,15 @@ Basic invocation
 The primary role of avantpy is to run programs that have a modified syntax.
 This is done by one of the two following alternatives::
 
-    python -m avantpy -s name
-    python -m avantpy --source name
+    python -m avantpy -s path.to.file
+    python -m avantpy --source path.to.file
 
-where ``name`` refers to a file named ``name.notpy``.  Any subsequent
-``import`` statement will first look for file whose extension is ``notpy`` before
-looking for normal ``py`` or ``pyc`` files. Any file with the ``notpy`` extension
-that is imported will also be processed by the relevant source transformers.
-Normal Python files will bypass the transformations.
+Note: do not include the extension in path.to.file.
 
 A different extension that ``notpy`` can be specified as follows::
 
     python -m avantpy -s name -x EXTENSION
     python -m avantpy -s name --file_extension EXTENSION
-
-Note that you really should not choose "py" and most definitely not "pyc"
-as the file extension for files to be processed by ``avantpy``.
 
 Additional utilities
 --------------------
@@ -63,15 +56,13 @@ Quirky console
 .. note::
 
     Python's interpreter console (REPL) is a useful tool for quick demos
-    and code explorations. avantpy includes a console which works
-    reasonably well in most situations but can fail unexpectedly.
-    To understand why, please console the documentation.
+    and code explorations. AvantPy includes a console which appears
+    to work reasonably well.  Please, feel free to file issues for any
+    unexpected behaviour.
 
 The simplest way to invoke pyextension's console is as follows::
 
     python -m avantpy
-
-
 
 .. todo::
 
@@ -88,30 +79,13 @@ Python's interactive mode
 
 """
 import argparse
-import glob
-import runpy
 import sys
-import os.path
 
 from . import transforms
 from . import console
 from . import import_hook
 
 start_console = console.start_console
-
-def init_dialects():
-    '''Find known dialects and create corresponding dictionaries'''
-    dialects = glob.glob(os.path.dirname(__file__) + "/dialects/*.py")
-    for f in dialects:
-        if os.path.isfile(f) and not f.endswith("__init__.py"):
-            name = os.path.basename(f)[:-3]
-            transforms.FILE_EXT.append("py" + name)
-            dialect = runpy.run_path(f)
-            dialect_dict = {v: k for k, v in dialect[name].items()}
-            transforms.DICTIONARIES["py" + name] = dialect_dict
-            transforms.DICTIONARIES[name] = dialect[name]
-
-init_dialects()
 
 if "-m" in sys.argv:
     console_dict = {}
