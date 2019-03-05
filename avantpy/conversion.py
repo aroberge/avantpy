@@ -75,9 +75,9 @@ def to_python(source):
     if CURRENT not in DICTIONARIES:
         return source
 
-    #source = translate_nobreak(source)
     lang_to_py = DICTIONARIES[CURRENT]
     py_to_lang = DICTIONARIES[CURRENT[2:]]
+    if_nobreak_disallowed = "%s is not allowed as a block with an if statement. (to be translated)"
 
     repeat_keyword = py_to_lang["repeat"]
     while_keyword = py_to_lang["while"]
@@ -147,7 +147,9 @@ def to_python(source):
                 if begin_new_line and start_col in indentations and indentations[start_col] in loops_with_else:
                     result.append('else')
                 else:
-                    result.append(tok_str)  # do not replace nobreak in if/nobreak clauses
+                    msg = if_nobreak_disallowed % tok_str
+                    result.append('raise SyntaxError("%s")' % msg)
+                    break
             else:
                 result.append(lang_to_py[tok_str])
         else:

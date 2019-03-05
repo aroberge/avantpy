@@ -15,11 +15,11 @@ This custom REPL should work in a way similar to Python's own.
 Please, feel free to file issues for any unexpected behaviour.
 
 If you want to select a particular dialect/language to be available in the
-console, you can use the `--lang` flag::
+console, you can use the ``--lang`` flag::
 
     python -m avantpy --lang fr
 
-If a source program is to be run, as described below, the `--lang` flag
+If a source program is to be run, as described below, the ``--lang`` flag
 is ignored.
 
 Running programs
@@ -27,7 +27,7 @@ Running programs
 
 .. sidebar:: Duplicate flags
 
-    From this point on, most flags specific to avantpy 
+    Many flags specific to avantpy 
     have a short form and a long form.
     In what follows we always show both alternatives.
 
@@ -42,12 +42,12 @@ This is done by one of the two following alternatives::
     Do not include the extension in path.to.file.
 
 You can use Python's interactive flag, either separately,
-as in `python -i -m ...` or combined with the `-m` flag
+as in ``python -i -m ...`` or combined with the ``-m`` flag
 as done below, to execute a program to be run as "main" and
 continue with the console.
 
 The following example is run from the rood folder of the AvantPy repository.
-The file that is run ends with the `pyfr` extension which AvantPy uses
+The file that is run ends with the ``pyfr`` extension which AvantPy uses
 to recognize that the French dialect is to be used::
 
     $ python -im avantpy -s tests.test_french
@@ -65,9 +65,8 @@ Showing the corresponding Python code
 --------------------------------------
 
 If you want to view how avantpy transformed an input file,
-you can use the ``-d`` or ``--diff`` option::
+you can use the ``--diff`` option::
 
-    python -m avantpy -s name -d
     python -m avantpy --source name --diff
 
 This will use Python's ``difflib`` module to write the result in a
@@ -79,7 +78,7 @@ The code in the source file will not be executed.
 Debug flag
 ----------
 
-By using the `--debug` flag, one can see how the code is translated.
+By using the ``--debug`` flag, one can see how the code is translated.
 For example, one can try::
 
     python -m avantpy --debug

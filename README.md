@@ -2,7 +2,7 @@
 
 Python with **training wheels**: _executable pseudocode_ in any language.
 
-Please see (insert link here) for more information, including for those
+Please see https://aroberge.github.io/avantpy/docs/html/ for more information, including for those
 who wish to contribute or file issues.
 
 ## What is AvantPy

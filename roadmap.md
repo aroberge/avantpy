@@ -29,7 +29,7 @@
 - [ ] Command line option to convert from Python to dialect
   - This could be useful to quickly create test suites in a new dialect.
 - [ ] Command line option to convert from dialect to Python
-- [ ] Command line option to show code in dialect and Python side by side, highlighting differences
+- [x] Command line option to show code in dialect and Python side by side, highlighting differences
 - [ ] GUI for above
 
 ## Syntax analysis and feedback
