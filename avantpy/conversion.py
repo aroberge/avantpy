@@ -147,8 +147,9 @@ def to_python(source):
                 if begin_new_line and start_col in indentations and indentations[start_col] in loops_with_else:
                     result.append('else')
                 else:
+                    result.append('# ' + tok_str)
                     msg = if_nobreak_disallowed % tok_str
-                    result.append('raise SyntaxError("%s")' % msg)
+                    result.append('\nraise SyntaxError("%s")' % msg)
                     break
             else:
                 result.append(lang_to_py[tok_str])

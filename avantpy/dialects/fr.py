@@ -44,6 +44,7 @@ fr = {
     'input': 'entrée',
     'print': 'imprime',
     'range': 'intervalle',
+    'exit': 'quitter',    # useful for console
     # a well-known python expression
     '__name__ == "__main__"': 'pasimporté'
 }

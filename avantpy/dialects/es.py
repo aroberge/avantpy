@@ -44,6 +44,7 @@ es = {
     'input': 'entrada',
     'print': 'imprimir',
     'range': 'intervalo',
+    'exit': 'salir', # useful for console - translation should be checked
     # a well-known python expression
     '__name__ == "__main__"': 'noimportado'    
 }

@@ -34,7 +34,7 @@ en = {
     'import': 'import',
     'in': 'in',
     'is': 'is',
-    'lambda': 'function',  # 
+    'lambda': 'function',  # Clearer for beginners
     'nonlocal': 'nonlocal',
     'not': 'not',
     'or': 'or',
@@ -53,6 +53,7 @@ en = {
     'input': 'input',
     'print': 'print',
     'range': 'range',
+    'exit': 'exit',     # useful for console
     # a well-known python expression
     '__name__ == "__main__"': 'notimported'
 }
