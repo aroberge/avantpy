@@ -39,6 +39,14 @@
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Special keyword: <code class="docutils literal notranslate"><span class="pre">nobreak</span></code></a><ul>
+<li><a class="reference internal" href="#nobreak-instead-of-else-in-if-else"><code class="docutils literal notranslate"><span class="pre">nobreak</span></code> instead of <code class="docutils literal notranslate"><span class="pre">else</span></code> in <code class="docutils literal notranslate"><span class="pre">if/else</span></code></a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="repeat.html"
                         title="previous chapter">Special keyword: <code class="docutils literal notranslate"><span class="pre">repeat</span></code></a></p>
@@ -74,7 +82,56 @@
             
   <div class="section" id="special-keyword-nobreak">
 <h1>Special keyword: <code class="docutils literal notranslate"><span class="pre">nobreak</span></code><a class="headerlink" href="#special-keyword-nobreak" title="Permalink to this headline">¶</a></h1>
-<p>To be written</p>
+<p>Python’s <code class="docutils literal notranslate"><span class="pre">for</span></code> and <code class="docutils literal notranslate"><span class="pre">while</span></code> loop include an <code class="docutils literal notranslate"><span class="pre">else</span></code> clause
+whose meaning is not immediately obvious:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
+    <span class="c1"># some</span>
+    <span class="c1"># code</span>
+    <span class="c1"># here</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># will be executed only if no</span>
+    <span class="c1"># break statement occurred above</span>
+</pre></div>
+</div>
+<p>AvantPy’s English dialect includes <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> as an additional keyword.
+It can be used instead of <code class="docutils literal notranslate"><span class="pre">else</span></code> in the above example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
+    <span class="c1"># some</span>
+    <span class="c1"># code</span>
+    <span class="c1"># here</span>
+<span class="n">nobreak</span><span class="p">:</span>
+    <span class="c1"># will be executed only if no</span>
+    <span class="c1"># break statement occurred above</span>
+</pre></div>
+</div>
+<p>When AvantPy encounters a <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> keyword, or its equivalent in a
+file, it tries to determine if such a keyword is indented matching
+a <code class="docutils literal notranslate"><span class="pre">for</span></code> or a <code class="docutils literal notranslate"><span class="pre">while</span></code> statement: if that is the case, it replaces
+by <code class="docutils literal notranslate"><span class="pre">else</span></code>.</p>
+<div class="section" id="nobreak-instead-of-else-in-if-else">
+<h2><code class="docutils literal notranslate"><span class="pre">nobreak</span></code> instead of <code class="docutils literal notranslate"><span class="pre">else</span></code> in <code class="docutils literal notranslate"><span class="pre">if/else</span></code><a class="headerlink" href="#nobreak-instead-of-else-in-if-else" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">else</span></code> keyword has a very different meaning when used as part
+of an <code class="docutils literal notranslate"><span class="pre">if</span></code> statement.  In this situation, <code class="docutils literal notranslate"><span class="pre">nobreak</span></code>, or its
+translation in some other language would make no sense.</p>
+<p>As a result, if one attempts to write the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">condition</span><span class="p">:</span>
+    <span class="c1"># some</span>
+    <span class="c1"># code</span>
+    <span class="c1"># here</span>
+<span class="n">nobreak</span><span class="p">:</span>
+    <span class="c1"># more code</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">nobreak</span></code> will <strong>not</strong> be replaced by <code class="docutils literal notranslate"><span class="pre">else</span></code>;
+instead, an explicit <code class="docutils literal notranslate"><span class="pre">raise</span> <span class="pre">SyntaxError</span></code> statement will be inserted
+and the file transformation will be stopped at that point.
+See <a class="reference external" href="https://htmlpreview.github.io/?https://github.com/aroberge/avantpy/blob/master/tests/if_nobreak.html">this link</a> for an explicit example.</p>
+<p>AvantPy aims to provide beginner-friendly tracebacks, written in their
+native language.  Since we can identify this incorrect use of <code class="docutils literal notranslate"><span class="pre">nobreak</span></code>
+in the translation phase, it seems logical to ensure that this syntax error
+will be identified as early as possible, with a meaningful error message
+provided.</p>
+</div>
 </div>
 
 

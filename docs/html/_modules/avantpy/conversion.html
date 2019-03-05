@@ -60,6 +60,8 @@
 <span class="sd">.. warning::</span>
 
 <span class="sd">   This module is currently very poorly documented.</span>
+<span class="sd">   Many global variables are currently accessed directly by other modules;</span>
+<span class="sd">   this needs to be corrected.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">glob</span>
@@ -120,19 +122,21 @@
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;unknown dialect: &quot;</span><span class="p">,</span> <span class="n">lang</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="to_python"><a class="viewcode-back" href="../../modules.html#avantpy.conversion.to_python">[docs]</a><span class="k">def</span> <span class="nf">to_python</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+<div class="viewcode-block" id="to_python"><a class="viewcode-back" href="../../works.html#avantpy.conversion.to_python">[docs]</a><span class="k">def</span> <span class="nf">to_python</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A conversion with a one-to-one translation of keywords is used</span>
 <span class="sd">    to provide the transformation.</span>
 
-<span class="sd">    This needs to be documented in much details.</span>
+<span class="sd">    .. warning::</span>
+
+<span class="sd">        This has yet to be documented properly.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">CURRENT</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">DICTIONARIES</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">source</span>
 
-    <span class="c1">#source = translate_nobreak(source)</span>
     <span class="n">lang_to_py</span> <span class="o">=</span> <span class="n">DICTIONARIES</span><span class="p">[</span><span class="n">CURRENT</span><span class="p">]</span>
     <span class="n">py_to_lang</span> <span class="o">=</span> <span class="n">DICTIONARIES</span><span class="p">[</span><span class="n">CURRENT</span><span class="p">[</span><span class="mi">2</span><span class="p">:]]</span>
+    <span class="n">if_nobreak_disallowed</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is not allowed as a block with an if statement. (to be translated)&quot;</span>
 
     <span class="n">repeat_keyword</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;repeat&quot;</span><span class="p">]</span>
     <span class="n">while_keyword</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;while&quot;</span><span class="p">]</span>
@@ -202,7 +206,10 @@
                 <span class="k">if</span> <span class="n">begin_new_line</span> <span class="ow">and</span> <span class="n">start_col</span> <span class="ow">in</span> <span class="n">indentations</span> <span class="ow">and</span> <span class="n">indentations</span><span class="p">[</span><span class="n">start_col</span><span class="p">]</span> <span class="ow">in</span> <span class="n">loops_with_else</span><span class="p">:</span>
                     <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;else&#39;</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tok_str</span><span class="p">)</span>  <span class="c1"># do not replace nobreak in if/nobreak clauses</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;# &#39;</span> <span class="o">+</span> <span class="n">tok_str</span><span class="p">)</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="n">if_nobreak_disallowed</span> <span class="o">%</span> <span class="n">tok_str</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">raise SyntaxError(&quot;</span><span class="si">%s</span><span class="s1">&quot;)&#39;</span> <span class="o">%</span> <span class="n">msg</span><span class="p">)</span>
+                    <span class="k">break</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lang_to_py</span><span class="p">[</span><span class="n">tok_str</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
@@ -216,7 +223,18 @@
 <div class="viewcode-block" id="get_unique_variable_names"><a class="viewcode-back" href="../../modules.html#avantpy.conversion.get_unique_variable_names">[docs]</a><span class="k">def</span> <span class="nf">get_unique_variable_names</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">nb</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Returns a list of possible variables names that</span>
 <span class="sd">       are not found in the original source and have not been used</span>
-<span class="sd">       anywhere.&#39;&#39;&#39;</span>
+<span class="sd">       during the current session.</span>
+
+<span class="sd">       This is used in replacing::</span>
+
+<span class="sd">            repeat n:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">       by something like::</span>
+
+<span class="sd">            for _COUNT_42 in range(n):</span>
+<span class="sd">                pass</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">base_name</span> <span class="o">=</span> <span class="s1">&#39;_COUNT_&#39;</span>
     <span class="n">var_names</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>

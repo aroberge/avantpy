@@ -1,0 +1,221 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Special keyword: repeat &#8212; AvantPy  documentation</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Special keyword: nobreak" href="nobreak.html" />
+    <link rel="prev" title="Invocation" href="invocation.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="nobreak.html" title="Special keyword: nobreak"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="invocation.html" title="Invocation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Special keyword: <code class="docutils literal notranslate"><span class="pre">repeat</span></code></a><ul>
+<li><a class="reference internal" href="#a-concrete-example">A concrete example</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="invocation.html"
+                        title="previous chapter">Invocation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nobreak.html"
+                        title="next chapter">Special keyword: <code class="docutils literal notranslate"><span class="pre">nobreak</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/repeat.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="special-keyword-repeat">
+<h1>Special keyword: <code class="docutils literal notranslate"><span class="pre">repeat</span></code><a class="headerlink" href="#special-keyword-repeat" title="Permalink to this headline">¶</a></h1>
+<p>Repeating a series of instructions is something that is often done when
+running programs.  Block-based programming environments, such as
+Scratch and Blockly, have different blocks that can be used for
+this purpose.</p>
+<p>The four main cases covered by such blocks can be written as follows
+in standard Python:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Repeat a series of instruction n times, without having to</span>
+<span class="sd">       keep track of the specific iteration number</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+<span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;Repeat a series of instruction an unspecified number of times,</span>
+<span class="sd">       while a certain condition is met.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+<span class="k">while</span> <span class="ow">not</span> <span class="n">condition</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;Repeat a series of instruction an unspecified number of times,</span>
+<span class="sd">       until a certain condition is met.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;Repeat a series of instruction an unspecified number of times,</span>
+<span class="sd">       until a something inside the loop triggers a &quot;break&quot; to end the loop.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+</pre></div>
+</div>
+<p>Inspired by the choices made by creators of block-based programming environments,
+AvantPy introduces a few additional keywords to cover the 4 cases above
+in a natural way:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repeat</span> <span class="n">n</span><span class="p">:</span>
+    <span class="c1"># code</span>
+
+<span class="n">repeat</span> <span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
+    <span class="c1"># code</span>
+
+<span class="n">repeat</span> <span class="n">until</span> <span class="n">condition</span><span class="p">:</span>
+    <span class="c1"># code</span>
+
+<span class="n">repeat</span> <span class="n">forever</span><span class="p">:</span>
+    <span class="c1"># condition</span>
+</pre></div>
+</div>
+<p>Unlike Python’s keywords, the English version of these additional keywords,
+<code class="docutils literal notranslate"><span class="pre">repeat</span></code>, <code class="docutils literal notranslate"><span class="pre">until</span></code>, <code class="docutils literal notranslate"><span class="pre">forever</span></code>, are only available in the English dialect of AvantPy.</p>
+<div class="section" id="a-concrete-example">
+<h2>A concrete example<a class="headerlink" href="#a-concrete-example" title="Permalink to this headline">¶</a></h2>
+<p>Suppose that I am teaching programming to beginners using Python’s turtle module.
+So far, we’ve only written programs that use one instruction per line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">turtle</span> <span class="k">import</span> <span class="n">forward</span><span class="p">,</span> <span class="n">left</span>
+
+<span class="c1"># Draw a square</span>
+
+<span class="n">forward</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">left</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+
+<span class="n">forward</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">left</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+
+<span class="n">forward</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">left</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+
+<span class="n">forward</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">left</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>I wish to use this to show to students how we can have computers <strong>repeat</strong>
+a given set of instructions, instead of typing them multiple times.
+Using Python, here’s the natural way to do this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">turtle</span> <span class="k">import</span> <span class="n">forward</span><span class="p">,</span> <span class="n">left</span>
+
+<span class="c1"># Draw a square</span>
+
+<span class="k">for</span> <span class="n">variable</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">forward</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">left</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In doing so, I need to introduce all at once many new concepts and additional terms:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>the concept of an indented code block preceded by a colon;</li>
+<li>two keywords, <code class="docutils literal notranslate"><span class="pre">for</span></code> and <code class="docutils literal notranslate"><span class="pre">in</span></code>;</li>
+<li>the use of a <em>variable</em>, which is some quantity with a completely irrelevant name in this example, except that it cannot be a keyword;</li>
+<li>the introduction of a built-in function, <code class="docutils literal notranslate"><span class="pre">range()</span></code>, which, unlike <code class="docutils literal notranslate"><span class="pre">forward()</span></code> or <code class="docutils literal notranslate"><span class="pre">left()</span></code>, does not have a visual representation.</li>
+</ol>
+</div></blockquote>
+<p>By contrast, using the <code class="docutils literal notranslate"><span class="pre">repeat</span></code> keyword, the above can be written as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">turtle</span> <span class="k">import</span> <span class="n">forward</span><span class="p">,</span> <span class="n">left</span>
+
+<span class="c1"># Draw a square</span>
+
+<span class="n">repeat</span> <span class="mi">4</span><span class="p">:</span>
+    <span class="n">forward</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">left</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and we only need to introduce fewer new topics:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>the concept of an indented code block preceded by a colon;</li>
+<li>one new keyword: <code class="docutils literal notranslate"><span class="pre">repeat</span></code>.</li>
+</ol>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="nobreak.html" title="Special keyword: nobreak"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="invocation.html" title="Invocation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, André Roberge.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

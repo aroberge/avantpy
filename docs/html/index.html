@@ -16,7 +16,7 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Invocation" href="invocation.html" /> 
+    <link rel="next" title="Language or dialect?" href="dialect.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -28,7 +28,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="invocation.html" title="Invocation"
+          <a href="dialect.html" title="Language or dialect?"
              accesskey="N">next</a> |</li>
         <li class="nav-item nav-item-0"><a href="#">AvantPy  documentation</a> &#187;</li> 
       </ul>
@@ -41,13 +41,14 @@
 <li><a class="reference internal" href="#what-is-avantpy">What is AvantPy?</a></li>
 <li><a class="reference internal" href="#who-is-it-for">Who is it for?</a></li>
 <li><a class="reference internal" href="#executable-pseudocode">Executable pseudocode?</a></li>
+<li><a class="reference internal" href="#contents">Contents</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Next topic</h4>
-  <p class="topless"><a href="invocation.html"
-                        title="next chapter">Invocation</a></p>
+  <p class="topless"><a href="dialect.html"
+                        title="next chapter">Language or dialect?</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -77,14 +78,14 @@
             
   <div class="section" id="bienvenue-bienvenido-welcome">
 <h1>Bienvenue 환영합니다 Bienvenido - ようこそ Welcome  歡迎光臨<a class="headerlink" href="#bienvenue-bienvenido-welcome" title="Permalink to this headline">¶</a></h1>
-<p><strong>AvantPy</strong>: Python with training wheels - executable pseudocode in any language.</p>
+<p><strong>AvantPy</strong> - Python with training wheels: executable pseudocode in any language.</p>
 <div class="section" id="what-is-avantpy">
 <h2>What is AvantPy?<a class="headerlink" href="#what-is-avantpy" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>AvantPy is a collection of dialects, each dialect being a superset of Python, designed to make it easier to learn programming concepts in a given human language.<ul>
 <li>Each dialect consists of a translations of most Python keywords in a given human language, supplemented by a few additional constructs intended to make some programming concepts easier to learn.</li>
 <li>The current version includes three dialects: English, French and Spanish.
-The translation currently donein these three dialects is subject to change; feel free to make suggestions for alternative to use, or contribute a new dialect.</li>
+The translation currently done in these three dialects is subject to change; feel free to make suggestions for alternative to use, or contribute a new dialect.</li>
 </ul>
 </li>
 <li>AvantPy is a preprocessor, that takes a program written either totally or
@@ -109,17 +110,42 @@ instructor.</p>
 </div>
 <div class="section" id="executable-pseudocode">
 <h2>Executable pseudocode?<a class="headerlink" href="#executable-pseudocode" title="Permalink to this headline">¶</a></h2>
-<p>Python is often described as executable pseudocode. Once people have learned a few idiomatic expressions, like <cite>for variable in range(n)</cite>, translating pseudocode written in English into Python is usually very straightforward.</p>
+<p>Python is often described as executable pseudocode. Once people have learned a few idiomatic expressions, like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">variable</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>translating pseudocode written in English into Python is usually very straightforward.</p>
 <p>If the pseudocode is not written in English, the translation process is, at least initially, not as straightforward since an additional mental step is required by the translation from the original language into Python’s English.</p>
 <p>Even though the number of Python keywords is small, for absolute beginners who are learning programming concepts (control flow structures, defining functions, etc.), being able to use a language that uses keywords easily understood in their own language can definitely facilitate the learning process.
 <strong>This is the approach taken by people using block-based environment
 (Scratch, Blockly, etc.) developed by educational experts
 to help students learn programming concepts.</strong></p>
 <p>Realistically, many students who learn computer programming as part of a formal course might never use programming again or, if so, it might not be for many years. Given enough time, they would likely forget most of the programming syntax they had learned.
-However they likely would retain programming <strong>concepts</strong> better if they are first learning them in their native language.</p>
+However they likely would understand and remember programming <strong>concepts</strong> better if they are first learning them in their native language.</p>
+</div>
+<div class="section" id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="dialect.html"> Language or dialect?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dialect.html#avantpy-s-english-dialect">AvantPy’s English dialect</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> Special keyword: repeat</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="repeat.html#a-concrete-example">A concrete example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> Special keyword: nobreak</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nobreak.html#nobreak-instead-of-else-in-if-else"><code class="docutils literal notranslate"><span class="pre">nobreak</span></code> instead of <code class="docutils literal notranslate"><span class="pre">else</span></code> in <code class="docutils literal notranslate"><span class="pre">if/else</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notimported.html"> Special keyword: notimported</a></li>
+<li class="toctree-l1"><a class="reference internal" href="builtins.html"> More than keywords</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tracebacks.html"> Friendly error messages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="works.html"> How does it work?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="works.html#from-the-source">From the source</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="invocation.html"> Invocation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="invocation.html#basic-invocation">Basic invocation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="invocation.html#running-programs">Running programs</a></li>
@@ -127,12 +153,14 @@ However they likely would retain programming <strong>concepts</strong> better if
 <li class="toctree-l2"><a class="reference internal" href="invocation.html#debug-flag">Debug flag</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html"> Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html"> Other modules</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#module-avantpy.import_hook">import_hook</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#module-avantpy.conversion">conversion</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html#module-avantpy.console">console</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html"> Contributing</a></li>
 </ul>
 </div>
 </div>
@@ -154,7 +182,7 @@ However they likely would retain programming <strong>concepts</strong> better if
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="invocation.html" title="Invocation"
+          <a href="dialect.html" title="Language or dialect?"
              >next</a> |</li>
         <li class="nav-item nav-item-0"><a href="#">AvantPy  documentation</a> &#187;</li> 
       </ul>

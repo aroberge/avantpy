@@ -1,12 +1,7 @@
-.. AvantPy documentation master file, created by
-   sphinx-quickstart on Sun Mar  3 22:28:26 2019.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Bienvenue 환영합니다 Bienvenido - ようこそ Welcome  歡迎光臨
 ========================================================================
 
-**AvantPy**: Python with training wheels - executable pseudocode in any language.
+**AvantPy** - Python with training wheels: executable pseudocode in any language.
 
 
 What is AvantPy?
@@ -16,7 +11,7 @@ What is AvantPy?
 
   - Each dialect consists of a translations of most Python keywords in a given human language, supplemented by a few additional constructs intended to make some programming concepts easier to learn.
   - The current version includes three dialects: English, French and Spanish.
-    The translation currently donein these three dialects is subject to change; feel free to make suggestions for alternative to use, or contribute a new dialect.
+    The translation currently done in these three dialects is subject to change; feel free to make suggestions for alternative to use, or contribute a new dialect.
 
 - AvantPy is a preprocessor, that takes a program written either totally or
   in parts in a given dialect, and converts it to standard Python prior to execution.
@@ -43,7 +38,11 @@ instructor.
 Executable pseudocode?
 -------------------------
 
-Python is often described as executable pseudocode. Once people have learned a few idiomatic expressions, like `for variable in range(n)`, translating pseudocode written in English into Python is usually very straightforward.
+Python is often described as executable pseudocode. Once people have learned a few idiomatic expressions, like::
+ 
+    for variable in range(n)
+
+translating pseudocode written in English into Python is usually very straightforward.
 
 If the pseudocode is not written in English, the translation process is, at least initially, not as straightforward since an additional mental step is required by the translation from the original language into Python's English. 
 
@@ -53,15 +52,25 @@ Even though the number of Python keywords is small, for absolute beginners who a
 to help students learn programming concepts.**
 
 Realistically, many students who learn computer programming as part of a formal course might never use programming again or, if so, it might not be for many years. Given enough time, they would likely forget most of the programming syntax they had learned.
-However they likely would retain programming **concepts** better if they are first learning them in their native language.
+However they likely would understand and remember programming **concepts** better if they are first learning them in their native language.
 
+Contents
+--------
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
+    Language or dialect? <dialect>
+    Special keyword: repeat <repeat>
+    Special keyword: nobreak <nobreak>
+    Special keyword: notimported <notimported>
+    More than keywords <builtins>
+    Friendly error messages <tracebacks>
+    How does it work? <works>
     Invocation <invocation>
+    Testing <testing>
     Other modules <modules>
+    Contributing <contribute>
 
 
 .. todolist::

@@ -103,18 +103,18 @@ collect all existing dialects, and leaves the user in a custom REPL:</p>
 <p>This custom REPL should work in a way similar to Python’s own.
 Please, feel free to file issues for any unexpected behaviour.</p>
 <p>If you want to select a particular dialect/language to be available in the
-console, you can use the <cite>–lang</cite> flag:</p>
+console, you can use the <code class="docutils literal notranslate"><span class="pre">--lang</span></code> flag:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">avantpy</span> <span class="o">--</span><span class="n">lang</span> <span class="n">fr</span>
 </pre></div>
 </div>
-<p>If a source program is to be run, as described below, the <cite>–lang</cite> flag
+<p>If a source program is to be run, as described below, the <code class="docutils literal notranslate"><span class="pre">--lang</span></code> flag
 is ignored.</p>
 </div>
 <div class="section" id="running-programs">
 <h2>Running programs<a class="headerlink" href="#running-programs" title="Permalink to this headline">¶</a></h2>
 <div class="sidebar">
 <p class="first sidebar-title">Duplicate flags</p>
-<p class="last">From this point on, most flags specific to avantpy 
+<p class="last">Many flags specific to avantpy 
 have a short form and a long form.
 In what follows we always show both alternatives.</p>
 </div>
@@ -129,11 +129,11 @@ This is done by one of the two following alternatives:</p>
 <p class="last">Do not include the extension in path.to.file.</p>
 </div>
 <p>You can use Python’s interactive flag, either separately,
-as in <cite>python -i -m …</cite> or combined with the <cite>-m</cite> flag
+as in <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-i</span> <span class="pre">-m</span> <span class="pre">...</span></code> or combined with the <code class="docutils literal notranslate"><span class="pre">-m</span></code> flag
 as done below, to execute a program to be run as “main” and
 continue with the console.</p>
 <p>The following example is run from the rood folder of the AvantPy repository.
-The file that is run ends with the <cite>pyfr</cite> extension which AvantPy uses
+The file that is run ends with the <code class="docutils literal notranslate"><span class="pre">pyfr</span></code> extension which AvantPy uses
 to recognize that the French dialect is to be used:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python -im avantpy -s tests.test_french
 Success.
@@ -150,9 +150,8 @@ Bonjour tout le monde !
 <div class="section" id="showing-the-corresponding-python-code">
 <h2>Showing the corresponding Python code<a class="headerlink" href="#showing-the-corresponding-python-code" title="Permalink to this headline">¶</a></h2>
 <p>If you want to view how avantpy transformed an input file,
-you can use the <code class="docutils literal notranslate"><span class="pre">-d</span></code> or <code class="docutils literal notranslate"><span class="pre">--diff</span></code> option:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">avantpy</span> <span class="o">-</span><span class="n">s</span> <span class="n">name</span> <span class="o">-</span><span class="n">d</span>
-<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">avantpy</span> <span class="o">--</span><span class="n">source</span> <span class="n">name</span> <span class="o">--</span><span class="n">diff</span>
+you can use the <code class="docutils literal notranslate"><span class="pre">--diff</span></code> option:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">avantpy</span> <span class="o">--</span><span class="n">source</span> <span class="n">name</span> <span class="o">--</span><span class="n">diff</span>
 </pre></div>
 </div>
 <p>This will use Python’s <code class="docutils literal notranslate"><span class="pre">difflib</span></code> module to write the result in a
@@ -163,7 +162,7 @@ The code in the source file will not be executed.</p>
 </div>
 <div class="section" id="debug-flag">
 <h2>Debug flag<a class="headerlink" href="#debug-flag" title="Permalink to this headline">¶</a></h2>
-<p>By using the <cite>–debug</cite> flag, one can see how the code is translated.
+<p>By using the <code class="docutils literal notranslate"><span class="pre">--debug</span></code> flag, one can see how the code is translated.
 For example, one can try:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">avantpy</span> <span class="o">--</span><span class="n">debug</span>
 </pre></div>

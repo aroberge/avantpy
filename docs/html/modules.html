@@ -137,14 +137,26 @@ change this so that “main_script” is properly identified as <code class="doc
 <p>Keeps track of available dialects, and perform require code transformations.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">This module is currently very poorly documented.</p>
+<p class="last">This module is currently very poorly documented.
+Many global variables are currently accessed directly by other modules;
+this needs to be corrected.</p>
 </div>
 <dl class="function">
 <dt id="avantpy.conversion.get_unique_variable_names">
 <code class="descclassname">avantpy.conversion.</code><code class="descname">get_unique_variable_names</code><span class="sig-paren">(</span><em>source</em>, <em>nb</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/conversion.html#get_unique_variable_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.conversion.get_unique_variable_names" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of possible variables names that
 are not found in the original source and have not been used
-anywhere.</p>
+during the current session.</p>
+<p>This is used in replacing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repeat</span> <span class="n">n</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>by something like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">_COUNT_42</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
@@ -171,7 +183,10 @@ anywhere.</p>
 <code class="descclassname">avantpy.conversion.</code><code class="descname">to_python</code><span class="sig-paren">(</span><em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/conversion.html#to_python"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.conversion.to_python" title="Permalink to this definition">¶</a></dt>
 <dd><p>A conversion with a one-to-one translation of keywords is used
 to provide the transformation.</p>
-<p>This needs to be documented in much details.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This has yet to be documented properly.</p>
+</div>
 </dd></dl>
 
 </div>
