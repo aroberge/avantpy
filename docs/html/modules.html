@@ -16,7 +16,8 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Invocation" href="invocation.html" /> 
+    <link rel="next" title="Contributing" href="contribute.html" />
+    <link rel="prev" title="Testing" href="testing.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -28,7 +29,10 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="invocation.html" title="Invocation"
+          <a href="contribute.html" title="Contributing"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="testing.html" title="Testing"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">AvantPy  documentation</a> &#187;</li> 
       </ul>
@@ -46,8 +50,11 @@
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="invocation.html"
-                        title="previous chapter">Invocation</a></p>
+  <p class="topless"><a href="testing.html"
+                        title="previous chapter">Testing</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="contribute.html"
+                        title="next chapter">Contributing</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -137,26 +144,14 @@ change this so that “main_script” is properly identified as <code class="doc
 <p>Keeps track of available dialects, and perform require code transformations.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">This module is currently very poorly documented.
-Many global variables are currently accessed directly by other modules;
-this needs to be corrected.</p>
+<p class="last">This module is currently very poorly documented.</p>
 </div>
 <dl class="function">
 <dt id="avantpy.conversion.get_unique_variable_names">
 <code class="descclassname">avantpy.conversion.</code><code class="descname">get_unique_variable_names</code><span class="sig-paren">(</span><em>source</em>, <em>nb</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/conversion.html#get_unique_variable_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.conversion.get_unique_variable_names" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of possible variables names that
 are not found in the original source and have not been used
-during the current session.</p>
-<p>This is used in replacing:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repeat</span> <span class="n">n</span><span class="p">:</span>
-    <span class="k">pass</span>
-</pre></div>
-</div>
-<p>by something like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">_COUNT_42</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    <span class="k">pass</span>
-</pre></div>
-</div>
+anywhere.</p>
 </dd></dl>
 
 <dl class="function">
@@ -183,10 +178,7 @@ during the current session.</p>
 <code class="descclassname">avantpy.conversion.</code><code class="descname">to_python</code><span class="sig-paren">(</span><em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/conversion.html#to_python"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.conversion.to_python" title="Permalink to this definition">¶</a></dt>
 <dd><p>A conversion with a one-to-one translation of keywords is used
 to provide the transformation.</p>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">This has yet to be documented properly.</p>
-</div>
+<p>This needs to be documented in much details.</p>
 </dd></dl>
 
 </div>
@@ -269,7 +261,10 @@ and the syntax error</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="invocation.html" title="Invocation"
+          <a href="contribute.html" title="Contributing"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="testing.html" title="Testing"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">AvantPy  documentation</a> &#187;</li> 
       </ul>

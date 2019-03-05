@@ -1,0 +1,25 @@
+'''Testing nobreak keyword with if.
+
+`nobreak` can replace `else` for loops (`for` and `while`) but not for `if` blocks.
+
+'''
+
+# AvantPy will abort the transformations when a user writes
+# an if/nobreak statement instead of if/else.  It replaces
+# the nobreak statement by a raise SyntaxError and stops
+# processing the file.
+
+# If you want to see what happens to this file, instead of
+#    python -m avantpy -s tests.if_nobreak
+# try
+#    python -m avantpy -s tests.if_nobreak--diff
+
+
+def test_if_nobreak():
+    if True:
+        pass
+    nobreak:  # AvantPy stops here
+        pass 
+
+# Nothing below the nobreak statement matching an if block is processed by AvantPy
+
