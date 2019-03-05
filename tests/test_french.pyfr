@@ -31,5 +31,6 @@ def main():
     test_for()
     imprime("Success.")
 
-if __name__ == "__main__":
+if pasimporté:
     main()
+    bonjour = 'Bonjour tout le monde !'  # for console example

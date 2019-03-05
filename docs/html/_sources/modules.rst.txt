@@ -1,14 +1,19 @@
-Modules
-=======
+Other modules
+==============
 
-AvantPy consists of a few modules.
+In addition to `invocation.py` already mentioned, and excluding modules defining individual
+dialects, the following are included:
 
-avantpy
--------
+import_hook
+-----------
 
-.. automodule:: avantpy
+.. automodule:: avantpy.import_hook
    :members:
 
+conversion
+----------
+.. automodule:: avantpy.conversion
+   :members:
 
 console
 -------

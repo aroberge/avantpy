@@ -2,6 +2,10 @@
 
 Keeps track of available dialects, and perform require code transformations.
 
+.. warning::
+
+   This module is currently very poorly documented.
+
 """
 import glob
 import os.path
@@ -9,13 +13,14 @@ import runpy
 import tokenize
 from io import StringIO
 
-MAIN_MODULE_NAME = None
-FILE_EXT = []
-CONVERT = False
+ALL_COUNT_NAMES = []
+CURRENT = None
 DIFF = False
 DICTIONARIES = {}
-CURRENT = None
 DEBUG = False
+FILE_EXT = []
+MAIN_MODULE_NAME = None
+
 
 def init_dialects():
     '''Find known dialects and create corresponding dictionaries'''
@@ -60,32 +65,12 @@ def set_lang(lang):
     print("unknown dialect: ", lang)
 
 
-# def translate_nobreak(source):
-#     py_to_lang = DICTIONARIES[CURRENT[2:]]
-#     lines = source.split("\n")
-#     result = []
-#     # nobreak keyword can be either followed by a space or colon
-#     no_break = (py_to_lang['else'][1] + ' ', py_to_lang['else'][1] + ':')
-#     blocks_with_else = ['if', 'for', 'while', 
-#                          py_to_lang['if'], py_to_lang['for'], py_to_lang['while']]
-#     indentations = {}
-#     for line in lines:
-#         stripped = line.lstrip()
-#         first_word = stripped.split(" ")[0]
-#         if first_word in blocks_with_else:
-#             nb_spaces = len(line) - len(stripped)
-#             indentations[nb_spaces] = first_word
-#         if stripped.startswith(no_break):
-#             nb_spaces = len(line) - len(stripped)
-#             if indentations[nb_spaces] in ['for', 'while', py_to_lang['for'], py_to_lang['while']]:
-#                 line.replace(py_to_lang['else'][1], 'else', 1)
-#         result.append(line)
-#     return "\n".join(result)
-
-
 def to_python(source):
     """A conversion with a one-to-one translation of keywords is used
     to provide the transformation.
+
+    This needs to be documented in much details.
+
     """
     if CURRENT not in DICTIONARIES:
         return source
@@ -136,11 +121,8 @@ def to_python(source):
         prev_lineno = end_line
         # start substitutions
 
-        if begin_new_line:
-            print(start, tok_str)
         if begin_new_line and tok_str in blocks_with_else:
             indentations[start_col] = tok_str
-            print("   Indentations = ", indentations)
 
         if tok_type == tokenize.NAME and tok_str == repeat_keyword:
             repeat_loop = True
@@ -162,25 +144,19 @@ def to_python(source):
             repeat_n = False
         elif tok_type == tokenize.NAME and tok_str in lang_to_py:
             if tok_str == nobreak:
-                print("tok_str == nobreak")
-                print("current block:", indentations[start_col])
                 if begin_new_line and start_col in indentations and indentations[start_col] in loops_with_else:
-                    print("appending else")
                     result.append('else')
                 else:
                     result.append(tok_str)  # do not replace nobreak in if/nobreak clauses
-                    print("appending nobreak: ", tok_str)
             else:
                 result.append(lang_to_py[tok_str])
         else:
             result.append(tok_str)
     source = "".join(result)
-    print(source)
     if DEBUG:
         print(source)
     return source
 
-ALL_NAMES = []
 
 def get_unique_variable_names(source, nb):
     '''Returns a list of possible variables names that
@@ -192,9 +168,9 @@ def get_unique_variable_names(source, nb):
     j = 0
     while j < nb:
         tentative_name = base_name + str(i)
-        if source.count(tentative_name) == 0 and tentative_name not in ALL_NAMES:
+        if source.count(tentative_name) == 0 and tentative_name not in ALL_COUNT_NAMES:
             var_names.append(tentative_name)
-            ALL_NAMES.append(tentative_name)
+            ALL_COUNT_NAMES.append(tentative_name)
             j += 1
         i += 1
     return var_names

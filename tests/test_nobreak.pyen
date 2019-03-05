@@ -29,8 +29,8 @@ def test_while_nobreak():
 #     nobreak:
 #         pass
 
-if __name__ == '__main__':
+if notimported:
     test_for_nobreak()
     test_while_nobreak()
-    print("Success.")
+    print("Success from test_nobreak.pyen!")
 

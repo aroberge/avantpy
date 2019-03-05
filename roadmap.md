@@ -2,9 +2,9 @@
 
 ## Documentation
 
-- [ ] Create simple GitHub Pages site
-  - [ ] Get inspiration from what I did for pyextension.
-  - [ ] Add section about invocation
+- [x] Create simple GitHub Pages site
+  - [x] Get inspiration from what I did for pyextension.
+  - [x] Add section about invocation
   - [ ] Explain various choices for addition to syntax
     - [ ] Explain why **repeat** and other loops
     - [ ] Explain why `function` instead of `lambda`
@@ -50,7 +50,7 @@
 - [ ] Consider using `colorama` as optional dependencies for the console
 - [ ] Add option to restrict processing to single dialect
   - In this case, only load single dialect file; if not found, issue error message and exit.
-- [ ] Think of replacing `__name__ is "__main__"` by a single keyword, perhaps `NotImported`.
+- [x] Think of replacing `__name__ is "__main__"` by a single keyword, perhaps `NotImported`.
 
 ## Integrating with other programs
 

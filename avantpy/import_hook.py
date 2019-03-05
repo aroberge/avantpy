@@ -2,8 +2,10 @@
 """
 import difflib
 import importlib
+import os
 import os.path
 import sys
+import webbrowser
 
 from importlib.abc import Loader, MetaPathFinder
 from importlib.util import spec_from_file_location
@@ -27,7 +29,7 @@ def import_main(name):
     return importlib.import_module(name)
 
 
-class AvantpyMetaFinder(MetaPathFinder):
+class AvantPyMetaFinder(MetaPathFinder):
     """A custom finder to locate modules.  The main reason for this code
        is to ensure that our custom loader, which does the code transformations,
        is used."""
@@ -53,16 +55,16 @@ class AvantpyMetaFinder(MetaPathFinder):
             return spec_from_file_location(
                 fullname,
                 filename,
-                loader=AvantpyLoader(filename),
+                loader=AvantPyLoader(filename),
                 submodule_search_locations=None,
             )
         return None  # Not an AvantPy file
 
 
-sys.meta_path.insert(0, AvantpyMetaFinder())
+sys.meta_path.insert(0, AvantPyMetaFinder())
 
 
-class AvantpyLoader(Loader):
+class AvantPyLoader(Loader):
     """A custom loader which will transform the source prior to its execution"""
 
     def __init__(self, filename):
@@ -75,35 +77,39 @@ class AvantpyLoader(Loader):
             module.__name__ = "__main__"
             conversion.MAIN_MODULE_NAME = None
 
-        with open(self.filename) as f:
+        with open(self.filename, encoding="utf8") as f:
             source = f.read()
         original = source
 
-        extension = self.filename.split(".")[-1]
+        _path, extension = os.path.splitext(self.filename)
+        extension = extension[1:]
+
         if extension in conversion.DICTIONARIES:
             conversion.CURRENT = extension
             source = conversion.to_python(source)
 
-        if conversion.CONVERT:
-            print("############### Original source: ############\n")
-            print(original)
-            print("\n############### Converted source: ############\n")
-            print(source)
-            print("=" * 50, "\n")
+            if conversion.DIFF:
+                name = os.path.basename(_path)
+                html_file = self.write_html_diff(name, original, source)
+                webbrowser.open_new_tab(html_file)
+                sys.exit()
+        else:
+            raise NotImplementedError("%s: extension not found in known languages."%extension)
 
         exec(source, vars(module))
 
     def write_html_diff(self, name, original, transformed):
         """Writes an html file showing the difference between the original
            and the transformed source."""
-        html = name + ".html"
+        html_file = name + ".html"
         fromlines = original.split("\n")
         tolines = transformed.split("\n")
+        print
 
         diff = difflib.HtmlDiff().make_file(
-            fromlines, tolines, name + "." + conversion.FILE_EXT, name + ".py"
+            fromlines, tolines, name + "." + conversion.CURRENT, name + ".py"
         )
-        with open(html, "w") as the_file:
+        with open(html_file, "w", encoding="utf8") as the_file:
             the_file.write(diff)
-        print("Diff file writen to", html)
+        return html_file
 

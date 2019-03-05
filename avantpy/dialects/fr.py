@@ -43,5 +43,7 @@ fr = {
     # a few builtins useful for beginners
     'input': 'entrée',
     'print': 'imprime',
-    'range': 'intervalle'
+    'range': 'intervalle',
+    # a well-known python expression
+    '__name__ == "__main__"': 'pasimporté'
 }

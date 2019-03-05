@@ -43,5 +43,7 @@ es = {
     # a few builtins useful for beginners
     'input': 'entrada',
     'print': 'imprimir',
-    'range': 'intervalo'
+    'range': 'intervalo',
+    # a well-known python expression
+    '__name__ == "__main__"': 'noimportado'    
 }

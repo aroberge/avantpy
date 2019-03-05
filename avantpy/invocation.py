@@ -3,38 +3,66 @@ AvantPy sets up an import hook which
 makes it possible to run a file that contains modified Python syntax,
 provided the relevant source transformers can be imported.
 
-.. warning::
-
-    It is always a good idea to not confirm that what follows below is
-    still accurate. You can confirm this by running one of the following
-    two alternatives::
-
-        python -m avantpy -h
-        python -m avantpy --help
-
-.. note::
-
-    Every relevant flag specific to avantpy has a short form and a
-    long form. In what follows we always show both alternatives.
-
 Basic invocation
 ----------------
 
-The primary role of avantpy is to run programs that have a modified syntax.
+The simplest invocation of AvantPy sets up the import hook,
+collect all existing dialects, and leaves the user in a custom REPL::
+
+    python -m avantpy
+
+This custom REPL should work in a way similar to Python's own.
+Please, feel free to file issues for any unexpected behaviour.
+
+If you want to select a particular dialect/language to be available in the
+console, you can use the `--lang` flag::
+
+    python -m avantpy --lang fr
+
+If a source program is to be run, as described below, the `--lang` flag
+is ignored.
+
+Running programs
+----------------
+
+.. sidebar:: Duplicate flags
+
+    From this point on, most flags specific to avantpy 
+    have a short form and a long form.
+    In what follows we always show both alternatives.
+
+The primary role of AvantPy is to run programs that have a modified syntax.
 This is done by one of the two following alternatives::
 
     python -m avantpy -s path.to.file
     python -m avantpy --source path.to.file
 
-Note: do not include the extension in path.to.file.
+.. warning::
 
-A different extension that ``notpy`` can be specified as follows::
+    Do not include the extension in path.to.file.
 
-    python -m avantpy -s name -x EXTENSION
-    python -m avantpy -s name --file_extension EXTENSION
+You can use Python's interactive flag, either separately,
+as in `python -i -m ...` or combined with the `-m` flag
+as done below, to execute a program to be run as "main" and
+continue with the console.
 
-Additional utilities
---------------------
+The following example is run from the rood folder of the AvantPy repository.
+The file that is run ends with the `pyfr` extension which AvantPy uses
+to recognize that the French dialect is to be used::
+
+    $ python -im avantpy -s tests.test_french
+    Success.
+    avantpy console version 0.0.3. [Python version: 3.7.0]
+
+    ->> si Vrai:
+    ...     imprime(bonjour)
+    ...
+    Bonjour tout le monde !
+    ->>
+
+
+Showing the corresponding Python code
+--------------------------------------
 
 If you want to view how avantpy transformed an input file,
 you can use the ``-d`` or ``--diff`` option::
@@ -42,40 +70,19 @@ you can use the ``-d`` or ``--diff`` option::
     python -m avantpy -s name -d
     python -m avantpy --source name --diff
 
-This will use Python's ``difflib`` module and write the result in a
-file named ``name.html`` in the current directory.
+This will use Python's ``difflib`` module to write the result in a
+file named ``name.html`` in the current directory, open a new tab
+in the default web browser and display the result.
+This will also end the current execution.
+The code in the source file will not be executed.
 
-.. todo::
+Debug flag
+----------
 
-   * document ``-c`` (``--convert``)
-   * Implement ``-o [filename]`` (``--output``) and document
+By using the `--debug` flag, one can see how the code is translated.
+For example, one can try::
 
-Quirky console
----------------
-
-.. note::
-
-    Python's interpreter console (REPL) is a useful tool for quick demos
-    and code explorations. AvantPy includes a console which appears
-    to work reasonably well.  Please, feel free to file issues for any
-    unexpected behaviour.
-
-The simplest way to invoke pyextension's console is as follows::
-
-    python -m avantpy
-
-.. todo::
-
-    * document ``-c`` when using the console
-    * document ``-d`` when using the console
-    * document ``-t`` when using the console
-
-Python's interactive mode
--------------------------
-
-.. todo::
-
-    Document Python's ``-i`` flag (interactive mode)
+    python -m avantpy --debug
 
 """
 import argparse
@@ -86,12 +93,13 @@ from . import console
 from . import import_hook
 
 start_console = console.start_console
+show_python = False
 
 if "-m" in sys.argv:
     console_dict = {}
     parser = argparse.ArgumentParser(
         description="""
-        avantpy sets up an import hook which
+        AvantPy sets up an import hook which
         makes it possible to run a file that contains modified Python syntax
         provided the relevant source transformers can be imported.
         """
@@ -103,16 +111,9 @@ if "-m" in sys.argv:
                 Format: path.to.file -- Do not include an extension.""",
     )
     parser.add_argument(
-        "-x",
-        "--file_extension",
-        help="The file extension of the module to load; default=notpy",
-    )
-
-    parser.add_argument(
-        "-c",
-        "--convert",
-        help="Show the original code and the code transformed into standard Python.",
-        action="store_true",
+        "--lang",
+        help="""The language to be assumed when starting the console.
+                Usually a two-letter code such as 'fr' for French.""",
     )
 
     parser.add_argument(
@@ -123,19 +124,24 @@ if "-m" in sys.argv:
         action="store_true",
     )
 
-    args = parser.parse_args()
+    parser.add_argument(
+        "--debug",
+        help="""In the debug mode, various information is printed as files
+                and input in console are processed.""",
+        action="store_true",
+    )
 
-    if args.convert:
-        show_python = True
-        conversion.CONVERT = True
-    else:
-        show_python = False
+    args = parser.parse_args()
 
     if args.diff:
         conversion.DIFF = True
 
-    if args.file_extension is not None:
-        conversion.FILE_EXT = args.file_extension
+    if args.lang is not None:
+        conversion.set_lang(args.lang)
+
+    if args.debug:
+        show_python = True
+        conversion.set_debug(True)
 
     if args.source is not None:
         try:

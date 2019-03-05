@@ -1,0 +1,196 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>avantpy.import_hook &#8212; AvantPy  documentation</title>
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for avantpy.import_hook</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;A custom importer making use of the import hook capability</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">difflib</span>
+<span class="kn">import</span> <span class="nn">importlib</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">webbrowser</span>
+
+<span class="kn">from</span> <span class="nn">importlib.abc</span> <span class="k">import</span> <span class="n">Loader</span><span class="p">,</span> <span class="n">MetaPathFinder</span>
+<span class="kn">from</span> <span class="nn">importlib.util</span> <span class="k">import</span> <span class="n">spec_from_file_location</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">conversion</span>
+
+
+<div class="viewcode-block" id="import_main"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.import_main">[docs]</a><span class="k">def</span> <span class="nf">import_main</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Imports the module that is to be interpreted as the main module.</span>
+
+<span class="sd">       avantpy is often invoked with a script meant to be run as the</span>
+<span class="sd">       main module its source is transformed with the -s (or --source) option,</span>
+<span class="sd">       as in::</span>
+
+<span class="sd">           python -m avantpy -s name</span>
+
+<span class="sd">       Python identifies avantpy as the main script; we artificially</span>
+<span class="sd">       change this so that &quot;main_script&quot; is properly identified as ``name``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conversion</span><span class="o">.</span><span class="n">MAIN_MODULE_NAME</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="k">return</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AvantPyMetaFinder"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.AvantPyMetaFinder">[docs]</a><span class="k">class</span> <span class="nc">AvantPyMetaFinder</span><span class="p">(</span><span class="n">MetaPathFinder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A custom finder to locate modules.  The main reason for this code</span>
+<span class="sd">       is to ensure that our custom loader, which does the code transformations,</span>
+<span class="sd">       is used.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AvantPyMetaFinder.find_spec"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.AvantPyMetaFinder.find_spec">[docs]</a>    <span class="k">def</span> <span class="nf">find_spec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fullname</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Finds the appropriate properties (spec) of a module, and sets</span>
+<span class="sd">           its loader.&quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()]</span>
+        <span class="k">if</span> <span class="s2">&quot;.&quot;</span> <span class="ow">in</span> <span class="n">fullname</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">fullname</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">fullname</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">conversion</span><span class="o">.</span><span class="n">FILE_EXT</span><span class="p">:</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">ext</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+                    <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="k">return</span> <span class="n">spec_from_file_location</span><span class="p">(</span>
+                <span class="n">fullname</span><span class="p">,</span>
+                <span class="n">filename</span><span class="p">,</span>
+                <span class="n">loader</span><span class="o">=</span><span class="n">AvantPyLoader</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span>
+                <span class="n">submodule_search_locations</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># Not an AvantPy file</span></div></div>
+
+
+<span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">AvantPyMetaFinder</span><span class="p">())</span>
+
+
+<div class="viewcode-block" id="AvantPyLoader"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.AvantPyLoader">[docs]</a><span class="k">class</span> <span class="nc">AvantPyLoader</span><span class="p">(</span><span class="n">Loader</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A custom loader which will transform the source prior to its execution&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+
+<div class="viewcode-block" id="AvantPyLoader.exec_module"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.AvantPyLoader.exec_module">[docs]</a>    <span class="k">def</span> <span class="nf">exec_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;import the source code, conversion it before executing it.&quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">module</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="n">conversion</span><span class="o">.</span><span class="n">MAIN_MODULE_NAME</span><span class="p">:</span>
+            <span class="n">module</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;__main__&quot;</span>
+            <span class="n">conversion</span><span class="o">.</span><span class="n">MAIN_MODULE_NAME</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">source</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">original</span> <span class="o">=</span> <span class="n">source</span>
+
+        <span class="n">_path</span><span class="p">,</span> <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">extension</span> <span class="o">=</span> <span class="n">extension</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+        <span class="k">if</span> <span class="n">extension</span> <span class="ow">in</span> <span class="n">conversion</span><span class="o">.</span><span class="n">DICTIONARIES</span><span class="p">:</span>
+            <span class="n">conversion</span><span class="o">.</span><span class="n">CURRENT</span> <span class="o">=</span> <span class="n">extension</span>
+            <span class="n">source</span> <span class="o">=</span> <span class="n">conversion</span><span class="o">.</span><span class="n">to_python</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">conversion</span><span class="o">.</span><span class="n">DIFF</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">_path</span><span class="p">)</span>
+                <span class="n">html_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_html_diff</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">original</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
+                <span class="n">webbrowser</span><span class="o">.</span><span class="n">open_new_tab</span><span class="p">(</span><span class="n">html_file</span><span class="p">)</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: extension not found in known languages.&quot;</span><span class="o">%</span><span class="n">extension</span><span class="p">)</span>
+
+        <span class="n">exec</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="nb">vars</span><span class="p">(</span><span class="n">module</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="AvantPyLoader.write_html_diff"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.AvantPyLoader.write_html_diff">[docs]</a>    <span class="k">def</span> <span class="nf">write_html_diff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">original</span><span class="p">,</span> <span class="n">transformed</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Writes an html file showing the difference between the original</span>
+<span class="sd">           and the transformed source.&quot;&quot;&quot;</span>
+        <span class="n">html_file</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.html&quot;</span>
+        <span class="n">fromlines</span> <span class="o">=</span> <span class="n">original</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">tolines</span> <span class="o">=</span> <span class="n">transformed</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span>
+
+        <span class="n">diff</span> <span class="o">=</span> <span class="n">difflib</span><span class="o">.</span><span class="n">HtmlDiff</span><span class="p">()</span><span class="o">.</span><span class="n">make_file</span><span class="p">(</span>
+            <span class="n">fromlines</span><span class="p">,</span> <span class="n">tolines</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">conversion</span><span class="o">.</span><span class="n">CURRENT</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.py&quot;</span>
+        <span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">html_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">the_file</span><span class="p">:</span>
+            <span class="n">the_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">html_file</span></div></div>
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, André Roberge.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

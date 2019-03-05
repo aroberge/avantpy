@@ -52,5 +52,7 @@ en = {
     # a few builtins useful for beginners
     'input': 'input',
     'print': 'print',
-    'range': 'range'
+    'range': 'range',
+    # a well-known python expression
+    '__name__ == "__main__"': 'notimported'
 }

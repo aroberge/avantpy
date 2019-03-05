@@ -34,3 +34,10 @@ def test_repeat_forever():
        if x == 3:
            break
     assert x == 3
+
+if __name__ == '__main__':
+    test_repeat_forever()
+    test_repeat_while()
+    test_repeat_until()
+    test_repeat_n()
+    print("Success from test_repeat.pyen!")

@@ -17,5 +17,5 @@ def main():
     test_for()
     imprimir("Success.")
 
-if __name__ == "__main__":
+if noimportado:
     main()
