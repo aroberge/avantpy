@@ -6,6 +6,11 @@ def test_repeat_n():
         x += 1
     assert x==4
 
+    repeat ( 1 +
+             2):
+        x -= 1
+    assert x == 1
+
 
 def test_repeat_until():
     x = 4

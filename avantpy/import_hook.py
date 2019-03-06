@@ -13,6 +13,16 @@ from importlib.util import spec_from_file_location
 from . import conversion
 
 
+
+DIFF = False
+def show_diff():
+    '''Sets the flag so that the difference between the original source
+    and the converted one can be shown'''
+    global DIFF
+    DIFF = True
+
+
+MAIN_MODULE_NAME = None
 def import_main(name):
     """Imports the module that is to be interpreted as the main module.
 
@@ -22,10 +32,10 @@ def import_main(name):
 
            python -m avantpy -s name
 
-       Python identifies avantpy as the main script; we artificially
-       change this so that "main_script" is properly identified as ``name``.
+       Python identifies avantpy as the main script, which is not what we want.
     """
-    conversion.MAIN_MODULE_NAME = name
+    global MAIN_MODULE_NAME
+    MAIN_MODULE_NAME = name
     return importlib.import_module(name)
 
 
@@ -45,7 +55,7 @@ class AvantPyMetaFinder(MetaPathFinder):
         else:
             name = fullname
         for entry in path:
-            for ext in conversion.FILE_EXT:
+            for ext in conversion.all_dialects():
                 filename = os.path.join(entry, name + "." + ext)
                 if os.path.exists(filename):
                     break
@@ -73,9 +83,9 @@ class AvantPyLoader(Loader):
     def exec_module(self, module):
         """import the source code, conversion it before executing it."""
 
-        if module.__name__ == conversion.MAIN_MODULE_NAME:
+        if module.__name__ == MAIN_MODULE_NAME:
             module.__name__ = "__main__"
-            conversion.MAIN_MODULE_NAME = None
+
 
         with open(self.filename, encoding="utf8") as f:
             source = f.read()
@@ -84,15 +94,16 @@ class AvantPyLoader(Loader):
         _path, extension = os.path.splitext(self.filename)
         extension = extension[1:]
 
-        if extension in conversion.DICTIONARIES:
-            conversion.CURRENT = extension
+        if conversion.is_dialect(extension):
+            conversion.set_dialect(extension)
             source = conversion.to_python(source)
 
-            if conversion.DIFF:
+            if DIFF:
                 name = os.path.basename(_path)
                 html_file = self.write_html_diff(name, original, source)
                 webbrowser.open_new_tab(html_file)
                 sys.exit()
+
         else:
             raise NotImplementedError("%s: extension not found in known languages."%extension)
 
@@ -107,7 +118,7 @@ class AvantPyLoader(Loader):
         print
 
         diff = difflib.HtmlDiff().make_file(
-            fromlines, tolines, name + "." + conversion.CURRENT, name + ".py"
+            fromlines, tolines, name + "." + conversion.get_dialect(), name + ".py"
         )
         with open(html_file, "w", encoding="utf8") as the_file:
             the_file.write(diff)

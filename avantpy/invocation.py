@@ -119,7 +119,9 @@ if "-m" in sys.argv:
         "-d",
         "--diff",
         help="""Creates an html file containing a showing
-                how the original source differs from the transformed one.""",
+                how the original source differs from the transformed one,
+                opens a tab in the default browser showing this html file,
+                and exits without executing the code from the source.""",
         action="store_true",
     )
 
@@ -133,7 +135,7 @@ if "-m" in sys.argv:
     args = parser.parse_args()
 
     if args.diff:
-        conversion.DIFF = True
+        import_hook.show_diff()
 
     if args.lang is not None:
         conversion.set_lang(args.lang)
