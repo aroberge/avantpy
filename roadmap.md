@@ -3,10 +3,10 @@
 ## Enhancements
 
 - [ ] Consider using `colorama` as optional dependencies for the console
-- [ ] Add option to restrict processing to single dialect
+- [x] Add option to restrict processing to single dialect
   - In this case, only load single dialect file; if not found, issue error message and exit.
 - [x] Think of replacing `__name__ is "__main__"` by a single keyword, perhaps `NotImported`.
-- [ ] Change html template for html output produced by difflib
+- [x] Change html template for html output produced by difflib
 - [ ] Make it possible to show the difflib output in an interactive session without exiting;
   This could be a more useful feature in an IDE environment
    - [ ] Have the possible options:
@@ -57,7 +57,7 @@
 
 ## Testing
 
-- [ ] Add tests for console
+- [x] Add test for console
 - [ ] Create comprehensive test for given dialect
 - [x] Add UPPERCASE English dialect
   - [ ] Add test for this

@@ -115,12 +115,54 @@ class AvantPyLoader(Loader):
         html_file = name + ".html"
         fromlines = original.split("\n")
         tolines = transformed.split("\n")
-        print
 
-        diff = difflib.HtmlDiff().make_file(
+        diff = MyHtmlDiff().make_file(
             fromlines, tolines, name + "." + conversion.get_dialect(), name + ".py"
         )
         with open(html_file, "w", encoding="utf8") as the_file:
             the_file.write(diff)
         return html_file
+
+
+my_file_template = """
+<!DOCTYPE html">
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title></title>
+    <style type="text/css">%(styles)s
+    </style>
+</head>
+<body>
+    %(table)s%(legend)s
+</body>
+</html>"""
+
+my_styles = """
+        a {display: none}
+        table.diff {font-family:Courier; border:medium; font-weight:bold}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffcc00}
+        .diff_sub {background-color:#ffaaaa}"""
+
+# my_legend = """
+#     <table class="diff" summary="Legends">
+#         <tr> <th> Legends </th> </tr>
+#         <tr> <td> <table border="" summary="Colors">
+#                       <tr><th> Colors </th> </tr>
+#                       <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+#                       <tr><td class="diff_chg">Changed</td> </tr>
+#                       <tr><td class="diff_sub">Deleted</td> </tr>
+#                   </table></td></tr>
+#     </table>"""
+my_legend = ''
+
+class MyHtmlDiff(difflib.HtmlDiff):
+    _filetemplate = my_file_template
+    _legend = my_legend
+    _styles = my_styles
+
 

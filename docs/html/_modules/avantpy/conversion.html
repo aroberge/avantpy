@@ -247,7 +247,7 @@
 <span class="sd">    Python&#39;s tokenize module includes a function, called</span>
 <span class="sd">    untokenize, which can be used to combine a series of tokens</span>
 <span class="sd">    into a valid program.  With a normal Python program, doing</span>
-<span class="sd">    something similar to</span>
+<span class="sd">    something similar to::</span>
 
 <span class="sd">        new_source = untokenize(tokenize(source))</span>
 
@@ -255,11 +255,11 @@
 <span class="sd">    as executing ``source``.  However, the spacing between tokens</span>
 <span class="sd">    would not necessarily be the same for both ``new_source``</span>
 <span class="sd">    and the original program.  For example, the original program</span>
-<span class="sd">    may include a line like</span>
+<span class="sd">    may include a line like::</span>
 
 <span class="sd">        variable = function( argument )</span>
 
-<span class="sd">    which might be converted into</span>
+<span class="sd">    which might be converted into::</span>
 
 <span class="sd">        variable =function(argument)</span>
 
@@ -314,12 +314,16 @@
 <span class="sd">    B. ``repeat``</span>
 
 <span class="sd">    In addition to the standard Python loops constructs, AvantPy</span>
-<span class="sd">    support four additional idioms:</span>
+<span class="sd">    support four additional idioms::</span>
 
-<span class="sd">    1. ``repeat forever:``           # while True:</span>
-<span class="sd">    2. ``repeat while condition:``   # while condition:</span>
-<span class="sd">    3. ``repeat until condition:``   # while not condition:</span>
-<span class="sd">    4. ``repeat n:``                 # for some_var in range(n):</span>
+<span class="sd">        repeat forever:           # while True:</span>
+<span class="sd">            pass</span>
+<span class="sd">        repeat while condition:   # while condition:</span>
+<span class="sd">            pass</span>
+<span class="sd">        repeat until condition:   # while not condition:</span>
+<span class="sd">            pass</span>
+<span class="sd">        repeat n:                 # for some_var in range(n):</span>
+<span class="sd">            pass</span>
 
 <span class="sd">    For this last case, ``n`` could be an expression, possibly</span>
 <span class="sd">    spanning multiple lines.</span>
@@ -331,10 +335,10 @@
 <span class="sd">    and ignore the rest of the code since it would be irrelevant</span>
 <span class="sd">    when the script is executed.</span>
 
-<span class="sd">    If &quot;repeat&quot; is the first keyword on a line, we set a flag</span>
+<span class="sd">    If ``repeat`` is the first keyword on a line, we set a flag</span>
 <span class="sd">    (repeat_loop) to True, preparing to look at the next token.</span>
 
-<span class="sd">    a) If the next token is one of &quot;forever&quot;, &quot;until&quot;, &quot;while&quot;,</span>
+<span class="sd">    a) If the next token is one of ``forever``, ``until``, ``while``,</span>
 <span class="sd">    or their equivalent in the target dialect</span>
 <span class="sd">    (remember that including normal Python keywords in a program written</span>
 <span class="sd">    in a different dialect is allowed)</span>

@@ -1,0 +1,6 @@
+DEF test_assert():
+    ASSERT TRUE
+
+IF __name__ == '__main__':
+    test_assert()
+    PRINT('Success.')

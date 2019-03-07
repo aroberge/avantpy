@@ -170,14 +170,56 @@
         <span class="n">html_file</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.html&quot;</span>
         <span class="n">fromlines</span> <span class="o">=</span> <span class="n">original</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">tolines</span> <span class="o">=</span> <span class="n">transformed</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span>
 
-        <span class="n">diff</span> <span class="o">=</span> <span class="n">difflib</span><span class="o">.</span><span class="n">HtmlDiff</span><span class="p">()</span><span class="o">.</span><span class="n">make_file</span><span class="p">(</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="n">MyHtmlDiff</span><span class="p">()</span><span class="o">.</span><span class="n">make_file</span><span class="p">(</span>
             <span class="n">fromlines</span><span class="p">,</span> <span class="n">tolines</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">conversion</span><span class="o">.</span><span class="n">get_dialect</span><span class="p">(),</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.py&quot;</span>
         <span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">html_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">the_file</span><span class="p">:</span>
             <span class="n">the_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">html_file</span></div></div>
+
+
+<span class="n">my_file_template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">&lt;!DOCTYPE html&quot;&gt;</span>
+<span class="s2">&lt;html&gt;</span>
+<span class="s2">&lt;head&gt;</span>
+<span class="s2">    &lt;meta charset=&quot;utf-8&quot;/&gt;</span>
+<span class="s2">    &lt;title&gt;&lt;/title&gt;</span>
+<span class="s2">    &lt;style type=&quot;text/css&quot;&gt;</span><span class="si">%(styles)s</span><span class="s2"></span>
+<span class="s2">    &lt;/style&gt;</span>
+<span class="s2">&lt;/head&gt;</span>
+<span class="s2">&lt;body&gt;</span>
+<span class="s2">    </span><span class="si">%(table)s%(legend)s</span><span class="s2"></span>
+<span class="s2">&lt;/body&gt;</span>
+<span class="s2">&lt;/html&gt;&quot;&quot;&quot;</span>
+
+<span class="n">my_styles</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        a {display: none}</span>
+<span class="s2">        table.diff {font-family:Courier; border:medium; font-weight:bold}</span>
+<span class="s2">        .diff_header {background-color:#e0e0e0}</span>
+<span class="s2">        td.diff_header {text-align:right}</span>
+<span class="s2">        .diff_next {background-color:#c0c0c0}</span>
+<span class="s2">        .diff_add {background-color:#aaffaa}</span>
+<span class="s2">        .diff_chg {background-color:#ffcc00}</span>
+<span class="s2">        .diff_sub {background-color:#ffaaaa}&quot;&quot;&quot;</span>
+
+<span class="c1"># my_legend = &quot;&quot;&quot;</span>
+<span class="c1">#     &lt;table class=&quot;diff&quot; summary=&quot;Legends&quot;&gt;</span>
+<span class="c1">#         &lt;tr&gt; &lt;th&gt; Legends &lt;/th&gt; &lt;/tr&gt;</span>
+<span class="c1">#         &lt;tr&gt; &lt;td&gt; &lt;table border=&quot;&quot; summary=&quot;Colors&quot;&gt;</span>
+<span class="c1">#                       &lt;tr&gt;&lt;th&gt; Colors &lt;/th&gt; &lt;/tr&gt;</span>
+<span class="c1">#                       &lt;tr&gt;&lt;td class=&quot;diff_add&quot;&gt;&amp;nbsp;Added&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="c1">#                       &lt;tr&gt;&lt;td class=&quot;diff_chg&quot;&gt;Changed&lt;/td&gt; &lt;/tr&gt;</span>
+<span class="c1">#                       &lt;tr&gt;&lt;td class=&quot;diff_sub&quot;&gt;Deleted&lt;/td&gt; &lt;/tr&gt;</span>
+<span class="c1">#                   &lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="c1">#     &lt;/table&gt;&quot;&quot;&quot;</span>
+<span class="n">my_legend</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+<div class="viewcode-block" id="MyHtmlDiff"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.MyHtmlDiff">[docs]</a><span class="k">class</span> <span class="nc">MyHtmlDiff</span><span class="p">(</span><span class="n">difflib</span><span class="o">.</span><span class="n">HtmlDiff</span><span class="p">):</span>
+    <span class="n">_filetemplate</span> <span class="o">=</span> <span class="n">my_file_template</span>
+    <span class="n">_legend</span> <span class="o">=</span> <span class="n">my_legend</span>
+    <span class="n">_styles</span> <span class="o">=</span> <span class="n">my_styles</span></div>
+
 
 </pre></div>
 

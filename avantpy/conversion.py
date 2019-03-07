@@ -192,7 +192,7 @@ def to_python(source, dialect=None):
     Python's tokenize module includes a function, called
     untokenize, which can be used to combine a series of tokens
     into a valid program.  With a normal Python program, doing
-    something similar to
+    something similar to::
 
         new_source = untokenize(tokenize(source))
 
@@ -200,11 +200,11 @@ def to_python(source, dialect=None):
     as executing ``source``.  However, the spacing between tokens
     would not necessarily be the same for both ``new_source``
     and the original program.  For example, the original program
-    may include a line like
+    may include a line like::
 
         variable = function( argument )
 
-    which might be converted into
+    which might be converted into::
 
         variable =function(argument)
 
@@ -259,12 +259,16 @@ def to_python(source, dialect=None):
     B. ``repeat``
 
     In addition to the standard Python loops constructs, AvantPy
-    support four additional idioms:
+    support four additional idioms::
 
-    1. ``repeat forever:``           # while True:
-    2. ``repeat while condition:``   # while condition:
-    3. ``repeat until condition:``   # while not condition:
-    4. ``repeat n:``                 # for some_var in range(n):
+        repeat forever:           # while True:
+            pass
+        repeat while condition:   # while condition:
+            pass
+        repeat until condition:   # while not condition:
+            pass
+        repeat n:                 # for some_var in range(n):
+            pass
 
     For this last case, ``n`` could be an expression, possibly
     spanning multiple lines.
@@ -276,10 +280,10 @@ def to_python(source, dialect=None):
     and ignore the rest of the code since it would be irrelevant
     when the script is executed.
 
-    If "repeat" is the first keyword on a line, we set a flag
+    If ``repeat`` is the first keyword on a line, we set a flag
     (repeat_loop) to True, preparing to look at the next token.
 
-    a) If the next token is one of "forever", "until", "while",
+    a) If the next token is one of ``forever``, ``until``, ``while``,
     or their equivalent in the target dialect
     (remember that including normal Python keywords in a program written
     in a different dialect is allowed)

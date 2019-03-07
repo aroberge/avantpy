@@ -9,12 +9,14 @@
           content="text/html; charset=utf-8" />
     <title></title>
     <style type="text/css">
-        table.diff {font-family:Courier; border:medium;}
+        tr:nth-child(even) {background: #f9f9f9}
+        a {display: none}
+        table.diff {font-family:Courier; border:medium; font-weight:bold}
         .diff_header {background-color:#e0e0e0}
         td.diff_header {text-align:right}
         .diff_next {background-color:#c0c0c0}
         .diff_add {background-color:#aaffaa}
-        .diff_chg {background-color:#ffff77}
+        .diff_chg {background-color:#ffcc00}
         .diff_sub {background-color:#ffaaaa}
     </style>
 </head>
@@ -65,21 +67,6 @@
             <tr><td class="diff_next"></td><td class="diff_header" id="from0_36">36</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;bonjour&nbsp;=&nbsp;'Bonjour&nbsp;tout&nbsp;le&nbsp;monde&nbsp;!'&nbsp;&nbsp;#&nbsp;for&nbsp;console&nbsp;example</td><td class="diff_next"></td><td class="diff_header" id="to0_36">36</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;bonjour&nbsp;=&nbsp;'Bonjour&nbsp;tout&nbsp;le&nbsp;monde&nbsp;!'&nbsp;&nbsp;#&nbsp;for&nbsp;console&nbsp;example</td></tr>
             <tr><td class="diff_next"></td><td class="diff_header" id="from0_37">37</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to0_37">37</td><td nowrap="nowrap"></td></tr>
         </tbody>
-    </table>
-    <table class="diff" summary="Legends">
-        <tr> <th colspan="2"> Legends </th> </tr>
-        <tr> <td> <table border="" summary="Colors">
-                      <tr><th> Colors </th> </tr>
-                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
-                      <tr><td class="diff_chg">Changed</td> </tr>
-                      <tr><td class="diff_sub">Deleted</td> </tr>
-                  </table></td>
-             <td> <table border="" summary="Links">
-                      <tr><th colspan="2"> Links </th> </tr>
-                      <tr><td>(f)irst change</td> </tr>
-                      <tr><td>(n)ext change</td> </tr>
-                      <tr><td>(t)op</td> </tr>
-                  </table></td> </tr>
     </table>
 </body>
 

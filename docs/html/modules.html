@@ -123,6 +123,11 @@ its loader.</p>
 
 </dd></dl>
 
+<dl class="class">
+<dt id="avantpy.import_hook.MyHtmlDiff">
+<em class="property">class </em><code class="descclassname">avantpy.import_hook.</code><code class="descname">MyHtmlDiff</code><span class="sig-paren">(</span><em>tabsize=8</em>, <em>wrapcolumn=None</em>, <em>linejunk=None</em>, <em>charjunk=&lt;function IS_CHARACTER_JUNK&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#MyHtmlDiff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.MyHtmlDiff" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="function">
 <dt id="avantpy.import_hook.import_main">
 <code class="descclassname">avantpy.import_hook.</code><code class="descname">import_main</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#import_main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.import_main" title="Permalink to this definition">¶</a></dt>
@@ -207,19 +212,22 @@ executed.</p>
 <p>Python’s tokenize module includes a function, called
 untokenize, which can be used to combine a series of tokens
 into a valid program.  With a normal Python program, doing
-something similar to</p>
-<blockquote>
-<div>new_source = untokenize(tokenize(source))</div></blockquote>
+something similar to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">new_source</span> <span class="o">=</span> <span class="n">untokenize</span><span class="p">(</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">))</span>
+</pre></div>
+</div>
 <p>would be such that executing <code class="docutils literal notranslate"><span class="pre">new_source</span></code> would be the same
 as executing <code class="docutils literal notranslate"><span class="pre">source</span></code>.  However, the spacing between tokens
 would not necessarily be the same for both <code class="docutils literal notranslate"><span class="pre">new_source</span></code>
 and the original program.  For example, the original program
-may include a line like</p>
-<blockquote>
-<div>variable = function( argument )</div></blockquote>
-<p>which might be converted into</p>
-<blockquote>
-<div>variable =function(argument)</div></blockquote>
+may include a line like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">variable</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span> <span class="n">argument</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>which might be converted into:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">variable</span> <span class="o">=</span><span class="n">function</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>One possibility that AvantPy offers is to run program with the 
 –diff option to show the difference 
 between the code written and standard Python. The difflib
@@ -269,12 +277,16 @@ the mistake in their code.</p>
 </ol>
 <p>In addition to the standard Python loops constructs, AvantPy
 support four additional idioms:</p>
-<ol class="arabic simple">
-<li><code class="docutils literal notranslate"><span class="pre">repeat</span> <span class="pre">forever:</span></code>           # while True:</li>
-<li><code class="docutils literal notranslate"><span class="pre">repeat</span> <span class="pre">while</span> <span class="pre">condition:</span></code>   # while condition:</li>
-<li><code class="docutils literal notranslate"><span class="pre">repeat</span> <span class="pre">until</span> <span class="pre">condition:</span></code>   # while not condition:</li>
-<li><code class="docutils literal notranslate"><span class="pre">repeat</span> <span class="pre">n:</span></code>                 # for some_var in range(n):</li>
-</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repeat</span> <span class="n">forever</span><span class="p">:</span>           <span class="c1"># while True:</span>
+    <span class="k">pass</span>
+<span class="n">repeat</span> <span class="k">while</span> <span class="n">condition</span><span class="p">:</span>   <span class="c1"># while condition:</span>
+    <span class="k">pass</span>
+<span class="n">repeat</span> <span class="n">until</span> <span class="n">condition</span><span class="p">:</span>   <span class="c1"># while not condition:</span>
+    <span class="k">pass</span>
+<span class="n">repeat</span> <span class="n">n</span><span class="p">:</span>                 <span class="c1"># for some_var in range(n):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
 <p>For this last case, <code class="docutils literal notranslate"><span class="pre">n</span></code> could be an expression, possibly
 spanning multiple lines.</p>
 <p>When we encounter the equivalent to the “repeat” keyword in
@@ -283,9 +295,9 @@ keyword occurring on a logical line; if not, we include a
 statement raising a SyntaxError with an appropriate message
 and ignore the rest of the code since it would be irrelevant
 when the script is executed.</p>
-<p>If “repeat” is the first keyword on a line, we set a flag
+<p>If <code class="docutils literal notranslate"><span class="pre">repeat</span></code> is the first keyword on a line, we set a flag
 (repeat_loop) to True, preparing to look at the next token.</p>
-<p>a) If the next token is one of “forever”, “until”, “while”,
+<p>a) If the next token is one of <code class="docutils literal notranslate"><span class="pre">forever</span></code>, <code class="docutils literal notranslate"><span class="pre">until</span></code>, <code class="docutils literal notranslate"><span class="pre">while</span></code>,
 or their equivalent in the target dialect
 (remember that including normal Python keywords in a program written
 in a different dialect is allowed)
