@@ -98,10 +98,128 @@ transformed into standard Python, see
 <p>The following can definitely be skipped, unless you want to know all the details.</p>
 <dl class="function">
 <dt>
-<code class="descclassname">avantpy.conversion.</code><code class="descname">to_python</code><span class="sig-paren">(</span><em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/conversion.html#to_python"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>A conversion with a one-to-one translation of keywords is used
-to provide the transformation.</p>
-<p>This needs to be documented in much details.</p>
+<code class="descclassname">avantpy.conversion.</code><code class="descname">to_python</code><span class="sig-paren">(</span><em>source</em>, <em>dialect=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/conversion.html#to_python"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Converts a source in a known dialect into standard Python.</p>
+<p>This function uses Python’s <code class="docutils literal notranslate"><span class="pre">tokenize</span></code> module to convert a
+source into a sequence of tokens. A token might be the name
+of a variable, an operator, a parenthesis, a string, etc.</p>
+<p>This function analyses these tokens,
+replacing some written into a different dialect until all
+are converted into standard Python tokens.  Then, these
+are recombined into a string which is the source to be 
+executed.</p>
+<p>Python’s tokenize module includes a function, called
+untokenize, which can be used to combine a series of tokens
+into a valid program.  With a normal Python program, doing
+something similar to</p>
+<blockquote>
+<div>new_source = untokenize(tokenize(source))</div></blockquote>
+<p>would be such that executing <code class="docutils literal notranslate"><span class="pre">new_source</span></code> would be the same
+as executing <code class="docutils literal notranslate"><span class="pre">source</span></code>.  However, the spacing between tokens
+would not necessarily be the same for both <code class="docutils literal notranslate"><span class="pre">new_source</span></code>
+and the original program.  For example, the original program
+may include a line like</p>
+<blockquote>
+<div>variable = function( argument )</div></blockquote>
+<p>which might be converted into</p>
+<blockquote>
+<div>variable =function(argument)</div></blockquote>
+<p>One possibility that AvantPy offers is to run program with the 
+–diff option to show the difference 
+between the code written and standard Python. The difflib
+module, used to do this, shows all differences including
+differences in spaces between tokens.  Since the primary
+goal of the –diff option is to allow users to learn the
+differences between their dialect and standard Python, it is
+important to restrict differences shown to only those that
+are meaningful.  As a result, we do not use Python’s
+untokenize function, and explicitly keep track of spacing
+between tokens.</p>
+<p>To understand how this function works, it is useful to review
+all possible cases, from some of the most complex, ending
+with the simplest ones.</p>
+<ol class="upperalpha simple">
+<li><code class="docutils literal notranslate"><span class="pre">nobreak</span></code></li>
+</ol>
+<p>AvantPy has an additional keyword, named <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> in the
+English dialect, which can be used in <code class="docutils literal notranslate"><span class="pre">for</span></code> or <code class="docutils literal notranslate"><span class="pre">while</span></code>
+loops instead of the standard <code class="docutils literal notranslate"><span class="pre">else</span></code>, as in:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
+    <span class="c1"># code</span>
+<span class="n">nobreak</span><span class="p">:</span>
+    <span class="c1"># code</span>
+</pre></div>
+</div>
+<p>However, <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> cannot be used in an <code class="docutils literal notranslate"><span class="pre">if/elif/else</span></code>
+blocks to replace <code class="docutils literal notranslate"><span class="pre">else</span></code>.</p>
+<p>To identify if a program includes a <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> keyword
+mistakenly, every time we see a leading <code class="docutils literal notranslate"><span class="pre">for</span></code>, <code class="docutils literal notranslate"><span class="pre">while</span></code>,
+<code class="docutils literal notranslate"><span class="pre">if</span></code> or <code class="docutils literal notranslate"><span class="pre">elif</span></code> keyword (or their equivalent in a
+given dialect), we note the indentation (column where the
+first character is written) and the corresponding keyword.
+A list containing these keywords is called <code class="docutils literal notranslate"><span class="pre">blocks_with_else</span></code>
+in this function.</p>
+<p>Later, when we encounter a <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> keyword at a given
+indentation, we check to see if the last <code class="docutils literal notranslate"><span class="pre">blocks_with_else</span></code>
+keyword found at that same indentation was one for which
+it made sense to use <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> or not.  If it was a
+loop, we simply replace <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> by <code class="docutils literal notranslate"><span class="pre">else</span></code>. If not,
+we stop processing the code, insert a <code class="docutils literal notranslate"><span class="pre">raise</span> <span class="pre">SyntaxError</span></code>
+statement with an appropriate message. When the code is
+run, the user will thus be alerted as to the cause of
+the mistake in their code.</p>
+<ol class="upperalpha simple" start="2">
+<li><code class="docutils literal notranslate"><span class="pre">repeat</span></code></li>
+</ol>
+<p>In addition to the standard Python loops constructs, AvantPy
+support four additional idioms:</p>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">repeat</span> <span class="pre">forever:</span></code>           # while True:</li>
+<li><code class="docutils literal notranslate"><span class="pre">repeat</span> <span class="pre">while</span> <span class="pre">condition:</span></code>   # while condition:</li>
+<li><code class="docutils literal notranslate"><span class="pre">repeat</span> <span class="pre">until</span> <span class="pre">condition:</span></code>   # while not condition:</li>
+<li><code class="docutils literal notranslate"><span class="pre">repeat</span> <span class="pre">n:</span></code>                 # for some_var in range(n):</li>
+</ol>
+<p>For this last case, <code class="docutils literal notranslate"><span class="pre">n</span></code> could be an expression, possibly
+spanning multiple lines.</p>
+<p>When we encounter the equivalent to the “repeat” keyword in
+the selected dialect, we must make sure that it is the first
+keyword occurring on a logical line; if not, we include a
+statement raising a SyntaxError with an appropriate message
+and ignore the rest of the code since it would be irrelevant
+when the script is executed.</p>
+<p>If “repeat” is the first keyword on a line, we set a flag
+(repeat_loop) to True, preparing to look at the next token.</p>
+<p>a) If the next token is one of “forever”, “until”, “while”,
+or their equivalent in the target dialect
+(remember that including normal Python keywords in a program written
+in a different dialect is allowed)
+we can proceed with the rest in a straightforward manner.</p>
+<p>b) if that is not the case, we set a different flag (repeat_n)
+to True so that we can deal with the relevant for loop.</p>
+<p>For this last case, the variable in the for loop is a dummy
+variable; we must ensure that its name is chosen such that
+it does not occur anywhere else in the source code.
+This is accomplished using a method called
+<code class="docutils literal notranslate"><span class="pre">get_unique_variable_names</span></code>.</p>
+<ol class="upperalpha simple" start="3">
+<li><code class="docutils literal notranslate"><span class="pre">nobreak</span></code> and <code class="docutils literal notranslate"><span class="pre">repeat</span></code></li>
+</ol>
+<p>A <code class="docutils literal notranslate"><span class="pre">repeat</span></code> loop is essentially a <code class="docutils literal notranslate"><span class="pre">for</span></code> or a <code class="docutils literal notranslate"><span class="pre">while</span></code>
+loop. As such, it could have an <code class="docutils literal notranslate"><span class="pre">else</span></code> clause which
+has a clearer meaning if the keyword <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> is used
+instead.  Thus, just like we mentioned before, we also
+keep track of where a leading <code class="docutils literal notranslate"><span class="pre">repeat</span></code> is used.</p>
+<ol class="upperalpha simple" start="4">
+<li>Direct translation</li>
+</ol>
+<p>If a token does not match one of the cases described above,
+we need to see if it is a term used in the dialect; if
+so, we simply translate it into standard Python.</p>
+<ol class="upperalpha simple" start="5">
+<li>Remaining tokens</li>
+</ol>
+<p>Any remaining token is left as is; it is assumed to be valid
+Python.</p>
 </dd></dl>
 
 </div>

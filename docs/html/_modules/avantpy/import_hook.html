@@ -68,6 +68,16 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">conversion</span>
 
 
+
+<span class="n">DIFF</span> <span class="o">=</span> <span class="kc">False</span>
+<div class="viewcode-block" id="show_diff"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.show_diff">[docs]</a><span class="k">def</span> <span class="nf">show_diff</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;Sets the flag so that the difference between the original source</span>
+<span class="sd">    and the converted one can be shown&#39;&#39;&#39;</span>
+    <span class="k">global</span> <span class="n">DIFF</span>
+    <span class="n">DIFF</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+
+<span class="n">MAIN_MODULE_NAME</span> <span class="o">=</span> <span class="kc">None</span>
 <div class="viewcode-block" id="import_main"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.import_main">[docs]</a><span class="k">def</span> <span class="nf">import_main</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Imports the module that is to be interpreted as the main module.</span>
 
@@ -77,10 +87,10 @@
 
 <span class="sd">           python -m avantpy -s name</span>
 
-<span class="sd">       Python identifies avantpy as the main script; we artificially</span>
-<span class="sd">       change this so that &quot;main_script&quot; is properly identified as ``name``.</span>
+<span class="sd">       Python identifies avantpy as the main script, which is not what we want.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conversion</span><span class="o">.</span><span class="n">MAIN_MODULE_NAME</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="k">global</span> <span class="n">MAIN_MODULE_NAME</span>
+    <span class="n">MAIN_MODULE_NAME</span> <span class="o">=</span> <span class="n">name</span>
     <span class="k">return</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
 
 
@@ -100,7 +110,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">name</span> <span class="o">=</span> <span class="n">fullname</span>
         <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">conversion</span><span class="o">.</span><span class="n">FILE_EXT</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">conversion</span><span class="o">.</span><span class="n">all_dialects</span><span class="p">():</span>
                 <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">ext</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
                     <span class="k">break</span>
@@ -128,9 +138,9 @@
 <div class="viewcode-block" id="AvantPyLoader.exec_module"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.AvantPyLoader.exec_module">[docs]</a>    <span class="k">def</span> <span class="nf">exec_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;import the source code, conversion it before executing it.&quot;&quot;&quot;</span>
 
-        <span class="k">if</span> <span class="n">module</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="n">conversion</span><span class="o">.</span><span class="n">MAIN_MODULE_NAME</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">module</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="n">MAIN_MODULE_NAME</span><span class="p">:</span>
             <span class="n">module</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;__main__&quot;</span>
-            <span class="n">conversion</span><span class="o">.</span><span class="n">MAIN_MODULE_NAME</span> <span class="o">=</span> <span class="kc">None</span>
+
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">source</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
@@ -139,15 +149,16 @@
         <span class="n">_path</span><span class="p">,</span> <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
         <span class="n">extension</span> <span class="o">=</span> <span class="n">extension</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
-        <span class="k">if</span> <span class="n">extension</span> <span class="ow">in</span> <span class="n">conversion</span><span class="o">.</span><span class="n">DICTIONARIES</span><span class="p">:</span>
-            <span class="n">conversion</span><span class="o">.</span><span class="n">CURRENT</span> <span class="o">=</span> <span class="n">extension</span>
+        <span class="k">if</span> <span class="n">conversion</span><span class="o">.</span><span class="n">is_dialect</span><span class="p">(</span><span class="n">extension</span><span class="p">):</span>
+            <span class="n">conversion</span><span class="o">.</span><span class="n">set_dialect</span><span class="p">(</span><span class="n">extension</span><span class="p">)</span>
             <span class="n">source</span> <span class="o">=</span> <span class="n">conversion</span><span class="o">.</span><span class="n">to_python</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="n">conversion</span><span class="o">.</span><span class="n">DIFF</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">DIFF</span><span class="p">:</span>
                 <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">_path</span><span class="p">)</span>
                 <span class="n">html_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_html_diff</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">original</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
                 <span class="n">webbrowser</span><span class="o">.</span><span class="n">open_new_tab</span><span class="p">(</span><span class="n">html_file</span><span class="p">)</span>
                 <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: extension not found in known languages.&quot;</span><span class="o">%</span><span class="n">extension</span><span class="p">)</span>
 
@@ -162,7 +173,7 @@
         <span class="nb">print</span>
 
         <span class="n">diff</span> <span class="o">=</span> <span class="n">difflib</span><span class="o">.</span><span class="n">HtmlDiff</span><span class="p">()</span><span class="o">.</span><span class="n">make_file</span><span class="p">(</span>
-            <span class="n">fromlines</span><span class="p">,</span> <span class="n">tolines</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">conversion</span><span class="o">.</span><span class="n">CURRENT</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.py&quot;</span>
+            <span class="n">fromlines</span><span class="p">,</span> <span class="n">tolines</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">conversion</span><span class="o">.</span><span class="n">get_dialect</span><span class="p">(),</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.py&quot;</span>
         <span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">html_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">the_file</span><span class="p">:</span>
             <span class="n">the_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span>

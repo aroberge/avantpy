@@ -2,10 +2,6 @@
 
 Keeps track of available dialects, and perform require code transformations.
 
-.. warning::
-
-   This module is currently very poorly documented.
-
 """
 import glob
 import os.path
@@ -183,11 +179,84 @@ def set_lang(lang):
 def to_python(source, dialect=None):
     """Converts a source in a known dialect into standard Python.
 
-    To understand how this function works, it is useful to review
-    all possible cases, from the more complex ones to the
-    simplest.
+    This function uses Python's ``tokenize`` module to convert a
+    source into a sequence of tokens. A token might be the name
+    of a variable, an operator, a parenthesis, a string, etc.
 
-    A. repeat
+    This function analyses these tokens,
+    replacing some written into a different dialect until all
+    are converted into standard Python tokens.  Then, these
+    are recombined into a string which is the source to be 
+    executed.
+
+    Python's tokenize module includes a function, called
+    untokenize, which can be used to combine a series of tokens
+    into a valid program.  With a normal Python program, doing
+    something similar to
+
+        new_source = untokenize(tokenize(source))
+
+    would be such that executing ``new_source`` would be the same
+    as executing ``source``.  However, the spacing between tokens
+    would not necessarily be the same for both ``new_source``
+    and the original program.  For example, the original program
+    may include a line like
+
+        variable = function( argument )
+
+    which might be converted into
+
+        variable =function(argument)
+
+    One possibility that AvantPy offers is to run program with the 
+    --diff option to show the difference 
+    between the code written and standard Python. The difflib
+    module, used to do this, shows all differences including
+    differences in spaces between tokens.  Since the primary
+    goal of the --diff option is to allow users to learn the
+    differences between their dialect and standard Python, it is
+    important to restrict differences shown to only those that
+    are meaningful.  As a result, we do not use Python's
+    untokenize function, and explicitly keep track of spacing
+    between tokens.
+
+    To understand how this function works, it is useful to review
+    all possible cases, from some of the most complex, ending
+    with the simplest ones.
+
+    A. ``nobreak``
+
+    AvantPy has an additional keyword, named ``nobreak`` in the
+    English dialect, which can be used in ``for`` or ``while``
+    loops instead of the standard ``else``, as in::
+
+        while condition:
+            # code
+        nobreak:
+            # code
+
+    However, ``nobreak`` cannot be used in an ``if/elif/else``
+    blocks to replace ``else``.  
+
+    To identify if a program includes a ``nobreak`` keyword
+    mistakenly, every time we see a leading ``for``, ``while``,
+    ``if`` or ``elif`` keyword (or their equivalent in a
+    given dialect), we note the indentation (column where the
+    first character is written) and the corresponding keyword.
+    A list containing these keywords is called ``blocks_with_else``
+    in this function.
+
+    Later, when we encounter a ``nobreak`` keyword at a given
+    indentation, we check to see if the last ``blocks_with_else``
+    keyword found at that same indentation was one for which
+    it made sense to use ``nobreak`` or not.  If it was a
+    loop, we simply replace ``nobreak`` by ``else``. If not,
+    we stop processing the code, insert a ``raise SyntaxError``
+    statement with an appropriate message. When the code is
+    run, the user will thus be alerted as to the cause of
+    the mistake in their code.
+
+    B. ``repeat``
 
     In addition to the standard Python loops constructs, AvantPy
     support four additional idioms:
@@ -197,7 +266,7 @@ def to_python(source, dialect=None):
     3. ``repeat until condition:``   # while not condition:
     4. ``repeat n:``                 # for some_var in range(n):
 
-    For this last case, 'n' could be an expression, possibly
+    For this last case, ``n`` could be an expression, possibly
     spanning multiple lines.
 
     When we encounter the equivalent to the "repeat" keyword in
@@ -222,31 +291,28 @@ def to_python(source, dialect=None):
     For this last case, the variable in the for loop is a dummy
     variable; we must ensure that its name is chosen such that
     it does not occur anywhere else in the source code.
+    This is accomplished using a method called
+    ``get_unique_variable_names``.
 
-    B. nobreak
+    C. ``nobreak`` and ``repeat``
 
-    The next case we need to consider is the "nobreak" keyword.
+    A ``repeat`` loop is essentially a ``for`` or a ``while``
+    loop. As such, it could have an ``else`` clause which
+    has a clearer meaning if the keyword ``nobreak`` is used
+    instead.  Thus, just like we mentioned before, we also
+    keep track of where a leading ``repeat`` is used.
+
+    D. Direct translation
+
+    If a token does not match one of the cases described above,
+    we need to see if it is a term used in the dialect; if
+    so, we simply translate it into standard Python.
 
 
-    C. Direct translation
-
-    Next is the simple translation of keywords from the dialect
-    to standard Python
-
-    D. Remaining tokens
+    E. Remaining tokens
 
     Any remaining token is left as is; it is assumed to be valid
     Python.
-
-    E. Spaces between tokens
-
-    Programs can be run with the --diff option to show the difference 
-    between the code written and standard Python. In order to minimize
-    the number of differences shown, we keep the spacing between
-    tokens the same.  While we use Python tokenize to break the code
-    into tokens, Python's untokenize cannot be used without risking
-    to change the spaces in the original code. We thus have our
-    own method to keep track of such spacing.
     """
     dialect = set_dialect(dialect)
     if not is_dialect(dialect):
@@ -259,7 +325,7 @@ def to_python(source, dialect=None):
     while_kwd = py_to_lang["while"]
     until_kwd = py_to_lang["until"]
     forever_kwd = py_to_lang["forever"]
-    loops_with_else = ["for", "while", py_to_lang["for"], while_kwd]
+    loops_with_else = ["for", "while", py_to_lang["for"], while_kwd, repeat_kwd]
     blocks_with_else = [
         "if",
         "elif",
@@ -292,11 +358,15 @@ def to_python(source, dialect=None):
     # format: indentation[column] = keyword
     indentations = {}
 
-    toks = tokenize.generate_tokens(StringIO(source).readline)
+    tokens = tokenize.generate_tokens(StringIO(source).readline)
 
-    for _, tok_str, start, end, _ in toks:
-        if not tok_str.strip(" "):  # we keep track of spacing elsewhere
+    for _, tok_str, start, end, _ in tokens:
+        if not tok_str.strip(" \t"):  # we keep track of spacing elsewhere
             continue
+
+        #============
+        # Bookkeeping
+        #============
 
         start_line, start_col = start
         end_line, end_col = end
@@ -320,14 +390,10 @@ def to_python(source, dialect=None):
         if begin_new_line:
             if tok_str in blocks_with_else:
                 indentations[start_col] = tok_str
-            elif tok_str == repeat_kwd:
-                # even though no one should be taught to use nobreak
-                # with such loops, it would be consistent with normal Python
-                # syntax; hence, we keep track of it, arbitrarily using 'for'
-                # as the keyword: the only important thing is that it is not 'if'
-                indentations[start_col] = "for"
 
-        # ===== Potential substitutions are done in if/elif/.../else clause
+        #========================
+        # Actual conversion below
+        #========================
 
         if tok_str == repeat_kwd:
             if not begin_new_line:  # this is not allowed to happen

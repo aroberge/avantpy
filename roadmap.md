@@ -1,15 +1,31 @@
 # Roadmap
 
+## Enhancements
+
+- [ ] Consider using `colorama` as optional dependencies for the console
+- [ ] Add option to restrict processing to single dialect
+  - In this case, only load single dialect file; if not found, issue error message and exit.
+- [x] Think of replacing `__name__ is "__main__"` by a single keyword, perhaps `NotImported`.
+- [ ] Change html template for html output produced by difflib
+- [ ] Make it possible to show the difflib output in an interactive session without exiting;
+  This could be a more useful feature in an IDE environment
+   - [ ] Have the possible options:
+     - [ ] Only show the diff without executing the module
+     - [ ] Show the diff and execute the module
+     - [ ] Show the diff for a previously imported module
+        - [ ] show errors if not an AvantPy module
+     - [ ] Show the diff from a source file which is not imported.
+
 ## Documentation
 
 - [x] Create simple GitHub Pages site
   - [x] Get inspiration from what I did for pyextension.
   - [x] Add section about invocation
   - [ ] Explain various choices for addition to syntax
-    - [ ] Explain why **repeat** and other loops
+    - [x] Explain why **repeat** and other loops
     - [ ] Explain why `function` instead of `lambda`
-    - [ ] If replacing `if __name__ == "__main__"`, explain
-    - [ ] Explain why not `else` in `for` and `while` loops
+    - [x] If replacing `if __name__ == "__main__"`, explain
+    - [x] Explain why not `else` in `for` and `while` loops
       - Actually, it might be possible to replace this by keeping track of loop or if indentation level
   - [ ] Explain how to use pytest
     - [ ] Explain how to create new tests
@@ -19,8 +35,8 @@
 
 - [ ] Add code of conduct
 - [ ] Add templates for various types of issues
-  - [ ] Bug report
-  - [ ] Feature request or contributions
+  - [x] Bug report
+  - [x] Feature request or contributions
   - [ ] Others
 - [ ] Add info about contributors and refer to documentation
 
@@ -43,14 +59,8 @@
 
 - [ ] Add tests for console
 - [ ] Create comprehensive test for given dialect
-- [ ] Add UPPERCASE English dialect
-
-## Enhancements
-
-- [ ] Consider using `colorama` as optional dependencies for the console
-- [ ] Add option to restrict processing to single dialect
-  - In this case, only load single dialect file; if not found, issue error message and exit.
-- [x] Think of replacing `__name__ is "__main__"` by a single keyword, perhaps `NotImported`.
+- [x] Add UPPERCASE English dialect
+  - [ ] Add test for this
 
 ## Integrating with other programs
 
