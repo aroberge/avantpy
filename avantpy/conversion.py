@@ -32,10 +32,15 @@ class _State:
         self.dictionaries = {}
         self.all_count_names = []
         self.current_dialect = None
+        self.current_lang = None
         self.collect_dialects()
+        self.only_one_dialect = False
+        self.only_one_lang = False
 
     def all_dialects(self):
         """Returns a list of all known dialects."""
+        if self.only_one_dialect:
+            return [self.only_one_dialect]
         return [k for k in self.dictionaries.keys() if k.startswith("py")]
 
     def collect_dialects(self):
@@ -62,10 +67,14 @@ class _State:
 
     def is_dialect(self, dialect):
         """Returns True if `dialect` is a known dialect, False otherwise."""
+        if self.only_one_dialect:
+            return dialect == self.only_one_dialect
         return dialect.startswith("py") and dialect in self.dictionaries
 
     def is_lang(self, lang):
         """Returns True if `lang` is known as part of a dialect, False otherwise"""
+        if self.only_one_lang:
+            return lang == self.only_one_lang
         return (not lang.startswith("py")) and lang in self.dictionaries
 
     def add_translation(self, name, translation_dict):
@@ -152,12 +161,16 @@ def set_dialect(dialect=None):
         print("Unknown dialect: ", dialect)
 
 
-def set_lang(lang):
+def set_lang(lang, only=False):
     """Sets the language and/or Python dialect to be used.
     
     Valid values are typically two-letter language code such as 'en' or 'fr'.
 
     If `lang` is not a recognized language, an error message is printed.
+
+
+    If the ``only`` argument is set to ``True``, and ``lang`` is a valid
+    value, no other language/dialect will be allowed.
     """
     # Since this function can be used in the console, in order to make it
     # more user friendly, we accept values that start with 'py' such as
@@ -165,11 +178,16 @@ def set_lang(lang):
 
     if lang.startswith("py"):
         dialect = lang
+        lang = dialect[2:]
     else:
         dialect = "py" + lang
 
     if is_dialect(dialect):
         set_dialect(dialect)
+        __state.current_lang = lang
+        if only:
+            __state.only_one_dialect = dialect
+            __state.only_one_lang = lang
         if DEBUG:
             print("lang %s selected" % lang)
         return

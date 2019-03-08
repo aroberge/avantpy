@@ -15,6 +15,7 @@
      - [ ] Show the diff for a previously imported module
         - [ ] show errors if not an AvantPy module
      - [ ] Show the diff from a source file which is not imported.
+- [ ] Consider adding a check in the tokenizer to ensure that opening and closing brackets match.
 
 ## Documentation
 

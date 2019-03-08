@@ -111,8 +111,8 @@ if "-m" in sys.argv:
     )
     parser.add_argument(
         "--lang",
-        help="""The language to be assumed when starting the console.
-                Usually a two-letter code such as 'fr' for French.""",
+        help="""This restricts AvantPy to using a single language.
+                Usually this is a two-letter code such as 'fr' for French.""",
     )
 
     parser.add_argument(
@@ -138,7 +138,7 @@ if "-m" in sys.argv:
         import_hook.show_diff()
 
     if args.lang is not None:
-        conversion.set_lang(args.lang)
+        conversion.set_lang(args.lang, only=True)
 
     if args.debug:
         show_python = True
