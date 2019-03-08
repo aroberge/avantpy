@@ -29,6 +29,8 @@ def test_if_sinon():
 def main():
     test_bool()
     test_for()
+    test_si_else()
+    test_if_sinon()
     imprime("Success.")
 
 if pasimporté:

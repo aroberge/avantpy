@@ -14,7 +14,7 @@ DEBUG = False
 
 
 def set_debug(val=True):
-    """Used to set DEBUG to either True or False, 
+    """Used to set DEBUG to either True or False,
        with True being the default value.
 
        Returns: The current value of DEBUG
@@ -386,9 +386,9 @@ def to_python(source, dialect=None):
         if not tok_str.strip(" \t"):  # we keep track of spacing elsewhere
             continue
 
-        #============
+        # ============
         # Bookkeeping
-        #============
+        # ============
 
         start_line, start_col = start
         end_line, end_col = end
@@ -413,9 +413,9 @@ def to_python(source, dialect=None):
             if tok_str in blocks_with_else:
                 indentations[start_col] = tok_str
 
-        #========================
+        # ========================
         # Actual conversion below
-        #========================
+        # ========================
 
         if tok_str == repeat_kwd:
             if not begin_new_line:  # this is not allowed to happen
@@ -463,6 +463,6 @@ def to_python(source, dialect=None):
             result.append(tok_str)
 
     source = "".join(result)
-    if DEBUG:
-        print(source)
+    # if DEBUG:
+    #     print(source)
     return source

@@ -34,7 +34,7 @@ The corresponding
 `definition file <https://github.com/aroberge/avantpy/blob/master/avantpy/dialects/en.py>`_
 could be used as the basis for the creation of a new dialect.  However, the
 "uppercase" dialect found at 
-`definition file <https://github.com/aroberge/avantpy/blob/master/avantpy/dialects/upper.py>`_
+`another definition file <https://github.com/aroberge/avantpy/blob/master/avantpy/dialects/upper.py>`_
 might be an even better choice as a starting point.
 It is mostly intended to be used for testing purpose.
 

@@ -68,16 +68,19 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">conversion</span>
 
 
-
 <span class="n">DIFF</span> <span class="o">=</span> <span class="kc">False</span>
+
+
 <div class="viewcode-block" id="show_diff"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.show_diff">[docs]</a><span class="k">def</span> <span class="nf">show_diff</span><span class="p">():</span>
-    <span class="sd">&#39;&#39;&#39;Sets the flag so that the difference between the original source</span>
-<span class="sd">    and the converted one can be shown&#39;&#39;&#39;</span>
+    <span class="sd">&quot;&quot;&quot;Sets the flag so that the difference between the original source</span>
+<span class="sd">    and the converted one can be shown&quot;&quot;&quot;</span>
     <span class="k">global</span> <span class="n">DIFF</span>
     <span class="n">DIFF</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 
 <span class="n">MAIN_MODULE_NAME</span> <span class="o">=</span> <span class="kc">None</span>
+
+
 <div class="viewcode-block" id="import_main"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.import_main">[docs]</a><span class="k">def</span> <span class="nf">import_main</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Imports the module that is to be interpreted as the main module.</span>
 
@@ -91,7 +94,11 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">global</span> <span class="n">MAIN_MODULE_NAME</span>
     <span class="n">MAIN_MODULE_NAME</span> <span class="o">=</span> <span class="n">name</span>
-    <span class="k">return</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">main</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">main</span>
+    <span class="k">except</span> <span class="n">ModuleNotFoundError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cannot find main module: &quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="AvantPyMetaFinder"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.AvantPyMetaFinder">[docs]</a><span class="k">class</span> <span class="nc">AvantPyMetaFinder</span><span class="p">(</span><span class="n">MetaPathFinder</span><span class="p">):</span>
@@ -141,7 +148,6 @@
         <span class="k">if</span> <span class="n">module</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="n">MAIN_MODULE_NAME</span><span class="p">:</span>
             <span class="n">module</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;__main__&quot;</span>
 
-
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">source</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
         <span class="n">original</span> <span class="o">=</span> <span class="n">source</span>
@@ -160,7 +166,9 @@
                 <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
 
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: extension not found in known languages.&quot;</span><span class="o">%</span><span class="n">extension</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: extension not found in known languages.&quot;</span> <span class="o">%</span> <span class="n">extension</span>
+            <span class="p">)</span>
 
         <span class="n">exec</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="nb">vars</span><span class="p">(</span><span class="n">module</span><span class="p">))</span></div>
 
@@ -213,14 +221,13 @@
 <span class="c1">#                       &lt;tr&gt;&lt;td class=&quot;diff_sub&quot;&gt;Deleted&lt;/td&gt; &lt;/tr&gt;</span>
 <span class="c1">#                   &lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="c1">#     &lt;/table&gt;&quot;&quot;&quot;</span>
-<span class="n">my_legend</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="n">my_legend</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
 
 <div class="viewcode-block" id="MyHtmlDiff"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.MyHtmlDiff">[docs]</a><span class="k">class</span> <span class="nc">MyHtmlDiff</span><span class="p">(</span><span class="n">difflib</span><span class="o">.</span><span class="n">HtmlDiff</span><span class="p">):</span>
     <span class="n">_filetemplate</span> <span class="o">=</span> <span class="n">my_file_template</span>
     <span class="n">_legend</span> <span class="o">=</span> <span class="n">my_legend</span>
     <span class="n">_styles</span> <span class="o">=</span> <span class="n">my_styles</span></div>
-
-
 </pre></div>
 
           </div>

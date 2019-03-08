@@ -174,7 +174,7 @@ and the converted one can be shown</p>
 <dl class="function">
 <dt id="avantpy.conversion.set_debug">
 <code class="descclassname">avantpy.conversion.</code><code class="descname">set_debug</code><span class="sig-paren">(</span><em>val=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/conversion.html#set_debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.conversion.set_debug" title="Permalink to this definition">¶</a></dt>
-<dd><p>Used to set DEBUG to either True or False, 
+<dd><p>Used to set DEBUG to either True or False,
 with True being the default value.</p>
 <p>Returns: The current value of DEBUG</p>
 </dd></dl>
@@ -191,10 +191,12 @@ printed.</p>
 
 <dl class="function">
 <dt id="avantpy.conversion.set_lang">
-<code class="descclassname">avantpy.conversion.</code><code class="descname">set_lang</code><span class="sig-paren">(</span><em>lang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/conversion.html#set_lang"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.conversion.set_lang" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">avantpy.conversion.</code><code class="descname">set_lang</code><span class="sig-paren">(</span><em>lang</em>, <em>only=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/conversion.html#set_lang"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.conversion.set_lang" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the language and/or Python dialect to be used.</p>
 <p>Valid values are typically two-letter language code such as ‘en’ or ‘fr’.</p>
 <p>If <cite>lang</cite> is not a recognized language, an error message is printed.</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">only</span></code> argument is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, and <code class="docutils literal notranslate"><span class="pre">lang</span></code> is a valid
+value, no other language/dialect will be allowed.</p>
 </dd></dl>
 
 <dl class="function">

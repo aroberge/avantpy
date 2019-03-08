@@ -89,6 +89,7 @@ import sys
 
 from . import conversion
 from . import console
+from . import exception_handling
 from . import import_hook
 
 start_console = console.start_console
@@ -132,6 +133,13 @@ if "-m" in sys.argv:
         action="store_true",
     )
 
+    parser.add_argument(
+        "--dev_py",
+        help="""This disables the exception hook so that normal Python 
+                tracebacks are printed""",
+        action="store_true",
+    )
+
     args = parser.parse_args()
 
     if args.diff:
@@ -143,6 +151,9 @@ if "-m" in sys.argv:
     if args.debug:
         show_python = True
         conversion.set_debug(True)
+
+    if not args.dev_py:
+        exception_handling.activate()
 
     if args.source is not None:
         try:

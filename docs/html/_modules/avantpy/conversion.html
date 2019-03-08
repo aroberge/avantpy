@@ -69,7 +69,7 @@
 
 
 <div class="viewcode-block" id="set_debug"><a class="viewcode-back" href="../../modules.html#avantpy.conversion.set_debug">[docs]</a><span class="k">def</span> <span class="nf">set_debug</span><span class="p">(</span><span class="n">val</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Used to set DEBUG to either True or False, </span>
+    <span class="sd">&quot;&quot;&quot;Used to set DEBUG to either True or False,</span>
 <span class="sd">       with True being the default value.</span>
 
 <span class="sd">       Returns: The current value of DEBUG</span>
@@ -87,10 +87,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">dictionaries</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">all_count_names</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_dialect</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_lang</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">collect_dialects</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">only_one_dialect</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">only_one_lang</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">all_dialects</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a list of all known dialects.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">only_one_dialect</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">only_one_dialect</span><span class="p">]</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionaries</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;py&quot;</span><span class="p">)]</span>
 
     <span class="k">def</span> <span class="nf">collect_dialects</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -117,10 +122,14 @@
 
     <span class="k">def</span> <span class="nf">is_dialect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dialect</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns True if `dialect` is a known dialect, False otherwise.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">only_one_dialect</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">dialect</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">only_one_dialect</span>
         <span class="k">return</span> <span class="n">dialect</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;py&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">dialect</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionaries</span>
 
     <span class="k">def</span> <span class="nf">is_lang</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lang</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns True if `lang` is known as part of a dialect, False otherwise&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">only_one_lang</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">lang</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">only_one_lang</span>
         <span class="k">return</span> <span class="p">(</span><span class="ow">not</span> <span class="n">lang</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;py&quot;</span><span class="p">))</span> <span class="ow">and</span> <span class="n">lang</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionaries</span>
 
     <span class="k">def</span> <span class="nf">add_translation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">translation_dict</span><span class="p">):</span>
@@ -207,12 +216,16 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unknown dialect: &quot;</span><span class="p">,</span> <span class="n">dialect</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="set_lang"><a class="viewcode-back" href="../../modules.html#avantpy.conversion.set_lang">[docs]</a><span class="k">def</span> <span class="nf">set_lang</span><span class="p">(</span><span class="n">lang</span><span class="p">):</span>
+<div class="viewcode-block" id="set_lang"><a class="viewcode-back" href="../../modules.html#avantpy.conversion.set_lang">[docs]</a><span class="k">def</span> <span class="nf">set_lang</span><span class="p">(</span><span class="n">lang</span><span class="p">,</span> <span class="n">only</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Sets the language and/or Python dialect to be used.</span>
 <span class="sd">    </span>
 <span class="sd">    Valid values are typically two-letter language code such as &#39;en&#39; or &#39;fr&#39;.</span>
 
 <span class="sd">    If `lang` is not a recognized language, an error message is printed.</span>
+
+
+<span class="sd">    If the ``only`` argument is set to ``True``, and ``lang`` is a valid</span>
+<span class="sd">    value, no other language/dialect will be allowed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Since this function can be used in the console, in order to make it</span>
     <span class="c1"># more user friendly, we accept values that start with &#39;py&#39; such as</span>
@@ -220,11 +233,16 @@
 
     <span class="k">if</span> <span class="n">lang</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;py&quot;</span><span class="p">):</span>
         <span class="n">dialect</span> <span class="o">=</span> <span class="n">lang</span>
+        <span class="n">lang</span> <span class="o">=</span> <span class="n">dialect</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">dialect</span> <span class="o">=</span> <span class="s2">&quot;py&quot;</span> <span class="o">+</span> <span class="n">lang</span>
 
     <span class="k">if</span> <span class="n">is_dialect</span><span class="p">(</span><span class="n">dialect</span><span class="p">):</span>
         <span class="n">set_dialect</span><span class="p">(</span><span class="n">dialect</span><span class="p">)</span>
+        <span class="n">__state</span><span class="o">.</span><span class="n">current_lang</span> <span class="o">=</span> <span class="n">lang</span>
+        <span class="k">if</span> <span class="n">only</span><span class="p">:</span>
+            <span class="n">__state</span><span class="o">.</span><span class="n">only_one_dialect</span> <span class="o">=</span> <span class="n">dialect</span>
+            <span class="n">__state</span><span class="o">.</span><span class="n">only_one_lang</span> <span class="o">=</span> <span class="n">lang</span>
         <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;lang </span><span class="si">%s</span><span class="s2"> selected&quot;</span> <span class="o">%</span> <span class="n">lang</span><span class="p">)</span>
         <span class="k">return</span>
@@ -423,9 +441,9 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">tok_str</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot; </span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">):</span>  <span class="c1"># we keep track of spacing elsewhere</span>
             <span class="k">continue</span>
 
-        <span class="c1">#============</span>
+        <span class="c1"># ============</span>
         <span class="c1"># Bookkeeping</span>
-        <span class="c1">#============</span>
+        <span class="c1"># ============</span>
 
         <span class="n">start_line</span><span class="p">,</span> <span class="n">start_col</span> <span class="o">=</span> <span class="n">start</span>
         <span class="n">end_line</span><span class="p">,</span> <span class="n">end_col</span> <span class="o">=</span> <span class="n">end</span>
@@ -450,9 +468,9 @@
             <span class="k">if</span> <span class="n">tok_str</span> <span class="ow">in</span> <span class="n">blocks_with_else</span><span class="p">:</span>
                 <span class="n">indentations</span><span class="p">[</span><span class="n">start_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">tok_str</span>
 
-        <span class="c1">#========================</span>
+        <span class="c1"># ========================</span>
         <span class="c1"># Actual conversion below</span>
-        <span class="c1">#========================</span>
+        <span class="c1"># ========================</span>
 
         <span class="k">if</span> <span class="n">tok_str</span> <span class="o">==</span> <span class="n">repeat_kwd</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">begin_new_line</span><span class="p">:</span>  <span class="c1"># this is not allowed to happen</span>
@@ -500,8 +518,8 @@
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tok_str</span><span class="p">)</span>
 
     <span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+    <span class="c1"># if DEBUG:</span>
+    <span class="c1">#     print(source)</span>
     <span class="k">return</span> <span class="n">source</span></div>
 </pre></div>
 

@@ -54,8 +54,8 @@
             
   <h1>Source code for avantpy.console</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">code</span>
-<span class="kn">import</span> <span class="nn">platform</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">platform</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">conversion</span>
@@ -95,7 +95,9 @@
 <span class="sd">        value is 1 if more input is required, 0 if the line was dealt</span>
 <span class="sd">        with in some way (this is the same as runsource()).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="ow">not</span> <span class="n">line</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">),</span> <span class="s2">&quot;Forbidden trailing newline in console&#39;s push method.&quot;</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">line</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="p">),</span> <span class="s2">&quot;Forbidden trailing newline in console&#39;s push method.&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
         <span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">identical</span> <span class="o">=</span> <span class="kc">True</span>
@@ -122,10 +124,10 @@
 
 <div class="viewcode-block" id="AvantPyInteractiveConsole.show_converted"><a class="viewcode-back" href="../../modules.html#avantpy.console.AvantPyInteractiveConsole.show_converted">[docs]</a>    <span class="k">def</span> <span class="nf">show_converted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Prints the converted source&quot;&quot;&quot;</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; ===&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">source</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">):</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;|&quot;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; ===&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">identical</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># prevent from showing again</span></div>
 
 <div class="viewcode-block" id="AvantPyInteractiveConsole.showsyntaxerror"><a class="viewcode-back" href="../../modules.html#avantpy.console.AvantPyInteractiveConsole.showsyntaxerror">[docs]</a>    <span class="k">def</span> <span class="nf">showsyntaxerror</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>

@@ -13,16 +13,19 @@ from importlib.util import spec_from_file_location
 from . import conversion
 
 
-
 DIFF = False
+
+
 def show_diff():
-    '''Sets the flag so that the difference between the original source
-    and the converted one can be shown'''
+    """Sets the flag so that the difference between the original source
+    and the converted one can be shown"""
     global DIFF
     DIFF = True
 
 
 MAIN_MODULE_NAME = None
+
+
 def import_main(name):
     """Imports the module that is to be interpreted as the main module.
 
@@ -36,7 +39,11 @@ def import_main(name):
     """
     global MAIN_MODULE_NAME
     MAIN_MODULE_NAME = name
-    return importlib.import_module(name)
+    try:
+        main = importlib.import_module(name)
+        return main
+    except ModuleNotFoundError:
+        print("Cannot find main module: ", name)
 
 
 class AvantPyMetaFinder(MetaPathFinder):
@@ -86,7 +93,6 @@ class AvantPyLoader(Loader):
         if module.__name__ == MAIN_MODULE_NAME:
             module.__name__ = "__main__"
 
-
         with open(self.filename, encoding="utf8") as f:
             source = f.read()
         original = source
@@ -105,7 +111,9 @@ class AvantPyLoader(Loader):
                 sys.exit()
 
         else:
-            raise NotImplementedError("%s: extension not found in known languages."%extension)
+            raise NotImplementedError(
+                "%s: extension not found in known languages." % extension
+            )
 
         exec(source, vars(module))
 
@@ -158,11 +166,10 @@ my_styles = """
 #                       <tr><td class="diff_sub">Deleted</td> </tr>
 #                   </table></td></tr>
 #     </table>"""
-my_legend = ''
+my_legend = ""
+
 
 class MyHtmlDiff(difflib.HtmlDiff):
     _filetemplate = my_file_template
     _legend = my_legend
     _styles = my_styles
-
-

@@ -1,6 +1,6 @@
 import code
-import platform
 import os
+import platform
 import sys
 
 from . import conversion
@@ -40,7 +40,9 @@ class AvantPyInteractiveConsole(code.InteractiveConsole):
         value is 1 if more input is required, 0 if the line was dealt
         with in some way (this is the same as runsource()).
         """
-        assert not line.endswith("\n"), "Forbidden trailing newline in console's push method."
+        assert not line.endswith(
+            "\n"
+        ), "Forbidden trailing newline in console's push method."
         self.buffer.append(line)
         source = "\n".join(self.buffer)
         self.identical = True
@@ -67,10 +69,10 @@ class AvantPyInteractiveConsole(code.InteractiveConsole):
 
     def show_converted(self, source):
         """Prints the converted source"""
-        print(" ===")
+        print()
         for line in source.split("\n"):
             print("|", line)
-        print(" ===")
+        print()
         self.identical = True  # prevent from showing again
 
     def showsyntaxerror(self, filename=None):
