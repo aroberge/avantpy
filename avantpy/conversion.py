@@ -9,6 +9,7 @@ import runpy
 import tokenize
 from io import StringIO
 
+from . import exceptions
 
 DEBUG = False
 
@@ -194,7 +195,7 @@ def set_lang(lang, only=False):
     print("Unknown language: ", lang)
 
 
-def to_python(source, dialect=None):
+def to_python(source, dialect=None, source_name=None):
     """Converts a source in a known dialect into standard Python.
 
     This function uses Python's ``tokenize`` module to convert a
@@ -357,9 +358,6 @@ def to_python(source, dialect=None):
     nobreak_kwd = py_to_lang["else"][1]
 
     # custom error messages
-    if_nobreak_disallowed = (
-        "%s is not allowed as a block with an if statement" % nobreak_kwd
-    )
     repeat_must_be_first = "%s must be the first keyword on a given line." % repeat_kwd
 
     # variable names to be used in
@@ -452,10 +450,16 @@ def to_python(source, dialect=None):
                 ):
                     result.append("else")
                 else:
-                    result.append("# " + tok_str)
-                    msg = if_nobreak_disallowed
-                    result.append('\nraise SyntaxError("%s")' % msg)
-                    break
+                    raise exceptions.IfnobreakError(
+                        "Keyword nobreak found matching if/elif",
+                        {
+                            "if_string": indentations[start_col],
+                            "nobreak keyword": tok_str,
+                            "linenumber": start_line,
+                            "source_name": source_name,
+                            "source": source,
+                        },
+                    )
             else:
                 result.append(lang_to_py[tok_str])
 

@@ -100,13 +100,19 @@ class AvantPyLoader(Loader):
 
         _path, extension = os.path.splitext(self.filename)
         extension = extension[1:]
+        name = os.path.basename(_path)
+
 
         if conversion.is_dialect(extension):
             conversion.set_dialect(extension)
-            source = conversion.to_python(source)
+            try:
+                source = conversion.to_python(source, source_name=name)
+            except Exception as exc:
+                print(exception_handling.handle_exception(exc, original))
+                return
+
 
             if DIFF:
-                name = os.path.basename(_path)
                 html_file = self.write_html_diff(name, original, source)
                 webbrowser.open_new_tab(html_file)
                 sys.exit()
@@ -119,7 +125,7 @@ class AvantPyLoader(Loader):
         try:
             exec(source, vars(module))
         except Exception as exc:
-            exception_handling.handle_exception(exc)
+            print(exception_handling.handle_exception(exc, original))
 
 
     def write_html_diff(self, name, original, transformed):

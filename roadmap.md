@@ -2,7 +2,6 @@
 
 ## Enhancements
 
-- [ ] Consider using `colorama` as optional dependencies for the console
 - [x] Add option to restrict processing to single dialect
   - In this case, only load single dialect file; if not found, issue error message and exit.
 - [x] Think of replacing `__name__ is "__main__"` by a single keyword, perhaps `NotImported`.
@@ -18,6 +17,16 @@
 - [ ] Consider adding a check in the tokenizer to ensure that opening and closing brackets match.
 - [ ] Add check for mixed spaces and tab characters: new lines should either all start with spaces
   or tabs, but not both.
+- [ ] After implementing basic exception handling, confirm that it works 
+  - [ ] for the console
+    - [ ] for SyntaxError
+    - [ ] for other types not derived from SyntaxError
+  - [ ] for imported file (e.g. pyen program import other pyen program, etc.)
+    - [ ] for SyntaxError
+    - [ ] for other types not derived from SyntaxError
+  - [ ] Add demo GUI-based editor with syntax highlighting, perhaps similar to,but simpler than [this](http://www.bitforestinfo.com/2017/05/how-to-create-python-syntax-highlighting-functions-for-python-tkinter-text-widget-python-magicstick-text-editor-last-part.html)
+
+- [ ] Use .format for string interpolation everywhere.
 
 ## Documentation
 

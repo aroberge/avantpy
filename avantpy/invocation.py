@@ -152,8 +152,8 @@ if "-m" in sys.argv:
         show_python = True
         conversion.set_debug(True)
 
-    if not args.dev_py:
-        exception_handling.enable()
+    if args.dev_py:
+        exception_handling.disable()
 
     if args.source is not None:
         try:
