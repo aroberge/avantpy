@@ -11,6 +11,7 @@ from importlib.abc import Loader, MetaPathFinder
 from importlib.util import spec_from_file_location
 
 from . import conversion
+from . import exception_handling
 
 
 DIFF = False
@@ -115,7 +116,11 @@ class AvantPyLoader(Loader):
                 "%s: extension not found in known languages." % extension
             )
 
-        exec(source, vars(module))
+        try:
+            exec(source, vars(module))
+        except Exception as exc:
+            exception_handling.handle_exception(exc)
+
 
     def write_html_diff(self, name, original, transformed):
         """Writes an html file showing the difference between the original
