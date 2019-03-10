@@ -270,10 +270,7 @@ def to_python(source, dialect=None, source_name=None):
     keyword found at that same indentation was one for which
     it made sense to use ``nobreak`` or not.  If it was a
     loop, we simply replace ``nobreak`` by ``else``. If not,
-    we stop processing the code, insert a ``raise SyntaxError``
-    statement with an appropriate message. When the code is
-    run, the user will thus be alerted as to the cause of
-    the mistake in their code.
+    we raise a custom exception which is handled elsewhere.
 
     B. ``repeat``
 
@@ -294,10 +291,8 @@ def to_python(source, dialect=None, source_name=None):
 
     When we encounter the equivalent to the "repeat" keyword in
     the selected dialect, we must make sure that it is the first
-    keyword occurring on a logical line; if not, we include a
-    statement raising a SyntaxError with an appropriate message
-    and ignore the rest of the code since it would be irrelevant
-    when the script is executed.
+    keyword occurring on a logical line; if not, we raise a
+    custom exception.
 
     If ``repeat`` is the first keyword on a line, we set a flag
     (repeat_loop) to True, preparing to look at the next token.
@@ -331,7 +326,6 @@ def to_python(source, dialect=None, source_name=None):
     we need to see if it is a term used in the dialect; if
     so, we simply translate it into standard Python.
 
-
     E. Remaining tokens
 
     Any remaining token is left as is; it is assumed to be valid
@@ -349,14 +343,8 @@ def to_python(source, dialect=None, source_name=None):
     until_kwd = py_to_lang["until"]
     forever_kwd = py_to_lang["forever"]
     loops_with_else = ["for", "while", py_to_lang["for"], while_kwd, repeat_kwd]
-    blocks_with_else = [
-        "if",
-        py_to_lang["if"],
-    ] + loops_with_else
+    blocks_with_else = ["if", py_to_lang["if"]] + loops_with_else
     nobreak_kwd = py_to_lang["else"][1]
-
-    # custom error messages
-    repeat_must_be_first = "%s must be the first keyword on a given line." % repeat_kwd
 
     # variable names to be used in
     #    for variable_name in range(...):
@@ -415,10 +403,18 @@ def to_python(source, dialect=None, source_name=None):
 
         if tok_str == repeat_kwd:
             if not begin_new_line:  # this is not allowed to happen
-                result.append(tok_str)
-                msg = repeat_must_be_first
-                result.append('\nraise SyntaxError("%s")' % msg)
-                break
+                raise exceptions.RepeatMustBeFirstError(
+                    "repeat must be first",
+                    (
+                        {
+                            "repeat keyword": tok_str,
+                            "linenumber": start_line,
+                            "source_name": source_name,
+                            "source": source,
+                            "lang": dialect[2:],
+                        },
+                    ),
+                )
             repeat_loop = True
 
         elif repeat_loop:
@@ -450,14 +446,16 @@ def to_python(source, dialect=None, source_name=None):
                 else:
                     raise exceptions.IfnobreakError(
                         "Keyword nobreak found matching if/elif",
-                        ({
-                            "if_string": indentations[start_col],
-                            "nobreak keyword": tok_str,
-                            "linenumber": start_line,
-                            "source_name": source_name,
-                            "source": source,
-                            "lang": dialect[2:]
-                        },)
+                        (
+                            {
+                                "if_string": indentations[start_col],
+                                "nobreak keyword": tok_str,
+                                "linenumber": start_line,
+                                "source_name": source_name,
+                                "source": source,
+                                "lang": dialect[2:],
+                            },
+                        ),
                     )
             else:
                 result.append(lang_to_py[tok_str])

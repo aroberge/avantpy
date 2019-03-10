@@ -66,6 +66,24 @@ def handle_IfnobreakError(exc, original_source):
     }
     return translate.get('IfnobreakError', lang).format(**info)
 
+
+def handle_RepeatMustBeFirstError(exc, original_source):
+    params = exc.args[0]
+    linenumber = int(params["linenumber"])
+    lang = params["lang"]
+
+    lines = original_source.split("\n")
+    repeat_line = lines[linenumber - 1]
+
+    info = {'filename': params["source_name"],
+        "repeat_kwd": params["repeat keyword"],
+        "linenumber": linenumber,
+        "repeat_line": repeat_line
+    }
+    return translate.get('RepeatMustBeFirstError', lang).format(**info)
+
+
 dispatch = {
-    'IfnobreakError': handle_IfnobreakError
+    'IfnobreakError': handle_IfnobreakError,
+    'RepeatMustBeFirstError': handle_RepeatMustBeFirstError
 }

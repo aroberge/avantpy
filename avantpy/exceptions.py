@@ -10,3 +10,6 @@ class AvantPyException(Exception):
 class IfnobreakError(AvantPyException):
     pass
 
+class RepeatMustBeFirstError(AvantPyException):
+    pass
+

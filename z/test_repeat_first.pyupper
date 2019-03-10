@@ -1,0 +1,3 @@
+# Simple exception example: having repeat not as first keyword
+IF REPEAT:
+    PASS
