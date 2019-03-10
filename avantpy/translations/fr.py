@@ -1,0 +1,4 @@
+'''translations: fr.py'''
+
+fr = {
+}

@@ -1,5 +1,14 @@
 '''translations: upper.py'''
 
 upper = {
-    'test': 'TEST'
+    'IfnobreakError': """
+AVANTPY EXCEPTION: IfnobreakError
+
+    THE AVANTPY  KEYWORD CANNOT BE USED IN AN IF/ELIF/ELSE (Python: if/elif/else) CLAUSE.
+
+ERROR FOUND IN FILE '{filename}'.
+
+    LINE {if_linenumber}: {if_line}
+    
+    LINE {nobreak_linenumber}: {nobreak_line}"""
 }

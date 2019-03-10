@@ -351,9 +351,7 @@ def to_python(source, dialect=None, source_name=None):
     loops_with_else = ["for", "while", py_to_lang["for"], while_kwd, repeat_kwd]
     blocks_with_else = [
         "if",
-        "elif",
         py_to_lang["if"],
-        py_to_lang["elif"],
     ] + loops_with_else
     nobreak_kwd = py_to_lang["else"][1]
 
@@ -409,7 +407,7 @@ def to_python(source, dialect=None, source_name=None):
         # we can tell if replacing 'nobreak' by 'else' makes sense.
         if begin_new_line:
             if tok_str in blocks_with_else:
-                indentations[start_col] = tok_str
+                indentations[start_col] = [tok_str, start_line]
 
         # ========================
         # Actual conversion below
@@ -446,19 +444,20 @@ def to_python(source, dialect=None, source_name=None):
                 if (
                     begin_new_line
                     and start_col in indentations
-                    and indentations[start_col] in loops_with_else
+                    and indentations[start_col][0] in loops_with_else
                 ):
                     result.append("else")
                 else:
                     raise exceptions.IfnobreakError(
                         "Keyword nobreak found matching if/elif",
-                        {
+                        ({
                             "if_string": indentations[start_col],
                             "nobreak keyword": tok_str,
                             "linenumber": start_line,
                             "source_name": source_name,
                             "source": source,
-                        },
+                            "lang": dialect[2:]
+                        },)
                     )
             else:
                 result.append(lang_to_py[tok_str])

@@ -99,14 +99,15 @@ class AvantPyLoader(Loader):
         original = source
 
         _path, extension = os.path.splitext(self.filename)
-        extension = extension[1:]
         name = os.path.basename(_path)
+        fullname = name + extension
+        extension = extension[1:]
 
 
         if conversion.is_dialect(extension):
             conversion.set_dialect(extension)
             try:
-                source = conversion.to_python(source, source_name=name)
+                source = conversion.to_python(source, source_name=fullname)
             except Exception as exc:
                 print(exception_handling.handle_exception(exc, original))
                 return

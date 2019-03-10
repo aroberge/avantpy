@@ -1,0 +1,5 @@
+# Simple exception example: using nobreak instead of else with if
+IF TRUE:
+    PASS
+NOBREAK:
+    PASS
