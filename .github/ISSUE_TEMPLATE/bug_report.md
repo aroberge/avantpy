@@ -8,22 +8,20 @@ assignees: ''
 ---
 
 **Describe the bug**
-A clear and concise description of what the bug is.
+Replace this text by a clear and concise description of what the bug is.
 
 **To Reproduce**
-Please list the steps to reproduce the behavior. Be as detailed as possible.
-
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+Please list the steps to reproduce the behavior. 
+Be as detailed as possible: assume you are talking to a child.
 
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
 **Please complete the following information:**
- - OS: [e.g. Windows]
  - Python version
  - AvantPy version
- - etc.
+ - OS: [e.g. Windows]
+ - Are you using the version from the code repository or installed using pip?
 
 **Additional context**
 Add any other context about the problem here.

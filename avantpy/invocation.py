@@ -135,7 +135,7 @@ if "-m" in sys.argv:
 
     parser.add_argument(
         "--dev_py",
-        help="""This disables the exception hook so that normal Python 
+        help="""This disables the custom exception handling so that Python 
                 tracebacks are printed""",
         action="store_true",
     )
@@ -153,7 +153,7 @@ if "-m" in sys.argv:
         conversion.set_debug(True)
 
     if not args.dev_py:
-        exception_handling.activate()
+        exception_handling.enable()
 
     if args.source is not None:
         try:

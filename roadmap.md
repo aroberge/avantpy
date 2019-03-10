@@ -16,6 +16,8 @@
         - [ ] show errors if not an AvantPy module
      - [ ] Show the diff from a source file which is not imported.
 - [ ] Consider adding a check in the tokenizer to ensure that opening and closing brackets match.
+- [ ] Add check for mixed spaces and tab characters: new lines should either all start with spaces
+  or tabs, but not both.
 
 ## Documentation
 
