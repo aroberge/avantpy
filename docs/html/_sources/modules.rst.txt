@@ -4,10 +4,10 @@ Other modules
 In addition to `invocation.py` already mentioned, and excluding modules defining individual
 dialects, the following are included:
 
-import_hook
------------
+console
+-------
 
-.. automodule:: avantpy.import_hook
+.. automodule:: avantpy.console
    :members:
 
 conversion
@@ -15,8 +15,27 @@ conversion
 .. automodule:: avantpy.conversion
    :members:
 
-console
--------
 
-.. automodule:: avantpy.console
+exception_handling
+------------------
+
+.. automodule:: avantpy.exception_handling
+   :members:
+
+exceptions
+----------
+
+.. automodule:: avantpy.exceptions
+   :members:
+
+import_hook
+-----------
+
+.. automodule:: avantpy.import_hook
+   :members:
+
+translate
+---------
+
+.. automodule:: avantpy.translate
    :members:

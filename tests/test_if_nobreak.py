@@ -1,5 +1,3 @@
-
-
 def test_if_nobreak(capsys):
     from . import if_nobreak
     # if_nobreak raises an error which will result in a 

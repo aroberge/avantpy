@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>How does it work? &#8212; AvantPy  documentation</title>
+    <title>How does it work? &#8212; AvantPy 0.0.3 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -34,7 +34,7 @@
         <li class="right" >
           <a href="tracebacks.html" title="Friendly error messages"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy  documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.3 documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -98,7 +98,7 @@ transformed into standard Python, see
 <p>The following can definitely be skipped, unless you want to know all the details.</p>
 <dl class="function">
 <dt>
-<code class="descclassname">avantpy.conversion.</code><code class="descname">to_python</code><span class="sig-paren">(</span><em>source</em>, <em>dialect=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/conversion.html#to_python"><span class="viewcode-link">[source]</span></a></dt>
+<code class="descclassname">avantpy.conversion.</code><code class="descname">to_python</code><span class="sig-paren">(</span><em>source</em>, <em>dialect=None</em>, <em>source_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/conversion.html#to_python"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Converts a source in a known dialect into standard Python.</p>
 <p>This function uses Python’s <code class="docutils literal notranslate"><span class="pre">tokenize</span></code> module to convert a
 source into a sequence of tokens. A token might be the name
@@ -167,10 +167,7 @@ indentation, we check to see if the last <code class="docutils literal notransla
 keyword found at that same indentation was one for which
 it made sense to use <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> or not.  If it was a
 loop, we simply replace <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> by <code class="docutils literal notranslate"><span class="pre">else</span></code>. If not,
-we stop processing the code, insert a <code class="docutils literal notranslate"><span class="pre">raise</span> <span class="pre">SyntaxError</span></code>
-statement with an appropriate message. When the code is
-run, the user will thus be alerted as to the cause of
-the mistake in their code.</p>
+we raise a custom exception which is handled elsewhere.</p>
 <ol class="upperalpha simple" start="2">
 <li><code class="docutils literal notranslate"><span class="pre">repeat</span></code></li>
 </ol>
@@ -190,10 +187,8 @@ support four additional idioms:</p>
 spanning multiple lines.</p>
 <p>When we encounter the equivalent to the “repeat” keyword in
 the selected dialect, we must make sure that it is the first
-keyword occurring on a logical line; if not, we include a
-statement raising a SyntaxError with an appropriate message
-and ignore the rest of the code since it would be irrelevant
-when the script is executed.</p>
+keyword occurring on a logical line; if not, we raise a
+custom exception.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">repeat</span></code> is the first keyword on a line, we set a flag
 (repeat_loop) to True, preparing to look at the next token.</p>
 <p>a) If the next token is one of <code class="docutils literal notranslate"><span class="pre">forever</span></code>, <code class="docutils literal notranslate"><span class="pre">until</span></code>, <code class="docutils literal notranslate"><span class="pre">while</span></code>,
@@ -253,7 +248,7 @@ Python.</p>
         <li class="right" >
           <a href="tracebacks.html" title="Friendly error messages"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy  documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.3 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

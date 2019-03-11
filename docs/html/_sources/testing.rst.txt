@@ -66,7 +66,7 @@ before executing it.
 Testing exceptions
 -------------------
 
-Imagine we have a ``pyenv`` test file with the following content::
+In the tests directory, the file ``if_nobreak.pyenv`` has the following content::
 
     def test_if_nobreak():
         if True:
@@ -75,30 +75,32 @@ Imagine we have a ``pyenv`` test file with the following content::
             pass 
 
 A ``nobreak`` keyword can only be used with a ``for`` or a ``while`` loop.
-As a result, AvantPy would transforms this into something like::
+As a result, AvantPy will initially raise an exception as it processes the file.
+AvantPy's exception handling results in a ``print`` statement. To test such
+a file, we need to capture the print output.
 
-    def test_if_nobreak():
-        if True:
-            pass
-        # nobreak
-    raise SyntaxError("nobreak is not allowed as a block with an if statement)")
+Since this file has a name that does not start with ``test_``,
+pytest will ignore it.  In the tests directory, there is another 
+file named ``test_if_nobreak.py`` whose content is the following::
 
-Upon executing this file, a syntax error would be raised which would not be caught
-properly by pytest.  If this file has a name that does not start with ``test_``,
-pytest will ignore it.  In the tests directory, there is a similar file
-named ``if_nobreak.pyen``.  There is another file named ``test_if_nobreak.py`` 
-whose content is the following::
+    def test_if_nobreak(capsys):
+        from . import if_nobreak
+        # if_nobreak raises an error which will result in a 
+        # print statement; it is printed out when pytest
+        # collects the tests.
+        # After collecting the test, they are run and 
+        # no print statement will be done from the import
+        # This is why we cache it so that we can see it
+        # both times.
+        if not hasattr(if_nobreak, "out"):
+            info = str(capsys.readouterr())
+            if_nobreak.out = info
+        assert 'IfnobreakError' in if_nobreak.out
 
-    import pytest
 
-    def test_if_nobreak():
-        with pytest.raises(SyntaxError):
-            from . import if_nobreak
-
-    if __name__ == '__main__':
+    if __name__ == "__main__":
         test_if_nobreak()
         print("Success.")
 
-As you can see, this file imports the file which will include a ``raise SyntaxError``
-statement, once processed by AvantPy.  This tests the transformation of ``if_break.pyen``
+This tests the transformation of ``if_break.pyen``
 indirectly, in such a way that pytest can do its test correctly.

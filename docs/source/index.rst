@@ -4,6 +4,11 @@ Bienvenue 환영합니다 Bienvenido - ようこそ Welcome  歡迎光臨
 **AvantPy** - Python with training wheels: executable pseudocode in any language.
 
 
+.. warning::
+
+    This is pre-alpha software, currently in development.
+
+
 What is AvantPy?
 ----------------
 

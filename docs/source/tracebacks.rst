@@ -7,4 +7,4 @@ Such feedback will also be available in languages other than English.
 
 .. warning::
 
-     Not yet implemented.
+     The work has just begun on this.

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Testing &#8212; AvantPy  documentation</title>
+    <title>Testing &#8212; AvantPy 0.0.3 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -34,7 +34,7 @@
         <li class="right" >
           <a href="invocation.html" title="Invocation"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy  documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.3 documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -139,7 +139,7 @@ will only import one of them.</p>
 </div>
 <div class="section" id="testing-exceptions">
 <h2>Testing exceptions<a class="headerlink" href="#testing-exceptions" title="Permalink to this headline">¶</a></h2>
-<p>Imagine we have a <code class="docutils literal notranslate"><span class="pre">pyenv</span></code> test file with the following content:</p>
+<p>In the tests directory, the file <code class="docutils literal notranslate"><span class="pre">if_nobreak.pyenv</span></code> has the following content:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_if_nobreak</span><span class="p">():</span>
     <span class="k">if</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">pass</span>
@@ -148,32 +148,33 @@ will only import one of them.</p>
 </pre></div>
 </div>
 <p>A <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> keyword can only be used with a <code class="docutils literal notranslate"><span class="pre">for</span></code> or a <code class="docutils literal notranslate"><span class="pre">while</span></code> loop.
-As a result, AvantPy would transforms this into something like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_if_nobreak</span><span class="p">():</span>
-    <span class="k">if</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="k">pass</span>
-    <span class="c1"># nobreak</span>
-<span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span><span class="s2">&quot;nobreak is not allowed as a block with an if statement)&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Upon executing this file, a syntax error would be raised which would not be caught
-properly by pytest.  If this file has a name that does not start with <code class="docutils literal notranslate"><span class="pre">test_</span></code>,
-pytest will ignore it.  In the tests directory, there is a similar file
-named <code class="docutils literal notranslate"><span class="pre">if_nobreak.pyen</span></code>.  There is another file named <code class="docutils literal notranslate"><span class="pre">test_if_nobreak.py</span></code>
-whose content is the following:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pytest</span>
+As a result, AvantPy will initially raise an exception as it processes the file.
+AvantPy’s exception handling results in a <code class="docutils literal notranslate"><span class="pre">print</span></code> statement. To test such
+a file, we need to capture the print output.</p>
+<p>Since this file has a name that does not start with <code class="docutils literal notranslate"><span class="pre">test_</span></code>,
+pytest will ignore it.  In the tests directory, there is another
+file named <code class="docutils literal notranslate"><span class="pre">test_if_nobreak.py</span></code> whose content is the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_if_nobreak</span><span class="p">(</span><span class="n">capsys</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">if_nobreak</span>
+    <span class="c1"># if_nobreak raises an error which will result in a</span>
+    <span class="c1"># print statement; it is printed out when pytest</span>
+    <span class="c1"># collects the tests.</span>
+    <span class="c1"># After collecting the test, they are run and</span>
+    <span class="c1"># no print statement will be done from the import</span>
+    <span class="c1"># This is why we cache it so that we can see it</span>
+    <span class="c1"># both times.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">if_nobreak</span><span class="p">,</span> <span class="s2">&quot;out&quot;</span><span class="p">):</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">capsys</span><span class="o">.</span><span class="n">readouterr</span><span class="p">())</span>
+        <span class="n">if_nobreak</span><span class="o">.</span><span class="n">out</span> <span class="o">=</span> <span class="n">info</span>
+    <span class="k">assert</span> <span class="s1">&#39;IfnobreakError&#39;</span> <span class="ow">in</span> <span class="n">if_nobreak</span><span class="o">.</span><span class="n">out</span>
 
-<span class="k">def</span> <span class="nf">test_if_nobreak</span><span class="p">():</span>
-    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">SyntaxError</span><span class="p">):</span>
-        <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">if_nobreak</span>
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">test_if_nobreak</span><span class="p">()</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Success.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>As you can see, this file imports the file which will include a <code class="docutils literal notranslate"><span class="pre">raise</span> <span class="pre">SyntaxError</span></code>
-statement, once processed by AvantPy.  This tests the transformation of <code class="docutils literal notranslate"><span class="pre">if_break.pyen</span></code>
+<p>This tests the transformation of <code class="docutils literal notranslate"><span class="pre">if_break.pyen</span></code>
 indirectly, in such a way that pytest can do its test correctly.</p>
 </div>
 </div>
@@ -199,7 +200,7 @@ indirectly, in such a way that pytest can do its test correctly.</p>
         <li class="right" >
           <a href="invocation.html" title="Invocation"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy  documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.3 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

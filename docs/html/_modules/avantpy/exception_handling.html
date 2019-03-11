@@ -1,0 +1,170 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>avantpy.exception_handling &#8212; AvantPy 0.0.3 documentation</title>
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for avantpy.exception_handling</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Exception handling</span>
+
+<span class="sd">Just a stub for now.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">translate</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">exceptions</span>
+
+<span class="n">DEBUG</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">ENABLED</span> <span class="o">=</span> <span class="kc">True</span>
+<div class="viewcode-block" id="disable"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.disable">[docs]</a><span class="k">def</span> <span class="nf">disable</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;Disables custom exception handling&#39;&#39;&#39;</span>
+    <span class="k">global</span> <span class="n">ENABLED</span>
+    <span class="n">ENABLED</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+<span class="k">def</span> <span class="nf">_maybe_print</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">attribute</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">attribute</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="s2">&quot;does not exist&quot;</span><span class="p">)</span>
+
+
+
+<span class="k">def</span> <span class="nf">handle_exception</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original_source</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ENABLED</span><span class="p">:</span>
+        <span class="c1"># Let normal Python traceback through</span>
+        <span class="k">raise</span> <span class="n">exc</span>
+
+    <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Info from sys&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;sys.exc_info(): &quot;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">())</span>
+        <span class="n">_maybe_print</span><span class="p">(</span><span class="s2">&quot;sys.last_type: &quot;</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="s2">&quot;last_type&quot;</span><span class="p">)</span>
+        <span class="n">_maybe_print</span><span class="p">(</span><span class="s2">&quot;sys.last_value: &quot;</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="s2">&quot;last_value&quot;</span><span class="p">)</span>
+        <span class="n">_maybe_print</span><span class="p">(</span><span class="s2">&quot;sys.last_traceback: &quot;</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="s2">&quot;last_traceback&quot;</span><span class="p">)</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">dispatch</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">dispatch</span><span class="p">[</span><span class="n">name</span><span class="p">](</span><span class="n">exc</span><span class="p">,</span> <span class="n">original_source</span><span class="p">)</span>
+        
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;An exception was raised:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;name: &quot;</span><span class="p">,</span> <span class="n">exc</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;args: &quot;</span><span class="p">,</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">handle_IfnobreakError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original_source</span><span class="p">):</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">if_linenumber</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;if_string&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">nobreak_linenumber</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">])</span>
+    <span class="n">lang</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;lang&quot;</span><span class="p">]</span>
+
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">original_source</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">if_line</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">if_linenumber</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">nobreak_line</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">nobreak_linenumber</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">info</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;filename&#39;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;source_name&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;nobreak_kwd&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;nobreak keyword&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;if_linenumber&quot;</span><span class="p">:</span> <span class="n">if_linenumber</span><span class="p">,</span>
+        <span class="s2">&quot;if_line&quot;</span><span class="p">:</span> <span class="n">if_line</span><span class="p">,</span>
+        <span class="s2">&quot;nobreak_linenumber&quot;</span><span class="p">:</span> <span class="n">nobreak_linenumber</span><span class="p">,</span>
+        <span class="s2">&quot;nobreak_line&quot;</span><span class="p">:</span> <span class="n">nobreak_line</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;IfnobreakError&#39;</span><span class="p">,</span> <span class="n">lang</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">handle_RepeatMustBeFirstError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original_source</span><span class="p">):</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">linenumber</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">])</span>
+    <span class="n">lang</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;lang&quot;</span><span class="p">]</span>
+
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">original_source</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">repeat_line</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">linenumber</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">info</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;filename&#39;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;source_name&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;repeat_kwd&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;repeat keyword&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">linenumber</span><span class="p">,</span>
+        <span class="s2">&quot;repeat_line&quot;</span><span class="p">:</span> <span class="n">repeat_line</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;RepeatMustBeFirstError&#39;</span><span class="p">,</span> <span class="n">lang</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span>
+
+
+<span class="n">dispatch</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;IfnobreakError&#39;</span><span class="p">:</span> <span class="n">handle_IfnobreakError</span><span class="p">,</span>
+    <span class="s1">&#39;RepeatMustBeFirstError&#39;</span><span class="p">:</span> <span class="n">handle_RepeatMustBeFirstError</span>
+<span class="p">}</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, André Roberge.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

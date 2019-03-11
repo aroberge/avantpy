@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Other modules &#8212; AvantPy  documentation</title>
+    <title>Other modules &#8212; AvantPy 0.0.3 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -34,7 +34,7 @@
         <li class="right" >
           <a href="testing.html" title="Testing"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy  documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.3 documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -42,9 +42,12 @@
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Other modules</a><ul>
-<li><a class="reference internal" href="#module-avantpy.import_hook">import_hook</a></li>
-<li><a class="reference internal" href="#module-avantpy.conversion">conversion</a></li>
 <li><a class="reference internal" href="#module-avantpy.console">console</a></li>
+<li><a class="reference internal" href="#module-avantpy.conversion">conversion</a></li>
+<li><a class="reference internal" href="#module-avantpy.exception_handling">exception_handling</a></li>
+<li><a class="reference internal" href="#module-avantpy.exceptions">exceptions</a></li>
+<li><a class="reference internal" href="#module-avantpy.import_hook">import_hook</a></li>
+<li><a class="reference internal" href="#module-avantpy.translate">translate</a></li>
 </ul>
 </li>
 </ul>
@@ -86,66 +89,64 @@
 <h1>Other modules<a class="headerlink" href="#other-modules" title="Permalink to this headline">¶</a></h1>
 <p>In addition to <cite>invocation.py</cite> already mentioned, and excluding modules defining individual
 dialects, the following are included:</p>
-<div class="section" id="module-avantpy.import_hook">
-<span id="import-hook"></span><h2>import_hook<a class="headerlink" href="#module-avantpy.import_hook" title="Permalink to this headline">¶</a></h2>
-<p>A custom importer making use of the import hook capability</p>
+<div class="section" id="module-avantpy.console">
+<span id="console"></span><h2>console<a class="headerlink" href="#module-avantpy.console" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="avantpy.import_hook.AvantPyLoader">
-<em class="property">class </em><code class="descclassname">avantpy.import_hook.</code><code class="descname">AvantPyLoader</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#AvantPyLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.AvantPyLoader" title="Permalink to this definition">¶</a></dt>
-<dd><p>A custom loader which will transform the source prior to its execution</p>
+<dt id="avantpy.console.AvantPyInteractiveConsole">
+<em class="property">class </em><code class="descclassname">avantpy.console.</code><code class="descname">AvantPyInteractiveConsole</code><span class="sig-paren">(</span><em>locals=None</em>, <em>show_python=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Python console that tries to emulate the normal Python interpreter
+except that it support experimental code transformations.
+It inherits from cPython’s <code class="docutils literal notranslate"><span class="pre">code.InteractiveConsole</span></code>.</p>
+<p>Like the normal Python’s interactive console, it attempts to evaluate
+code entered one line at a time by a user.</p>
 <dl class="method">
-<dt id="avantpy.import_hook.AvantPyLoader.exec_module">
-<code class="descname">exec_module</code><span class="sig-paren">(</span><em>module</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#AvantPyLoader.exec_module"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.AvantPyLoader.exec_module" title="Permalink to this definition">¶</a></dt>
-<dd><p>import the source code, conversion it before executing it.</p>
+<dt id="avantpy.console.AvantPyInteractiveConsole.do_transformations">
+<code class="descname">do_transformations</code><span class="sig-paren">(</span><em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.do_transformations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.do_transformations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs the source transformations on the current content.</p>
+<p>Returns the transformed source.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="avantpy.import_hook.AvantPyLoader.write_html_diff">
-<code class="descname">write_html_diff</code><span class="sig-paren">(</span><em>name</em>, <em>original</em>, <em>transformed</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#AvantPyLoader.write_html_diff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.AvantPyLoader.write_html_diff" title="Permalink to this definition">¶</a></dt>
-<dd><p>Writes an html file showing the difference between the original
-and the transformed source.</p>
+<dt id="avantpy.console.AvantPyInteractiveConsole.fix_ending">
+<code class="descname">fix_ending</code><span class="sig-paren">(</span><em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.fix_ending"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.fix_ending" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ensures that the last blank lines of the transformed source are
+consistent with what was provided by the user.</p>
 </dd></dl>
 
-</dd></dl>
-
-<dl class="class">
-<dt id="avantpy.import_hook.AvantPyMetaFinder">
-<em class="property">class </em><code class="descclassname">avantpy.import_hook.</code><code class="descname">AvantPyMetaFinder</code><a class="reference internal" href="_modules/avantpy/import_hook.html#AvantPyMetaFinder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.AvantPyMetaFinder" title="Permalink to this definition">¶</a></dt>
-<dd><p>A custom finder to locate modules.  The main reason for this code
-is to ensure that our custom loader, which does the code transformations,
-is used.</p>
 <dl class="method">
-<dt id="avantpy.import_hook.AvantPyMetaFinder.find_spec">
-<code class="descname">find_spec</code><span class="sig-paren">(</span><em>fullname</em>, <em>path</em>, <em>target=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#AvantPyMetaFinder.find_spec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.AvantPyMetaFinder.find_spec" title="Permalink to this definition">¶</a></dt>
-<dd><p>Finds the appropriate properties (spec) of a module, and sets
-its loader.</p>
+<dt id="avantpy.console.AvantPyInteractiveConsole.push">
+<code class="descname">push</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.push"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.push" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pushes a transformed line to the interpreter.</p>
+<p>The line should not have a trailing newline; it may have
+internal newlines.  The line is transformed and appended to a buffer.
+The interpreter’s runsource() method is called with the
+concatenated contents of the buffer as source.  If this
+indicates that the command was executed or invalid, the buffer
+is reset; otherwise, the command is incomplete, and the buffer
+is left as it was after the line was appended.  The return
+value is 1 if more input is required, 0 if the line was dealt
+with in some way (this is the same as runsource()).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.console.AvantPyInteractiveConsole.show_converted">
+<code class="descname">show_converted</code><span class="sig-paren">(</span><em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.show_converted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.show_converted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints the converted source</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.console.AvantPyInteractiveConsole.showsyntaxerror">
+<code class="descname">showsyntaxerror</code><span class="sig-paren">(</span><em>filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.showsyntaxerror"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.showsyntaxerror" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows the converted source if different than the original
+and the syntax error</p>
 </dd></dl>
 
 </dd></dl>
-
-<dl class="class">
-<dt id="avantpy.import_hook.MyHtmlDiff">
-<em class="property">class </em><code class="descclassname">avantpy.import_hook.</code><code class="descname">MyHtmlDiff</code><span class="sig-paren">(</span><em>tabsize=8</em>, <em>wrapcolumn=None</em>, <em>linejunk=None</em>, <em>charjunk=&lt;function IS_CHARACTER_JUNK&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#MyHtmlDiff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.MyHtmlDiff" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="function">
-<dt id="avantpy.import_hook.import_main">
-<code class="descclassname">avantpy.import_hook.</code><code class="descname">import_main</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#import_main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.import_main" title="Permalink to this definition">¶</a></dt>
-<dd><p>Imports the module that is to be interpreted as the main module.</p>
-<p>avantpy is often invoked with a script meant to be run as the
-main module its source is transformed with the -s (or –source) option,
-as in:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">avantpy</span> <span class="o">-</span><span class="n">s</span> <span class="n">name</span>
-</pre></div>
-</div>
-<p>Python identifies avantpy as the main script, which is not what we want.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="avantpy.import_hook.show_diff">
-<code class="descclassname">avantpy.import_hook.</code><code class="descname">show_diff</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#show_diff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.show_diff" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the flag so that the difference between the original source
-and the converted one can be shown</p>
+<dt id="avantpy.console.start_console">
+<code class="descclassname">avantpy.console.</code><code class="descname">start_console</code><span class="sig-paren">(</span><em>local_vars=None</em>, <em>show_python=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#start_console"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.start_console" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts a console; modified from code.interact</p>
 </dd></dl>
 
 </div>
@@ -201,7 +202,7 @@ value, no other language/dialect will be allowed.</p>
 
 <dl class="function">
 <dt id="avantpy.conversion.to_python">
-<code class="descclassname">avantpy.conversion.</code><code class="descname">to_python</code><span class="sig-paren">(</span><em>source</em>, <em>dialect=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/conversion.html#to_python"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.conversion.to_python" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">avantpy.conversion.</code><code class="descname">to_python</code><span class="sig-paren">(</span><em>source</em>, <em>dialect=None</em>, <em>source_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/conversion.html#to_python"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.conversion.to_python" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts a source in a known dialect into standard Python.</p>
 <p>This function uses Python’s <code class="docutils literal notranslate"><span class="pre">tokenize</span></code> module to convert a
 source into a sequence of tokens. A token might be the name
@@ -270,10 +271,7 @@ indentation, we check to see if the last <code class="docutils literal notransla
 keyword found at that same indentation was one for which
 it made sense to use <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> or not.  If it was a
 loop, we simply replace <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> by <code class="docutils literal notranslate"><span class="pre">else</span></code>. If not,
-we stop processing the code, insert a <code class="docutils literal notranslate"><span class="pre">raise</span> <span class="pre">SyntaxError</span></code>
-statement with an appropriate message. When the code is
-run, the user will thus be alerted as to the cause of
-the mistake in their code.</p>
+we raise a custom exception which is handled elsewhere.</p>
 <ol class="upperalpha simple" start="2">
 <li><code class="docutils literal notranslate"><span class="pre">repeat</span></code></li>
 </ol>
@@ -293,10 +291,8 @@ support four additional idioms:</p>
 spanning multiple lines.</p>
 <p>When we encounter the equivalent to the “repeat” keyword in
 the selected dialect, we must make sure that it is the first
-keyword occurring on a logical line; if not, we include a
-statement raising a SyntaxError with an appropriate message
-and ignore the rest of the code since it would be irrelevant
-when the script is executed.</p>
+keyword occurring on a logical line; if not, we raise a
+custom exception.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">repeat</span></code> is the first keyword on a line, we set a flag
 (repeat_loop) to True, preparing to look at the next token.</p>
 <p>a) If the next token is one of <code class="docutils literal notranslate"><span class="pre">forever</span></code>, <code class="docutils literal notranslate"><span class="pre">until</span></code>, <code class="docutils literal notranslate"><span class="pre">while</span></code>,
@@ -333,64 +329,106 @@ Python.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-avantpy.console">
-<span id="console"></span><h2>console<a class="headerlink" href="#module-avantpy.console" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-avantpy.exception_handling">
+<span id="exception-handling"></span><h2>exception_handling<a class="headerlink" href="#module-avantpy.exception_handling" title="Permalink to this headline">¶</a></h2>
+<p>Exception handling</p>
+<p>Just a stub for now.</p>
+<dl class="function">
+<dt id="avantpy.exception_handling.disable">
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">disable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#disable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.disable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disables custom exception handling</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-avantpy.exceptions">
+<span id="exceptions"></span><h2>exceptions<a class="headerlink" href="#module-avantpy.exceptions" title="Permalink to this headline">¶</a></h2>
+<p>Custom exceptions</p>
+<dl class="exception">
+<dt id="avantpy.exceptions.AvantPyException">
+<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">AvantPyException</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#AvantPyException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.AvantPyException" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="avantpy.exceptions.IfnobreakError">
+<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">IfnobreakError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#IfnobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.IfnobreakError" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="avantpy.exceptions.RepeatMustBeFirstError">
+<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">RepeatMustBeFirstError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#RepeatMustBeFirstError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.RepeatMustBeFirstError" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-avantpy.import_hook">
+<span id="import-hook"></span><h2>import_hook<a class="headerlink" href="#module-avantpy.import_hook" title="Permalink to this headline">¶</a></h2>
+<p>A custom importer making use of the import hook capability</p>
 <dl class="class">
-<dt id="avantpy.console.AvantPyInteractiveConsole">
-<em class="property">class </em><code class="descclassname">avantpy.console.</code><code class="descname">AvantPyInteractiveConsole</code><span class="sig-paren">(</span><em>locals=None</em>, <em>show_python=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole" title="Permalink to this definition">¶</a></dt>
-<dd><p>A Python console that tries to emulate the normal Python interpreter
-except that it support experimental code transformations.
-It inherits from cPython’s <code class="docutils literal notranslate"><span class="pre">code.InteractiveConsole</span></code>.</p>
-<p>Like the normal Python’s interactive console, it attempts to evaluate
-code entered one line at a time by a user.</p>
+<dt id="avantpy.import_hook.AvantPyLoader">
+<em class="property">class </em><code class="descclassname">avantpy.import_hook.</code><code class="descname">AvantPyLoader</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#AvantPyLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.AvantPyLoader" title="Permalink to this definition">¶</a></dt>
+<dd><p>A custom loader which will transform the source prior to its execution</p>
 <dl class="method">
-<dt id="avantpy.console.AvantPyInteractiveConsole.do_transformations">
-<code class="descname">do_transformations</code><span class="sig-paren">(</span><em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.do_transformations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.do_transformations" title="Permalink to this definition">¶</a></dt>
-<dd><p>Performs the source transformations on the current content.</p>
-<p>Returns the transformed source.</p>
+<dt id="avantpy.import_hook.AvantPyLoader.exec_module">
+<code class="descname">exec_module</code><span class="sig-paren">(</span><em>module</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#AvantPyLoader.exec_module"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.AvantPyLoader.exec_module" title="Permalink to this definition">¶</a></dt>
+<dd><p>import the source code, conversion it before executing it.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="avantpy.console.AvantPyInteractiveConsole.fix_ending">
-<code class="descname">fix_ending</code><span class="sig-paren">(</span><em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.fix_ending"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.fix_ending" title="Permalink to this definition">¶</a></dt>
-<dd><p>Ensures that the last blank lines of the transformed source are
-consistent with what was provided by the user.</p>
+<dt id="avantpy.import_hook.AvantPyLoader.write_html_diff">
+<code class="descname">write_html_diff</code><span class="sig-paren">(</span><em>name</em>, <em>original</em>, <em>transformed</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#AvantPyLoader.write_html_diff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.AvantPyLoader.write_html_diff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes an html file showing the difference between the original
+and the transformed source.</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="class">
+<dt id="avantpy.import_hook.AvantPyMetaFinder">
+<em class="property">class </em><code class="descclassname">avantpy.import_hook.</code><code class="descname">AvantPyMetaFinder</code><a class="reference internal" href="_modules/avantpy/import_hook.html#AvantPyMetaFinder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.AvantPyMetaFinder" title="Permalink to this definition">¶</a></dt>
+<dd><p>A custom finder to locate modules.  The main reason for this code
+is to ensure that our custom loader, which does the code transformations,
+is used.</p>
 <dl class="method">
-<dt id="avantpy.console.AvantPyInteractiveConsole.push">
-<code class="descname">push</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.push"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.push" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pushes a transformed line to the interpreter.</p>
-<p>The line should not have a trailing newline; it may have
-internal newlines.  The line is transformed and appended to a buffer.
-The interpreter’s runsource() method is called with the
-concatenated contents of the buffer as source.  If this
-indicates that the command was executed or invalid, the buffer
-is reset; otherwise, the command is incomplete, and the buffer
-is left as it was after the line was appended.  The return
-value is 1 if more input is required, 0 if the line was dealt
-with in some way (this is the same as runsource()).</p>
+<dt id="avantpy.import_hook.AvantPyMetaFinder.find_spec">
+<code class="descname">find_spec</code><span class="sig-paren">(</span><em>fullname</em>, <em>path</em>, <em>target=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#AvantPyMetaFinder.find_spec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.AvantPyMetaFinder.find_spec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the appropriate properties (spec) of a module, and sets
+its loader.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="avantpy.console.AvantPyInteractiveConsole.show_converted">
-<code class="descname">show_converted</code><span class="sig-paren">(</span><em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.show_converted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.show_converted" title="Permalink to this definition">¶</a></dt>
-<dd><p>Prints the converted source</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="avantpy.console.AvantPyInteractiveConsole.showsyntaxerror">
-<code class="descname">showsyntaxerror</code><span class="sig-paren">(</span><em>filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.showsyntaxerror"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.showsyntaxerror" title="Permalink to this definition">¶</a></dt>
-<dd><p>Shows the converted source if different than the original
-and the syntax error</p>
-</dd></dl>
+<dl class="class">
+<dt id="avantpy.import_hook.MyHtmlDiff">
+<em class="property">class </em><code class="descclassname">avantpy.import_hook.</code><code class="descname">MyHtmlDiff</code><span class="sig-paren">(</span><em>tabsize=8</em>, <em>wrapcolumn=None</em>, <em>linejunk=None</em>, <em>charjunk=&lt;function IS_CHARACTER_JUNK&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#MyHtmlDiff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.MyHtmlDiff" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
+<dl class="function">
+<dt id="avantpy.import_hook.import_main">
+<code class="descclassname">avantpy.import_hook.</code><code class="descname">import_main</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#import_main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.import_main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Imports the module that is to be interpreted as the main module.</p>
+<p>avantpy is often invoked with a script meant to be run as the
+main module its source is transformed with the -s (or –source) option,
+as in:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">avantpy</span> <span class="o">-</span><span class="n">s</span> <span class="n">name</span>
+</pre></div>
+</div>
+<p>Python identifies avantpy as the main script, which is not what we want.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="avantpy.console.start_console">
-<code class="descclassname">avantpy.console.</code><code class="descname">start_console</code><span class="sig-paren">(</span><em>local_vars=None</em>, <em>show_python=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#start_console"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.start_console" title="Permalink to this definition">¶</a></dt>
-<dd><p>Starts a console; modified from code.interact</p>
+<dt id="avantpy.import_hook.show_diff">
+<code class="descclassname">avantpy.import_hook.</code><code class="descname">show_diff</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#show_diff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.show_diff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the flag so that the difference between the original source
+and the converted one can be shown</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-avantpy.translate">
+<span id="translate"></span><h2>translate<a class="headerlink" href="#module-avantpy.translate" title="Permalink to this headline">¶</a></h2>
+<p>Provide mechanism to get translations of messages</p>
+<dl class="function">
+<dt id="avantpy.translate.collect_messages">
+<code class="descclassname">avantpy.translate.</code><code class="descname">collect_messages</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/translate.html#collect_messages"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.translate.collect_messages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find messages from known languages and create corresponding dictionaries</p>
 </dd></dl>
 
 </div>
@@ -417,7 +455,7 @@ and the syntax error</p>
         <li class="right" >
           <a href="testing.html" title="Testing"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy  documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.3 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

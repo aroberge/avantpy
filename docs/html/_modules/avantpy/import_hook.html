@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>avantpy.import_hook &#8212; AvantPy  documentation</title>
+    <title>avantpy.import_hook &#8212; AvantPy 0.0.3 documentation</title>
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -26,7 +26,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>
@@ -66,6 +66,7 @@
 <span class="kn">from</span> <span class="nn">importlib.util</span> <span class="k">import</span> <span class="n">spec_from_file_location</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">conversion</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">exception_handling</span>
 
 
 <span class="n">DIFF</span> <span class="o">=</span> <span class="kc">False</span>
@@ -153,14 +154,21 @@
         <span class="n">original</span> <span class="o">=</span> <span class="n">source</span>
 
         <span class="n">_path</span><span class="p">,</span> <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">_path</span><span class="p">)</span>
+        <span class="n">fullname</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="n">extension</span>
         <span class="n">extension</span> <span class="o">=</span> <span class="n">extension</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
 
         <span class="k">if</span> <span class="n">conversion</span><span class="o">.</span><span class="n">is_dialect</span><span class="p">(</span><span class="n">extension</span><span class="p">):</span>
             <span class="n">conversion</span><span class="o">.</span><span class="n">set_dialect</span><span class="p">(</span><span class="n">extension</span><span class="p">)</span>
-            <span class="n">source</span> <span class="o">=</span> <span class="n">conversion</span><span class="o">.</span><span class="n">to_python</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">source</span> <span class="o">=</span> <span class="n">conversion</span><span class="o">.</span><span class="n">to_python</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">source_name</span><span class="o">=</span><span class="n">fullname</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">exception_handling</span><span class="o">.</span><span class="n">handle_exception</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original</span><span class="p">))</span>
+                <span class="k">return</span>
+
 
             <span class="k">if</span> <span class="n">DIFF</span><span class="p">:</span>
-                <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">_path</span><span class="p">)</span>
                 <span class="n">html_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_html_diff</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">original</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
                 <span class="n">webbrowser</span><span class="o">.</span><span class="n">open_new_tab</span><span class="p">(</span><span class="n">html_file</span><span class="p">)</span>
                 <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
@@ -170,7 +178,11 @@
                 <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: extension not found in known languages.&quot;</span> <span class="o">%</span> <span class="n">extension</span>
             <span class="p">)</span>
 
-        <span class="n">exec</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="nb">vars</span><span class="p">(</span><span class="n">module</span><span class="p">))</span></div>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">exec</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="nb">vars</span><span class="p">(</span><span class="n">module</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">exception_handling</span><span class="o">.</span><span class="n">handle_exception</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original</span><span class="p">))</span></div>
+
 
 <div class="viewcode-block" id="AvantPyLoader.write_html_diff"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.AvantPyLoader.write_html_diff">[docs]</a>    <span class="k">def</span> <span class="nf">write_html_diff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">original</span><span class="p">,</span> <span class="n">transformed</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Writes an html file showing the difference between the original</span>
@@ -244,7 +256,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>

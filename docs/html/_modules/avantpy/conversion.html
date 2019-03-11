@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>avantpy.conversion &#8212; AvantPy  documentation</title>
+    <title>avantpy.conversion &#8212; AvantPy 0.0.3 documentation</title>
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -26,7 +26,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>
@@ -64,6 +64,7 @@
 <span class="kn">import</span> <span class="nn">tokenize</span>
 <span class="kn">from</span> <span class="nn">io</span> <span class="k">import</span> <span class="n">StringIO</span>
 
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">exceptions</span>
 
 <span class="n">DEBUG</span> <span class="o">=</span> <span class="kc">False</span>
 
@@ -249,7 +250,7 @@
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unknown language: &quot;</span><span class="p">,</span> <span class="n">lang</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="to_python"><a class="viewcode-back" href="../../works.html#avantpy.conversion.to_python">[docs]</a><span class="k">def</span> <span class="nf">to_python</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">dialect</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="to_python"><a class="viewcode-back" href="../../works.html#avantpy.conversion.to_python">[docs]</a><span class="k">def</span> <span class="nf">to_python</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">dialect</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">source_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Converts a source in a known dialect into standard Python.</span>
 
 <span class="sd">    This function uses Python&#39;s ``tokenize`` module to convert a</span>
@@ -324,10 +325,7 @@
 <span class="sd">    keyword found at that same indentation was one for which</span>
 <span class="sd">    it made sense to use ``nobreak`` or not.  If it was a</span>
 <span class="sd">    loop, we simply replace ``nobreak`` by ``else``. If not,</span>
-<span class="sd">    we stop processing the code, insert a ``raise SyntaxError``</span>
-<span class="sd">    statement with an appropriate message. When the code is</span>
-<span class="sd">    run, the user will thus be alerted as to the cause of</span>
-<span class="sd">    the mistake in their code.</span>
+<span class="sd">    we raise a custom exception which is handled elsewhere.</span>
 
 <span class="sd">    B. ``repeat``</span>
 
@@ -348,10 +346,8 @@
 
 <span class="sd">    When we encounter the equivalent to the &quot;repeat&quot; keyword in</span>
 <span class="sd">    the selected dialect, we must make sure that it is the first</span>
-<span class="sd">    keyword occurring on a logical line; if not, we include a</span>
-<span class="sd">    statement raising a SyntaxError with an appropriate message</span>
-<span class="sd">    and ignore the rest of the code since it would be irrelevant</span>
-<span class="sd">    when the script is executed.</span>
+<span class="sd">    keyword occurring on a logical line; if not, we raise a</span>
+<span class="sd">    custom exception.</span>
 
 <span class="sd">    If ``repeat`` is the first keyword on a line, we set a flag</span>
 <span class="sd">    (repeat_loop) to True, preparing to look at the next token.</span>
@@ -385,7 +381,6 @@
 <span class="sd">    we need to see if it is a term used in the dialect; if</span>
 <span class="sd">    so, we simply translate it into standard Python.</span>
 
-
 <span class="sd">    E. Remaining tokens</span>
 
 <span class="sd">    Any remaining token is left as is; it is assumed to be valid</span>
@@ -403,19 +398,8 @@
     <span class="n">until_kwd</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;until&quot;</span><span class="p">]</span>
     <span class="n">forever_kwd</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;forever&quot;</span><span class="p">]</span>
     <span class="n">loops_with_else</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;for&quot;</span><span class="p">,</span> <span class="s2">&quot;while&quot;</span><span class="p">,</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;for&quot;</span><span class="p">],</span> <span class="n">while_kwd</span><span class="p">,</span> <span class="n">repeat_kwd</span><span class="p">]</span>
-    <span class="n">blocks_with_else</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s2">&quot;if&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;elif&quot;</span><span class="p">,</span>
-        <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;if&quot;</span><span class="p">],</span>
-        <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;elif&quot;</span><span class="p">],</span>
-    <span class="p">]</span> <span class="o">+</span> <span class="n">loops_with_else</span>
+    <span class="n">blocks_with_else</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;if&quot;</span><span class="p">,</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;if&quot;</span><span class="p">]]</span> <span class="o">+</span> <span class="n">loops_with_else</span>
     <span class="n">nobreak_kwd</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;else&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
-
-    <span class="c1"># custom error messages</span>
-    <span class="n">if_nobreak_disallowed</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is not allowed as a block with an if statement&quot;</span> <span class="o">%</span> <span class="n">nobreak_kwd</span>
-    <span class="p">)</span>
-    <span class="n">repeat_must_be_first</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> must be the first keyword on a given line.&quot;</span> <span class="o">%</span> <span class="n">repeat_kwd</span>
 
     <span class="c1"># variable names to be used in</span>
     <span class="c1">#    for variable_name in range(...):</span>
@@ -466,7 +450,7 @@
         <span class="c1"># we can tell if replacing &#39;nobreak&#39; by &#39;else&#39; makes sense.</span>
         <span class="k">if</span> <span class="n">begin_new_line</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">tok_str</span> <span class="ow">in</span> <span class="n">blocks_with_else</span><span class="p">:</span>
-                <span class="n">indentations</span><span class="p">[</span><span class="n">start_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">tok_str</span>
+                <span class="n">indentations</span><span class="p">[</span><span class="n">start_col</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">tok_str</span><span class="p">,</span> <span class="n">start_line</span><span class="p">]</span>
 
         <span class="c1"># ========================</span>
         <span class="c1"># Actual conversion below</span>
@@ -474,10 +458,18 @@
 
         <span class="k">if</span> <span class="n">tok_str</span> <span class="o">==</span> <span class="n">repeat_kwd</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">begin_new_line</span><span class="p">:</span>  <span class="c1"># this is not allowed to happen</span>
-                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tok_str</span><span class="p">)</span>
-                <span class="n">msg</span> <span class="o">=</span> <span class="n">repeat_must_be_first</span>
-                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">raise SyntaxError(&quot;</span><span class="si">%s</span><span class="s1">&quot;)&#39;</span> <span class="o">%</span> <span class="n">msg</span><span class="p">)</span>
-                <span class="k">break</span>
+                <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">RepeatMustBeFirstError</span><span class="p">(</span>
+                    <span class="s2">&quot;repeat must be first&quot;</span><span class="p">,</span>
+                    <span class="p">(</span>
+                        <span class="p">{</span>
+                            <span class="s2">&quot;repeat keyword&quot;</span><span class="p">:</span> <span class="n">tok_str</span><span class="p">,</span>
+                            <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">start_line</span><span class="p">,</span>
+                            <span class="s2">&quot;source_name&quot;</span><span class="p">:</span> <span class="n">source_name</span><span class="p">,</span>
+                            <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">source</span><span class="p">,</span>
+                            <span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">[</span><span class="mi">2</span><span class="p">:],</span>
+                        <span class="p">},</span>
+                    <span class="p">),</span>
+                <span class="p">)</span>
             <span class="n">repeat_loop</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="k">elif</span> <span class="n">repeat_loop</span><span class="p">:</span>
@@ -503,14 +495,23 @@
                 <span class="k">if</span> <span class="p">(</span>
                     <span class="n">begin_new_line</span>
                     <span class="ow">and</span> <span class="n">start_col</span> <span class="ow">in</span> <span class="n">indentations</span>
-                    <span class="ow">and</span> <span class="n">indentations</span><span class="p">[</span><span class="n">start_col</span><span class="p">]</span> <span class="ow">in</span> <span class="n">loops_with_else</span>
+                    <span class="ow">and</span> <span class="n">indentations</span><span class="p">[</span><span class="n">start_col</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">loops_with_else</span>
                 <span class="p">):</span>
                     <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;else&quot;</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;# &quot;</span> <span class="o">+</span> <span class="n">tok_str</span><span class="p">)</span>
-                    <span class="n">msg</span> <span class="o">=</span> <span class="n">if_nobreak_disallowed</span>
-                    <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">raise SyntaxError(&quot;</span><span class="si">%s</span><span class="s1">&quot;)&#39;</span> <span class="o">%</span> <span class="n">msg</span><span class="p">)</span>
-                    <span class="k">break</span>
+                    <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">IfnobreakError</span><span class="p">(</span>
+                        <span class="s2">&quot;Keyword nobreak found matching if/elif&quot;</span><span class="p">,</span>
+                        <span class="p">(</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;if_string&quot;</span><span class="p">:</span> <span class="n">indentations</span><span class="p">[</span><span class="n">start_col</span><span class="p">],</span>
+                                <span class="s2">&quot;nobreak keyword&quot;</span><span class="p">:</span> <span class="n">tok_str</span><span class="p">,</span>
+                                <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">start_line</span><span class="p">,</span>
+                                <span class="s2">&quot;source_name&quot;</span><span class="p">:</span> <span class="n">source_name</span><span class="p">,</span>
+                                <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">source</span><span class="p">,</span>
+                                <span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">[</span><span class="mi">2</span><span class="p">:],</span>
+                            <span class="p">},</span>
+                        <span class="p">),</span>
+                    <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lang_to_py</span><span class="p">[</span><span class="n">tok_str</span><span class="p">])</span>
 
@@ -537,7 +538,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>

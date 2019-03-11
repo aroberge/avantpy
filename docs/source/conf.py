@@ -16,13 +16,13 @@ import os
 import sys
 
 sys.path.insert(0, os.path.abspath("../../"))
-print(sys.path[0])
 
-# The short X.Y version
-version = ""
+from avantpy import version as v
+# Sphinx: The short X.Y version
+# This project: we just use one number
+version = v.__version__
 # The full version, including alpha/beta/rc tags
-release = ""
-
+release = v.__version__
 
 # -- General configuration ---------------------------------------------------
 
