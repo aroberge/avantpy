@@ -16,8 +16,8 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Special keyword: repeat" href="repeat.html" />
-    <link rel="prev" title="Bienvenue 환영합니다 Bienvenido - ようこそ Welcome 歡迎光臨" href="index.html" /> 
+    <link rel="next" title="Guiding principles" href="principles.html" />
+    <link rel="prev" title="Invocation" href="invocation.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -29,30 +29,22 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="repeat.html" title="Special keyword: repeat"
+          <a href="principles.html" title="Guiding principles"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Bienvenue 환영합니다 Bienvenido - ようこそ Welcome 歡迎光臨"
+          <a href="invocation.html" title="Invocation"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.3 documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Language or dialect?</a><ul>
-<li><a class="reference internal" href="#avantpy-s-english-dialect">AvantPy’s English dialect</a></li>
-</ul>
-</li>
-</ul>
-
   <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Bienvenue 환영합니다 Bienvenido - ようこそ Welcome  歡迎光臨</a></p>
+  <p class="topless"><a href="invocation.html"
+                        title="previous chapter">Invocation</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="repeat.html"
-                        title="next chapter">Special keyword: <code class="docutils literal notranslate"><span class="pre">repeat</span></code></a></p>
+  <p class="topless"><a href="principles.html"
+                        title="next chapter">Guiding principles</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -100,21 +92,20 @@ We refer to such files as being written in the French (Python) dialect.</p>
 <p>Dialects definitions for language <code class="docutils literal notranslate"><span class="pre">xx</span></code> are Python files
 named <code class="docutils literal notranslate"><span class="pre">xx.py</span></code> and are found in the AvantPy’s repository:
 <a class="reference external" href="https://github.com/aroberge/avantpy/tree/master/avantpy/dialects">avantpy/dialects/ directory</a>.</p>
-<div class="section" id="avantpy-s-english-dialect">
-<h2>AvantPy’s English dialect<a class="headerlink" href="#avantpy-s-english-dialect" title="Permalink to this headline">¶</a></h2>
-<p>AvantPy includes an English dialect (<code class="docutils literal notranslate"><span class="pre">.pyen</span></code>) which adds a few keywords and constructs
-to Python.
-The corresponding
-<a class="reference external" href="https://github.com/aroberge/avantpy/blob/master/avantpy/dialects/en.py">definition file</a>
-could be used as the basis for the creation of a new dialect.  However, the
-“uppercase” dialect found at
-<a class="reference external" href="https://github.com/aroberge/avantpy/blob/master/avantpy/dialects/upper.py">another definition file</a>
-might be an even better choice as a starting point.
-It is mostly intended to be used for testing purpose.</p>
+<p>Currently, a <strong>DRAFT</strong> implementation of the following dialects exist:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/aroberge/avantpy/tree/master/avantpy/dialects/en.py">English</a></li>
+<li><a class="reference external" href="https://github.com/aroberge/avantpy/tree/master/avantpy/dialects/fr.py">French</a></li>
+<li><a class="reference external" href="https://github.com/aroberge/avantpy/tree/master/avantpy/dialects/es.py">Spanish</a></li>
+</ul>
 <p>In addition to the additional keywords needed for the special idioms used in AvantPy,
 and explained later in this documentation, the English dialect includes the
-keyword <code class="docutils literal notranslate"><span class="pre">function</span></code> as being equivalent to <code class="docutils literal notranslate"><span class="pre">lambda</span></code>.</p>
-</div>
+keyword <code class="docutils literal notranslate"><span class="pre">function</span></code> as being equivalent to <code class="docutils literal notranslate"><span class="pre">lambda</span></code>, and <code class="docutils literal notranslate"><span class="pre">ask</span></code> as being
+equivalent to <code class="docutils literal notranslate"><span class="pre">input</span></code>.</p>
+<p>Finally, an
+<a class="reference external" href="https://github.com/aroberge/avantpy/tree/master/avantpy/dialects/en.py">UPPERCASE version</a>
+of AvantPy’s English dialect exists; this is primarily intended to be used as a template
+for other dialects, and for testing.</p>
 </div>
 
 
@@ -133,10 +124,10 @@ keyword <code class="docutils literal notranslate"><span class="pre">function</s
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="repeat.html" title="Special keyword: repeat"
+          <a href="principles.html" title="Guiding principles"
              >next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Bienvenue 환영합니다 Bienvenido - ようこそ Welcome 歡迎光臨"
+          <a href="invocation.html" title="Invocation"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.3 documentation</a> &#187;</li> 
       </ul>

@@ -4,9 +4,25 @@ Special keyword: ``repeat``
 Repeating a series of instructions is something that is often done when
 running programs.  Block-based programming environments, such as
 Scratch and Blockly, have different blocks that can be used for
-this purpose.
+this purpose.  For example:
 
-The four main cases covered by such blocks can be written as follows
+.. image:: images/repeat10.png
+   :scale: 100 %
+   :alt: Repeat 10 block
+
+.. image:: images/repeat_until.png
+   :scale: 100 %
+   :alt: Repeat until block
+
+and a "repeat forever" loop in French: 
+
+.. image:: images/repeat_forever_fr.png
+   :scale: 55 %
+   :alt: French repeat forever block
+
+
+Depending on the block-based environment one uses, there are up to four
+four main such cases, which can be written as follows
 in standard Python::
 
     for _ in range(n):
@@ -44,9 +60,6 @@ in a natural way::
 
     repeat forever:
         # condition
-
-Unlike Python's keywords, the English version of these additional keywords, 
-``repeat``, ``until``, ``forever``, are only available in the English dialect of AvantPy.
  
 
 A concrete example

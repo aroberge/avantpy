@@ -10,7 +10,7 @@ def test_if_nobreak(capsys):
     if not hasattr(if_nobreak, "out"):
         info = str(capsys.readouterr())
         if_nobreak.out = info
-    assert 'IfnobreakError' in if_nobreak.out
+    assert 'IfNobreakError' in if_nobreak.out
 
 
 def test_if_nobreak2(capsys):
@@ -18,4 +18,4 @@ def test_if_nobreak2(capsys):
     if not hasattr(if_nobreak2, "out"):
         info = str(capsys.readouterr())
         if_nobreak2.out = info
-    assert 'NobreakMustBeFirstError' in if_nobreak2.out
+    assert 'NobreakFirstError' in if_nobreak2.out

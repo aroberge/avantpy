@@ -23,8 +23,31 @@ def _maybe_print(msg, obj, attribute):
         print(msg, "does not exist")
 
 
+def get_partial_source(source, begin, end, mark=-1):
+    """Extracts a few relevant lines from a source file"""
+
+    lines = source.split("\n")
+    result = []
+    if mark == -1:
+        mark = end
+
+    for index, line in enumerate(lines, start=1):
+        if index < begin:
+            continue
+        if index > end:
+            break
+        if index == mark:
+            result.append("      -->{:5d}: ".format(index) + line)
+        else:
+            result.append("         {:5d}: ".format(index) + line)
+
+    return "\n".join(result)
+
 
 def handle_exception(exc, original_source):
+    """Generic function to handle exceptions and return a
+       friendlier traceback than Python.
+    """
     if not ENABLED:
         # Let normal Python traceback through
         raise exc
@@ -46,7 +69,7 @@ def handle_exception(exc, original_source):
     print("args: ", exc.args)
 
 
-def handle_IfnobreakError(exc, original_source):
+def handle_IfNobreakError(exc, original_source):
     params = exc.args[0]
 
     if_linenumber = int(params["if_string"][1])
@@ -56,18 +79,21 @@ def handle_IfnobreakError(exc, original_source):
     lines = original_source.split("\n")
     if_line = lines[if_linenumber - 1]
     nobreak_line = lines[nobreak_linenumber - 1]
+    partial_source = get_partial_source(
+        original_source, 
+        if_linenumber, 
+        nobreak_linenumber
+    )
 
     info = {'filename': params["source_name"],
         "nobreak_kwd": params["nobreak keyword"],
-        "if_linenumber": if_linenumber,
-        "if_line": if_line,
-        "nobreak_linenumber": nobreak_linenumber,
-        "nobreak_line": nobreak_line
+        "partial_source": partial_source,
+        "nobreak_linenumber": nobreak_linenumber
     }
-    return translate.get('IfnobreakError', lang).format(**info)
+    return translate.get('IfNobreakError', lang).format(**info)
 
 
-def handle_TrynobreakError(exc, original_source):
+def handle_TryNobreakError(exc, original_source):
     params = exc.args[0]
 
     try_linenumber = int(params["try_string"][1])
@@ -85,7 +111,7 @@ def handle_TrynobreakError(exc, original_source):
         "nobreak_linenumber": nobreak_linenumber,
         "nobreak_line": nobreak_line
     }
-    return translate.get('TrynobreakError', lang).format(**info)
+    return translate.get('TryNobreakError', lang).format(**info)
 
 
 def handle_NobreakSyntaxError(exc, original_source):
@@ -105,7 +131,7 @@ def handle_NobreakSyntaxError(exc, original_source):
     return translate.get('NobreakSyntaxError', lang).format(**info)
 
 
-def handle_NobreakMustBeFirstError(exc, original_source):
+def handle_NobreakFirstError(exc, original_source):
     params = exc.args[0]
     linenumber = int(params["linenumber"])
     lang = params["lang"]
@@ -118,10 +144,10 @@ def handle_NobreakMustBeFirstError(exc, original_source):
         "linenumber": linenumber,
         "nobreak_line": nobreak_line
     }
-    return translate.get('NobreakMustBeFirstError', lang).format(**info)
+    return translate.get('NobreakFirstError', lang).format(**info)
 
 
-def handle_RepeatMustBeFirstError(exc, original_source):
+def handle_RepeatFirstError(exc, original_source):
     params = exc.args[0]
     linenumber = int(params["linenumber"])
     lang = params["lang"]
@@ -134,13 +160,13 @@ def handle_RepeatMustBeFirstError(exc, original_source):
         "linenumber": linenumber,
         "repeat_line": repeat_line
     }
-    return translate.get('RepeatMustBeFirstError', lang).format(**info)
+    return translate.get('RepeatFirstError', lang).format(**info)
 
 
 dispatch = {
-    'IfnobreakError': handle_IfnobreakError,
-    'TrynobreakError': handle_TrynobreakError,
-    'NobreakMustBeFirstError': handle_NobreakMustBeFirstError,
+    'IfNobreakError': handle_IfNobreakError,
+    'TryNobreakError': handle_TryNobreakError,
+    'NobreakFirstError': handle_NobreakFirstError,
     'NobreakSyntaxError': handle_NobreakSyntaxError,
-    'RepeatMustBeFirstError': handle_RepeatMustBeFirstError,
+    'RepeatFirstError': handle_RepeatFirstError,
 }

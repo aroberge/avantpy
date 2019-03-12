@@ -4,4 +4,4 @@ def test_nobreak_else(capsys):
     if not hasattr(nobreak_else, "out"):
         info = str(capsys.readouterr())
         nobreak_else.out = info
-    assert 'TrynobreakError' in nobreak_else.out
+    assert 'TryNobreakError' in nobreak_else.out

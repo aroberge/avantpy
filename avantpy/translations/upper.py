@@ -1,70 +1,50 @@
-"""translations: upper.py"""
+"""translations: upper.py
 
-upper = {}
 
-upper[
-    "IfnobreakError"
-] = """
-AVANTPY EXCEPTION: IfnobreakError
-
-    THE AVANTPY {nobreak_kwd} KEYWORD CANNOT BE USED IN AN IF/ELIF/ELSE CLAUSE
-    (Python: if/elif/else).
-
-ERROR FOUND IN FILE '{filename}'.
-
-    LINE {if_linenumber}: {if_line}
-
-    LINE {nobreak_linenumber}: {nobreak_line}
+This file can be used as a template for translations in other languages.
 """
 
-upper[
-    "TrynobreakError"
-] = """
-AVANTPY EXCEPTION: TrynobreakError
+# Note: as a reminder that these are the error messages from the upper(case)
+# dialect, we begin them with the all-caps words AVANTPY EXCEPTION or
+# PYTHON EXCEPTION
 
-    THE AVANTPY {nobreak_kwd} KEYWORD CANNOT BE USED IN A TRY/EXCEPT/ELSE CLAUSE
-    (Python: try/except/else).
+upper = {
+    "IfNobreakError": """
+    AVANTPY EXCEPTION: IfNobreakError\n
+    The AvantPy {nobreak_kwd} keyword cannot be used in an IF/ELIF/ELSE
+    clause (Python: if/elif/else).\n
+    Error found in file {filename} on line {nobreak_linenumber}.\n
+{partial_source}
+""",
 
-ERROR FOUND IN FILE '{filename}'.
+    "NobreakFirstError": """
+        AVANTPY EXCEPTION: NobreakFirstError\n
+        The AvantPy {nobreak_kwd} keyword must begin a new statement.\n
+        Error found in file {filename} on line {linenumber}.\n
+            Line {linenumber}: {nobreak_line}
+    """,
 
-    LINE {try_linenumber}: {try_line}
+    "NobreakSyntaxError": """
+        AVANTPY EXCEPTION: NobreakSyntaxError\n
+        The AvantPy {nobreak_kwd} keyword must begin a new statement
+        matching a FOR or WHILE loop.\n
+        Error found in file {filename} on line {linenumber}.\n
+            Line {linenumber}: {nobreak_line}
+    """,
 
-    LINE {nobreak_linenumber}: {nobreak_line}
-"""
+    "RepeatFirstError": """
+        AVANTPY EXCEPTION: RepeatFirstError\n
+        The AvantPy {repeat_kwd} keyword must begin a new statement.\n
+        Error found in file {filename} on line {linenumber}.\n
+            Line {linenumber}: {repeat_line}
+    """,
 
-upper[
-    "NobreakMustBeFirstError"
-] = """
-AVANTPY EXCEPTION: NobreakMustBeFirstError
-
-    THE AVANTPY {nobreak_kwd} KEYWORD MUST BEGIN A NEW STATEMENT.
-
-ERROR FOUND IN FILE '{filename}'.
-
-    LINE {linenumber}: {nobreak_line}
-"""
-
-upper[
-    "NobreakSyntaxError"
-] = """
-AVANTPY EXCEPTION: NobreakSyntaxError
-
-    THE AVANTPY {nobreak_kwd} KEYWORD MUST BEGIN A NEW STATEMENT WHICH 
-    DOES NOT MATCH A VALID BLOCK.
-
-ERROR FOUND IN FILE '{filename}'.
-
-    LINE {linenumber}: {nobreak_line}
-"""
-
-upper[
-    "RepeatMustBeFirstError"
-] = """
-AVANTPY EXCEPTION: RepeatMustBeFirstError
-
-    THE AVANTPY {repeat_kwd} KEYWORD MUST BEGIN A NEW STATEMENT.
-
-ERROR FOUND IN FILE '{filename}'.
-
-    LINE {linenumber}: {repeat_line}
-"""
+    "TryNobreakError": """
+        AVANTPY EXCEPTION: TryNobreakError\n
+        The AvantPy {nobreak_kwd} keyword cannot be used in a TRY/EXCEPT/ELSE
+        clause (Python: try/except/else).\n
+        Error found in file {filename} on line {nobreak_linenumber}.\n
+            Line {try_linenumber}: {try_line}\n
+            Line {nobreak_linenumber}: {nobreak_line}
+    """,
+}

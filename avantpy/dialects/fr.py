@@ -14,9 +14,9 @@ fr = {
     "continue": "continue",
     "def": "définir",
     "del": "supprime",
-    "elif": "autrementsi",
+    "elif": "sinonsi",
     "else": ["sinon", "pasinterrompu"],
-    "except": "exception",
+    "except": "siexception",
     "finally": "finalement",
     "for": "pour",
     "from": "de",
@@ -33,7 +33,7 @@ fr = {
     "raise": "soulève",
     "return": "retourne",
     "try": "essaie",
-    "while": "pendantque",
+    "while": "tantque",
     "with": "avec",
     "yield": "cède",
     # Special loop keywords
@@ -41,8 +41,8 @@ fr = {
     "forever": "sansfin",
     "until": "jusquà",
     # a few builtins useful for beginners
-    "input": "entrée",
-    "print": "imprime",
+    "input": "demande",
+    "print": "affiche",
     "range": "intervalle",
     "exit": "quitter",  # useful for console
     # a well-known python expression

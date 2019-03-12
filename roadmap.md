@@ -8,6 +8,9 @@ Goals:
 
 ## Enhancements
 
+Important: add code (and test) to ensure that `until` cannot be used if it
+is not preceded by `repeat`.
+
 - [x] Add option to restrict processing to single dialect
   - In this case, only load single dialect file; if not found, issue error message and exit.
 - [x] Think of replacing `__name__ is "__main__"` by a single keyword, perhaps `NotImported`.
@@ -35,7 +38,6 @@ Goals:
 - [ ] Use .format for string interpolation everywhere.
 - [ ] Look at having translation for open()
 - [ ] Review builtins and see if translations of other functions are needed.
-- [ ] add noexcept as replacement for else in try/except loop
 - [ ] add syntax check in conversion
   - [ ] Closing ]}) not matching opening
   - [ ] opening [({ never closed

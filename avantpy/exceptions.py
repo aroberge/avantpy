@@ -7,18 +7,18 @@ class AvantPyException(Exception):
         self.args = args
 
 
-class IfnobreakError(AvantPyException):
+class IfNobreakError(AvantPyException):
     pass
 
-class TrynobreakError(AvantPyException):
+class TryNobreakError(AvantPyException):
     pass
 
-class NobreakMustBeFirstError(AvantPyException):
+class NobreakFirstError(AvantPyException):
     pass
 
 class NobreakSyntaxError(AvantPyException):
     pass
 
 
-class RepeatMustBeFirstError(AvantPyException):
+class RepeatFirstError(AvantPyException):
     pass

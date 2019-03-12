@@ -24,20 +24,20 @@ Dialects definitions for language ``xx`` are Python files
 named ``xx.py`` and are found in the AvantPy's repository:
 `avantpy/dialects/ directory <https://github.com/aroberge/avantpy/tree/master/avantpy/dialects>`_.
 
+Currently, a **DRAFT** implementation of the following dialects exist:
 
-AvantPy's English dialect
---------------------------
-
-AvantPy includes an English dialect (``.pyen``) which adds a few keywords and constructs
-to Python. 
-The corresponding 
-`definition file <https://github.com/aroberge/avantpy/blob/master/avantpy/dialects/en.py>`_
-could be used as the basis for the creation of a new dialect.  However, the
-"uppercase" dialect found at 
-`another definition file <https://github.com/aroberge/avantpy/blob/master/avantpy/dialects/upper.py>`_
-might be an even better choice as a starting point.
-It is mostly intended to be used for testing purpose.
+- `English <https://github.com/aroberge/avantpy/tree/master/avantpy/dialects/en.py>`_
+- `French <https://github.com/aroberge/avantpy/tree/master/avantpy/dialects/fr.py>`_
+- `Spanish <https://github.com/aroberge/avantpy/tree/master/avantpy/dialects/es.py>`_
 
 In addition to the additional keywords needed for the special idioms used in AvantPy,
 and explained later in this documentation, the English dialect includes the
-keyword ``function`` as being equivalent to ``lambda``.
+keyword ``function`` as being equivalent to ``lambda``, and ``ask`` as being
+equivalent to ``input``.
+
+
+Finally, an 
+`UPPERCASE version <https://github.com/aroberge/avantpy/tree/master/avantpy/dialects/en.py>`_ 
+of AvantPy's English dialect exists; this is primarily intended to be used as a template
+for other dialects, and for testing.
+

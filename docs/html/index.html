@@ -16,7 +16,7 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Language or dialect?" href="dialect.html" /> 
+    <link rel="next" title="Invocation" href="invocation.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -28,7 +28,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="dialect.html" title="Language or dialect?"
+          <a href="invocation.html" title="Invocation"
              accesskey="N">next</a> |</li>
         <li class="nav-item nav-item-0"><a href="#">AvantPy 0.0.3 documentation</a> &#187;</li> 
       </ul>
@@ -47,8 +47,8 @@
 </ul>
 
   <h4>Next topic</h4>
-  <p class="topless"><a href="dialect.html"
-                        title="next chapter">Language or dialect?</a></p>
+  <p class="topless"><a href="invocation.html"
+                        title="next chapter">Invocation</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -131,15 +131,19 @@ However they likely would understand and remember programming <strong>concepts</
 <h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="dialect.html"> Language or dialect?</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="dialect.html#avantpy-s-english-dialect">AvantPy’s English dialect</a></li>
+<li class="toctree-l1"><a class="reference internal" href="invocation.html"> Invocation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="invocation.html#basic-invocation">Basic invocation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="invocation.html#running-programs">Running programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="invocation.html#showing-the-corresponding-python-code">Showing the corresponding Python code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="invocation.html#debug-flag">Debug flag</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="dialect.html"> Language or dialect?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="principles.html"> Guiding principles</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="principles.html#for-students">For students</a></li>
-<li class="toctree-l2"><a class="reference internal" href="principles.html#for-instructors">For instructors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="principles.html#for-students-and-instructors">For students and instructors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="principles.html#for-contributors">For contributors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="principles.html#for-third-parties">For third parties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="principles.html#for-third-party-software">For third party software</a></li>
+<li class="toctree-l2"><a class="reference internal" href="principles.html#limitations">Limitations</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="repeat.html"> Special keyword: repeat</a><ul>
@@ -154,16 +158,12 @@ However they likely would understand and remember programming <strong>concepts</
 </li>
 <li class="toctree-l1"><a class="reference internal" href="notimported.html"> Special keyword: notimported</a></li>
 <li class="toctree-l1"><a class="reference internal" href="builtins.html"> More than keywords</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tracebacks.html"> Friendly error messages</a></li>
-<li class="toctree-l1"><a class="reference internal" href="works.html"> How does it work?</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="works.html#from-the-source">From the source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tracebacks.html"> Friendly error messages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tracebacks.html#ifnobreakerror">IfNobreakError</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="invocation.html"> Invocation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="invocation.html#basic-invocation">Basic invocation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="invocation.html#running-programs">Running programs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="invocation.html#showing-the-corresponding-python-code">Showing the corresponding Python code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="invocation.html#debug-flag">Debug flag</a></li>
+<li class="toctree-l1"><a class="reference internal" href="works.html"> How does it work?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="works.html#from-the-source">From the source</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="testing.html"> Testing</a><ul>
@@ -187,6 +187,12 @@ However they likely would understand and remember programming <strong>concepts</
 </li>
 </ul>
 </div>
+<div class="admonition-todo admonition">
+<p class="first admonition-title">Todo</p>
+<p class="last">Write program that generate sample tracebacks from each case covered and
+use it to generate the “Friendly error messages” file automatically.</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="tracebacks.html#index-0"><em>original entry</em></a> is located in C:\Users\andre\github\avantpy\docs\source\tracebacks.rst, line 8.)</p>
 </div>
 </div>
 
@@ -206,7 +212,7 @@ However they likely would understand and remember programming <strong>concepts</
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="dialect.html" title="Language or dialect?"
+          <a href="invocation.html" title="Invocation"
              >next</a> |</li>
         <li class="nav-item nav-item-0"><a href="#">AvantPy 0.0.3 documentation</a> &#187;</li> 
       </ul>

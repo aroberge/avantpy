@@ -42,10 +42,10 @@
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Guiding principles</a><ul>
-<li><a class="reference internal" href="#for-students">For students</a></li>
-<li><a class="reference internal" href="#for-instructors">For instructors</a></li>
+<li><a class="reference internal" href="#for-students-and-instructors">For students and instructors</a></li>
 <li><a class="reference internal" href="#for-contributors">For contributors</a></li>
-<li><a class="reference internal" href="#for-third-parties">For third parties</a></li>
+<li><a class="reference internal" href="#for-third-party-software">For third party software</a></li>
+<li><a class="reference internal" href="#limitations">Limitations</a></li>
 </ul>
 </li>
 </ul>
@@ -86,31 +86,28 @@
   <div class="section" id="guiding-principles">
 <h1>Guiding principles<a class="headerlink" href="#guiding-principles" title="Permalink to this headline">¶</a></h1>
 <p>AvantPy aims to be a project that facilitates learning computer programming while minimizing the pain. AvantPy will strive to make informed decisions about designs based on other successful programming language or environments, and from feedback from its users.</p>
-<p>AvantPy is limited in scope: the goal is to provide only a basic set of translated/localized
-keywords, built-in and error-handling functions,
-thus making it possible for students to learn basic programming concepts in their own language.</p>
-<p>AvantPy does not aim have a localized version of all of Python’s builtin function, nor
-does it aim to provide a translation of any modules from Python’s standard library.
-However, if AvantPy is successful, it is conceivable that a few additional Python
-resources, such as the Turtle module, might be localized. However, no work
-is planned in this direction in the near future for AvantPy.</p>
-<div class="section" id="for-students">
-<h2>For students<a class="headerlink" href="#for-students" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="for-students-and-instructors">
+<h2>For students and instructors<a class="headerlink" href="#for-students-and-instructors" title="Permalink to this headline">¶</a></h2>
 <p>AvantPy aims to:</p>
 <ul class="simple">
 <li>make it possible for students to learn <strong>basic</strong> programming concepts in their own language;</li>
-<li>provide simple to understand error messages (tracebacks);</li>
-<li>for those that wish going beyond the basics, allow for an easy transition to programming using standard Python.</li>
+<li>provide easy to understand basic error messages, simpler than Python tracebacks;</li>
+<li>reduce the number of non-obvious programming idioms, as compared with Python;
+Python, such as when introducing <code class="docutils literal notranslate"><span class="pre">repeat</span> <span class="pre">n</span></code>;</li>
+<li>allow for an easy transition to programming using standard Python.</li>
 </ul>
-</div>
-<div class="section" id="for-instructors">
-<h2>For instructors<a class="headerlink" href="#for-instructors" title="Permalink to this headline">¶</a></h2>
-<p>AvantPy aims to make the job of instructors teaching programming easier.  (This definitely needs to be explained better.)</p>
+<p>In a given dialect, AvantPy keywords and functions should not be thought of as
+straight translations from English of the Python keywords; instead, these should be
+chosen so that they make sense in a programming context. For example, in the French dialect,
+the function <code class="docutils literal notranslate"><span class="pre">input</span></code> is named <code class="docutils literal notranslate"><span class="pre">demande</span></code> which would normally be translated as <code class="docutils literal notranslate"><span class="pre">ask</span></code>.
+Similarly, the French equivalent to <code class="docutils literal notranslate"><span class="pre">except</span></code> is <code class="docutils literal notranslate"><span class="pre">siexception</span></code>
+which is composed of two words, <code class="docutils literal notranslate"><span class="pre">si</span></code> and  <code class="docutils literal notranslate"><span class="pre">exception</span></code>.
+Thus, <code class="docutils literal notranslate"><span class="pre">siexception</span> <span class="pre">SyntaxError:</span></code> can be read as <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">exception</span> <span class="pre">SyntaxError:</span></code>.</p>
 </div>
 <div class="section" id="for-contributors">
 <h2>For contributors<a class="headerlink" href="#for-contributors" title="Permalink to this headline">¶</a></h2>
-<p>Other than users that provide feedback, including bug reports and suggestions for improvements,
-we can think of two different types of contributors.</p>
+<p>In addition to users that provide feedback, including bug reports and suggestions for improvements,
+we can think of three other types of contributors.</p>
 <ol class="upperalpha simple">
 <li>Contributor of new language adaptation</li>
 </ol>
@@ -123,6 +120,11 @@ one-to-one keyword substitution. Such keywords might be essentially compound wor
 in a given language written in such a way that the language’s grammar is not followed
 <strong>but</strong> in a way that might nonetheless be relatively easy to understand by
 beginners.</p>
+<p>Translations of <strong>messages</strong> to user, such as simplified tracebacks, are currently implemented
+(in theory - not much content yet) using a simple Python dictionary for each language,
+instead of using a standard method such as that provided by pygettext.
+This is probably going to change in once the project’s core functionality is completed
+(probably around version 0.1).</p>
 <ol class="upperalpha simple" start="2">
 <li>Contributor of “core” code</li>
 </ol>
@@ -134,13 +136,42 @@ current author.</p>
 <p>It is very likely that using more advanced programming techniques could speed up the transformations and error handling done by AvantPy; however, speed of execution is not the goal of AvantPy.
 AvantPy aims to be easy to use by beginners, and easy to contribute to by developers.</p>
 </div>
-<div class="section" id="for-third-parties">
-<h2>For third parties<a class="headerlink" href="#for-third-parties" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="for-third-party-software">
+<h2>For third party software<a class="headerlink" href="#for-third-party-software" title="Permalink to this headline">¶</a></h2>
 <p>AvantPy does not aim to be a full programming environment; it adresses a different need
 than editors or IDEs aimed at Python programmers. However, AvantPy aims to make it easy
-for tools like Python’s IDLE, [Mu](<a class="reference external" href="https://codewith.mu/">https://codewith.mu/</a>),
-[Thonny](<a class="reference external" href="https://thonny.org/">https://thonny.org/</a>), or others, to “hook” to AvantPy and make it available
+for tools like Python’s IDLE, <a class="reference external" href="https://codewith.mu/">Mu</a>,
+<a class="reference external" href="https://thonny.org/">Thonny</a>, etc., to “hook” to AvantPy and make it available
 to their users.</p>
+</div>
+<div class="section" id="limitations">
+<h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h2>
+<ol class="upperalpha simple">
+<li>Limited scope</li>
+</ol>
+<p>AvantPy is limited in scope: the goal is to provide only a basic set of translated/localized
+keywords, built-in and error-handling functions, thus making it possible for absolute
+beginners to learn very basic programming concepts in their own language.</p>
+<p>AvantPy does not aim have a localized version of all of Python’s builtin functions, nor
+does it aim to provide a translation of any modules from Python’s standard library.
+If AvantPy is successful, it is conceivable that a few additional Python
+resources, in particular its Turtle module, might be localized. However, no work
+is planned in this direction in the near future for AvantPy.</p>
+<ol class="upperalpha simple" start="2">
+<li>Possibly incorrect grammatical structure</li>
+</ol>
+<p>AvantPy dialects are assumed to be a one-to-one translations of keywords into the corresponding
+AvantPy English dialect. Unlike the text that appears on blocks in Scratch or Blockly,
+it could happen that the simple translation of keywords does not result in
+grammatically correct word order in a given language.</p>
+<p>As a concrete example, AvantPy assumes that separate translations of <code class="docutils literal notranslate"><span class="pre">repeat</span></code> and <code class="docutils literal notranslate"><span class="pre">until</span></code> exist,
+and that they can be combined with a user-defined <code class="docutils literal notranslate"><span class="pre">&quot;condition&quot;</span></code> in <strong>exactly</strong> the following
+order:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repeat</span> <span class="n">until</span> <span class="s2">&quot;condition&quot;</span><span class="p">:</span>
+</pre></div>
+</div>
+<p>It is almost certainly the case that this will not yield a grammatically correct phrase
+in some languages.  [If you know of a concrete example, please feel free to contribute.]</p>
 </div>
 </div>
 

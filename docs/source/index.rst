@@ -65,6 +65,7 @@ Contents
 .. toctree::
    :maxdepth: 2
 
+    Invocation <invocation>
     Language or dialect? <dialect>
     Guiding principles <principles>
     Special keyword: repeat <repeat>
@@ -73,7 +74,6 @@ Contents
     More than keywords <builtins>
     Friendly error messages <tracebacks>
     How does it work? <works>
-    Invocation <invocation>
     Testing <testing>
     Other modules <modules>
     Contributing <contribute>

@@ -3,9 +3,9 @@
 en = {}
 
 en[
-    "IfnobreakError"
+    "IfNobreakError"
 ] = """
-AvantPy exception: IfnobreakError
+AvantPy exception: IfNobreakError
 
     The AvantPy {nobreak_kwd} keyword cannot be used in an if/elif/else clause.
 
@@ -17,9 +17,9 @@ Error found in file '{filename}':
 """
 
 en[
-    "RepeatMustBeFirstError"
+    "RepeatFirstError"
 ] = """
-AvantPy exception:RepeatMustBeFirstError
+AvantPy exception:RepeatFirstError
 
     The AvantPy {repeat_kwd} keyword must begin a new statement.
 

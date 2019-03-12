@@ -3,35 +3,31 @@ Guiding principles
 
 AvantPy aims to be a project that facilitates learning computer programming while minimizing the pain. AvantPy will strive to make informed decisions about designs based on other successful programming language or environments, and from feedback from its users.
 
-AvantPy is limited in scope: the goal is to provide only a basic set of translated/localized
-keywords, built-in and error-handling functions, 
-thus making it possible for students to learn basic programming concepts in their own language.
 
-AvantPy does not aim have a localized version of all of Python's builtin function, nor
-does it aim to provide a translation of any modules from Python's standard library.
-However, if AvantPy is successful, it is conceivable that a few additional Python
-resources, such as the Turtle module, might be localized. However, no work
-is planned in this direction in the near future for AvantPy.
-
-For students
-------------
+For students and instructors
+-----------------------------
 
 AvantPy aims to:
 
 - make it possible for students to learn **basic** programming concepts in their own language;
-- provide simple to understand error messages (tracebacks);
-- for those that wish going beyond the basics, allow for an easy transition to programming using standard Python.
+- provide easy to understand basic error messages, simpler than Python tracebacks;
+- reduce the number of non-obvious programming idioms, as compared with Python;
+  Python, such as when introducing ``repeat n``;
+- allow for an easy transition to programming using standard Python.
 
-For instructors
----------------
-
-AvantPy aims to make the job of instructors teaching programming easier.  (This definitely needs to be explained better.)
+In a given dialect, AvantPy keywords and functions should not be thought of as 
+straight translations from English of the Python keywords; instead, these should be
+chosen so that they make sense in a programming context. For example, in the French dialect,
+the function ``input`` is named ``demande`` which would normally be translated as ``ask``.
+Similarly, the French equivalent to ``except`` is ``siexception`` 
+which is composed of two words, ``si`` and  ``exception``.
+Thus, ``siexception SyntaxError:`` can be read as ``if exception SyntaxError:``.
 
 For contributors
 -----------------
 
-Other than users that provide feedback, including bug reports and suggestions for improvements,
-we can think of two different types of contributors.
+In addition to users that provide feedback, including bug reports and suggestions for improvements,
+we can think of three other types of contributors.
 
 A. Contributor of new language adaptation
 
@@ -46,6 +42,12 @@ in a given language written in such a way that the language's grammar is not fol
 **but** in a way that might nonetheless be relatively easy to understand by 
 beginners.
 
+Translations of **messages** to user, such as simplified tracebacks, are currently implemented
+(in theory - not much content yet) using a simple Python dictionary for each language, 
+instead of using a standard method such as that provided by pygettext. 
+This is probably going to change in once the project's core functionality is completed
+(probably around version 0.1).
+
 B. Contributor of "core" code
 
 Currently, the "core" code does not rely on any "advanced" knowledge of computer science.
@@ -57,11 +59,42 @@ current author.
 It is very likely that using more advanced programming techniques could speed up the transformations and error handling done by AvantPy; however, speed of execution is not the goal of AvantPy.
 AvantPy aims to be easy to use by beginners, and easy to contribute to by developers.
 
-For third parties
------------------
+For third party software
+------------------------
 
 AvantPy does not aim to be a full programming environment; it adresses a different need
 than editors or IDEs aimed at Python programmers. However, AvantPy aims to make it easy
-for tools like Python's IDLE, [Mu](https://codewith.mu/),
-[Thonny](https://thonny.org/), or others, to "hook" to AvantPy and make it available
+for tools like Python's IDLE, `Mu <https://codewith.mu/>`_,
+`Thonny <https://thonny.org/>`_, etc., to "hook" to AvantPy and make it available
 to their users.
+
+Limitations
+-----------
+
+A. Limited scope
+
+AvantPy is limited in scope: the goal is to provide only a basic set of translated/localized
+keywords, built-in and error-handling functions, thus making it possible for absolute 
+beginners to learn very basic programming concepts in their own language.
+
+AvantPy does not aim have a localized version of all of Python's builtin functions, nor
+does it aim to provide a translation of any modules from Python's standard library.
+If AvantPy is successful, it is conceivable that a few additional Python
+resources, in particular its Turtle module, might be localized. However, no work
+is planned in this direction in the near future for AvantPy.
+
+B. Possibly incorrect grammatical structure
+
+AvantPy dialects are assumed to be a one-to-one translations of keywords into the corresponding
+AvantPy English dialect. Unlike the text that appears on blocks in Scratch or Blockly,
+it could happen that the simple translation of keywords does not result in
+grammatically correct word order in a given language.
+
+As a concrete example, AvantPy assumes that separate translations of ``repeat`` and ``until`` exist,
+and that they can be combined with a user-defined ``"condition"`` in **exactly** the following
+order::
+
+    repeat until "condition":
+
+It is almost certainly the case that this will not yield a grammatically correct phrase
+in some languages.  [If you know of a concrete example, please feel free to contribute.]

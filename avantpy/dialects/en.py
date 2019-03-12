@@ -50,7 +50,7 @@ en = {
     "forever": "forever",
     "until": "until",
     # a few builtins useful for beginners
-    "input": "input",
+    "input": "ask",
     "print": "print",
     "range": "range",
     "exit": "exit",  # useful for console

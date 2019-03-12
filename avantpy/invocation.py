@@ -25,12 +25,6 @@ is ignored.
 Running programs
 ----------------
 
-.. sidebar:: Duplicate flags
-
-    Many flags specific to avantpy 
-    have a short form and a long form.
-    In what follows we always show both alternatives.
-
 The primary role of AvantPy is to run programs that have a modified syntax.
 This is done by one of the two following alternatives::
 

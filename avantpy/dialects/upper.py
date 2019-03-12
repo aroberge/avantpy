@@ -50,7 +50,7 @@ upper = {
     "forever": "FOREVER",
     "until": "UNTIL",
     # a few builtins useful for beginners
-    "input": "INPUT",
+    "input": "ASK",
     "print": "PRINT",
     "range": "RANGE",
     "exit": "EXIT",  # useful for console

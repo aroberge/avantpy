@@ -344,6 +344,19 @@ Python.</p>
 <dd><p>Disables custom exception handling</p>
 </dd></dl>
 
+<dl class="function">
+<dt id="avantpy.exception_handling.get_partial_source">
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">get_partial_source</code><span class="sig-paren">(</span><em>source</em>, <em>begin</em>, <em>end</em>, <em>mark=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#get_partial_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.get_partial_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracts a few relevant lines from a source file</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="avantpy.exception_handling.handle_exception">
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_exception</code><span class="sig-paren">(</span><em>exc</em>, <em>original_source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_exception"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_exception" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generic function to handle exceptions and return a
+friendlier traceback than Python.</p>
+</dd></dl>
+
 </div>
 <div class="section" id="module-avantpy.exceptions">
 <span id="exceptions"></span><h2>exceptions<a class="headerlink" href="#module-avantpy.exceptions" title="Permalink to this headline">¶</a></h2>
@@ -354,13 +367,13 @@ Python.</p>
 <dd></dd></dl>
 
 <dl class="exception">
-<dt id="avantpy.exceptions.IfnobreakError">
-<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">IfnobreakError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#IfnobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.IfnobreakError" title="Permalink to this definition">¶</a></dt>
+<dt id="avantpy.exceptions.IfNobreakError">
+<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">IfNobreakError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#IfNobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.IfNobreakError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="exception">
-<dt id="avantpy.exceptions.NobreakMustBeFirstError">
-<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">NobreakMustBeFirstError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#NobreakMustBeFirstError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.NobreakMustBeFirstError" title="Permalink to this definition">¶</a></dt>
+<dt id="avantpy.exceptions.NobreakFirstError">
+<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">NobreakFirstError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#NobreakFirstError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.NobreakFirstError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="exception">
@@ -369,13 +382,13 @@ Python.</p>
 <dd></dd></dl>
 
 <dl class="exception">
-<dt id="avantpy.exceptions.RepeatMustBeFirstError">
-<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">RepeatMustBeFirstError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#RepeatMustBeFirstError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.RepeatMustBeFirstError" title="Permalink to this definition">¶</a></dt>
+<dt id="avantpy.exceptions.RepeatFirstError">
+<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">RepeatFirstError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#RepeatFirstError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.RepeatFirstError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="exception">
-<dt id="avantpy.exceptions.TrynobreakError">
-<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">TrynobreakError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#TrynobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.TrynobreakError" title="Permalink to this definition">¶</a></dt>
+<dt id="avantpy.exceptions.TryNobreakError">
+<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">TryNobreakError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#TryNobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.TryNobreakError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>

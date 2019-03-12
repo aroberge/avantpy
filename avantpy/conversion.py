@@ -406,7 +406,7 @@ def to_python(source, dialect=None, source_name=None):
 
         if tok_str == nobreak_kwd:
             if not begin_new_line:  # this is not allowed to happen
-                raise exceptions.NobreakMustBeFirstError(
+                raise exceptions.NobreakFirstError(
                     "nobreak must be first",
                     (
                         {
@@ -423,7 +423,7 @@ def to_python(source, dialect=None, source_name=None):
 
         if tok_str == repeat_kwd:
             if not begin_new_line:  # this is not allowed to happen
-                raise exceptions.RepeatMustBeFirstError(
+                raise exceptions.RepeatFirstError(
                     "repeat must be first",
                     (
                         {
@@ -465,7 +465,7 @@ def to_python(source, dialect=None, source_name=None):
                     start_col in indentations
                     and indentations[start_col][0] in if_blocks
                 ):
-                    raise exceptions.IfnobreakError(
+                    raise exceptions.IfNobreakError(
                         "Keyword nobreak found matching if/elif",
                         (
                             {
@@ -482,7 +482,7 @@ def to_python(source, dialect=None, source_name=None):
                     start_col in indentations
                     and indentations[start_col][0] in try_blocks
                 ):
-                    raise exceptions.TrynobreakError(
+                    raise exceptions.TryNobreakError(
                         "Keyword nobreak found matching try/except",
                         (
                             {
