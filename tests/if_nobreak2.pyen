@@ -1,0 +1,6 @@
+'''Testing nobreak keyword with if in assignment
+
+'''
+def test_if_nobreak2_():
+    pass
+    a = 2 if True nobreak 3  # will raise an exception

@@ -1,5 +1,11 @@
 # Roadmap
 
+Goals:
+
+- version 0.1: first public release
+  - a simple editor has been written
+- version 0.2: all Python Errors can be caught and an explanation provided
+
 ## Enhancements
 
 - [x] Add option to restrict processing to single dialect
@@ -24,24 +30,15 @@
   - [ ] for imported file (e.g. pyen program import other pyen program, etc.)
     - [ ] for SyntaxError
     - [ ] for other types not derived from SyntaxError
-  - [ ] Add demo GUI-based editor with syntax highlighting, perhaps similar to,but simpler than [this](http://www.bitforestinfo.com/2017/05/how-to-create-python-syntax-highlighting-functions-for-python-tkinter-text-widget-python-magicstick-text-editor-last-part.html)
+  - [ ] Add demo GUI-based editor with syntax highlighting, perhaps similar to, but simpler than [this](http://www.bitforestinfo.com/2017/05/how-to-create-python-syntax-highlighting-functions-for-python-tkinter-text-widget-python-magicstick-text-editor-last-part.html)
 
 - [ ] Use .format for string interpolation everywhere.
-
-## Documentation
-
-- [x] Create simple GitHub Pages site
-  - [x] Get inspiration from what I did for pyextension.
-  - [x] Add section about invocation
-  - [ ] Explain various choices for addition to syntax
-    - [x] Explain why **repeat** and other loops
-    - [ ] Explain why `function` instead of `lambda`
-    - [x] If replacing `if __name__ == "__main__"`, explain
-    - [x] Explain why not `else` in `for` and `while` loops
-      - Actually, it might be possible to replace this by keeping track of loop or if indentation level
-  - [ ] Explain how to use pytest
-    - [ ] Explain how to create new tests
-  - [ ] Explain how to run a single test without using pytest
+- [ ] Look at having translation for open()
+- [ ] Review builtins and see if translations of other functions are needed.
+- [ ] add noexcept as replacement for else in try/except loop
+- [ ] add syntax check in conversion
+  - [ ] Closing ]}) not matching opening
+  - [ ] opening [({ never closed
 
 ## Contributors
 
@@ -51,6 +48,8 @@
   - [x] Feature request or contributions
   - [ ] Others
 - [ ] Add info about contributors and refer to documentation
+  - [ ] Add style information
+  - [ ] Contributions should focus on new or corrected content, not format.
 
 ## Developers tools
 
@@ -60,19 +59,12 @@
 - [x] Command line option to show code in dialect and Python side by side, highlighting differences
 - [ ] GUI for above
 
-## Syntax analysis and feedback
-
-- [ ] Add hook to replace standard Python tracebacks
-  - [ ] Implement one or two simple error analysis
-  - [ ] Add more in future phase
-- [ ] Use gettext to provide translations
-
 ## Testing
 
 - [x] Add test for console
 - [ ] Create comprehensive test for given dialect
 - [x] Add UPPERCASE English dialect
-  - [ ] Add test for this
+  - [x] Add test for this
 
 ## Integrating with other programs
 

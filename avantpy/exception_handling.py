@@ -67,6 +67,60 @@ def handle_IfnobreakError(exc, original_source):
     return translate.get('IfnobreakError', lang).format(**info)
 
 
+def handle_TrynobreakError(exc, original_source):
+    params = exc.args[0]
+
+    try_linenumber = int(params["try_string"][1])
+    nobreak_linenumber = int(params["linenumber"])
+    lang = params["lang"]
+
+    lines = original_source.split("\n")
+    try_line = lines[try_linenumber - 1]
+    nobreak_line = lines[nobreak_linenumber - 1]
+
+    info = {'filename': params["source_name"],
+        "nobreak_kwd": params["nobreak keyword"],
+        "try_linenumber": try_linenumber,
+        "try_line": try_line,
+        "nobreak_linenumber": nobreak_linenumber,
+        "nobreak_line": nobreak_line
+    }
+    return translate.get('TrynobreakError', lang).format(**info)
+
+
+def handle_NobreakSyntaxError(exc, original_source):
+    params = exc.args[0]
+
+    nobreak_linenumber = int(params["linenumber"])
+    lang = params["lang"]
+
+    lines = original_source.split("\n")
+    nobreak_line = lines[nobreak_linenumber - 1]
+
+    info = {'filename': params["source_name"],
+        "nobreak_kwd": params["nobreak keyword"],
+        "linenumber": nobreak_linenumber,
+        "nobreak_line": nobreak_line
+    }
+    return translate.get('NobreakSyntaxError', lang).format(**info)
+
+
+def handle_NobreakMustBeFirstError(exc, original_source):
+    params = exc.args[0]
+    linenumber = int(params["linenumber"])
+    lang = params["lang"]
+
+    lines = original_source.split("\n")
+    nobreak_line = lines[linenumber - 1]
+
+    info = {'filename': params["source_name"],
+        "nobreak_kwd": params["nobreak keyword"],
+        "linenumber": linenumber,
+        "nobreak_line": nobreak_line
+    }
+    return translate.get('NobreakMustBeFirstError', lang).format(**info)
+
+
 def handle_RepeatMustBeFirstError(exc, original_source):
     params = exc.args[0]
     linenumber = int(params["linenumber"])
@@ -85,5 +139,8 @@ def handle_RepeatMustBeFirstError(exc, original_source):
 
 dispatch = {
     'IfnobreakError': handle_IfnobreakError,
-    'RepeatMustBeFirstError': handle_RepeatMustBeFirstError
+    'TrynobreakError': handle_TrynobreakError,
+    'NobreakMustBeFirstError': handle_NobreakMustBeFirstError,
+    'NobreakSyntaxError': handle_NobreakSyntaxError,
+    'RepeatMustBeFirstError': handle_RepeatMustBeFirstError,
 }

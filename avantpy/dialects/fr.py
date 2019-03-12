@@ -14,7 +14,7 @@ fr = {
     "continue": "continue",
     "def": "définir",
     "del": "supprime",
-    "elif": "sinonsi",
+    "elif": "autrementsi",
     "else": ["sinon", "pasinterrompu"],
     "except": "exception",
     "finally": "finalement",

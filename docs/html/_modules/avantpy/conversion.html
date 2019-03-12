@@ -312,6 +312,11 @@
 <span class="sd">    However, ``nobreak`` cannot be used in an ``if/elif/else``</span>
 <span class="sd">    blocks to replace ``else``.  </span>
 
+<span class="sd">    Furthermore, ``nobreak`` cannot be used instead of ``else``</span>
+<span class="sd">    in an assignment such as::</span>
+
+<span class="sd">        a = 1 if True else 2</span>
+
 <span class="sd">    To identify if a program includes a ``nobreak`` keyword</span>
 <span class="sd">    mistakenly, every time we see a leading ``for``, ``while``,</span>
 <span class="sd">    ``if`` or ``elif`` keyword (or their equivalent in a</span>
@@ -398,7 +403,9 @@
     <span class="n">until_kwd</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;until&quot;</span><span class="p">]</span>
     <span class="n">forever_kwd</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;forever&quot;</span><span class="p">]</span>
     <span class="n">loops_with_else</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;for&quot;</span><span class="p">,</span> <span class="s2">&quot;while&quot;</span><span class="p">,</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;for&quot;</span><span class="p">],</span> <span class="n">while_kwd</span><span class="p">,</span> <span class="n">repeat_kwd</span><span class="p">]</span>
-    <span class="n">blocks_with_else</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;if&quot;</span><span class="p">,</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;if&quot;</span><span class="p">]]</span> <span class="o">+</span> <span class="n">loops_with_else</span>
+    <span class="n">if_blocks</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;if&quot;</span><span class="p">,</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;if&quot;</span><span class="p">]]</span>
+    <span class="n">try_blocks</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;try&quot;</span><span class="p">,</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;try&quot;</span><span class="p">]]</span>
+    <span class="n">blocks_with_else</span> <span class="o">=</span>  <span class="n">if_blocks</span> <span class="o">+</span> <span class="n">try_blocks</span> <span class="o">+</span> <span class="n">loops_with_else</span>
     <span class="n">nobreak_kwd</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;else&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="c1"># variable names to be used in</span>
@@ -452,8 +459,21 @@
             <span class="k">if</span> <span class="n">tok_str</span> <span class="ow">in</span> <span class="n">blocks_with_else</span><span class="p">:</span>
                 <span class="n">indentations</span><span class="p">[</span><span class="n">start_col</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">tok_str</span><span class="p">,</span> <span class="n">start_line</span><span class="p">]</span>
 
-        <span class="c1"># ========================</span>
-        <span class="c1"># Actual conversion below</span>
+        <span class="k">if</span> <span class="n">tok_str</span> <span class="o">==</span> <span class="n">nobreak_kwd</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">begin_new_line</span><span class="p">:</span>  <span class="c1"># this is not allowed to happen</span>
+                <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">NobreakMustBeFirstError</span><span class="p">(</span>
+                    <span class="s2">&quot;nobreak must be first&quot;</span><span class="p">,</span>
+                    <span class="p">(</span>
+                        <span class="p">{</span>
+                            <span class="s2">&quot;nobreak keyword&quot;</span><span class="p">:</span> <span class="n">tok_str</span><span class="p">,</span>
+                            <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">start_line</span><span class="p">,</span>
+                            <span class="s2">&quot;source_name&quot;</span><span class="p">:</span> <span class="n">source_name</span><span class="p">,</span>
+                            <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">source</span><span class="p">,</span>
+                            <span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">[</span><span class="mi">2</span><span class="p">:],</span>
+                        <span class="p">},</span>
+                    <span class="p">),</span>
+                <span class="p">)</span>
+
         <span class="c1"># ========================</span>
 
         <span class="k">if</span> <span class="n">tok_str</span> <span class="o">==</span> <span class="n">repeat_kwd</span><span class="p">:</span>
@@ -471,7 +491,6 @@
                     <span class="p">),</span>
                 <span class="p">)</span>
             <span class="n">repeat_loop</span> <span class="o">=</span> <span class="kc">True</span>
-
         <span class="k">elif</span> <span class="n">repeat_loop</span><span class="p">:</span>
             <span class="n">repeat_loop</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="k">if</span> <span class="n">tok_str</span> <span class="ow">in</span> <span class="p">[</span><span class="n">while_kwd</span><span class="p">,</span> <span class="n">until_kwd</span><span class="p">,</span> <span class="n">forever_kwd</span><span class="p">]:</span>
@@ -493,12 +512,14 @@
         <span class="k">elif</span> <span class="n">tok_str</span> <span class="ow">in</span> <span class="n">lang_to_py</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">tok_str</span> <span class="o">==</span> <span class="n">nobreak_kwd</span><span class="p">:</span>
                 <span class="k">if</span> <span class="p">(</span>
-                    <span class="n">begin_new_line</span>
-                    <span class="ow">and</span> <span class="n">start_col</span> <span class="ow">in</span> <span class="n">indentations</span>
+                    <span class="n">start_col</span> <span class="ow">in</span> <span class="n">indentations</span>
                     <span class="ow">and</span> <span class="n">indentations</span><span class="p">[</span><span class="n">start_col</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">loops_with_else</span>
                 <span class="p">):</span>
                     <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;else&quot;</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
+                <span class="k">elif</span> <span class="p">(</span>
+                    <span class="n">start_col</span> <span class="ow">in</span> <span class="n">indentations</span>
+                    <span class="ow">and</span> <span class="n">indentations</span><span class="p">[</span><span class="n">start_col</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">if_blocks</span>
+                <span class="p">):</span>
                     <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">IfnobreakError</span><span class="p">(</span>
                         <span class="s2">&quot;Keyword nobreak found matching if/elif&quot;</span><span class="p">,</span>
                         <span class="p">(</span>
@@ -512,9 +533,38 @@
                             <span class="p">},</span>
                         <span class="p">),</span>
                     <span class="p">)</span>
+                <span class="k">elif</span> <span class="p">(</span>
+                    <span class="n">start_col</span> <span class="ow">in</span> <span class="n">indentations</span>
+                    <span class="ow">and</span> <span class="n">indentations</span><span class="p">[</span><span class="n">start_col</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">try_blocks</span>
+                <span class="p">):</span>
+                    <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">TrynobreakError</span><span class="p">(</span>
+                        <span class="s2">&quot;Keyword nobreak found matching try/except&quot;</span><span class="p">,</span>
+                        <span class="p">(</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;try_string&quot;</span><span class="p">:</span> <span class="n">indentations</span><span class="p">[</span><span class="n">start_col</span><span class="p">],</span>
+                                <span class="s2">&quot;nobreak keyword&quot;</span><span class="p">:</span> <span class="n">tok_str</span><span class="p">,</span>
+                                <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">start_line</span><span class="p">,</span>
+                                <span class="s2">&quot;source_name&quot;</span><span class="p">:</span> <span class="n">source_name</span><span class="p">,</span>
+                                <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">source</span><span class="p">,</span>
+                                <span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">[</span><span class="mi">2</span><span class="p">:],</span>
+                            <span class="p">},</span>
+                        <span class="p">),</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">NobreakSyntaxError</span><span class="p">(</span>
+                        <span class="s2">&quot;Keyword nobreak not matching a valid block&quot;</span><span class="p">,</span>
+                        <span class="p">(</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;nobreak keyword&quot;</span><span class="p">:</span> <span class="n">tok_str</span><span class="p">,</span>
+                                <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">start_line</span><span class="p">,</span>
+                                <span class="s2">&quot;source_name&quot;</span><span class="p">:</span> <span class="n">source_name</span><span class="p">,</span>
+                                <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">source</span><span class="p">,</span>
+                                <span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">[</span><span class="mi">2</span><span class="p">:],</span>
+                            <span class="p">},</span>
+                        <span class="p">),</span>
+                    <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lang_to_py</span><span class="p">[</span><span class="n">tok_str</span><span class="p">])</span>
-
         <span class="k">else</span><span class="p">:</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tok_str</span><span class="p">)</span>
 

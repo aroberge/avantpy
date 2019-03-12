@@ -155,6 +155,11 @@ loops instead of the standard <code class="docutils literal notranslate"><span c
 </div>
 <p>However, <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> cannot be used in an <code class="docutils literal notranslate"><span class="pre">if/elif/else</span></code>
 blocks to replace <code class="docutils literal notranslate"><span class="pre">else</span></code>.</p>
+<p>Furthermore, <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> cannot be used instead of <code class="docutils literal notranslate"><span class="pre">else</span></code>
+in an assignment such as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="kc">True</span> <span class="k">else</span> <span class="mi">2</span>
+</pre></div>
+</div>
 <p>To identify if a program includes a <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> keyword
 mistakenly, every time we see a leading <code class="docutils literal notranslate"><span class="pre">for</span></code>, <code class="docutils literal notranslate"><span class="pre">while</span></code>,
 <code class="docutils literal notranslate"><span class="pre">if</span></code> or <code class="docutils literal notranslate"><span class="pre">elif</span></code> keyword (or their equivalent in a

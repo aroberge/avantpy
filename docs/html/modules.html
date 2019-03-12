@@ -259,6 +259,11 @@ loops instead of the standard <code class="docutils literal notranslate"><span c
 </div>
 <p>However, <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> cannot be used in an <code class="docutils literal notranslate"><span class="pre">if/elif/else</span></code>
 blocks to replace <code class="docutils literal notranslate"><span class="pre">else</span></code>.</p>
+<p>Furthermore, <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> cannot be used instead of <code class="docutils literal notranslate"><span class="pre">else</span></code>
+in an assignment such as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="kc">True</span> <span class="k">else</span> <span class="mi">2</span>
+</pre></div>
+</div>
 <p>To identify if a program includes a <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> keyword
 mistakenly, every time we see a leading <code class="docutils literal notranslate"><span class="pre">for</span></code>, <code class="docutils literal notranslate"><span class="pre">while</span></code>,
 <code class="docutils literal notranslate"><span class="pre">if</span></code> or <code class="docutils literal notranslate"><span class="pre">elif</span></code> keyword (or their equivalent in a
@@ -354,8 +359,23 @@ Python.</p>
 <dd></dd></dl>
 
 <dl class="exception">
+<dt id="avantpy.exceptions.NobreakMustBeFirstError">
+<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">NobreakMustBeFirstError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#NobreakMustBeFirstError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.NobreakMustBeFirstError" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="avantpy.exceptions.NobreakSyntaxError">
+<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">NobreakSyntaxError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#NobreakSyntaxError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.NobreakSyntaxError" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
 <dt id="avantpy.exceptions.RepeatMustBeFirstError">
 <em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">RepeatMustBeFirstError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#RepeatMustBeFirstError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.RepeatMustBeFirstError" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="avantpy.exceptions.TrynobreakError">
+<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">TrynobreakError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#TrynobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.TrynobreakError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -426,9 +446,9 @@ and the converted one can be shown</p>
 <span id="translate"></span><h2>translate<a class="headerlink" href="#module-avantpy.translate" title="Permalink to this headline">¶</a></h2>
 <p>Provide mechanism to get translations of messages</p>
 <dl class="function">
-<dt id="avantpy.translate.collect_messages">
-<code class="descclassname">avantpy.translate.</code><code class="descname">collect_messages</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/translate.html#collect_messages"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.translate.collect_messages" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find messages from known languages and create corresponding dictionaries</p>
+<dt id="avantpy.translate.get">
+<code class="descclassname">avantpy.translate.</code><code class="descname">get</code><span class="sig-paren">(</span><em>msg</em>, <em>lang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/translate.html#get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.translate.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the translation of msg given lang</p>
 </dd></dl>
 
 </div>

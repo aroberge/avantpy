@@ -257,6 +257,11 @@ def to_python(source, dialect=None, source_name=None):
     However, ``nobreak`` cannot be used in an ``if/elif/else``
     blocks to replace ``else``.  
 
+    Furthermore, ``nobreak`` cannot be used instead of ``else``
+    in an assignment such as::
+
+        a = 1 if True else 2
+
     To identify if a program includes a ``nobreak`` keyword
     mistakenly, every time we see a leading ``for``, ``while``,
     ``if`` or ``elif`` keyword (or their equivalent in a
@@ -343,7 +348,9 @@ def to_python(source, dialect=None, source_name=None):
     until_kwd = py_to_lang["until"]
     forever_kwd = py_to_lang["forever"]
     loops_with_else = ["for", "while", py_to_lang["for"], while_kwd, repeat_kwd]
-    blocks_with_else = ["if", py_to_lang["if"]] + loops_with_else
+    if_blocks = ["if", py_to_lang["if"]]
+    try_blocks = ["try", py_to_lang["try"]]
+    blocks_with_else =  if_blocks + try_blocks + loops_with_else
     nobreak_kwd = py_to_lang["else"][1]
 
     # variable names to be used in
@@ -397,8 +404,21 @@ def to_python(source, dialect=None, source_name=None):
             if tok_str in blocks_with_else:
                 indentations[start_col] = [tok_str, start_line]
 
-        # ========================
-        # Actual conversion below
+        if tok_str == nobreak_kwd:
+            if not begin_new_line:  # this is not allowed to happen
+                raise exceptions.NobreakMustBeFirstError(
+                    "nobreak must be first",
+                    (
+                        {
+                            "nobreak keyword": tok_str,
+                            "linenumber": start_line,
+                            "source_name": source_name,
+                            "source": source,
+                            "lang": dialect[2:],
+                        },
+                    ),
+                )
+
         # ========================
 
         if tok_str == repeat_kwd:
@@ -416,7 +436,6 @@ def to_python(source, dialect=None, source_name=None):
                     ),
                 )
             repeat_loop = True
-
         elif repeat_loop:
             repeat_loop = False
             if tok_str in [while_kwd, until_kwd, forever_kwd]:
@@ -438,12 +457,14 @@ def to_python(source, dialect=None, source_name=None):
         elif tok_str in lang_to_py:
             if tok_str == nobreak_kwd:
                 if (
-                    begin_new_line
-                    and start_col in indentations
+                    start_col in indentations
                     and indentations[start_col][0] in loops_with_else
                 ):
                     result.append("else")
-                else:
+                elif (
+                    start_col in indentations
+                    and indentations[start_col][0] in if_blocks
+                ):
                     raise exceptions.IfnobreakError(
                         "Keyword nobreak found matching if/elif",
                         (
@@ -457,9 +478,38 @@ def to_python(source, dialect=None, source_name=None):
                             },
                         ),
                     )
+                elif (
+                    start_col in indentations
+                    and indentations[start_col][0] in try_blocks
+                ):
+                    raise exceptions.TrynobreakError(
+                        "Keyword nobreak found matching try/except",
+                        (
+                            {
+                                "try_string": indentations[start_col],
+                                "nobreak keyword": tok_str,
+                                "linenumber": start_line,
+                                "source_name": source_name,
+                                "source": source,
+                                "lang": dialect[2:],
+                            },
+                        ),
+                    )
+                else:
+                    raise exceptions.NobreakSyntaxError(
+                        "Keyword nobreak not matching a valid block",
+                        (
+                            {
+                                "nobreak keyword": tok_str,
+                                "linenumber": start_line,
+                                "source_name": source_name,
+                                "source": source,
+                                "lang": dialect[2:],
+                            },
+                        ),
+                    )
             else:
                 result.append(lang_to_py[tok_str])
-
         else:
             result.append(tok_str)
 

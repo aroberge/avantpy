@@ -66,6 +66,7 @@ Contents
    :maxdepth: 2
 
     Language or dialect? <dialect>
+    Guiding principles <principles>
     Special keyword: repeat <repeat>
     Special keyword: nobreak <nobreak>
     Special keyword: notimported <notimported>

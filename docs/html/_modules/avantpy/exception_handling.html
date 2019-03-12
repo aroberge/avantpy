@@ -122,6 +122,60 @@
     <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;IfnobreakError&#39;</span><span class="p">,</span> <span class="n">lang</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span>
 
 
+<span class="k">def</span> <span class="nf">handle_TrynobreakError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original_source</span><span class="p">):</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">try_linenumber</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;try_string&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">nobreak_linenumber</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">])</span>
+    <span class="n">lang</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;lang&quot;</span><span class="p">]</span>
+
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">original_source</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">try_line</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">try_linenumber</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">nobreak_line</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">nobreak_linenumber</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">info</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;filename&#39;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;source_name&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;nobreak_kwd&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;nobreak keyword&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;try_linenumber&quot;</span><span class="p">:</span> <span class="n">try_linenumber</span><span class="p">,</span>
+        <span class="s2">&quot;try_line&quot;</span><span class="p">:</span> <span class="n">try_line</span><span class="p">,</span>
+        <span class="s2">&quot;nobreak_linenumber&quot;</span><span class="p">:</span> <span class="n">nobreak_linenumber</span><span class="p">,</span>
+        <span class="s2">&quot;nobreak_line&quot;</span><span class="p">:</span> <span class="n">nobreak_line</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;TrynobreakError&#39;</span><span class="p">,</span> <span class="n">lang</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">handle_NobreakSyntaxError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original_source</span><span class="p">):</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">nobreak_linenumber</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">])</span>
+    <span class="n">lang</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;lang&quot;</span><span class="p">]</span>
+
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">original_source</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">nobreak_line</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">nobreak_linenumber</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">info</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;filename&#39;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;source_name&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;nobreak_kwd&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;nobreak keyword&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">nobreak_linenumber</span><span class="p">,</span>
+        <span class="s2">&quot;nobreak_line&quot;</span><span class="p">:</span> <span class="n">nobreak_line</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;NobreakSyntaxError&#39;</span><span class="p">,</span> <span class="n">lang</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">handle_NobreakMustBeFirstError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original_source</span><span class="p">):</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">linenumber</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">])</span>
+    <span class="n">lang</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;lang&quot;</span><span class="p">]</span>
+
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">original_source</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">nobreak_line</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">linenumber</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">info</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;filename&#39;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;source_name&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;nobreak_kwd&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;nobreak keyword&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">linenumber</span><span class="p">,</span>
+        <span class="s2">&quot;nobreak_line&quot;</span><span class="p">:</span> <span class="n">nobreak_line</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;NobreakMustBeFirstError&#39;</span><span class="p">,</span> <span class="n">lang</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span>
+
+
 <span class="k">def</span> <span class="nf">handle_RepeatMustBeFirstError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original_source</span><span class="p">):</span>
     <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">linenumber</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">])</span>
@@ -140,7 +194,10 @@
 
 <span class="n">dispatch</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;IfnobreakError&#39;</span><span class="p">:</span> <span class="n">handle_IfnobreakError</span><span class="p">,</span>
-    <span class="s1">&#39;RepeatMustBeFirstError&#39;</span><span class="p">:</span> <span class="n">handle_RepeatMustBeFirstError</span>
+    <span class="s1">&#39;TrynobreakError&#39;</span><span class="p">:</span> <span class="n">handle_TrynobreakError</span><span class="p">,</span>
+    <span class="s1">&#39;NobreakMustBeFirstError&#39;</span><span class="p">:</span> <span class="n">handle_NobreakMustBeFirstError</span><span class="p">,</span>
+    <span class="s1">&#39;NobreakSyntaxError&#39;</span><span class="p">:</span> <span class="n">handle_NobreakSyntaxError</span><span class="p">,</span>
+    <span class="s1">&#39;RepeatMustBeFirstError&#39;</span><span class="p">:</span> <span class="n">handle_RepeatMustBeFirstError</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></div>
 

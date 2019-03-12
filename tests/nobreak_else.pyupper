@@ -1,0 +1,7 @@
+DEF test_except_else_():
+    TRY:
+        A = 1
+    EXCEPT:
+        A = 2
+    NOBREAK:
+        ASSERT A = 1

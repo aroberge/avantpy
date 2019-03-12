@@ -7,7 +7,7 @@ import runpy
 messages = {}
 default = 'upper'
 
-def collect_messages():
+def _collect_messages():
     """Find messages from known languages and create corresponding dictionaries"""
     languages = glob.glob(os.path.dirname(__file__) + "/translations/*.py")
     for f in languages:
@@ -17,10 +17,11 @@ def collect_messages():
             _module = runpy.run_path(f)
             messages[lang] = _module[lang]
 
-collect_messages()
+_collect_messages()
 
 
 def get(msg, lang):
+    '''Returns the translation of msg given lang'''
     if lang in messages:
         if msg in messages[lang]:
             return messages[lang][msg]

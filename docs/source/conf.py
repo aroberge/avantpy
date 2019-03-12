@@ -25,10 +25,6 @@ version = v.__version__
 release = v.__version__
 
 # -- General configuration ---------------------------------------------------
-
-# If your documentation needs a minimal Sphinx version, state it here.
-#
-# needs_sphinx = '1.0'
 todo_include_todos = True
 
 # Add any Sphinx extension module names here, as strings. They can be

@@ -13,6 +13,9 @@ def test_if_nobreak(capsys):
     assert 'IfnobreakError' in if_nobreak.out
 
 
-if __name__ == "__main__":
-    test_if_nobreak()
-    print("Success.")
+def test_if_nobreak2(capsys):
+    from . import if_nobreak2
+    if not hasattr(if_nobreak2, "out"):
+        info = str(capsys.readouterr())
+        if_nobreak2.out = info
+    assert 'NobreakMustBeFirstError' in if_nobreak2.out

@@ -19,15 +19,12 @@ def test_while_nobreak():
         x = 0
     assert x == 2
 
-# The following would fail with a SyntaxError
-#
-# A different kind of test should be written for this.
-#
-# def test_if_nobreak():
-#     if True:
-#         pass
-#     nobreak:
-#         pass
+def test_nobreak_else(capsys):
+    from . import nobreak_syntax_error 
+    if not hasattr(nobreak_syntax_error, "out"):
+        info = str(capsys.readouterr())
+        nobreak_syntax_error.out = info
+    assert 'NobreakSyntaxError' in nobreak_syntax_error.out
 
 if notimported:
     test_for_nobreak()

@@ -43,6 +43,8 @@
   <ul>
 <li><a class="reference internal" href="#">Special keyword: <code class="docutils literal notranslate"><span class="pre">nobreak</span></code></a><ul>
 <li><a class="reference internal" href="#nobreak-instead-of-else-in-if-else"><code class="docutils literal notranslate"><span class="pre">nobreak</span></code> instead of <code class="docutils literal notranslate"><span class="pre">else</span></code> in <code class="docutils literal notranslate"><span class="pre">if/else</span></code></a></li>
+<li><a class="reference internal" href="#think-of-other-languages">Think of other languages</a></li>
+<li><a class="reference internal" href="#what-about-try-except">What about try/except?</a></li>
 </ul>
 </li>
 </ul>
@@ -93,7 +95,13 @@ whose meaning is not immediately obvious:</p>
     <span class="c1"># break statement occurred above</span>
 </pre></div>
 </div>
-<p>AvantPy’s English dialect includes <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> as an additional keyword.
+<p>When I first understood this, I thought <em>wouldn’t it be nice if, instead
+of using ``else:``, one could write something like</em> <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">no</span> <span class="pre">break:</span></code>.
+In theory, it might be possible to do something like this in AvantPy.
+However, wanting to have a one-to-one keyword translation from one
+dialect into another (excluding standard Python), I thought that a
+suggestion made by Raymond Hettinger made the most sense:
+AvantPy’s English dialect thus includes <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> as an additional keyword.
 It can be used instead of <code class="docutils literal notranslate"><span class="pre">else</span></code> in the above example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
     <span class="c1"># some</span>
@@ -131,6 +139,46 @@ native language.  Since we can identify this incorrect use of <code class="docut
 in the translation phase, it seems logical to ensure that this syntax error
 will be identified as early as possible, with a meaningful error message
 provided.</p>
+</div>
+<div class="section" id="think-of-other-languages">
+<h2>Think of other languages<a class="headerlink" href="#think-of-other-languages" title="Permalink to this headline">¶</a></h2>
+<p>Using English, one can think of:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">something</span><span class="p">:</span>
+    <span class="n">do_this</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">do_that</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>as being equivalent to</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>if something:</dt>
+<dd>do_this()</dd>
+<dt>otherwise:</dt>
+<dd>do_that()</dd>
+</dl>
+</div></blockquote>
+<p>However, <code class="docutils literal notranslate"><span class="pre">otherwise</span></code> would almost certainly be a wrong word choice in:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
+    <span class="n">do_this</span><span class="p">()</span>
+<span class="n">otherwise</span><span class="p">:</span>
+    <span class="n">do_that</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Now, imagine a new dialect where a keyword equivalent to <code class="docutils literal notranslate"><span class="pre">else</span></code> has
+been chosen in for the <code class="docutils literal notranslate"><span class="pre">if/else</span></code> construct. It is quite possible that
+such a keyword would definitely not convey the right meaning for
+a <code class="docutils literal notranslate"><span class="pre">while/else</span></code> loop.  If only for this reason, we believe it
+makes sense to have an additional keyword, such as <code class="docutils literal notranslate"><span class="pre">nobreak</span></code>.</p>
+</div>
+<div class="section" id="what-about-try-except">
+<h2>What about try/except?<a class="headerlink" href="#what-about-try-except" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">else</span></code> keyword can also be used in a <code class="docutils literal notranslate"><span class="pre">try/except/else/finally</span></code> block.
+For now, we assume that, unlike <code class="docutils literal notranslate"><span class="pre">nobreak,</span>
+<span class="pre">we</span> <span class="pre">do</span> <span class="pre">not</span> <span class="pre">need</span> <span class="pre">any</span> <span class="pre">other</span> <span class="pre">keyword</span> <span class="pre">than</span> <span class="pre">``else</span></code>.
+If it were found that the use of the equivalent of <code class="docutils literal notranslate"><span class="pre">else</span></code> in some language
+would not be appropriate in this construct, we could consider
+introducing another keyword - perhaps something like <code class="docutils literal notranslate"><span class="pre">noexcept</span></code>.</p>
 </div>
 </div>
 
