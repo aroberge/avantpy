@@ -3,6 +3,7 @@ import os
 import platform
 import sys
 
+from . import session
 from . import conversion
 from . import version
 
@@ -88,7 +89,7 @@ class AvantPyInteractiveConsole(code.InteractiveConsole):
            Returns the transformed source.
         """
         try:
-            source = conversion.to_python(source)
+            source = conversion.to_python(source, source_name="REPL")
         except Exception:
             pass
         source = self.fix_ending(source)
@@ -129,8 +130,8 @@ class AvantPyInteractiveConsole(code.InteractiveConsole):
 def start_console(local_vars=None, show_python=False):
     """Starts a console; modified from code.interact"""
     console_defaults = {
-        "set_lang": conversion.set_lang,
-        "set_debug": conversion.set_debug,
+        "set_lang": session.state.set_lang,
+        "set_dialect": session.state.set_dialect
     }
 
     if local_vars is None:

@@ -11,10 +11,11 @@ This file can be used as a template for translations in other languages.
 upper = {
     "IfNobreakError": """
     AVANTPY EXCEPTION: IfNobreakError\n
-    The AvantPy {nobreak_kwd} keyword cannot be used in an IF/ELIF/ELSE
-    clause (Python: if/elif/else).\n
     Error found in file {filename} on line {nobreak_linenumber}.\n
 {partial_source}
+
+    The AvantPy {nobreak_kwd} keyword cannot be used in an IF/ELIF/ELSE clause
+    (Python: if/elif/else).
 """,
 
     "NobreakFirstError": """

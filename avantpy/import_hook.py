@@ -10,6 +10,7 @@ import webbrowser
 from importlib.abc import Loader, MetaPathFinder
 from importlib.util import spec_from_file_location
 
+from . import session
 from . import conversion
 from . import exception_handling
 
@@ -63,7 +64,7 @@ class AvantPyMetaFinder(MetaPathFinder):
         else:
             name = fullname
         for entry in path:
-            for ext in conversion.all_dialects():
+            for ext in session.state.all_dialects():
                 filename = os.path.join(entry, name + "." + ext)
                 if os.path.exists(filename):
                     break
@@ -101,27 +102,19 @@ class AvantPyLoader(Loader):
         _path, extension = os.path.splitext(self.filename)
         name = os.path.basename(_path)
         fullname = name + extension
-        extension = extension[1:]
+        dialect = extension[1:]
 
+        try:
+            session.state.set_dialect(dialect)
+            source = conversion.to_python(source, dialect, source_name=fullname)
+        except Exception as exc:
+            print(exception_handling.handle_exception(exc, original))
+            return
 
-        if conversion.is_dialect(extension):
-            conversion.set_dialect(extension)
-            try:
-                source = conversion.to_python(source, source_name=fullname)
-            except Exception as exc:
-                print(exception_handling.handle_exception(exc, original))
-                return
-
-
-            if DIFF:
-                html_file = self.write_html_diff(name, original, source)
-                webbrowser.open_new_tab(html_file)
-                sys.exit()
-
-        else:
-            raise NotImplementedError(
-                "%s: extension not found in known languages." % extension
-            )
+        if DIFF:
+            html_file = self.write_html_diff(name, original, source)
+            webbrowser.open_new_tab(html_file)
+            sys.exit()
 
         try:
             exec(source, vars(module))
@@ -137,7 +130,10 @@ class AvantPyLoader(Loader):
         tolines = transformed.split("\n")
 
         diff = MyHtmlDiff().make_file(
-            fromlines, tolines, name + "." + conversion.get_dialect(), name + ".py"
+            fromlines,
+            tolines,
+            name + "." + session.state.get_dialect(),
+            name + ".py",
         )
         with open(html_file, "w", encoding="utf8") as the_file:
             the_file.write(diff)

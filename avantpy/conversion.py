@@ -3,196 +3,46 @@
 Keeps track of available dialects, and perform require code transformations.
 
 """
-import glob
-import os.path
-import runpy
 import tokenize
 from io import StringIO
 
 from . import exceptions
+from . import session
 
-DEBUG = False
+state = session.state
 
 
-def set_debug(val=True):
-    """Used to set DEBUG to either True or False,
-       with True being the default value.
+def get_unique_variable_names(source, repeat_kwd, all_count_names=[]):
+    """Returns a list of possible variables names that
+       are not found in the original source and have not been used
+       anywhere.
+       These variables will be used in expressions such as
 
-       Returns: The current value of DEBUG
+           for _COUNT_42 in range(n):
+
+       which will replace
+
+           repeat n:
     """
-    global DEBUG
-    DEBUG = val
-    return DEBUG
+    nb = source.count(repeat_kwd)
+    if nb == 0:
+        return []
 
-
-class _State:
-    """Keeping track of parameters which control some of the
-       behaviour of AvantPy."""
-
-    def __init__(self):
-        self.dictionaries = {}
-        self.all_count_names = []
-        self.current_dialect = None
-        self.current_lang = None
-        self.collect_dialects()
-        self.only_one_dialect = False
-        self.only_one_lang = False
-
-    def all_dialects(self):
-        """Returns a list of all known dialects."""
-        if self.only_one_dialect:
-            return [self.only_one_dialect]
-        return [k for k in self.dictionaries.keys() if k.startswith("py")]
-
-    def collect_dialects(self):
-        """Find known dialects and create corresponding dictionaries"""
-        dialects = glob.glob(os.path.dirname(__file__) + "/dialects/*.py")
-        for f in dialects:
-            if os.path.isfile(f) and not f.endswith("__init__.py"):
-
-                lang = os.path.basename(f).split(".")[0]
-                dialect = "py" + lang
-
-                _module = runpy.run_path(f)
-                from_py = _module[lang]
-                self.add_translation(lang, from_py)
-
-                to_py = {}
-                for k, v in from_py.items():
-                    if isinstance(v, str):
-                        to_py[v] = k
-                    else:
-                        for val in v:
-                            to_py[val] = k
-                self.add_translation(dialect, to_py)
-
-    def is_dialect(self, dialect):
-        """Returns True if `dialect` is a known dialect, False otherwise."""
-        if self.only_one_dialect:
-            return dialect == self.only_one_dialect
-        return dialect.startswith("py") and dialect in self.dictionaries
-
-    def is_lang(self, lang):
-        """Returns True if `lang` is known as part of a dialect, False otherwise"""
-        if self.only_one_lang:
-            return lang == self.only_one_lang
-        return (not lang.startswith("py")) and lang in self.dictionaries
-
-    def add_translation(self, name, translation_dict):
-        """Adds a translation dict either from a dialect to Python
-           or from Python to a given dialect.
-        """
-        self.dictionaries[name] = translation_dict
-
-    def get_to_python(self, dialect):
-        """Returns a dict providing translation from a dialect into Python"""
-        assert self.is_dialect(dialect)
-        return self.dictionaries[dialect]
-
-    def get_from_python(self, dialect):
-        """Returns a dict providing translation from Python into a dialect"""
-        lang = dialect[2:]
-        assert self.is_lang(lang)
-        return self.dictionaries[lang]
-
-    def get_unique_variable_names(self, source, repeat_kwd):
-        """Returns a list of possible variables names that
-           are not found in the original source and have not been used
-           anywhere.
-           These variables will be used in expressions such as
-
-               for _COUNT_42 in range(n):
-
-           which will replace
-
-               repeat n:
-        """
-        nb = source.count(repeat_kwd)
-        if nb == 0:
-            return []
-
-        base_name = "_COUNT_"
-        var_names = []
-        i = 0
-        j = 0
-        while j < nb:
-            tentative_name = base_name + str(i)
-            if (
-                source.count(tentative_name) == 0
-                and tentative_name not in self.all_count_names
-            ):
-                var_names.append(tentative_name)
-                self.all_count_names.append(tentative_name)
-                j += 1
-            i += 1
-        return var_names
-
-
-__state = _State()
-
-
-def all_dialects():
-    """Returns a list of all known dialects."""
-    return __state.all_dialects()
-
-
-def is_dialect(dialect):
-    """Returns True if `dialect` is a known dialect, False otherwise."""
-    return __state.is_dialect(dialect)
-
-
-def get_dialect():
-    """Returns the current dialect being used."""
-    return __state.current_dialect
-
-
-def set_dialect(dialect=None):
-    """Sets the dialect to be used.
-
-    Valid values are of the form "pyXX" where XX denotes a valid two-letter
-    language code.  
-    If `dialect` is not recognized as being valid, an error message is
-    printed.
-    """
-    if dialect is None:
-        return __state.current_dialect
-    elif is_dialect(dialect):
-        __state.current_dialect = dialect
-    else:
-        print("Unknown dialect: ", dialect)
-
-
-def set_lang(lang, only=False):
-    """Sets the language and/or Python dialect to be used.
-    
-    Valid values are typically two-letter language code such as 'en' or 'fr'.
-
-    If `lang` is not a recognized language, an error message is printed.
-
-
-    If the ``only`` argument is set to ``True``, and ``lang`` is a valid
-    value, no other language/dialect will be allowed.
-    """
-    # Since this function can be used in the console, in order to make it
-    # more user friendly, we accept values that start with 'py' such as
-    # 'pyfr' as being equivalent to their two-letter language counterpart
-
-    if lang.startswith("py"):
-        dialect = lang
-        lang = dialect[2:]
-    else:
-        dialect = "py" + lang
-
-    if is_dialect(dialect):
-        set_dialect(dialect)
-        __state.current_lang = lang
-        if only:
-            __state.only_one_dialect = dialect
-            __state.only_one_lang = lang
-        if DEBUG:
-            print("lang %s selected" % lang)
-        return
-    print("Unknown language: ", lang)
+    base_name = "_COUNT_"
+    var_names = []
+    i = 0
+    j = 0
+    while j < nb:
+        tentative_name = base_name + str(i)
+        if (
+            source.count(tentative_name) == 0
+            and tentative_name not in all_count_names
+        ):
+            var_names.append(tentative_name)
+            all_count_names.append(tentative_name)
+            j += 1
+        i += 1
+    return var_names
 
 
 def to_python(source, dialect=None, source_name=None):
@@ -205,7 +55,7 @@ def to_python(source, dialect=None, source_name=None):
     This function analyses these tokens,
     replacing some written into a different dialect until all
     are converted into standard Python tokens.  Then, these
-    are recombined into a string which is the source to be 
+    are recombined into a string which is the source to be
     executed.
 
     Python's tokenize module includes a function, called
@@ -227,8 +77,8 @@ def to_python(source, dialect=None, source_name=None):
 
         variable =function(argument)
 
-    One possibility that AvantPy offers is to run program with the 
-    --diff option to show the difference 
+    One possibility that AvantPy offers is to run program with the
+    --diff option to show the difference
     between the code written and standard Python. The difflib
     module, used to do this, shows all differences including
     differences in spaces between tokens.  Since the primary
@@ -255,7 +105,7 @@ def to_python(source, dialect=None, source_name=None):
             # code
 
     However, ``nobreak`` cannot be used in an ``if/elif/else``
-    blocks to replace ``else``.  
+    blocks to replace ``else``.
 
     Furthermore, ``nobreak`` cannot be used instead of ``else``
     in an assignment such as::
@@ -336,12 +186,13 @@ def to_python(source, dialect=None, source_name=None):
     Any remaining token is left as is; it is assumed to be valid
     Python.
     """
-    dialect = set_dialect(dialect)
-    if not is_dialect(dialect):
-        return source
+    if dialect is not None:
+        dialect = state.set_dialect(dialect)
+    else:
+        dialect = state.get_dialect()
 
-    lang_to_py = __state.get_to_python(dialect)
-    py_to_lang = __state.get_from_python(dialect)
+    lang_to_py = state.get_to_python(dialect)
+    py_to_lang = state.get_from_python(dialect)
 
     repeat_kwd = py_to_lang["repeat"]
     while_kwd = py_to_lang["while"]
@@ -355,7 +206,7 @@ def to_python(source, dialect=None, source_name=None):
 
     # variable names to be used in
     #    for variable_name in range(...):
-    var_names = __state.get_unique_variable_names(source, repeat_kwd)
+    var_names = get_unique_variable_names(source, repeat_kwd)
 
     # some book-keeping variables used in the for-loop below
     result = []
@@ -414,7 +265,7 @@ def to_python(source, dialect=None, source_name=None):
                             "linenumber": start_line,
                             "source_name": source_name,
                             "source": source,
-                            "lang": dialect[2:],
+                            "dialect": dialect,
                         },
                     ),
                 )
@@ -431,7 +282,7 @@ def to_python(source, dialect=None, source_name=None):
                             "linenumber": start_line,
                             "source_name": source_name,
                             "source": source,
-                            "lang": dialect[2:],
+                            "dialect": dialect,
                         },
                     ),
                 )
@@ -474,7 +325,7 @@ def to_python(source, dialect=None, source_name=None):
                                 "linenumber": start_line,
                                 "source_name": source_name,
                                 "source": source,
-                                "lang": dialect[2:],
+                                "dialect": dialect,
                             },
                         ),
                     )
@@ -491,7 +342,7 @@ def to_python(source, dialect=None, source_name=None):
                                 "linenumber": start_line,
                                 "source_name": source_name,
                                 "source": source,
-                                "lang": dialect[2:],
+                                "dialect": dialect,
                             },
                         ),
                     )
@@ -504,7 +355,7 @@ def to_python(source, dialect=None, source_name=None):
                                 "linenumber": start_line,
                                 "source_name": source_name,
                                 "source": source,
-                                "lang": dialect[2:],
+                                "dialect": dialect,
                             },
                         ),
                     )
@@ -514,6 +365,4 @@ def to_python(source, dialect=None, source_name=None):
             result.append(tok_str)
 
     source = "".join(result)
-    # if DEBUG:
-    #     print(source)
     return source

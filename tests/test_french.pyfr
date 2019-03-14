@@ -1,9 +1,9 @@
 ''' Just testing a small subset of all the French syntax '''
 
-de math importe pi
+de math importer pi
 
 def test_bool():
-    affirme Vrai, "Vrai is True"
+    affirmer Vrai, "Vrai is True"
     assert not Faux, "Faux is False"
 
 def test_for():
@@ -31,7 +31,7 @@ def main():
     test_for()
     test_si_else()
     test_if_sinon()
-    affiche("Success.")
+    afficher("Success.")
 
 if pasimporté:
     main()

@@ -4,6 +4,8 @@ import glob
 import os.path
 import runpy
 
+from . import session
+
 messages = {}
 default = 'upper'
 
@@ -20,16 +22,12 @@ def _collect_messages():
 _collect_messages()
 
 
-def get(msg, lang):
+def get(msg):
     '''Returns the translation of msg given lang'''
-    if lang in messages:
-        if msg in messages[lang]:
-            return messages[lang][msg]
-        elif msg in messages[default]:
-            return messages[default][msg]
-        else:
-            return "Translation of the following does not exist: %s" % msg
+    lang = session.state.get_lang()
+    if lang is None:
+        lang = default
+    if msg in messages[lang]:
+        return messages[lang][msg]
     else:
-        return "Unknown language: %s" % lang
-
-
+        return "Translation of the following does not exist: %s" % msg

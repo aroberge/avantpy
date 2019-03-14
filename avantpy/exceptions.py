@@ -19,6 +19,11 @@ class NobreakFirstError(AvantPyException):
 class NobreakSyntaxError(AvantPyException):
     pass
 
-
 class RepeatFirstError(AvantPyException):
+    pass
+
+class UnknownDialect(AvantPyException):
+    pass
+
+class UnknownLanguage(AvantPyException):
     pass

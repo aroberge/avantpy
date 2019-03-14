@@ -68,20 +68,11 @@ file named ``name.html`` in the current directory, open a new tab
 in the default web browser and display the result.
 This will also end the current execution.
 The code in the source file will not be executed.
-
-Debug flag
-----------
-
-By using the ``--debug`` flag, one can see how the code is translated.
-For example, one can try::
-
-    python -m avantpy --debug
-
 """
 import argparse
 import sys
 
-from . import conversion
+from . import session
 from . import console
 from . import exception_handling
 from . import import_hook
@@ -106,12 +97,21 @@ if "-m" in sys.argv:
     )
     parser.add_argument(
         "--lang",
-        help="""This restricts AvantPy to using a single language.
-                Usually this is a two-letter code such as 'fr' for French.""",
+        help="""This sets the language used by AvantPy.
+                Usually this is a two-letter code such as 'fr' for French.
+                If no dialect is specified, this will also sets the corresponding
+                dialect""",
     )
 
     parser.add_argument(
-        "-d",
+        "--dialect",
+        help="""This sets the dialect used by AvantPy.
+                Usually this is a two-letter code such as 'pyfr' for French.
+                If 'lang' is not specified, this will also sets the corresponding
+                value for lang.""",
+    )
+
+    parser.add_argument(
         "--diff",
         help="""Creates an html file containing a showing
                 how the original source differs from the transformed one,
@@ -121,15 +121,8 @@ if "-m" in sys.argv:
     )
 
     parser.add_argument(
-        "--debug",
-        help="""In the debug mode, various information is printed as files
-                and input in console are processed.""",
-        action="store_true",
-    )
-
-    parser.add_argument(
         "--dev_py",
-        help="""This disables the custom exception handling so that Python 
+        help="""This disables the custom exception handling so that Python
                 tracebacks are printed""",
         action="store_true",
     )
@@ -140,11 +133,15 @@ if "-m" in sys.argv:
         import_hook.show_diff()
 
     if args.lang is not None:
-        conversion.set_lang(args.lang, only=True)
+        session.state.set_lang(args.lang)
 
-    if args.debug:
-        show_python = True
-        conversion.set_debug(True)
+    if args.dialect is not None:
+        session.state.set_dialect(args.dialect)
+
+    show_python = True  # FIXME
+    # if args.show_converted:
+    #     show_python = True
+    #     conversion.set_debug(True)
 
     if args.dev_py:
         exception_handling.disable()
