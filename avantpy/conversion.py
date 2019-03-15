@@ -34,10 +34,7 @@ def get_unique_variable_names(source, repeat_kwd, all_count_names=[]):
     j = 0
     while j < nb:
         tentative_name = base_name + str(i)
-        if (
-            source.count(tentative_name) == 0
-            and tentative_name not in all_count_names
-        ):
+        if source.count(tentative_name) == 0 and tentative_name not in all_count_names:
             var_names.append(tentative_name)
             all_count_names.append(tentative_name)
             j += 1
@@ -203,7 +200,7 @@ def to_python(source, dialect=None, source_name=None):
     loops_with_else = ["for", "while", py_to_lang["for"], while_kwd, repeat_kwd]
     if_blocks = ["if", py_to_lang["if"]]
     try_blocks = ["try", py_to_lang["try"]]
-    blocks_with_else =  if_blocks + try_blocks + loops_with_else
+    blocks_with_else = if_blocks + try_blocks + loops_with_else
     nobreak_kwd = py_to_lang["else"][1]
 
     # variable names to be used in
@@ -350,8 +347,8 @@ def to_python(source, dialect=None, source_name=None):
                         ),
                     )
                 else:
-                    raise exceptions.NobreakSyntaxError(
-                        "Keyword nobreak not matching a valid block",
+                    raise exceptions.UnexpectedError(
+                        "Should not happen: Keyword nobreak not matching a valid block",
                         (
                             {
                                 "nobreak keyword": tok_str,

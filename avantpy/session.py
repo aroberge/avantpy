@@ -14,6 +14,7 @@ class _State:
     """Keeps track of dialect and lang parameters which control some of the
        behaviour of AvantPy.
     """
+
     def __init__(self):
         self.dict_to_py = {}
         self.dict_from_py = {}
@@ -22,7 +23,6 @@ class _State:
         self.current_lang = None
         self.collect_dialects()
         self.collect_languages()
-
 
     def collect_dialects(self):
         """Find known dialects and create corresponding dictionaries."""
@@ -54,7 +54,6 @@ class _State:
                 lang = os.path.basename(f).split(".")[0]
                 _module = runpy.run_path(f)
                 self.messages[lang] = _module[lang]
-
 
     def all_dialects(self):
         """Returns a list of all known dialects."""
@@ -106,7 +105,8 @@ class _State:
         """
         if not self.is_dialect(dialect):
             raise exceptions.UnknownDialect(
-                "Unknown dialect %s; known dialects = %s" % dialect, (dialect, self.all_dialects())
+                "Unknown dialect %s; known dialects = %s" % dialect,
+                (dialect, self.all_dialects()),
             )
         else:
             self.current_dialect = dialect
@@ -115,6 +115,7 @@ class _State:
                     self.set_lang(dialect[2:])
                 except exceptions.UnknownLanguage:
                     pass
+        return dialect
 
     def set_lang(self, lang):
         """Sets the current language.
@@ -126,7 +127,8 @@ class _State:
         """
         if not self.is_lang(lang):
             raise exceptions.UnknownLanguage(
-                "Unknown language %s; known languages = %s" % lang, (lang, self.all_langs())
+                "Unknown language %s; known languages = %s" % lang,
+                (lang, self.all_langs()),
             )
         else:
             self.current_lang = lang

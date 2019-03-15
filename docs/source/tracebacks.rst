@@ -11,8 +11,12 @@ Such feedback will also be available in languages other than English.
      update_tb.py located in the ``dev_tools`` directory,
      which needs to be done explicitly.
 
+AvantPy version 0.0.3.
+Python version 3.7.0.
+
+
 IfNobreakError
--------------- 
+--------------
 
 Example 1::
 
@@ -26,4 +30,3 @@ Example 1::
 
     The AvantPy NOBREAK keyword cannot be used in an IF/ELIF/ELSE clause
     (Python: if/elif/else).
-
