@@ -14,8 +14,10 @@ parent_dir = os.path.abspath(os.path.join(this_dir, ".."))
 sys.path.insert(0, this_dir)
 sys.path.insert(0, parent_dir)
 
+# sets up import hook; never used explicitly in code
+import avantpy  # NOQA
 
-import avantpy   # sets up import hook; never used explicitly in code
+assert avantpy  # silence pyflakes warnings about unused imports
 
 target = os.path.normpath(os.path.join(parent_dir, "docs/source/tracebacks.rst"))
 
@@ -40,14 +42,18 @@ Such feedback will also be available in languages other than English.
      which needs to be done explicitly.
 """
 
+
 def make_title(text):
     print(text)
-    print("-" * len(text), '\n')
+    print("-" * len(text), "\n")
 
-with open(target, 'w') as out:
+
+with open(target, "w") as out:
     with redirect_stdout(out):
         print(content)
 
         make_title("IfNobreakError")
         print("Example 1::")
-        import ifnobreakerror
+        import ifnobreakerror  # NOQA
+
+        assert ifnobreakerror  # silences pyflakes

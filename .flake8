@@ -1,0 +1,18 @@
+[flake8]
+max-line-length = 88
+exclude =
+    # No need to traverse our git directory
+    .git/*,
+    # There's no value in checking cache directories
+    __pycache__,
+    # documentation, to be ignored
+    docs/*,
+    images/*,
+    psf/*,
+    # This contains our tests directory
+    test/*,
+    # This contains developer tools which we want to ignore
+    # as they use code which generate spurious unused imports
+    dev_tools/*,
+    # the following is for quick local tests
+    z/*
