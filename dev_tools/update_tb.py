@@ -62,6 +62,19 @@ with open(target, "w") as out:
 
         make_title("IfNobreakError")
         print("Example 1::")
-        import ifnobreakerror  # NOQA
+        import ifnobreakerror
 
-        assert ifnobreakerror  # silences pyflakes
+        make_title("TryNobreakError")
+        import trynobreakerror
+
+        for exc in [
+            "NobreakFirstError",
+            "NobreakSyntaxError",
+            "RepeatFirstError",
+            "UnknownDialect",
+            "UnknownLanguage",
+            "UnexpectedError",
+        ]:
+
+            make_title(exc)
+            print("Not documented here and possibly not yet tested.")
