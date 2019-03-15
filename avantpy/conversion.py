@@ -347,8 +347,8 @@ def to_python(source, dialect=None, source_name=None):
                         ),
                     )
                 else:
-                    raise exceptions.UnexpectedError(
-                        "Should not happen: Keyword nobreak not matching a valid block",
+                    raise exceptions.NobreakSyntaxError(
+                        "Keyword nobreak not matching a valid block",
                         (
                             {
                                 "nobreak keyword": tok_str,

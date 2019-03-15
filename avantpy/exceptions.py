@@ -28,6 +28,12 @@ class NobreakFirstError(AvantPyException):
     pass
 
 
+class NobreakSyntaxError(AvantPyException):
+    """Raised if ``nobreak`` is without a matching block."""
+
+    pass
+
+
 class RepeatFirstError(AvantPyException):
     """Raised if ``repeat`` is used somewhere other than at the beginning of a line."""
 
