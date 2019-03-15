@@ -190,6 +190,8 @@ def to_python(source, dialect=None, source_name=None):
         dialect = state.set_dialect(dialect)
     else:
         dialect = state.get_dialect()
+        if dialect is None:
+            return source
 
     lang_to_py = state.get_to_python(dialect)
     py_to_lang = state.get_from_python(dialect)
@@ -320,7 +322,8 @@ def to_python(source, dialect=None, source_name=None):
                         "Keyword nobreak found matching if/elif",
                         (
                             {
-                                "if_string": indentations[start_col],
+                                "if_string": indentations[start_col][0],
+                                "if_linenumber": indentations[start_col][1],
                                 "nobreak keyword": tok_str,
                                 "linenumber": start_line,
                                 "source_name": source_name,

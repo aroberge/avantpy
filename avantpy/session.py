@@ -17,9 +17,12 @@ class _State:
     def __init__(self):
         self.dict_to_py = {}
         self.dict_from_py = {}
+        self.messages = {}
         self.current_dialect = None
         self.current_lang = None
         self.collect_dialects()
+        self.collect_languages()
+
 
     def collect_dialects(self):
         """Find known dialects and create corresponding dictionaries."""
@@ -42,13 +45,24 @@ class _State:
                             to_py[val] = k
                 self.dict_to_py[dialect] = to_py
 
+    def collect_languages(self):
+        """Find messages from known languages and create corresponding dictionaries"""
+        languages = glob.glob(os.path.dirname(__file__) + "/translations/*.py")
+        for f in languages:
+            if os.path.isfile(f) and not f.endswith("__init__.py"):
+
+                lang = os.path.basename(f).split(".")[0]
+                _module = runpy.run_path(f)
+                self.messages[lang] = _module[lang]
+
+
     def all_dialects(self):
         """Returns a list of all known dialects."""
         return [k for k in self.dict_from_py.keys()]
 
     def all_langs(self):
         """Returns a list of all known languages."""
-        return [k for k in self.dict_to_py.keys()]
+        return [k for k in self.messages.keys()]
 
     def is_dialect(self, dialect):
         """Returns True if `dialect` is a known dialect, False otherwise."""
@@ -58,7 +72,7 @@ class _State:
         """Returns True if `lang` is known as part of a dialect,
                    False otherwise
         """
-        return lang in self.dict_to_py
+        return lang in self.messages
 
     def get_dialect(self):
         """Returns the current dialect."""
@@ -87,34 +101,40 @@ class _State:
 
            Raises an exception if the dialect is unknown.
 
-           If current language is set to None, language will be
-           set to the value corresponding to dialect.
+           If current language is set to None, an attempt will be made
+           to set language to the value corresponding to dialect.
         """
         if not self.is_dialect(dialect):
             raise exceptions.UnknownDialect(
-                "Unknown dialect %s" % dialect, (dialect, self.all_dialects())
+                "Unknown dialect %s; known dialects = %s" % dialect, (dialect, self.all_dialects())
             )
         else:
             self.current_dialect = dialect
             if self.current_lang is None:
-                self.current_lang = dialect[2:]
+                try:
+                    self.set_lang(dialect[2:])
+                except exceptions.UnknownLanguage:
+                    pass
 
     def set_lang(self, lang):
         """Sets the current language.
 
            Raises an exception if the language is unknown.
 
-           If current dialect is set to None, dialect will be
-           set to the value corresponding to language.
+           If current dialect is set to None, an attempt will be made
+           to set dialect to the value corresponding to language.
         """
         if not self.is_lang(lang):
             raise exceptions.UnknownLanguage(
-                "Unknown language %s" % lang, (lang, self.all_langs())
+                "Unknown language %s; known languages = %s" % lang, (lang, self.all_langs())
             )
         else:
             self.current_lang = lang
             if self.current_dialect is None:
-                self.current_dialect = "py" + lang
+                try:
+                    self.set_dialect("py" + lang)
+                except exceptions.UnknownDialect:
+                    pass
 
 
 state = _State()

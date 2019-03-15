@@ -5,16 +5,12 @@ en = {}
 en[
     "IfNobreakError"
 ] = """
-AvantPy exception: IfNobreakError
+    AVANTPY EXCEPTION: IfNobreakError\n
+    Error found in file {filename} on line {nobreak_linenumber}.\n
+{partial_source}
 
     The AvantPy {nobreak_kwd} keyword cannot be used in an if/elif/else clause.
-
-Error found in file '{filename}':
-
-    Line {if_linenumber}: {if_line}
-
-    Line {nobreak_linenumber}: {nobreak_line}
-"""
+""",
 
 en[
     "RepeatFirstError"

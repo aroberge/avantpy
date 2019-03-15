@@ -5,16 +5,19 @@ Goals:
 - version 0.1: first public release
   - a simple editor has been written
 - version 0.2: all Python Errors can be caught and an explanation provided
+  - Have decided on whether or not using (py) gettext
+    - if yes, document how to use it
+    - if no, explain why since using gettext is the standard for internationalization.
+    - See, for example https://news.ycombinator.com/item?id=2095334
+    - One of many references: https://docs.readthedocs.io/en/latest/i18n.html
 
 ## Enhancements
 
 Important: add code (and test) to ensure that `until` cannot be used if it
 is not preceded by `repeat`.
 
-- [x] Add option to restrict processing to single dialect
-  - In this case, only load single dialect file; if not found, issue error message and exit.
-- [x] Think of replacing `__name__ is "__main__"` by a single keyword, perhaps `NotImported`.
-- [x] Change html template for html output produced by difflib
+Important: separate lang (for messages) from dialect.
+
 - [ ] Make it possible to show the difflib output in an interactive session without exiting;
   This could be a more useful feature in an IDE environment
    - [ ] Have the possible options:
@@ -35,12 +38,25 @@ is not preceded by `repeat`.
     - [ ] for other types not derived from SyntaxError
   - [ ] Add demo GUI-based editor with syntax highlighting, perhaps similar to, but simpler than [this](http://www.bitforestinfo.com/2017/05/how-to-create-python-syntax-highlighting-functions-for-python-tkinter-text-widget-python-magicstick-text-editor-last-part.html)
 
+- [ ] Add option to limit to one dialect only
+
 - [ ] Use .format for string interpolation everywhere.
 - [ ] Look at having translation for open()
 - [ ] Review builtins and see if translations of other functions are needed.
 - [ ] add syntax check in conversion
   - [ ] Closing ]}) not matching opening
   - [ ] opening [({ never closed
+
+Some useful links to use as a start for improving error analysis:
+
+    http://inventwithpython.com/appendixd.html
+    https://inventwithpython.com/blog/2012/07/09/16-common-python-runtime-errors-beginners-find/
+    https://www.dropbox.com/s/cqsxfws52gulkyx/drawing.pdf
+    https://www2.cs.arizona.edu/people/mccann/errors-python
+    https://tobiaskohn.ch/files/Dissertation_TKohn.pdf
+    http://www.felienne.com/archives/6279
+
+    Also, use = in an if statement comparison (and others)
 
 ## Contributors
 
@@ -58,15 +74,11 @@ is not preceded by `repeat`.
 - [ ] Command line option to convert from Python to dialect
   - This could be useful to quickly create test suites in a new dialect.
 - [ ] Command line option to convert from dialect to Python
-- [x] Command line option to show code in dialect and Python side by side, highlighting differences
 - [ ] GUI for above
 
 ## Testing
 
-- [x] Add test for console
 - [ ] Create comprehensive test for given dialect
-- [x] Add UPPERCASE English dialect
-  - [x] Add test for this
 
 ## Integrating with other programs
 
@@ -75,7 +87,7 @@ to integrate it with other programs.
 
 - [ ] Can it be integrated with Idle ?
 - [ ] Can a tool be written to easily enable syntax highlighting for a given dialect in some text editor?
-  - It should be possible to take an existing file for Python, process it to add the keywords from a `xx.py` dialect file, and save it as a new syntax file. Ideally this process should be documented with a complete example showing
+  - It should be possible to take an existing file for Python, process it to add the keywords from a `pyxx.py` dialect file, and save it as a new syntax file. Ideally this process should be documented with a complete example showing
       1. how to find the existing Python file
       2. how to use the tool to create the new file (say pyfr)
       3. how to add the newly created file so that it is recognized by the editor.

@@ -6,6 +6,8 @@ import sys
 from . import session
 from . import conversion
 from . import version
+from . import exception_handling
+from . import exceptions
 
 
 # define banner and prompt here so that they can be imported in tests
@@ -51,8 +53,13 @@ class AvantPyInteractiveConsole(code.InteractiveConsole):
             newsource = self.do_transformations(source)
         except SystemExit:
             os._exit(1)
-        except Exception:
-            self.showsyntaxerror(filename="console")
+        except exceptions.AvantPyException as exc:
+            print(exception_handling.handle_exception(exc, source))
+            self.resetbuffer()
+            return
+        except Exception as exc:
+            print("UNHANDLED EXCEPTION in console.py. This should not happen.")
+            raise exc
 
         if newsource != source:
             self.identical = False
@@ -61,6 +68,8 @@ class AvantPyInteractiveConsole(code.InteractiveConsole):
             more = self.runsource(newsource, self.filename)
         except SystemExit:
             os._exit(1)
+        except Exception as exc:
+            print(exception_handling.handle_exception(exc, source))
 
         if not more:
             self.resetbuffer()
@@ -88,10 +97,7 @@ class AvantPyInteractiveConsole(code.InteractiveConsole):
 
            Returns the transformed source.
         """
-        try:
-            source = conversion.to_python(source, source_name="REPL")
-        except Exception:
-            pass
+        source = conversion.to_python(source, source_name="REPL")
         source = self.fix_ending(source)
 
         self._source = source  # saved in case we need it if we want to show

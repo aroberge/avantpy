@@ -25,17 +25,16 @@ def _maybe_print(msg, obj, attribute):
 
 def get_partial_source(source, begin, end, mark=-1):
     """Extracts a few relevant lines from a source file"""
-
-    # Formatting string which will have an indentation of
-    # 4 spaces, for easy insertion as code-blocks in documentation
-    # and enough additional space to include linenumbers,
-    # keeping everything aligned.
     nb_digits = len(str(end))
     no_mark = "       {:%d}: " % nb_digits
     with_mark = "    -->{:%d}: " % nb_digits
 
     if mark == -1:
         mark = end
+
+    # TODO  For long blocks, make it possible to show only
+    # a few lines at the beginning and at the end
+    # with some indication in between that there is more.
 
     lines = source.split("\n")
     result = []
@@ -60,7 +59,7 @@ def handle_exception(exc, original_source):
         # Let normal Python traceback through
         raise exc
 
-    if True:  # Fixme
+    if False:  # Fixme
         print("\nInfo from sys")
         print("sys.exc_info(): ", sys.exc_info())
         _maybe_print("sys.last_type: ", sys, "last_type")
@@ -79,11 +78,11 @@ def handle_exception(exc, original_source):
 def handle_IfNobreakError(exc, original_source):
     params = exc.args[0]
 
-    if_linenumber = int(params["if_string"][1])
-    nobreak_linenumber = int(params["linenumber"])
+    if_linenumber = params["if_linenumber"]
+    nobreak_linenumber = params["linenumber"]
 
     partial_source = get_partial_source(
-        original_source, if_linenumber, nobreak_linenumber + 1
+        original_source, if_linenumber, nobreak_linenumber
     )
 
     info = {

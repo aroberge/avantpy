@@ -5,6 +5,9 @@ Python with **training wheels**: _executable pseudocode_ in any language.
 Please see https://aroberge.github.io/avantpy/docs/html/ for more information, including for those
 who wish to contribute or file issues.
 
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :target: https://github.com/ambv/black
+
 ## What is AvantPy
 
 :warning: The following describes what the final version of AvantPy should look
@@ -34,7 +37,7 @@ instructor.
 
 Python is often described as executable pseudocode. Once people have learned a few idiomatic expressions, like `for variable in range(n)`, translating pseudocode written in English into Python is usually very straightforward.
 
-If the pseudocode is not written in English, the translation process is, at least initially, not as straightforward since an additional mental step is required by the translation from the original language into Python's English. 
+If the pseudocode is not written in English, the translation process is, at least initially, not as straightforward since an additional mental step is required by the translation from the original language into Python's English.
 
 Even though the number of Python keywords is small, for absolute beginners who are learning programming concepts (control flow structures, defining functions, etc.), being able to use a language that uses keywords easily understood in their own language can definitely facilitate the learning process.
 **This is the approach taken by people using block-based environment
