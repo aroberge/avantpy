@@ -18,7 +18,7 @@ AvantPy aims to:
 In a given dialect, AvantPy keywords and functions should not be thought of as 
 straight translations from English of the Python keywords; instead, these should be
 chosen so that they make sense in a programming context. For example, in the French dialect,
-the function ``input`` is named ``demande`` which would normally be translated as ``ask``.
+the function ``input`` is named ``demander`` which would normally be translated as ``ask``.
 Similarly, the French equivalent to ``except`` is ``siexception`` 
 which is composed of two words, ``si`` and  ``exception``.
 Thus, ``siexception SyntaxError:`` can be read as ``if exception SyntaxError:``.
@@ -45,7 +45,7 @@ beginners.
 Translations of **messages** to user, such as simplified tracebacks, are currently implemented
 (in theory - not much content yet) using a simple Python dictionary for each language, 
 instead of using a standard method such as that provided by pygettext. 
-This is probably going to change in once the project's core functionality is completed
+This is possibly going to change in once the project's core functionality is completed
 (probably around version 0.1).
 
 B. Contributor of "core" code

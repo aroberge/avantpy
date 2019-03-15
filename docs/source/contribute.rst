@@ -1,7 +1,11 @@
 Contributing
 ==================
 
-To be written.
+.. note::
+
+    This project uses `Black <https://github.com/ambv/black>`_ with default
+    parameters for formatting. This means that some linter that strictly
+    follow PEP 8 will give spurious warning messages.
 
 Contributing through a pull request
 ------------------------------------

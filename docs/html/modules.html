@@ -155,49 +155,17 @@ and the syntax error</p>
 <p>conversion.py</p>
 <p>Keeps track of available dialects, and perform require code transformations.</p>
 <dl class="function">
-<dt id="avantpy.conversion.all_dialects">
-<code class="descclassname">avantpy.conversion.</code><code class="descname">all_dialects</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/conversion.html#all_dialects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.conversion.all_dialects" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a list of all known dialects.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="avantpy.conversion.get_dialect">
-<code class="descclassname">avantpy.conversion.</code><code class="descname">get_dialect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/conversion.html#get_dialect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.conversion.get_dialect" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the current dialect being used.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="avantpy.conversion.is_dialect">
-<code class="descclassname">avantpy.conversion.</code><code class="descname">is_dialect</code><span class="sig-paren">(</span><em>dialect</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/conversion.html#is_dialect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.conversion.is_dialect" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns True if <cite>dialect</cite> is a known dialect, False otherwise.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="avantpy.conversion.set_debug">
-<code class="descclassname">avantpy.conversion.</code><code class="descname">set_debug</code><span class="sig-paren">(</span><em>val=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/conversion.html#set_debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.conversion.set_debug" title="Permalink to this definition">¶</a></dt>
-<dd><p>Used to set DEBUG to either True or False,
-with True being the default value.</p>
-<p>Returns: The current value of DEBUG</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="avantpy.conversion.set_dialect">
-<code class="descclassname">avantpy.conversion.</code><code class="descname">set_dialect</code><span class="sig-paren">(</span><em>dialect=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/conversion.html#set_dialect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.conversion.set_dialect" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the dialect to be used.</p>
-<p>Valid values are of the form “pyXX” where XX denotes a valid two-letter
-language code.  
-If <cite>dialect</cite> is not recognized as being valid, an error message is
-printed.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="avantpy.conversion.set_lang">
-<code class="descclassname">avantpy.conversion.</code><code class="descname">set_lang</code><span class="sig-paren">(</span><em>lang</em>, <em>only=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/conversion.html#set_lang"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.conversion.set_lang" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the language and/or Python dialect to be used.</p>
-<p>Valid values are typically two-letter language code such as ‘en’ or ‘fr’.</p>
-<p>If <cite>lang</cite> is not a recognized language, an error message is printed.</p>
-<p>If the <code class="docutils literal notranslate"><span class="pre">only</span></code> argument is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, and <code class="docutils literal notranslate"><span class="pre">lang</span></code> is a valid
-value, no other language/dialect will be allowed.</p>
+<dt id="avantpy.conversion.get_unique_variable_names">
+<code class="descclassname">avantpy.conversion.</code><code class="descname">get_unique_variable_names</code><span class="sig-paren">(</span><em>source</em>, <em>repeat_kwd</em>, <em>all_count_names=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/conversion.html#get_unique_variable_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.conversion.get_unique_variable_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of possible variables names that
+are not found in the original source and have not been used
+anywhere.
+These variables will be used in expressions such as</p>
+<blockquote>
+<div>for _COUNT_42 in range(n):</div></blockquote>
+<p>which will replace</p>
+<blockquote>
+<div>repeat n:</div></blockquote>
 </dd></dl>
 
 <dl class="function">
@@ -210,7 +178,7 @@ of a variable, an operator, a parenthesis, a string, etc.</p>
 <p>This function analyses these tokens,
 replacing some written into a different dialect until all
 are converted into standard Python tokens.  Then, these
-are recombined into a string which is the source to be 
+are recombined into a string which is the source to be
 executed.</p>
 <p>Python’s tokenize module includes a function, called
 untokenize, which can be used to combine a series of tokens
@@ -231,8 +199,8 @@ may include a line like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">variable</span> <span class="o">=</span><span class="n">function</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>One possibility that AvantPy offers is to run program with the 
-–diff option to show the difference 
+<p>One possibility that AvantPy offers is to run program with the
+–diff option to show the difference
 between the code written and standard Python. The difflib
 module, used to do this, shows all differences including
 differences in spaces between tokens.  Since the primary
@@ -391,6 +359,16 @@ friendlier traceback than Python.</p>
 <em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">TryNobreakError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#TryNobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.TryNobreakError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="exception">
+<dt id="avantpy.exceptions.UnknownDialect">
+<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">UnknownDialect</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#UnknownDialect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.UnknownDialect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="avantpy.exceptions.UnknownLanguage">
+<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">UnknownLanguage</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#UnknownLanguage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.UnknownLanguage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 <div class="section" id="module-avantpy.import_hook">
 <span id="import-hook"></span><h2>import_hook<a class="headerlink" href="#module-avantpy.import_hook" title="Permalink to this headline">¶</a></h2>
@@ -460,7 +438,7 @@ and the converted one can be shown</p>
 <p>Provide mechanism to get translations of messages</p>
 <dl class="function">
 <dt id="avantpy.translate.get">
-<code class="descclassname">avantpy.translate.</code><code class="descname">get</code><span class="sig-paren">(</span><em>msg</em>, <em>lang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/translate.html#get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.translate.get" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">avantpy.translate.</code><code class="descname">get</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/translate.html#get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.translate.get" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the translation of msg given lang</p>
 </dd></dl>
 

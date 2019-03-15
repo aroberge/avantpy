@@ -58,199 +58,49 @@
 <span class="sd">Keeps track of available dialects, and perform require code transformations.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">glob</span>
-<span class="kn">import</span> <span class="nn">os.path</span>
-<span class="kn">import</span> <span class="nn">runpy</span>
 <span class="kn">import</span> <span class="nn">tokenize</span>
 <span class="kn">from</span> <span class="nn">io</span> <span class="k">import</span> <span class="n">StringIO</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">exceptions</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">session</span>
 
-<span class="n">DEBUG</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">state</span>
 
 
-<div class="viewcode-block" id="set_debug"><a class="viewcode-back" href="../../modules.html#avantpy.conversion.set_debug">[docs]</a><span class="k">def</span> <span class="nf">set_debug</span><span class="p">(</span><span class="n">val</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Used to set DEBUG to either True or False,</span>
-<span class="sd">       with True being the default value.</span>
+<div class="viewcode-block" id="get_unique_variable_names"><a class="viewcode-back" href="../../modules.html#avantpy.conversion.get_unique_variable_names">[docs]</a><span class="k">def</span> <span class="nf">get_unique_variable_names</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">repeat_kwd</span><span class="p">,</span> <span class="n">all_count_names</span><span class="o">=</span><span class="p">[]):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a list of possible variables names that</span>
+<span class="sd">       are not found in the original source and have not been used</span>
+<span class="sd">       anywhere.</span>
+<span class="sd">       These variables will be used in expressions such as</span>
 
-<span class="sd">       Returns: The current value of DEBUG</span>
+<span class="sd">           for _COUNT_42 in range(n):</span>
+
+<span class="sd">       which will replace</span>
+
+<span class="sd">           repeat n:</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">global</span> <span class="n">DEBUG</span>
-    <span class="n">DEBUG</span> <span class="o">=</span> <span class="n">val</span>
-    <span class="k">return</span> <span class="n">DEBUG</span></div>
+    <span class="n">nb</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">repeat_kwd</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">nb</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="n">base_name</span> <span class="o">=</span> <span class="s2">&quot;_COUNT_&quot;</span>
+    <span class="n">var_names</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">nb</span><span class="p">:</span>
+        <span class="n">tentative_name</span> <span class="o">=</span> <span class="n">base_name</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">source</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">tentative_name</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+            <span class="ow">and</span> <span class="n">tentative_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">all_count_names</span>
+        <span class="p">):</span>
+            <span class="n">var_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tentative_name</span><span class="p">)</span>
+            <span class="n">all_count_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tentative_name</span><span class="p">)</span>
+            <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">var_names</span></div>
 
 
-<span class="k">class</span> <span class="nc">_State</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Keeping track of parameters which control some of the</span>
-<span class="sd">       behaviour of AvantPy.&quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dictionaries</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">all_count_names</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">current_dialect</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">current_lang</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">collect_dialects</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">only_one_dialect</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">only_one_lang</span> <span class="o">=</span> <span class="kc">False</span>
-
-    <span class="k">def</span> <span class="nf">all_dialects</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns a list of all known dialects.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">only_one_dialect</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">only_one_dialect</span><span class="p">]</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionaries</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;py&quot;</span><span class="p">)]</span>
-
-    <span class="k">def</span> <span class="nf">collect_dialects</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Find known dialects and create corresponding dictionaries&quot;&quot;&quot;</span>
-        <span class="n">dialects</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/dialects/*.py&quot;</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">dialects</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;__init__.py&quot;</span><span class="p">):</span>
-
-                <span class="n">lang</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="n">dialect</span> <span class="o">=</span> <span class="s2">&quot;py&quot;</span> <span class="o">+</span> <span class="n">lang</span>
-
-                <span class="n">_module</span> <span class="o">=</span> <span class="n">runpy</span><span class="o">.</span><span class="n">run_path</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-                <span class="n">from_py</span> <span class="o">=</span> <span class="n">_module</span><span class="p">[</span><span class="n">lang</span><span class="p">]</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">add_translation</span><span class="p">(</span><span class="n">lang</span><span class="p">,</span> <span class="n">from_py</span><span class="p">)</span>
-
-                <span class="n">to_py</span> <span class="o">=</span> <span class="p">{}</span>
-                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">from_py</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                        <span class="n">to_py</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">v</span><span class="p">:</span>
-                            <span class="n">to_py</span><span class="p">[</span><span class="n">val</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">add_translation</span><span class="p">(</span><span class="n">dialect</span><span class="p">,</span> <span class="n">to_py</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">is_dialect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dialect</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns True if `dialect` is a known dialect, False otherwise.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">only_one_dialect</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">dialect</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">only_one_dialect</span>
-        <span class="k">return</span> <span class="n">dialect</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;py&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">dialect</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionaries</span>
-
-    <span class="k">def</span> <span class="nf">is_lang</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lang</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns True if `lang` is known as part of a dialect, False otherwise&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">only_one_lang</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">lang</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">only_one_lang</span>
-        <span class="k">return</span> <span class="p">(</span><span class="ow">not</span> <span class="n">lang</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;py&quot;</span><span class="p">))</span> <span class="ow">and</span> <span class="n">lang</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionaries</span>
-
-    <span class="k">def</span> <span class="nf">add_translation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">translation_dict</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Adds a translation dict either from a dialect to Python</span>
-<span class="sd">           or from Python to a given dialect.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dictionaries</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">translation_dict</span>
-
-    <span class="k">def</span> <span class="nf">get_to_python</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dialect</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns a dict providing translation from a dialect into Python&quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_dialect</span><span class="p">(</span><span class="n">dialect</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionaries</span><span class="p">[</span><span class="n">dialect</span><span class="p">]</span>
-
-    <span class="k">def</span> <span class="nf">get_from_python</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dialect</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns a dict providing translation from Python into a dialect&quot;&quot;&quot;</span>
-        <span class="n">lang</span> <span class="o">=</span> <span class="n">dialect</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_lang</span><span class="p">(</span><span class="n">lang</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionaries</span><span class="p">[</span><span class="n">lang</span><span class="p">]</span>
-
-    <span class="k">def</span> <span class="nf">get_unique_variable_names</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">repeat_kwd</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns a list of possible variables names that</span>
-<span class="sd">           are not found in the original source and have not been used</span>
-<span class="sd">           anywhere.</span>
-<span class="sd">           These variables will be used in expressions such as</span>
-
-<span class="sd">               for _COUNT_42 in range(n):</span>
-
-<span class="sd">           which will replace</span>
-
-<span class="sd">               repeat n:</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">nb</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">repeat_kwd</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">nb</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">[]</span>
-
-        <span class="n">base_name</span> <span class="o">=</span> <span class="s2">&quot;_COUNT_&quot;</span>
-        <span class="n">var_names</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">while</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">nb</span><span class="p">:</span>
-            <span class="n">tentative_name</span> <span class="o">=</span> <span class="n">base_name</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-            <span class="k">if</span> <span class="p">(</span>
-                <span class="n">source</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">tentative_name</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
-                <span class="ow">and</span> <span class="n">tentative_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_count_names</span>
-            <span class="p">):</span>
-                <span class="n">var_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tentative_name</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">all_count_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tentative_name</span><span class="p">)</span>
-                <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="n">var_names</span>
-
-
-<span class="n">__state</span> <span class="o">=</span> <span class="n">_State</span><span class="p">()</span>
-
-
-<div class="viewcode-block" id="all_dialects"><a class="viewcode-back" href="../../modules.html#avantpy.conversion.all_dialects">[docs]</a><span class="k">def</span> <span class="nf">all_dialects</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Returns a list of all known dialects.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">__state</span><span class="o">.</span><span class="n">all_dialects</span><span class="p">()</span></div>
-
-
-<div class="viewcode-block" id="is_dialect"><a class="viewcode-back" href="../../modules.html#avantpy.conversion.is_dialect">[docs]</a><span class="k">def</span> <span class="nf">is_dialect</span><span class="p">(</span><span class="n">dialect</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Returns True if `dialect` is a known dialect, False otherwise.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">__state</span><span class="o">.</span><span class="n">is_dialect</span><span class="p">(</span><span class="n">dialect</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="get_dialect"><a class="viewcode-back" href="../../modules.html#avantpy.conversion.get_dialect">[docs]</a><span class="k">def</span> <span class="nf">get_dialect</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Returns the current dialect being used.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">__state</span><span class="o">.</span><span class="n">current_dialect</span></div>
-
-
-<div class="viewcode-block" id="set_dialect"><a class="viewcode-back" href="../../modules.html#avantpy.conversion.set_dialect">[docs]</a><span class="k">def</span> <span class="nf">set_dialect</span><span class="p">(</span><span class="n">dialect</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Sets the dialect to be used.</span>
-
-<span class="sd">    Valid values are of the form &quot;pyXX&quot; where XX denotes a valid two-letter</span>
-<span class="sd">    language code.  </span>
-<span class="sd">    If `dialect` is not recognized as being valid, an error message is</span>
-<span class="sd">    printed.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">dialect</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">__state</span><span class="o">.</span><span class="n">current_dialect</span>
-    <span class="k">elif</span> <span class="n">is_dialect</span><span class="p">(</span><span class="n">dialect</span><span class="p">):</span>
-        <span class="n">__state</span><span class="o">.</span><span class="n">current_dialect</span> <span class="o">=</span> <span class="n">dialect</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unknown dialect: &quot;</span><span class="p">,</span> <span class="n">dialect</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="set_lang"><a class="viewcode-back" href="../../modules.html#avantpy.conversion.set_lang">[docs]</a><span class="k">def</span> <span class="nf">set_lang</span><span class="p">(</span><span class="n">lang</span><span class="p">,</span> <span class="n">only</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Sets the language and/or Python dialect to be used.</span>
-<span class="sd">    </span>
-<span class="sd">    Valid values are typically two-letter language code such as &#39;en&#39; or &#39;fr&#39;.</span>
-
-<span class="sd">    If `lang` is not a recognized language, an error message is printed.</span>
-
-
-<span class="sd">    If the ``only`` argument is set to ``True``, and ``lang`` is a valid</span>
-<span class="sd">    value, no other language/dialect will be allowed.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Since this function can be used in the console, in order to make it</span>
-    <span class="c1"># more user friendly, we accept values that start with &#39;py&#39; such as</span>
-    <span class="c1"># &#39;pyfr&#39; as being equivalent to their two-letter language counterpart</span>
-
-    <span class="k">if</span> <span class="n">lang</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;py&quot;</span><span class="p">):</span>
-        <span class="n">dialect</span> <span class="o">=</span> <span class="n">lang</span>
-        <span class="n">lang</span> <span class="o">=</span> <span class="n">dialect</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">dialect</span> <span class="o">=</span> <span class="s2">&quot;py&quot;</span> <span class="o">+</span> <span class="n">lang</span>
-
-    <span class="k">if</span> <span class="n">is_dialect</span><span class="p">(</span><span class="n">dialect</span><span class="p">):</span>
-        <span class="n">set_dialect</span><span class="p">(</span><span class="n">dialect</span><span class="p">)</span>
-        <span class="n">__state</span><span class="o">.</span><span class="n">current_lang</span> <span class="o">=</span> <span class="n">lang</span>
-        <span class="k">if</span> <span class="n">only</span><span class="p">:</span>
-            <span class="n">__state</span><span class="o">.</span><span class="n">only_one_dialect</span> <span class="o">=</span> <span class="n">dialect</span>
-            <span class="n">__state</span><span class="o">.</span><span class="n">only_one_lang</span> <span class="o">=</span> <span class="n">lang</span>
-        <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;lang </span><span class="si">%s</span><span class="s2"> selected&quot;</span> <span class="o">%</span> <span class="n">lang</span><span class="p">)</span>
-        <span class="k">return</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unknown language: &quot;</span><span class="p">,</span> <span class="n">lang</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="to_python"><a class="viewcode-back" href="../../modules.html#avantpy.conversion.to_python">[docs]</a><span class="k">def</span> <span class="nf">to_python</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">dialect</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">source_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="to_python"><a class="viewcode-back" href="../../works.html#avantpy.conversion.to_python">[docs]</a><span class="k">def</span> <span class="nf">to_python</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">dialect</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">source_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Converts a source in a known dialect into standard Python.</span>
 
 <span class="sd">    This function uses Python&#39;s ``tokenize`` module to convert a</span>
@@ -260,7 +110,7 @@
 <span class="sd">    This function analyses these tokens,</span>
 <span class="sd">    replacing some written into a different dialect until all</span>
 <span class="sd">    are converted into standard Python tokens.  Then, these</span>
-<span class="sd">    are recombined into a string which is the source to be </span>
+<span class="sd">    are recombined into a string which is the source to be</span>
 <span class="sd">    executed.</span>
 
 <span class="sd">    Python&#39;s tokenize module includes a function, called</span>
@@ -282,8 +132,8 @@
 
 <span class="sd">        variable =function(argument)</span>
 
-<span class="sd">    One possibility that AvantPy offers is to run program with the </span>
-<span class="sd">    --diff option to show the difference </span>
+<span class="sd">    One possibility that AvantPy offers is to run program with the</span>
+<span class="sd">    --diff option to show the difference</span>
 <span class="sd">    between the code written and standard Python. The difflib</span>
 <span class="sd">    module, used to do this, shows all differences including</span>
 <span class="sd">    differences in spaces between tokens.  Since the primary</span>
@@ -310,7 +160,7 @@
 <span class="sd">            # code</span>
 
 <span class="sd">    However, ``nobreak`` cannot be used in an ``if/elif/else``</span>
-<span class="sd">    blocks to replace ``else``.  </span>
+<span class="sd">    blocks to replace ``else``.</span>
 
 <span class="sd">    Furthermore, ``nobreak`` cannot be used instead of ``else``</span>
 <span class="sd">    in an assignment such as::</span>
@@ -391,12 +241,15 @@
 <span class="sd">    Any remaining token is left as is; it is assumed to be valid</span>
 <span class="sd">    Python.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">dialect</span> <span class="o">=</span> <span class="n">set_dialect</span><span class="p">(</span><span class="n">dialect</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_dialect</span><span class="p">(</span><span class="n">dialect</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">source</span>
+    <span class="k">if</span> <span class="n">dialect</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">dialect</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">set_dialect</span><span class="p">(</span><span class="n">dialect</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dialect</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get_dialect</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">dialect</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">source</span>
 
-    <span class="n">lang_to_py</span> <span class="o">=</span> <span class="n">__state</span><span class="o">.</span><span class="n">get_to_python</span><span class="p">(</span><span class="n">dialect</span><span class="p">)</span>
-    <span class="n">py_to_lang</span> <span class="o">=</span> <span class="n">__state</span><span class="o">.</span><span class="n">get_from_python</span><span class="p">(</span><span class="n">dialect</span><span class="p">)</span>
+    <span class="n">lang_to_py</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get_to_python</span><span class="p">(</span><span class="n">dialect</span><span class="p">)</span>
+    <span class="n">py_to_lang</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get_from_python</span><span class="p">(</span><span class="n">dialect</span><span class="p">)</span>
 
     <span class="n">repeat_kwd</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;repeat&quot;</span><span class="p">]</span>
     <span class="n">while_kwd</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;while&quot;</span><span class="p">]</span>
@@ -410,7 +263,7 @@
 
     <span class="c1"># variable names to be used in</span>
     <span class="c1">#    for variable_name in range(...):</span>
-    <span class="n">var_names</span> <span class="o">=</span> <span class="n">__state</span><span class="o">.</span><span class="n">get_unique_variable_names</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">repeat_kwd</span><span class="p">)</span>
+    <span class="n">var_names</span> <span class="o">=</span> <span class="n">get_unique_variable_names</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">repeat_kwd</span><span class="p">)</span>
 
     <span class="c1"># some book-keeping variables used in the for-loop below</span>
     <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
@@ -469,7 +322,7 @@
                             <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">start_line</span><span class="p">,</span>
                             <span class="s2">&quot;source_name&quot;</span><span class="p">:</span> <span class="n">source_name</span><span class="p">,</span>
                             <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">source</span><span class="p">,</span>
-                            <span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">[</span><span class="mi">2</span><span class="p">:],</span>
+                            <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">,</span>
                         <span class="p">},</span>
                     <span class="p">),</span>
                 <span class="p">)</span>
@@ -486,7 +339,7 @@
                             <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">start_line</span><span class="p">,</span>
                             <span class="s2">&quot;source_name&quot;</span><span class="p">:</span> <span class="n">source_name</span><span class="p">,</span>
                             <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">source</span><span class="p">,</span>
-                            <span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">[</span><span class="mi">2</span><span class="p">:],</span>
+                            <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">,</span>
                         <span class="p">},</span>
                     <span class="p">),</span>
                 <span class="p">)</span>
@@ -524,12 +377,13 @@
                         <span class="s2">&quot;Keyword nobreak found matching if/elif&quot;</span><span class="p">,</span>
                         <span class="p">(</span>
                             <span class="p">{</span>
-                                <span class="s2">&quot;if_string&quot;</span><span class="p">:</span> <span class="n">indentations</span><span class="p">[</span><span class="n">start_col</span><span class="p">],</span>
+                                <span class="s2">&quot;if_string&quot;</span><span class="p">:</span> <span class="n">indentations</span><span class="p">[</span><span class="n">start_col</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+                                <span class="s2">&quot;if_linenumber&quot;</span><span class="p">:</span> <span class="n">indentations</span><span class="p">[</span><span class="n">start_col</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
                                 <span class="s2">&quot;nobreak keyword&quot;</span><span class="p">:</span> <span class="n">tok_str</span><span class="p">,</span>
                                 <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">start_line</span><span class="p">,</span>
                                 <span class="s2">&quot;source_name&quot;</span><span class="p">:</span> <span class="n">source_name</span><span class="p">,</span>
                                 <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">source</span><span class="p">,</span>
-                                <span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">[</span><span class="mi">2</span><span class="p">:],</span>
+                                <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">,</span>
                             <span class="p">},</span>
                         <span class="p">),</span>
                     <span class="p">)</span>
@@ -546,7 +400,7 @@
                                 <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">start_line</span><span class="p">,</span>
                                 <span class="s2">&quot;source_name&quot;</span><span class="p">:</span> <span class="n">source_name</span><span class="p">,</span>
                                 <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">source</span><span class="p">,</span>
-                                <span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">[</span><span class="mi">2</span><span class="p">:],</span>
+                                <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">,</span>
                             <span class="p">},</span>
                         <span class="p">),</span>
                     <span class="p">)</span>
@@ -559,7 +413,7 @@
                                 <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">start_line</span><span class="p">,</span>
                                 <span class="s2">&quot;source_name&quot;</span><span class="p">:</span> <span class="n">source_name</span><span class="p">,</span>
                                 <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">source</span><span class="p">,</span>
-                                <span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">[</span><span class="mi">2</span><span class="p">:],</span>
+                                <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">,</span>
                             <span class="p">},</span>
                         <span class="p">),</span>
                     <span class="p">)</span>
@@ -569,8 +423,6 @@
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tok_str</span><span class="p">)</span>
 
     <span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-    <span class="c1"># if DEBUG:</span>
-    <span class="c1">#     print(source)</span>
     <span class="k">return</span> <span class="n">source</span></div>
 </pre></div>
 

@@ -55,39 +55,17 @@
   <h1>Source code for avantpy.translate</h1><div class="highlight"><pre>
 <span></span><span class="sd">&#39;&#39;&#39;Provide mechanism to get translations of messages&#39;&#39;&#39;</span>
 
-<span class="kn">import</span> <span class="nn">glob</span>
-<span class="kn">import</span> <span class="nn">os.path</span>
-<span class="kn">import</span> <span class="nn">runpy</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">session</span>
 
-<span class="n">messages</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="n">default</span> <span class="o">=</span> <span class="s1">&#39;upper&#39;</span>
-
-<span class="k">def</span> <span class="nf">_collect_messages</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Find messages from known languages and create corresponding dictionaries&quot;&quot;&quot;</span>
-    <span class="n">languages</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/translations/*.py&quot;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">languages</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;__init__.py&quot;</span><span class="p">):</span>
-
-            <span class="n">lang</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">_module</span> <span class="o">=</span> <span class="n">runpy</span><span class="o">.</span><span class="n">run_path</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-            <span class="n">messages</span><span class="p">[</span><span class="n">lang</span><span class="p">]</span> <span class="o">=</span> <span class="n">_module</span><span class="p">[</span><span class="n">lang</span><span class="p">]</span>
-
-<span class="n">_collect_messages</span><span class="p">()</span>
-
-
-<div class="viewcode-block" id="get"><a class="viewcode-back" href="../../modules.html#avantpy.translate.get">[docs]</a><span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">lang</span><span class="p">):</span>
+<div class="viewcode-block" id="get"><a class="viewcode-back" href="../../modules.html#avantpy.translate.get">[docs]</a><span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Returns the translation of msg given lang&#39;&#39;&#39;</span>
-    <span class="k">if</span> <span class="n">lang</span> <span class="ow">in</span> <span class="n">messages</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">messages</span><span class="p">[</span><span class="n">lang</span><span class="p">]:</span>
-            <span class="k">return</span> <span class="n">messages</span><span class="p">[</span><span class="n">lang</span><span class="p">][</span><span class="n">msg</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">messages</span><span class="p">[</span><span class="n">default</span><span class="p">]:</span>
-            <span class="k">return</span> <span class="n">messages</span><span class="p">[</span><span class="n">default</span><span class="p">][</span><span class="n">msg</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;Translation of the following does not exist: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">msg</span>
+    <span class="n">lang</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">get_lang</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">lang</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">lang</span> <span class="o">=</span> <span class="s1">&#39;upper&#39;</span>
+    <span class="k">if</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">messages</span><span class="p">[</span><span class="n">lang</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">session</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">messages</span><span class="p">[</span><span class="n">lang</span><span class="p">][</span><span class="n">msg</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;Unknown language: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">lang</span></div>
-
-
+        <span class="k">return</span> <span class="s2">&quot;Translation of the following does not exist: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">msg</span></div>
 </pre></div>
 
           </div>

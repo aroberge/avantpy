@@ -84,26 +84,21 @@ which includes non-English based keywords.</p>
 <p>A given language is identified by its
 <a class="reference external" href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">two-letter code</a>.
 For example, <code class="docutils literal notranslate"><span class="pre">fr</span></code> identifies the French language.</p>
-<p>AvantPy will recognize that a file with an extension of the form
-<code class="docutils literal notranslate"><span class="pre">.pyxx</span></code> is based on the <code class="docutils literal notranslate"><span class="pre">xx</span></code> language, provided a corresponding
-language definition has been created.
-Thus a file with the extension <code class="docutils literal notranslate"><span class="pre">.pyfr</span></code> is based on the French language.
-We refer to such files as being written in the French (Python) dialect.</p>
 <p>Dialects definitions for language <code class="docutils literal notranslate"><span class="pre">xx</span></code> are Python files
-named <code class="docutils literal notranslate"><span class="pre">xx.py</span></code> and are found in the AvantPy’s repository:
+named <code class="docutils literal notranslate"><span class="pre">pyxx.py</span></code> and are found in the AvantPy’s repository:
 <a class="reference external" href="https://github.com/aroberge/avantpy/tree/master/avantpy/dialects">avantpy/dialects/ directory</a>.</p>
 <p>Currently, a <strong>DRAFT</strong> implementation of the following dialects exist:</p>
 <ul class="simple">
-<li><a class="reference external" href="https://github.com/aroberge/avantpy/tree/master/avantpy/dialects/en.py">English</a></li>
-<li><a class="reference external" href="https://github.com/aroberge/avantpy/tree/master/avantpy/dialects/fr.py">French</a></li>
-<li><a class="reference external" href="https://github.com/aroberge/avantpy/tree/master/avantpy/dialects/es.py">Spanish</a></li>
+<li><a class="reference external" href="https://github.com/aroberge/avantpy/tree/master/avantpy/dialects/pyen.py">English</a></li>
+<li><a class="reference external" href="https://github.com/aroberge/avantpy/tree/master/avantpy/dialects/pyfr.py">French</a></li>
+<li><a class="reference external" href="https://github.com/aroberge/avantpy/tree/master/avantpy/dialects/pyes.py">Spanish</a></li>
 </ul>
 <p>In addition to the additional keywords needed for the special idioms used in AvantPy,
 and explained later in this documentation, the English dialect includes the
 keyword <code class="docutils literal notranslate"><span class="pre">function</span></code> as being equivalent to <code class="docutils literal notranslate"><span class="pre">lambda</span></code>, and <code class="docutils literal notranslate"><span class="pre">ask</span></code> as being
 equivalent to <code class="docutils literal notranslate"><span class="pre">input</span></code>.</p>
 <p>Finally, an
-<a class="reference external" href="https://github.com/aroberge/avantpy/tree/master/avantpy/dialects/en.py">UPPERCASE version</a>
+<a class="reference external" href="https://github.com/aroberge/avantpy/tree/master/avantpy/dialects/pyupper.py">UPPERCASE version</a>
 of AvantPy’s English dialect exists; this is primarily intended to be used as a template
 for other dialects, and for testing.</p>
 </div>
