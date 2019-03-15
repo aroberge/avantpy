@@ -15,7 +15,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" /> 
+    <link rel="search" title="Search" href="../../search.html" />
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -27,7 +27,7 @@
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.3 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -51,7 +51,7 @@
       <div class="documentwrapper">
         <div class="bodywrapper">
           <div class="body" role="main">
-            
+
   <h1>Source code for avantpy.conversion</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;conversion.py</span>
 
@@ -89,10 +89,7 @@
     <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">while</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">nb</span><span class="p">:</span>
         <span class="n">tentative_name</span> <span class="o">=</span> <span class="n">base_name</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-        <span class="k">if</span> <span class="p">(</span>
-            <span class="n">source</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">tentative_name</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
-            <span class="ow">and</span> <span class="n">tentative_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">all_count_names</span>
-        <span class="p">):</span>
+        <span class="k">if</span> <span class="n">source</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">tentative_name</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">tentative_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">all_count_names</span><span class="p">:</span>
             <span class="n">var_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tentative_name</span><span class="p">)</span>
             <span class="n">all_count_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tentative_name</span><span class="p">)</span>
             <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -258,7 +255,7 @@
     <span class="n">loops_with_else</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;for&quot;</span><span class="p">,</span> <span class="s2">&quot;while&quot;</span><span class="p">,</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;for&quot;</span><span class="p">],</span> <span class="n">while_kwd</span><span class="p">,</span> <span class="n">repeat_kwd</span><span class="p">]</span>
     <span class="n">if_blocks</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;if&quot;</span><span class="p">,</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;if&quot;</span><span class="p">]]</span>
     <span class="n">try_blocks</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;try&quot;</span><span class="p">,</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;try&quot;</span><span class="p">]]</span>
-    <span class="n">blocks_with_else</span> <span class="o">=</span>  <span class="n">if_blocks</span> <span class="o">+</span> <span class="n">try_blocks</span> <span class="o">+</span> <span class="n">loops_with_else</span>
+    <span class="n">blocks_with_else</span> <span class="o">=</span> <span class="n">if_blocks</span> <span class="o">+</span> <span class="n">try_blocks</span> <span class="o">+</span> <span class="n">loops_with_else</span>
     <span class="n">nobreak_kwd</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;else&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="c1"># variable names to be used in</span>
@@ -282,16 +279,14 @@
     <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">generate_tokens</span><span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">readline</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">tok_str</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="c1"># TODO: Add check for inconsistent use of tabs and spaces at beginning of</span>
+        <span class="c1"># lines</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">tok_str</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot; </span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">):</span>  <span class="c1"># we keep track of spacing elsewhere</span>
             <span class="k">continue</span>
 
-        <span class="c1"># ============</span>
-        <span class="c1"># Bookkeeping</span>
-        <span class="c1"># ============</span>
-
         <span class="n">start_line</span><span class="p">,</span> <span class="n">start_col</span> <span class="o">=</span> <span class="n">start</span>
         <span class="n">end_line</span><span class="p">,</span> <span class="n">end_col</span> <span class="o">=</span> <span class="n">end</span>
-        <span class="n">begin_new_line</span> <span class="o">=</span> <span class="n">start_line</span> <span class="o">!=</span> <span class="n">prev_lineno</span>
+        <span class="n">begin_new_line</span> <span class="o">=</span> <span class="p">(</span><span class="n">start_line</span> <span class="o">!=</span> <span class="n">prev_lineno</span><span class="p">)</span>
 
         <span class="c1"># We ensure spacing of original file is preserved,</span>
         <span class="c1"># including space between tokens.</span>
@@ -441,7 +436,7 @@
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.3 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
       </ul>
     </div>
     <div class="footer" role="contentinfo">

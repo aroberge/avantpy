@@ -17,7 +17,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Contributing" href="contribute.html" />
-    <link rel="prev" title="Testing" href="testing.html" /> 
+    <link rel="prev" title="Testing" href="testing.html" />
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -34,7 +34,7 @@
         <li class="right" >
           <a href="testing.html" title="Testing"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.3 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.3 documentation</a> &#187;</li>
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -84,7 +84,7 @@
       <div class="documentwrapper">
         <div class="bodywrapper">
           <div class="body" role="main">
-            
+
   <div class="section" id="other-modules">
 <h1>Other modules<a class="headerlink" href="#other-modules" title="Permalink to this headline">¶</a></h1>
 <p>In addition to <cite>invocation.py</cite> already mentioned, and excluding modules defining individual
@@ -332,42 +332,57 @@ friendlier traceback than Python.</p>
 <dl class="exception">
 <dt id="avantpy.exceptions.AvantPyException">
 <em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">AvantPyException</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#AvantPyException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.AvantPyException" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Base class for custom exceptions.</p>
+</dd></dl>
 
 <dl class="exception">
 <dt id="avantpy.exceptions.IfNobreakError">
 <em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">IfNobreakError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#IfNobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.IfNobreakError" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Raised if <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> is used instead of <code class="docutils literal notranslate"><span class="pre">else</span></code> in an <code class="docutils literal notranslate"><span class="pre">if</span></code> statement</p>
+</dd></dl>
 
 <dl class="exception">
 <dt id="avantpy.exceptions.NobreakFirstError">
 <em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">NobreakFirstError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#NobreakFirstError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.NobreakFirstError" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Raised if <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> is used somewhere other than at the beginning of a line.</p>
+</dd></dl>
 
 <dl class="exception">
 <dt id="avantpy.exceptions.NobreakSyntaxError">
 <em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">NobreakSyntaxError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#NobreakSyntaxError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.NobreakSyntaxError" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Raised if <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> is without a matching block.</p>
+</dd></dl>
 
 <dl class="exception">
 <dt id="avantpy.exceptions.RepeatFirstError">
 <em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">RepeatFirstError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#RepeatFirstError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.RepeatFirstError" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Raised if <code class="docutils literal notranslate"><span class="pre">repeat</span></code> is used somewhere other than at the beginning of a line.</p>
+</dd></dl>
 
 <dl class="exception">
 <dt id="avantpy.exceptions.TryNobreakError">
 <em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">TryNobreakError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#TryNobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.TryNobreakError" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Raised if <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> is used instead of <code class="docutils literal notranslate"><span class="pre">else</span></code> in <code class="docutils literal notranslate"><span class="pre">try/except</span></code> statement</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="avantpy.exceptions.UnexpectedError">
+<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">UnexpectedError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#UnexpectedError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.UnexpectedError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raised when some unexpected condition occurs which should
+be cavered by a specific excption.</p>
+</dd></dl>
 
 <dl class="exception">
 <dt id="avantpy.exceptions.UnknownDialect">
 <em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">UnknownDialect</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#UnknownDialect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.UnknownDialect" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Raised when attempting to set <code class="docutils literal notranslate"><span class="pre">dialect</span></code> to unsupported value.</p>
+</dd></dl>
 
 <dl class="exception">
 <dt id="avantpy.exceptions.UnknownLanguage">
 <em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">UnknownLanguage</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#UnknownLanguage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.UnknownLanguage" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Raised when attempting to set <code class="docutils literal notranslate"><span class="pre">lang</span></code> to unsupported value.</p>
+</dd></dl>
 
 </div>
 <div class="section" id="module-avantpy.import_hook">
@@ -466,7 +481,7 @@ and the converted one can be shown</p>
         <li class="right" >
           <a href="testing.html" title="Testing"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.3 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.3 documentation</a> &#187;</li>
       </ul>
     </div>
     <div class="footer" role="contentinfo">

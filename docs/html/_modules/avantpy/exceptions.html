@@ -15,7 +15,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" /> 
+    <link rel="search" title="Search" href="../../search.html" />
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -27,7 +27,7 @@
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.3 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -51,11 +51,14 @@
       <div class="documentwrapper">
         <div class="bodywrapper">
           <div class="body" role="main">
-            
+
   <h1>Source code for avantpy.exceptions</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;Custom exceptions&#39;&#39;&#39;</span>
+<span></span><span class="sd">&quot;&quot;&quot;Custom exceptions&quot;&quot;&quot;</span>
+
 
 <div class="viewcode-block" id="AvantPyException"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.AvantPyException">[docs]</a><span class="k">class</span> <span class="nc">AvantPyException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for custom exceptions.&quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span>
@@ -63,24 +66,51 @@
 
 
 <div class="viewcode-block" id="IfNobreakError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.IfNobreakError">[docs]</a><span class="k">class</span> <span class="nc">IfNobreakError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raised if ``nobreak`` is used instead of ``else`` in an ``if`` statement&quot;&quot;&quot;</span>
+
     <span class="k">pass</span></div>
+
 
 <div class="viewcode-block" id="TryNobreakError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.TryNobreakError">[docs]</a><span class="k">class</span> <span class="nc">TryNobreakError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raised if ``nobreak`` is used instead of ``else`` in ``try/except`` statement&quot;&quot;&quot;</span>
+
     <span class="k">pass</span></div>
+
 
 <div class="viewcode-block" id="NobreakFirstError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.NobreakFirstError">[docs]</a><span class="k">class</span> <span class="nc">NobreakFirstError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raised if ``nobreak`` is used somewhere other than at the beginning of a line.&quot;&quot;&quot;</span>
+
     <span class="k">pass</span></div>
+
 
 <div class="viewcode-block" id="NobreakSyntaxError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.NobreakSyntaxError">[docs]</a><span class="k">class</span> <span class="nc">NobreakSyntaxError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raised if ``nobreak`` is without a matching block.&quot;&quot;&quot;</span>
+
     <span class="k">pass</span></div>
+
 
 <div class="viewcode-block" id="RepeatFirstError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.RepeatFirstError">[docs]</a><span class="k">class</span> <span class="nc">RepeatFirstError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raised if ``repeat`` is used somewhere other than at the beginning of a line.&quot;&quot;&quot;</span>
+
     <span class="k">pass</span></div>
+
 
 <div class="viewcode-block" id="UnknownDialect"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.UnknownDialect">[docs]</a><span class="k">class</span> <span class="nc">UnknownDialect</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raised when attempting to set ``dialect`` to unsupported value.&quot;&quot;&quot;</span>
+
     <span class="k">pass</span></div>
 
+
 <div class="viewcode-block" id="UnknownLanguage"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.UnknownLanguage">[docs]</a><span class="k">class</span> <span class="nc">UnknownLanguage</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raised when attempting to set ``lang`` to unsupported value.&quot;&quot;&quot;</span>
+
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="UnexpectedError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.UnexpectedError">[docs]</a><span class="k">class</span> <span class="nc">UnexpectedError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raised when some unexpected condition occurs which should</span>
+<span class="sd">       be cavered by a specific excption.&quot;&quot;&quot;</span>
+
     <span class="k">pass</span></div>
 </pre></div>
 
@@ -99,7 +129,7 @@
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.3 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
