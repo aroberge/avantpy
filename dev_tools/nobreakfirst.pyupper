@@ -1,0 +1,3 @@
+'''Should raise NobreakFirstError'''
+# Need to prevent NOBREAK being replaced by 'else' in this situation.
+a = 1 if True NOBREAK 3

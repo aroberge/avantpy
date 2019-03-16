@@ -17,8 +17,8 @@ parent_dir = os.path.abspath(os.path.join(this_dir, ".."))
 sys.path.insert(0, this_dir)
 sys.path.insert(0, parent_dir)
 
-# sets up import hook
-import avantpy  # NOQA
+
+import avantpy  # sets up import hook
 
 
 target = os.path.normpath(os.path.join(parent_dir, "docs/source/tracebacks.rst"))
@@ -52,8 +52,10 @@ Python version: {python}
 
 
 def make_title(text):
+    print()
     print(text)
     print("-" * len(text), "\n")
+    print("Example::\n")
 
 
 with open(target, "w") as out:
@@ -61,15 +63,19 @@ with open(target, "w") as out:
         print(content)
 
         make_title("IfNobreakError")
-        print("Example 1::")
+
         import ifnobreakerror
 
         make_title("TryNobreakError")
         import trynobreakerror
 
+        make_title("NobreakFirstError")
+        import nobreakfirst
+
+        make_title("NobreakSyntaxError")
+        import nobreaksyntaxerror
+
         for exc in [
-            "NobreakFirstError",
-            "NobreakSyntaxError",
             "RepeatFirstError",
             "UnknownDialect",
             "UnknownLanguage",
@@ -77,4 +83,4 @@ with open(target, "w") as out:
         ]:
 
             make_title(exc)
-            print("Not documented here and possibly not yet tested.")
+            print("    Not documented here and possibly not yet tested.\n")

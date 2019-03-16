@@ -224,12 +224,10 @@ def to_python(source, dialect=None, source_name=None):
     tokens = tokenize.generate_tokens(StringIO(source).readline)
 
     for _, tok_str, start, end, _ in tokens:
+        # TODO: Add check for inconsistent use of tabs and spaces at beginning of
+        # lines
         if not tok_str.strip(" \t"):  # we keep track of spacing elsewhere
             continue
-
-        # ============
-        # Bookkeeping
-        # ============
 
         start_line, start_col = start
         end_line, end_col = end
@@ -257,7 +255,7 @@ def to_python(source, dialect=None, source_name=None):
         if tok_str == nobreak_kwd:
             if not begin_new_line:  # this is not allowed to happen
                 raise exceptions.NobreakFirstError(
-                    "nobreak must be first",
+                    "nobreak must be first statement on a line",
                     (
                         {
                             "nobreak keyword": tok_str,
@@ -324,7 +322,6 @@ def to_python(source, dialect=None, source_name=None):
                                 "nobreak keyword": tok_str,
                                 "linenumber": start_line,
                                 "source_name": source_name,
-                                "source": source,
                                 "dialect": dialect,
                             },
                         ),
@@ -337,11 +334,11 @@ def to_python(source, dialect=None, source_name=None):
                         "Keyword nobreak found matching try/except",
                         (
                             {
-                                "try_string": indentations[start_col],
+                                "try_string": indentations[start_col][0],
+                                "try_linenumber": indentations[start_col][1],
                                 "nobreak keyword": tok_str,
                                 "linenumber": start_line,
                                 "source_name": source_name,
-                                "source": source,
                                 "dialect": dialect,
                             },
                         ),

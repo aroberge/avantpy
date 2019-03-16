@@ -11,22 +11,121 @@ Such feedback will also be available in languages other than English.
      update_tb.py located in the ``dev_tools`` directory,
      which needs to be done explicitly.
 
-AvantPy version 0.0.3.
-Python version 3.7.0.
+AvantPy version: 0.0.3
+Python version: 3.7.0
+
 
 
 IfNobreakError
 --------------
 
-Example 1::
+Example::
+
 
     AVANTPY EXCEPTION: IfNobreakError
 
     Error found in file ifnobreakerror.pyupper on line 4.
 
+    Dialect used: pyupper
+
        2: if True:
        3:     pass
     -->4: NOBREAK:
 
-    The AvantPy NOBREAK keyword cannot be used in an IF/ELIF/ELSE clause
-    (Python: if/elif/else).
+    The AvantPy NOBREAK keyword cannot be used in
+    an IF/ELIF/ELSE clause (Python: if/elif/else).
+
+
+TryNobreakError
+---------------
+
+Example::
+
+
+    AVANTPY EXCEPTION: TryNobreakError
+
+    Error found in file trynobreakerror.pyupper on line 6.
+
+    Dialect used: pyupper
+
+       2: try:
+       3:     pass
+       4: except:
+       5:     pass
+    -->6: NOBREAK:
+
+    The AvantPy NOBREAK keyword cannot be used in
+    a TRY/EXCEPT/ELSE/FINALLY clause (Python: try/except/else/finally).
+
+
+NobreakFirstError
+-----------------
+
+Example::
+
+
+    AVANTPY EXCEPTION: NobreakFirstError
+
+    Error found in file nobreakfirst.pyupper on line 3.
+
+    Dialect used: pyupper
+
+       2: # Need to prevent NOBREAK being replaced by 'else' in this situation.
+    -->3: a = 1 if True NOBREAK 3
+       4:
+
+    The AvantPy NOBREAK keyword can be used instead of ELSE (Python: else)
+    only when it begins a new statement for loops.
+
+
+NobreakSyntaxError
+------------------
+
+Example::
+
+
+    AVANTPY EXCEPTION: NobreakFirstError
+
+    Error found in file nobreaksyntaxerror.pyupper on line 4.
+
+    Dialect used: pyupper
+
+       3: a = 1
+    -->4: NOBREAK: pass
+       5:
+
+    The AvantPy NOBREAK keyword can only be used as a replacement
+    of ELSE (Python: else) with a matching FOR or WHILE loop
+    (Python: for/while).
+
+
+RepeatFirstError
+----------------
+
+Example::
+
+    Not documented here and possibly not yet tested.
+
+
+UnknownDialect
+--------------
+
+Example::
+
+    Not documented here and possibly not yet tested.
+
+
+UnknownLanguage
+---------------
+
+Example::
+
+    Not documented here and possibly not yet tested.
+
+
+UnexpectedError
+---------------
+
+Example::
+
+    Not documented here and possibly not yet tested.

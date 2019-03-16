@@ -12,40 +12,44 @@ upper = {
     "IfNobreakError": """
     AVANTPY EXCEPTION: IfNobreakError\n
     Error found in file {filename} on line {nobreak_linenumber}.\n
+    Dialect used: {dialect}\n
 {partial_source}
 
-    The AvantPy {nobreak_kwd} keyword cannot be used in an IF/ELIF/ELSE clause
-    (Python: if/elif/else).
+    The AvantPy {nobreak_kwd} keyword cannot be used in
+    an IF/ELIF/ELSE clause (Python: if/elif/else).
 """,
-
     "NobreakFirstError": """
-        AVANTPY EXCEPTION: NobreakFirstError\n
-        The AvantPy {nobreak_kwd} keyword must begin a new statement.\n
-        Error found in file {filename} on line {linenumber}.\n
-            Line {linenumber}: {nobreak_line}
-    """,
+    AVANTPY EXCEPTION: NobreakFirstError\n
+    Error found in file {filename} on line {linenumber}.\n
+    Dialect used: {dialect}\n
+{partial_source}
 
+    The AvantPy {nobreak_kwd} keyword can be used instead of ELSE (Python: else)
+    only when it begins a new statement for loops.
+""",
     "NobreakSyntaxError": """
-        AVANTPY EXCEPTION: NobreakSyntaxError\n
-        The AvantPy {nobreak_kwd} keyword must begin a new statement
-        matching a FOR or WHILE loop.\n
-        Error found in file {filename} on line {linenumber}.\n
-            Line {linenumber}: {nobreak_line}
-    """,
+    AVANTPY EXCEPTION: NobreakFirstError\n
+    Error found in file {filename} on line {linenumber}.\n
+    Dialect used: {dialect}\n
+{partial_source}
 
+    The AvantPy {nobreak_kwd} keyword can only be used as a replacement
+    of ELSE (Python: else) with a matching FOR or WHILE loop
+    (Python: for/while).
+""",
     "RepeatFirstError": """
         AVANTPY EXCEPTION: RepeatFirstError\n
         The AvantPy {repeat_kwd} keyword must begin a new statement.\n
         Error found in file {filename} on line {linenumber}.\n
             Line {linenumber}: {repeat_line}
     """,
-
     "TryNobreakError": """
-        AVANTPY EXCEPTION: TryNobreakError\n
-        The AvantPy {nobreak_kwd} keyword cannot be used in a TRY/EXCEPT/ELSE
-        clause (Python: try/except/else).\n
-        Error found in file {filename} on line {nobreak_linenumber}.\n
-            Line {try_linenumber}: {try_line}\n
-            Line {nobreak_linenumber}: {nobreak_line}
-    """,
+    AVANTPY EXCEPTION: TryNobreakError\n
+    Error found in file {filename} on line {nobreak_linenumber}.\n
+    Dialect used: {dialect}\n
+{partial_source}
+
+    The AvantPy {nobreak_kwd} keyword cannot be used in
+    a TRY/EXCEPT/ELSE/FINALLY clause (Python: try/except/else/finally).
+""",
 }

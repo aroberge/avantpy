@@ -76,6 +76,9 @@ def handle_exception(exc, original_source):
 
 
 def handle_IfNobreakError(exc, original_source):
+    """Handles situation where ``nobreak`` was wrongly use as a
+       replacement for ``else`` in an if/elif/else block.
+    """
     params = exc.args[0]
 
     if_linenumber = params["if_linenumber"]
@@ -90,60 +93,74 @@ def handle_IfNobreakError(exc, original_source):
         "nobreak_kwd": params["nobreak keyword"],
         "partial_source": partial_source,
         "nobreak_linenumber": nobreak_linenumber,
+        "dialect": params["dialect"],
     }
     return translate.get("IfNobreakError").format(**info)
 
 
 def handle_TryNobreakError(exc, original_source):
+    """Handles situation where ``nobreak`` was wrongly use as a
+       replacement for ``else`` in an try/except/else/finally block.
+    """
     params = exc.args[0]
 
-    try_linenumber = int(params["try_string"][1])
-    nobreak_linenumber = int(params["linenumber"])
+    try_linenumber = params["try_linenumber"]
+    nobreak_linenumber = params["linenumber"]
 
-    lines = original_source.split("\n")
-    try_line = lines[try_linenumber - 1]
-    nobreak_line = lines[nobreak_linenumber - 1]
+    partial_source = get_partial_source(
+        original_source, try_linenumber, nobreak_linenumber
+    )
 
     info = {
         "filename": params["source_name"],
         "nobreak_kwd": params["nobreak keyword"],
-        "try_linenumber": try_linenumber,
-        "try_line": try_line,
+        "partial_source": partial_source,
         "nobreak_linenumber": nobreak_linenumber,
-        "nobreak_line": nobreak_line,
+        "dialect": params["dialect"],
     }
     return translate.get("TryNobreakError").format(**info)
 
 
 def handle_NobreakSyntaxError(exc, original_source):
+    """Handles situation where ``nobreak`` is used without a matching
+       ``for`` or ``while`` loop and not already raised.
+    """
     params = exc.args[0]
 
-    nobreak_linenumber = int(params["linenumber"])
+    linenumber = params["linenumber"]
 
-    lines = original_source.split("\n")
-    nobreak_line = lines[nobreak_linenumber - 1]
+    partial_source = get_partial_source(
+        original_source, linenumber - 1, linenumber + 1, linenumber
+    )
 
     info = {
         "filename": params["source_name"],
         "nobreak_kwd": params["nobreak keyword"],
-        "linenumber": nobreak_linenumber,
-        "nobreak_line": nobreak_line,
+        "partial_source": partial_source,
+        "linenumber": linenumber,
+        "dialect": params["dialect"],
     }
     return translate.get("NobreakSyntaxError").format(**info)
 
 
 def handle_NobreakFirstError(exc, original_source):
+    """Handles situation where ``nobreak`` was wrongly use as a
+       replacement for ``else`` in statements like
+       var = x if condition else y.
+    """
     params = exc.args[0]
-    linenumber = int(params["linenumber"])
+    linenumber = params["linenumber"]
 
-    lines = original_source.split("\n")
-    nobreak_line = lines[linenumber - 1]
+    partial_source = get_partial_source(
+        original_source, linenumber - 1, linenumber + 1, linenumber
+    )
 
     info = {
         "filename": params["source_name"],
         "nobreak_kwd": params["nobreak keyword"],
+        "partial_source": partial_source,
         "linenumber": linenumber,
-        "nobreak_line": nobreak_line,
+        "dialect": params["dialect"],
     }
     return translate.get("NobreakFirstError").format(**info)
 
