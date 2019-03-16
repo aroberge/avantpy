@@ -33,8 +33,8 @@ except AssertionError:
 content = """Friendly error messages
 =======================
 
-AvantPy aims to provide friendlier feedback when an exception is raised than what is
-done by Python.
+AvantPy aims to provide friendlier feedback when an exception
+is raised than what is done by Python.
 Such feedback will also be available in languages other than English.
 
 .. note::
@@ -75,12 +75,14 @@ with open(target, "w") as out:
         make_title("NobreakSyntaxError")
         import nobreaksyntaxerror
 
-        for exc in [
-            "RepeatFirstError",
-            "UnknownDialect",
-            "UnknownLanguage",
-            "UnexpectedError",
-        ]:
+        make_title("RepeatFirstError")
+        import repeatfirst
 
-            make_title(exc)
-            print("    Not documented here and possibly not yet tested.\n")
+        make_title("UnknownLanguage")
+        import unknown_language
+
+        make_title("UnknownDialect")
+        import unknown_dialect
+
+        make_title("UnexpectedError")
+        print("    No example found yet.\n")

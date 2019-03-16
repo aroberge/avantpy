@@ -28,7 +28,7 @@ upper = {
     only when it begins a new statement for loops.
 """,
     "NobreakSyntaxError": """
-    AVANTPY EXCEPTION: NobreakFirstError\n
+    AVANTPY EXCEPTION: NobreakSyntaxError\n
     Error found in file {filename} on line {linenumber}.\n
     Dialect used: {dialect}\n
 {partial_source}
@@ -38,11 +38,14 @@ upper = {
     (Python: for/while).
 """,
     "RepeatFirstError": """
-        AVANTPY EXCEPTION: RepeatFirstError\n
-        The AvantPy {repeat_kwd} keyword must begin a new statement.\n
-        Error found in file {filename} on line {linenumber}.\n
-            Line {linenumber}: {repeat_line}
-    """,
+    AVANTPY EXCEPTION: RepeatFirstError\n
+    Error found in file {filename} on line {linenumber}.\n
+    Dialect used: {dialect}\n
+{partial_source}
+
+    The AvantPy {repeat_kwd} keyword can be used instead to begin
+    a new loop (Python: equivalent to 'for' or 'while' loop).
+""",
     "TryNobreakError": """
     AVANTPY EXCEPTION: TryNobreakError\n
     Error found in file {filename} on line {nobreak_linenumber}.\n
@@ -51,5 +54,17 @@ upper = {
 
     The AvantPy {nobreak_kwd} keyword cannot be used in
     a TRY/EXCEPT/ELSE/FINALLY clause (Python: try/except/else/finally).
+""",
+    "UnknownLanguage": """
+    AVANTPY EXCEPTION: UnknownLanguage\n
+
+    The following unknown language was requested: {lang}.
+    The known languages are: {all_langs}.
+""",
+    "UnknownDialect": """
+    AVANTPY EXCEPTION: UnknownDialect\n
+
+    The following unknown dialect was requested: {dialect}.
+    The known dialects are: {all_dialects}.
 """,
 }

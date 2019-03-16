@@ -17,7 +17,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Contributing" href="contribute.html" />
-    <link rel="prev" title="Testing" href="testing.html" />
+    <link rel="prev" title="Testing" href="testing.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -34,7 +34,7 @@
         <li class="right" >
           <a href="testing.html" title="Testing"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.3 documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -84,7 +84,7 @@
       <div class="documentwrapper">
         <div class="bodywrapper">
           <div class="body" role="main">
-
+            
   <div class="section" id="other-modules">
 <h1>Other modules<a class="headerlink" href="#other-modules" title="Permalink to this headline">¶</a></h1>
 <p>In addition to <cite>invocation.py</cite> already mentioned, and excluding modules defining individual
@@ -319,6 +319,54 @@ Python.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="avantpy.exception_handling.handle_IfNobreakError">
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_IfNobreakError</code><span class="sig-paren">(</span><em>exc</em>, <em>original_source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_IfNobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_IfNobreakError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles situation where <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> was wrongly use as a
+replacement for <code class="docutils literal notranslate"><span class="pre">else</span></code> in an if/elif/else block.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="avantpy.exception_handling.handle_NobreakFirstError">
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_NobreakFirstError</code><span class="sig-paren">(</span><em>exc</em>, <em>original_source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_NobreakFirstError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_NobreakFirstError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles situation where <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> was wrongly use as a
+replacement for <code class="docutils literal notranslate"><span class="pre">else</span></code> in statements like
+var = x if condition else y.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="avantpy.exception_handling.handle_NobreakSyntaxError">
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_NobreakSyntaxError</code><span class="sig-paren">(</span><em>exc</em>, <em>original_source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_NobreakSyntaxError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_NobreakSyntaxError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles situation where <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> is used without a matching
+<code class="docutils literal notranslate"><span class="pre">for</span></code> or <code class="docutils literal notranslate"><span class="pre">while</span></code> loop and not already raised.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="avantpy.exception_handling.handle_RepeatFirstError">
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_RepeatFirstError</code><span class="sig-paren">(</span><em>exc</em>, <em>original_source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_RepeatFirstError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_RepeatFirstError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles situation where <code class="docutils literal notranslate"><span class="pre">repeat</span></code> was uses wrongly as
+it did not appear as the first keyword of a given statement.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="avantpy.exception_handling.handle_TryNobreakError">
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_TryNobreakError</code><span class="sig-paren">(</span><em>exc</em>, <em>original_source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_TryNobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_TryNobreakError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles situation where <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> was wrongly use as a
+replacement for <code class="docutils literal notranslate"><span class="pre">else</span></code> in an try/except/else/finally block.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="avantpy.exception_handling.handle_UnknownDialect">
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_UnknownDialect</code><span class="sig-paren">(</span><em>exc</em>, <em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_UnknownDialect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_UnknownDialect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles error raised when an unknown dialect is requested</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="avantpy.exception_handling.handle_UnknownLanguage">
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_UnknownLanguage</code><span class="sig-paren">(</span><em>exc</em>, <em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_UnknownLanguage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_UnknownLanguage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles error raised when an unknown language is requested</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="avantpy.exception_handling.handle_exception">
 <code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_exception</code><span class="sig-paren">(</span><em>exc</em>, <em>original_source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_exception"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_exception" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generic function to handle exceptions and return a
@@ -481,7 +529,7 @@ and the converted one can be shown</p>
         <li class="right" >
           <a href="testing.html" title="Testing"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.3 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

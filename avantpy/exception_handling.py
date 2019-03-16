@@ -166,19 +166,44 @@ def handle_NobreakFirstError(exc, original_source):
 
 
 def handle_RepeatFirstError(exc, original_source):
+    """Handles situation where ``repeat`` was uses wrongly as
+       it did not appear as the first keyword of a given statement.
+    """
     params = exc.args[0]
-    linenumber = int(params["linenumber"])
+    linenumber = params["linenumber"]
 
-    lines = original_source.split("\n")
-    repeat_line = lines[linenumber - 1]
+    partial_source = get_partial_source(
+        original_source, linenumber - 1, linenumber + 1, linenumber
+    )
 
     info = {
         "filename": params["source_name"],
         "repeat_kwd": params["repeat keyword"],
+        "partial_source": partial_source,
         "linenumber": linenumber,
-        "repeat_line": repeat_line,
+        "dialect": params["dialect"],
     }
     return translate.get("RepeatFirstError").format(**info)
+
+
+def handle_UnknownLanguage(exc, *args):
+    """Handles error raised when an unknown language is requested
+    """
+    lang = exc.args[0]
+    all_langs = exc.args[1]
+
+    info = {"lang": lang, "all_langs": all_langs}
+    return translate.get("UnknownLanguage").format(**info)
+
+
+def handle_UnknownDialect(exc, *args):
+    """Handles error raised when an unknown dialect is requested
+    """
+    dialect = exc.args[0]
+    all_dialects = exc.args[1]
+
+    info = {"dialect": dialect, "all_dialects": all_dialects}
+    return translate.get("UnknownDialect").format(**info)
 
 
 dispatch = {
@@ -187,4 +212,6 @@ dispatch = {
     "NobreakFirstError": handle_NobreakFirstError,
     "NobreakSyntaxError": handle_NobreakSyntaxError,
     "RepeatFirstError": handle_RepeatFirstError,
+    "UnknownLanguage": handle_UnknownLanguage,
+    "UnknownDialect": handle_UnknownDialect,
 }

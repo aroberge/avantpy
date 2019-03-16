@@ -15,7 +15,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -27,7 +27,7 @@
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.3 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -51,7 +51,7 @@
       <div class="documentwrapper">
         <div class="bodywrapper">
           <div class="body" role="main">
-
+            
   <h1>Source code for avantpy.conversion</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;conversion.py</span>
 
@@ -286,7 +286,7 @@
 
         <span class="n">start_line</span><span class="p">,</span> <span class="n">start_col</span> <span class="o">=</span> <span class="n">start</span>
         <span class="n">end_line</span><span class="p">,</span> <span class="n">end_col</span> <span class="o">=</span> <span class="n">end</span>
-        <span class="n">begin_new_line</span> <span class="o">=</span> <span class="p">(</span><span class="n">start_line</span> <span class="o">!=</span> <span class="n">prev_lineno</span><span class="p">)</span>
+        <span class="n">begin_new_line</span> <span class="o">=</span> <span class="n">start_line</span> <span class="o">!=</span> <span class="n">prev_lineno</span>
 
         <span class="c1"># We ensure spacing of original file is preserved,</span>
         <span class="c1"># including space between tokens.</span>
@@ -310,7 +310,7 @@
         <span class="k">if</span> <span class="n">tok_str</span> <span class="o">==</span> <span class="n">nobreak_kwd</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">begin_new_line</span><span class="p">:</span>  <span class="c1"># this is not allowed to happen</span>
                 <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">NobreakFirstError</span><span class="p">(</span>
-                    <span class="s2">&quot;nobreak must be first&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;nobreak must be first statement on a line&quot;</span><span class="p">,</span>
                     <span class="p">(</span>
                         <span class="p">{</span>
                             <span class="s2">&quot;nobreak keyword&quot;</span><span class="p">:</span> <span class="n">tok_str</span><span class="p">,</span>
@@ -327,7 +327,7 @@
         <span class="k">if</span> <span class="n">tok_str</span> <span class="o">==</span> <span class="n">repeat_kwd</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">begin_new_line</span><span class="p">:</span>  <span class="c1"># this is not allowed to happen</span>
                 <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">RepeatFirstError</span><span class="p">(</span>
-                    <span class="s2">&quot;repeat must be first&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;repeat must be first statement on a line&quot;</span><span class="p">,</span>
                     <span class="p">(</span>
                         <span class="p">{</span>
                             <span class="s2">&quot;repeat keyword&quot;</span><span class="p">:</span> <span class="n">tok_str</span><span class="p">,</span>
@@ -377,7 +377,6 @@
                                 <span class="s2">&quot;nobreak keyword&quot;</span><span class="p">:</span> <span class="n">tok_str</span><span class="p">,</span>
                                 <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">start_line</span><span class="p">,</span>
                                 <span class="s2">&quot;source_name&quot;</span><span class="p">:</span> <span class="n">source_name</span><span class="p">,</span>
-                                <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">source</span><span class="p">,</span>
                                 <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">,</span>
                             <span class="p">},</span>
                         <span class="p">),</span>
@@ -390,11 +389,11 @@
                         <span class="s2">&quot;Keyword nobreak found matching try/except&quot;</span><span class="p">,</span>
                         <span class="p">(</span>
                             <span class="p">{</span>
-                                <span class="s2">&quot;try_string&quot;</span><span class="p">:</span> <span class="n">indentations</span><span class="p">[</span><span class="n">start_col</span><span class="p">],</span>
+                                <span class="s2">&quot;try_string&quot;</span><span class="p">:</span> <span class="n">indentations</span><span class="p">[</span><span class="n">start_col</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+                                <span class="s2">&quot;try_linenumber&quot;</span><span class="p">:</span> <span class="n">indentations</span><span class="p">[</span><span class="n">start_col</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
                                 <span class="s2">&quot;nobreak keyword&quot;</span><span class="p">:</span> <span class="n">tok_str</span><span class="p">,</span>
                                 <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">start_line</span><span class="p">,</span>
                                 <span class="s2">&quot;source_name&quot;</span><span class="p">:</span> <span class="n">source_name</span><span class="p">,</span>
-                                <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">source</span><span class="p">,</span>
                                 <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">,</span>
                             <span class="p">},</span>
                         <span class="p">),</span>
@@ -436,7 +435,7 @@
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.3 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

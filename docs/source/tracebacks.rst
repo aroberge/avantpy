@@ -1,8 +1,8 @@
 Friendly error messages
 =======================
 
-AvantPy aims to provide friendlier feedback when an exception is raised than what is
-done by Python.
+AvantPy aims to provide friendlier feedback when an exception
+is raised than what is done by Python.
 Such feedback will also be available in languages other than English.
 
 .. note::
@@ -17,7 +17,7 @@ Python version: 3.7.0
 
 
 IfNobreakError
---------------
+-------------- 
 
 Example::
 
@@ -37,7 +37,7 @@ Example::
 
 
 TryNobreakError
----------------
+--------------- 
 
 Example::
 
@@ -59,7 +59,7 @@ Example::
 
 
 NobreakFirstError
------------------
+----------------- 
 
 Example::
 
@@ -72,19 +72,19 @@ Example::
 
        2: # Need to prevent NOBREAK being replaced by 'else' in this situation.
     -->3: a = 1 if True NOBREAK 3
-       4:
+       4: 
 
     The AvantPy NOBREAK keyword can be used instead of ELSE (Python: else)
     only when it begins a new statement for loops.
 
 
 NobreakSyntaxError
-------------------
+------------------ 
 
 Example::
 
 
-    AVANTPY EXCEPTION: NobreakFirstError
+    AVANTPY EXCEPTION: NobreakSyntaxError
 
     Error found in file nobreaksyntaxerror.pyupper on line 4.
 
@@ -92,7 +92,7 @@ Example::
 
        3: a = 1
     -->4: NOBREAK: pass
-       5:
+       5: 
 
     The AvantPy NOBREAK keyword can only be used as a replacement
     of ELSE (Python: else) with a matching FOR or WHILE loop
@@ -100,32 +100,55 @@ Example::
 
 
 RepeatFirstError
-----------------
+---------------- 
 
 Example::
 
-    Not documented here and possibly not yet tested.
 
+    AVANTPY EXCEPTION: RepeatFirstError
 
-UnknownDialect
---------------
+    Error found in file repeatfirst.pyupper on line 3.
 
-Example::
+    Dialect used: pyupper
 
-    Not documented here and possibly not yet tested.
+       2: # Catch an early case of using REPEAT not to begin a loop
+    -->3: a = REPEAT
+       4: 
+
+    The AvantPy REPEAT keyword can be used instead to begin
+    a new loop (Python: equivalent to 'for' or 'while' loop).
 
 
 UnknownLanguage
----------------
+--------------- 
 
 Example::
 
-    Not documented here and possibly not yet tested.
+
+    AVANTPY EXCEPTION: UnknownLanguage
+
+
+    The following unknown language was requested: xx.
+    The known languages are: ['en', 'fr', 'sp', 'upper'].
+
+
+UnknownDialect
+-------------- 
+
+Example::
+
+
+    AVANTPY EXCEPTION: UnknownDialect
+
+
+    The following unknown dialect was requested: pyxx.
+    The known dialects are: ['pyen', 'pyes', 'pyfr', 'pyupper'].
 
 
 UnexpectedError
----------------
+--------------- 
 
 Example::
 
-    Not documented here and possibly not yet tested.
+    No example found yet.
+

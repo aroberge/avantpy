@@ -272,7 +272,7 @@ def to_python(source, dialect=None, source_name=None):
         if tok_str == repeat_kwd:
             if not begin_new_line:  # this is not allowed to happen
                 raise exceptions.RepeatFirstError(
-                    "repeat must be first",
+                    "repeat must be first statement on a line",
                     (
                         {
                             "repeat keyword": tok_str,

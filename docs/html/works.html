@@ -87,8 +87,18 @@ to load program files written in a known dialect (<code class="docutils literal 
 extension (<code class="docutils literal notranslate"><span class="pre">.pyxx</span></code>).
 It uses the information in the definition file (<code class="docutils literal notranslate"><span class="pre">xx.py</span></code>) to translate keywords found
 into that definition file into the corresponding Python keyword or idiom.
-Finally, it executes the transformed file.</p>
-<p>Note that normal Python keywords are allowed into a file written in another dialect.</p>
+During this process, some errors can be caught and custom exceptions raised.</p>
+<p>If no exceptions are raised, the transformed program is executed.
+This could result in some standard Python exceptions raised.
+These are caught and an attempt is made to provide information in a
+more user-friendly way, possibly also with more details than Python’s
+standard tracebacks.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The error analysis is far from being fully implemented.</p>
+</div>
+<p>Note that normal Python keywords are allowed into a file written
+in another dialect.</p>
 <p>For a concrete example showing a file written in the French dialect, using a mix
 of French dialect constructs and normal Python keywords, and the source
 transformed into standard Python, see

@@ -10,9 +10,8 @@ exclude =
     images/*,
     psf/*,
     # This contains our tests directory
-    test/*,
-    # This contains developer tools which we want to ignore
-    # as they use code which generate spurious unused imports
-    dev_tools/*,
+    tests/*,
     # the following is for quick local tests
-    z/*
+    z/*,
+    # ignore this tool
+    update_tb*

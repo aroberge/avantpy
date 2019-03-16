@@ -130,7 +130,10 @@
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;args: &quot;</span><span class="p">,</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">handle_IfNobreakError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original_source</span><span class="p">):</span>
+<div class="viewcode-block" id="handle_IfNobreakError"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.handle_IfNobreakError">[docs]</a><span class="k">def</span> <span class="nf">handle_IfNobreakError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original_source</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Handles situation where ``nobreak`` was wrongly use as a</span>
+<span class="sd">       replacement for ``else`` in an if/elif/else block.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="n">if_linenumber</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;if_linenumber&quot;</span><span class="p">]</span>
@@ -145,78 +148,117 @@
         <span class="s2">&quot;nobreak_kwd&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;nobreak keyword&quot;</span><span class="p">],</span>
         <span class="s2">&quot;partial_source&quot;</span><span class="p">:</span> <span class="n">partial_source</span><span class="p">,</span>
         <span class="s2">&quot;nobreak_linenumber&quot;</span><span class="p">:</span> <span class="n">nobreak_linenumber</span><span class="p">,</span>
+        <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;dialect&quot;</span><span class="p">],</span>
     <span class="p">}</span>
-    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;IfNobreakError&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;IfNobreakError&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">handle_TryNobreakError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original_source</span><span class="p">):</span>
+<div class="viewcode-block" id="handle_TryNobreakError"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.handle_TryNobreakError">[docs]</a><span class="k">def</span> <span class="nf">handle_TryNobreakError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original_source</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Handles situation where ``nobreak`` was wrongly use as a</span>
+<span class="sd">       replacement for ``else`` in an try/except/else/finally block.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-    <span class="n">try_linenumber</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;try_string&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
-    <span class="n">nobreak_linenumber</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">])</span>
+    <span class="n">try_linenumber</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;try_linenumber&quot;</span><span class="p">]</span>
+    <span class="n">nobreak_linenumber</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">]</span>
 
-    <span class="n">lines</span> <span class="o">=</span> <span class="n">original_source</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">try_line</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">try_linenumber</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="n">nobreak_line</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">nobreak_linenumber</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">partial_source</span> <span class="o">=</span> <span class="n">get_partial_source</span><span class="p">(</span>
+        <span class="n">original_source</span><span class="p">,</span> <span class="n">try_linenumber</span><span class="p">,</span> <span class="n">nobreak_linenumber</span>
+    <span class="p">)</span>
 
     <span class="n">info</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;source_name&quot;</span><span class="p">],</span>
         <span class="s2">&quot;nobreak_kwd&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;nobreak keyword&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;try_linenumber&quot;</span><span class="p">:</span> <span class="n">try_linenumber</span><span class="p">,</span>
-        <span class="s2">&quot;try_line&quot;</span><span class="p">:</span> <span class="n">try_line</span><span class="p">,</span>
+        <span class="s2">&quot;partial_source&quot;</span><span class="p">:</span> <span class="n">partial_source</span><span class="p">,</span>
         <span class="s2">&quot;nobreak_linenumber&quot;</span><span class="p">:</span> <span class="n">nobreak_linenumber</span><span class="p">,</span>
-        <span class="s2">&quot;nobreak_line&quot;</span><span class="p">:</span> <span class="n">nobreak_line</span><span class="p">,</span>
+        <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;dialect&quot;</span><span class="p">],</span>
     <span class="p">}</span>
-    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;TryNobreakError&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;TryNobreakError&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">handle_NobreakSyntaxError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original_source</span><span class="p">):</span>
+<div class="viewcode-block" id="handle_NobreakSyntaxError"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.handle_NobreakSyntaxError">[docs]</a><span class="k">def</span> <span class="nf">handle_NobreakSyntaxError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original_source</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Handles situation where ``nobreak`` is used without a matching</span>
+<span class="sd">       ``for`` or ``while`` loop and not already raised.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-    <span class="n">nobreak_linenumber</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">])</span>
+    <span class="n">linenumber</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">]</span>
 
-    <span class="n">lines</span> <span class="o">=</span> <span class="n">original_source</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">nobreak_line</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">nobreak_linenumber</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">partial_source</span> <span class="o">=</span> <span class="n">get_partial_source</span><span class="p">(</span>
+        <span class="n">original_source</span><span class="p">,</span> <span class="n">linenumber</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">linenumber</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">linenumber</span>
+    <span class="p">)</span>
 
     <span class="n">info</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;source_name&quot;</span><span class="p">],</span>
         <span class="s2">&quot;nobreak_kwd&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;nobreak keyword&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">nobreak_linenumber</span><span class="p">,</span>
-        <span class="s2">&quot;nobreak_line&quot;</span><span class="p">:</span> <span class="n">nobreak_line</span><span class="p">,</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;NobreakSyntaxError&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">handle_NobreakFirstError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original_source</span><span class="p">):</span>
-    <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">linenumber</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">])</span>
-
-    <span class="n">lines</span> <span class="o">=</span> <span class="n">original_source</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">nobreak_line</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">linenumber</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
-
-    <span class="n">info</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;source_name&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;nobreak_kwd&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;nobreak keyword&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;partial_source&quot;</span><span class="p">:</span> <span class="n">partial_source</span><span class="p">,</span>
         <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">linenumber</span><span class="p">,</span>
-        <span class="s2">&quot;nobreak_line&quot;</span><span class="p">:</span> <span class="n">nobreak_line</span><span class="p">,</span>
+        <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;dialect&quot;</span><span class="p">],</span>
     <span class="p">}</span>
-    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;NobreakFirstError&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;NobreakSyntaxError&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">handle_RepeatFirstError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original_source</span><span class="p">):</span>
+<div class="viewcode-block" id="handle_NobreakFirstError"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.handle_NobreakFirstError">[docs]</a><span class="k">def</span> <span class="nf">handle_NobreakFirstError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original_source</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Handles situation where ``nobreak`` was wrongly use as a</span>
+<span class="sd">       replacement for ``else`` in statements like</span>
+<span class="sd">       var = x if condition else y.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">linenumber</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">])</span>
+    <span class="n">linenumber</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">]</span>
 
-    <span class="n">lines</span> <span class="o">=</span> <span class="n">original_source</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">repeat_line</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">linenumber</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">partial_source</span> <span class="o">=</span> <span class="n">get_partial_source</span><span class="p">(</span>
+        <span class="n">original_source</span><span class="p">,</span> <span class="n">linenumber</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">linenumber</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">linenumber</span>
+    <span class="p">)</span>
+
+    <span class="n">info</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;source_name&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;nobreak_kwd&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;nobreak keyword&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;partial_source&quot;</span><span class="p">:</span> <span class="n">partial_source</span><span class="p">,</span>
+        <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">linenumber</span><span class="p">,</span>
+        <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;dialect&quot;</span><span class="p">],</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;NobreakFirstError&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="handle_RepeatFirstError"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.handle_RepeatFirstError">[docs]</a><span class="k">def</span> <span class="nf">handle_RepeatFirstError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original_source</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Handles situation where ``repeat`` was uses wrongly as</span>
+<span class="sd">       it did not appear as the first keyword of a given statement.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">linenumber</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">]</span>
+
+    <span class="n">partial_source</span> <span class="o">=</span> <span class="n">get_partial_source</span><span class="p">(</span>
+        <span class="n">original_source</span><span class="p">,</span> <span class="n">linenumber</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">linenumber</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">linenumber</span>
+    <span class="p">)</span>
 
     <span class="n">info</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;source_name&quot;</span><span class="p">],</span>
         <span class="s2">&quot;repeat_kwd&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;repeat keyword&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;partial_source&quot;</span><span class="p">:</span> <span class="n">partial_source</span><span class="p">,</span>
         <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">linenumber</span><span class="p">,</span>
-        <span class="s2">&quot;repeat_line&quot;</span><span class="p">:</span> <span class="n">repeat_line</span><span class="p">,</span>
+        <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;dialect&quot;</span><span class="p">],</span>
     <span class="p">}</span>
-    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;RepeatFirstError&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;RepeatFirstError&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="handle_UnknownLanguage"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.handle_UnknownLanguage">[docs]</a><span class="k">def</span> <span class="nf">handle_UnknownLanguage</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Handles error raised when an unknown language is requested</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">lang</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">all_langs</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">info</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="n">lang</span><span class="p">,</span> <span class="s2">&quot;all_langs&quot;</span><span class="p">:</span> <span class="n">all_langs</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;UnknownLanguage&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="handle_UnknownDialect"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.handle_UnknownDialect">[docs]</a><span class="k">def</span> <span class="nf">handle_UnknownDialect</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Handles error raised when an unknown dialect is requested</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dialect</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">all_dialects</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">info</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">,</span> <span class="s2">&quot;all_dialects&quot;</span><span class="p">:</span> <span class="n">all_dialects</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;UnknownDialect&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span></div>
 
 
 <span class="n">dispatch</span> <span class="o">=</span> <span class="p">{</span>
@@ -225,6 +267,8 @@
     <span class="s2">&quot;NobreakFirstError&quot;</span><span class="p">:</span> <span class="n">handle_NobreakFirstError</span><span class="p">,</span>
     <span class="s2">&quot;NobreakSyntaxError&quot;</span><span class="p">:</span> <span class="n">handle_NobreakSyntaxError</span><span class="p">,</span>
     <span class="s2">&quot;RepeatFirstError&quot;</span><span class="p">:</span> <span class="n">handle_RepeatFirstError</span><span class="p">,</span>
+    <span class="s2">&quot;UnknownLanguage&quot;</span><span class="p">:</span> <span class="n">handle_UnknownLanguage</span><span class="p">,</span>
+    <span class="s2">&quot;UnknownDialect&quot;</span><span class="p">:</span> <span class="n">handle_UnknownDialect</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></div>
 

@@ -105,7 +105,8 @@ class _State:
         """
         if not self.is_dialect(dialect):
             raise exceptions.UnknownDialect(
-                "Unknown dialect %s; known dialects = %s" % dialect,
+                "Unknown dialect %s; known dialects = %s"
+                % (dialect, self.all_dialects()),
                 (dialect, self.all_dialects()),
             )
         else:
@@ -127,7 +128,7 @@ class _State:
         """
         if not self.is_lang(lang):
             raise exceptions.UnknownLanguage(
-                "Unknown language %s; known languages = %s" % lang,
+                "Unknown language %s; known languages = %s" % (lang, self.all_langs()),
                 (lang, self.all_langs()),
             )
         else:

@@ -1,8 +1,8 @@
 Friendly error messages
 =======================
 
-AvantPy aims to provide friendlier feedback when an exception is raised than what is
-done by Python.
+AvantPy aims to provide friendlier feedback when an exception
+is raised than what is done by Python.
 Such feedback will also be available in languages other than English.
 
 .. note::
@@ -11,22 +11,144 @@ Such feedback will also be available in languages other than English.
      update_tb.py located in the ``dev_tools`` directory,
      which needs to be done explicitly.
 
-AvantPy version 0.0.3.
-Python version 3.7.0.
+AvantPy version: 0.0.3
+Python version: 3.7.0
+
 
 
 IfNobreakError
---------------
+-------------- 
 
-Example 1::
+Example::
+
 
     AVANTPY EXCEPTION: IfNobreakError
 
     Error found in file ifnobreakerror.pyupper on line 4.
 
+    Dialect used: pyupper
+
        2: if True:
        3:     pass
     -->4: NOBREAK:
 
-    The AvantPy NOBREAK keyword cannot be used in an IF/ELIF/ELSE clause
-    (Python: if/elif/else).
+    The AvantPy NOBREAK keyword cannot be used in
+    an IF/ELIF/ELSE clause (Python: if/elif/else).
+
+
+TryNobreakError
+--------------- 
+
+Example::
+
+
+    AVANTPY EXCEPTION: TryNobreakError
+
+    Error found in file trynobreakerror.pyupper on line 6.
+
+    Dialect used: pyupper
+
+       2: try:
+       3:     pass
+       4: except:
+       5:     pass
+    -->6: NOBREAK:
+
+    The AvantPy NOBREAK keyword cannot be used in
+    a TRY/EXCEPT/ELSE/FINALLY clause (Python: try/except/else/finally).
+
+
+NobreakFirstError
+----------------- 
+
+Example::
+
+
+    AVANTPY EXCEPTION: NobreakFirstError
+
+    Error found in file nobreakfirst.pyupper on line 3.
+
+    Dialect used: pyupper
+
+       2: # Need to prevent NOBREAK being replaced by 'else' in this situation.
+    -->3: a = 1 if True NOBREAK 3
+       4: 
+
+    The AvantPy NOBREAK keyword can be used instead of ELSE (Python: else)
+    only when it begins a new statement for loops.
+
+
+NobreakSyntaxError
+------------------ 
+
+Example::
+
+
+    AVANTPY EXCEPTION: NobreakSyntaxError
+
+    Error found in file nobreaksyntaxerror.pyupper on line 4.
+
+    Dialect used: pyupper
+
+       3: a = 1
+    -->4: NOBREAK: pass
+       5: 
+
+    The AvantPy NOBREAK keyword can only be used as a replacement
+    of ELSE (Python: else) with a matching FOR or WHILE loop
+    (Python: for/while).
+
+
+RepeatFirstError
+---------------- 
+
+Example::
+
+
+    AVANTPY EXCEPTION: RepeatFirstError
+
+    Error found in file repeatfirst.pyupper on line 3.
+
+    Dialect used: pyupper
+
+       2: # Catch an early case of using REPEAT not to begin a loop
+    -->3: a = REPEAT
+       4: 
+
+    The AvantPy REPEAT keyword can be used instead to begin
+    a new loop (Python: equivalent to 'for' or 'while' loop).
+
+
+UnknownLanguage
+--------------- 
+
+Example::
+
+
+    AVANTPY EXCEPTION: UnknownLanguage
+
+
+    The following unknown language was requested: xx.
+    The known languages are: ['en', 'fr', 'sp', 'upper'].
+
+
+UnknownDialect
+-------------- 
+
+Example::
+
+
+    AVANTPY EXCEPTION: UnknownDialect
+
+
+    The following unknown dialect was requested: pyxx.
+    The known dialects are: ['pyen', 'pyes', 'pyfr', 'pyupper'].
+
+
+UnexpectedError
+--------------- 
+
+Example::
+
+    No example found yet.
+
