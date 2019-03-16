@@ -186,6 +186,27 @@ def handle_RepeatFirstError(exc, original_source):
     return translate.get("RepeatFirstError").format(**info)
 
 
+def handle_MissingRepeatError(exc, original_source):
+    """Handles situation where either ``until`` or ``forever`` was
+       used without being preceeded by ``repeat``.
+    """
+    params = exc.args[0]
+    linenumber = params["linenumber"]
+
+    partial_source = get_partial_source(
+        original_source, linenumber - 1, linenumber + 1, linenumber
+    )
+
+    info = {
+        "filename": params["source_name"],
+        "keyword": params["keyword"],
+        "partial_source": partial_source,
+        "linenumber": linenumber,
+        "dialect": params["dialect"],
+    }
+    return translate.get("MissingRepeatError").format(**info)
+
+
 def handle_UnknownLanguage(exc, *args):
     """Handles error raised when an unknown language is requested
     """
@@ -212,6 +233,7 @@ dispatch = {
     "NobreakFirstError": handle_NobreakFirstError,
     "NobreakSyntaxError": handle_NobreakSyntaxError,
     "RepeatFirstError": handle_RepeatFirstError,
+    "MissingRepeatError": handle_MissingRepeatError,
     "UnknownLanguage": handle_UnknownLanguage,
     "UnknownDialect": handle_UnknownDialect,
 }

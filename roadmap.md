@@ -13,11 +13,6 @@ Goals:
 
 ## Enhancements
 
-Important: add code (and test) to ensure that `until` cannot be used if it
-is not preceded by `repeat`.
-
-Important: separate lang (for messages) from dialect.
-
 - [ ] Make it possible to show the difflib output in an interactive session without exiting;
   This could be a more useful feature in an IDE environment
    - [ ] Have the possible options:
@@ -26,10 +21,9 @@ Important: separate lang (for messages) from dialect.
      - [ ] Show the diff for a previously imported module
         - [ ] show errors if not an AvantPy module
      - [ ] Show the diff from a source file which is not imported.
-- [ ] Consider adding a check in the tokenizer to ensure that opening and closing brackets match.
 - [ ] Add check for mixed spaces and tab characters: new lines should either all start with spaces
   or tabs, but not both.
-- [ ] After implementing basic exception handling, confirm that it works 
+- [ ] After implementing basic exception handling, confirm that it works
   - [ ] for the console
     - [ ] for SyntaxError
     - [ ] for other types not derived from SyntaxError
@@ -60,14 +54,10 @@ Some useful links to use as a start for improving error analysis:
 
 ## Contributors
 
-- [ ] Add code of conduct
 - [ ] Add templates for various types of issues
   - [x] Bug report
   - [x] Feature request or contributions
   - [ ] Others
-- [ ] Add info about contributors and refer to documentation
-  - [ ] Add style information
-  - [ ] Contributions should focus on new or corrected content, not format.
 
 ## Developers tools
 
@@ -83,7 +73,7 @@ Some useful links to use as a start for improving error analysis:
 ## Integrating with other programs
 
 While AvantPy works as a standalone application, it should be possible
-to integrate it with other programs.  
+to integrate it with other programs.
 
 - [ ] Can it be integrated with Idle ?
 - [ ] Can a tool be written to easily enable syntax highlighting for a given dialect in some text editor?

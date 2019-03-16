@@ -119,6 +119,42 @@ Example::
     a new loop (Python: equivalent to 'for' or 'while' loop).
 
 
+MissingRepeatError
+------------------ 
+
+Example::
+
+
+    AVANTPY EXCEPTION: MissingRepeatError
+
+    Error found in file until_no_repeat.pyupper on line 3.
+
+    Dialect used: pyupper
+
+       2: x = 0
+    -->3: UNTIL x == 2:
+       4:     x += 1
+
+    The AvantPy UNTIL keyword can be used only when preceded by
+    REPEAT.
+
+
+Example 2::
+
+    AVANTPY EXCEPTION: MissingRepeatError
+
+    Error found in file forever_no_repeat.pyupper on line 3.
+
+    Dialect used: pyupper
+
+       2: x = 0
+    -->3: FOREVER:
+       4:     x += 1
+
+    The AvantPy FOREVER keyword can be used only when preceded by
+    REPEAT.
+
+
 UnknownLanguage
 --------------- 
 

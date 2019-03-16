@@ -243,6 +243,21 @@ def to_python(source, dialect=None, source_name=None):
                 prev_col = 0
             if start_col > prev_col and tok_str != "\n":
                 result.append(" " * (start_col - prev_col))
+            # Also, if that is the case, we cannot have
+            # the keywords 'until' or 'forever'
+            if tok_str in [forever_kwd, until_kwd]:
+                raise exceptions.MissingRepeatError(
+                    "until and forever must be preceeded by repeat",
+                    (
+                        {
+                            "keyword": tok_str,
+                            "linenumber": start_line,
+                            "source_name": source_name,
+                            "source": source,
+                            "dialect": dialect,
+                        },
+                    ),
+                )
         prev_col = end_col
         prev_lineno = end_line
 

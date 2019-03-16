@@ -40,6 +40,14 @@ class RepeatFirstError(AvantPyException):
     pass
 
 
+class MissingRepeatError(AvantPyException):
+    """Raised if ``until`` or ``forever`` is used without being preceeded by
+       ``repeat``.
+    """
+
+    pass
+
+
 class UnknownDialect(AvantPyException):
     """Raised when attempting to set ``dialect`` to unsupported value."""
 

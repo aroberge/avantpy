@@ -78,6 +78,12 @@ with open(target, "w") as out:
         make_title("RepeatFirstError")
         import repeatfirst
 
+        make_title("MissingRepeatError")
+        import until_no_repeat
+
+        print("\nExample 2::")
+        import forever_no_repeat
+
         make_title("UnknownLanguage")
         import unknown_language
 

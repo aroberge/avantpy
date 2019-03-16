@@ -37,6 +37,15 @@ upper = {
     of ELSE (Python: else) with a matching FOR or WHILE loop
     (Python: for/while).
 """,
+    "MissingRepeatError": """
+    AVANTPY EXCEPTION: MissingRepeatError\n
+    Error found in file {filename} on line {linenumber}.\n
+    Dialect used: {dialect}\n
+{partial_source}
+
+    The AvantPy {keyword} keyword can be used only when preceded by
+    REPEAT.
+""",
     "RepeatFirstError": """
     AVANTPY EXCEPTION: RepeatFirstError\n
     Error found in file {filename} on line {linenumber}.\n

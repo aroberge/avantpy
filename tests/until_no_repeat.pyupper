@@ -1,0 +1,4 @@
+'''Should raise MissingRepeatError'''
+x = 0
+UNTIL x == 2:
+    x += 1
