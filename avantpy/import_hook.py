@@ -11,7 +11,7 @@ from importlib.abc import Loader, MetaPathFinder
 from importlib.util import spec_from_file_location
 
 from . import session
-from . import conversion
+from . import converter
 from . import exception_handling
 
 
@@ -104,7 +104,7 @@ class AvantPyLoader(Loader):
 
         try:
             session.state.set_dialect(dialect)
-            source = conversion.to_python(source, dialect, source_name=fullname)
+            source = converter.convert(source, dialect, source_name=fullname)
         except Exception as exc:
             print(exception_handling.handle_exception(exc, original))
             return

@@ -5,7 +5,7 @@ import sys
 from tokenize import TokenError
 
 from . import session
-from . import conversion
+from . import converter
 from . import version
 from . import exception_handling
 from . import exceptions
@@ -101,7 +101,7 @@ class AvantPyInteractiveConsole(code.InteractiveConsole):
 
            Returns the transformed source.
         """
-        source = conversion.to_python(source, source_name="REPL")
+        source = converter.convert(source, source_name="REPL")
         source = self.fix_ending(source)
 
         self._source = source  # saved in case we need it if we want to show
