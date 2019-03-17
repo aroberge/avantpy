@@ -16,6 +16,7 @@ from . import exception_handling
 
 
 DIFF = False
+MAIN_MODULE_NAME = None
 
 
 def show_diff():
@@ -23,9 +24,6 @@ def show_diff():
     and the converted one can be shown"""
     global DIFF
     DIFF = True
-
-
-MAIN_MODULE_NAME = None
 
 
 def import_main(name):
@@ -116,11 +114,18 @@ class AvantPyLoader(Loader):
             webbrowser.open_new_tab(html_file)
             sys.exit()
 
+        # ------------------------
+        # Ideally, instead of the following use of exec(source), we would
+        # proceed in two steps:
+        # 1. use a custom AST parser that could generate more detailed
+        #    information when a SyntaxError is found
+        # 2. If no error is found, exec the code objects produced by the AST.
+        # -------------------------
+
         try:
             exec(source, vars(module))
         except Exception as exc:
             print(exception_handling.handle_exception(exc, original))
-
 
     def write_html_diff(self, name, original, transformed):
         """Writes an html file showing the difference between the original
@@ -130,10 +135,7 @@ class AvantPyLoader(Loader):
         tolines = transformed.split("\n")
 
         diff = MyHtmlDiff().make_file(
-            fromlines,
-            tolines,
-            name + "." + session.state.get_dialect(),
-            name + ".py",
+            fromlines, tolines, name + "." + session.state.get_dialect(), name + ".py"
         )
         with open(html_file, "w", encoding="utf8") as the_file:
             the_file.write(diff)

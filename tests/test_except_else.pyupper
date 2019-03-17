@@ -4,5 +4,5 @@ DEF test_except_else():
     EXCEPT:
         A = 2
     ELSE:
-        ASSERT A = 1
+        ASSERT A == 1
 

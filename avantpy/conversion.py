@@ -203,6 +203,8 @@ def to_python(source, dialect=None, source_name=None):
     blocks_with_else = if_blocks + try_blocks + loops_with_else
     nobreak_kwd = py_to_lang["else"][1]
 
+    brackets = []  # keeps track where (), [], {} occur
+
     # variable names to be used in
     #    for variable_name in range(...):
     var_names = get_unique_variable_names(source, repeat_kwd)
@@ -232,6 +234,46 @@ def to_python(source, dialect=None, source_name=None):
         start_line, start_col = start
         end_line, end_col = end
         begin_new_line = start_line != prev_lineno
+
+        if tok_str in "([{":
+            brackets.append((tok_str, start_line))
+        elif tok_str in ")]}":
+            try:
+                previous_bracket = brackets.pop()
+            except IndexError:
+                raise exceptions.MissingLeftBracketError(
+                    "Closing bracket found with no matching opening one",
+                    (
+                        {
+                            "bracket": tok_str,
+                            "linenumber": start_line,
+                            "source_name": source_name,
+                            "source": source,
+                            "dialect": dialect,
+                        },
+                    ),
+                )
+            else:
+                open_bracket = previous_bracket[0]
+                if (
+                    (open_bracket == "(" and tok_str != ")")
+                    or (open_bracket == "[" and tok_str != "]")
+                    or (open_bracket == "{" and tok_str != "}")
+                ):
+                    raise exceptions.MismatchedBracketsError(
+                        "Closing bracket found matching a different opening one.",
+                        (
+                            {
+                                "close_bracket": tok_str,
+                                "open_bracket": open_bracket,
+                                "close_linenumber": start_line,
+                                "open_linenumber": previous_bracket[1],
+                                "source_name": source_name,
+                                "source": source,
+                                "dialect": dialect,
+                            },
+                        ),
+                    )
 
         # We ensure spacing of original file is preserved,
         # including space between tokens.
@@ -375,6 +417,19 @@ def to_python(source, dialect=None, source_name=None):
                 result.append(lang_to_py[tok_str])
         else:
             result.append(tok_str)
+
+    if brackets:
+        raise exceptions.MissingRightBracketError(
+            "One or more bracket was never closed.",
+            (
+                {
+                    "brackets": brackets,
+                    "source_name": source_name,
+                    "source": source,
+                    "dialect": dialect,
+                },
+            ),
+        )
 
     source = "".join(result)
     return source

@@ -181,6 +181,27 @@ Example::
     The known dialects are: ['pyen', 'pyes', 'pyfr', 'pyupper'].
 
 
+MismatchedBracketsError
+----------------------- 
+
+Example::
+
+
+    AVANTPY EXCEPTION: MismatchedBracketsError
+
+    Error found in file matchingbracketerror.pyupper on lines [2 - 6].
+
+    Dialect used: pyupper
+
+    -->2: a = (1,
+       3:     2,
+       4:     3, 4,
+       5:     5
+    -->6: ]
+
+    The opening ( does not match the closing ].
+
+
 UnexpectedError
 --------------- 
 

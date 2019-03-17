@@ -2,6 +2,7 @@ import code
 import os
 import platform
 import sys
+from tokenize import TokenError
 
 from . import session
 from . import conversion
@@ -57,6 +58,9 @@ class AvantPyInteractiveConsole(code.InteractiveConsole):
             print(exception_handling.handle_exception(exc, source))
             self.resetbuffer()
             return
+        except TokenError as exc:
+            exc.args[0].startswith("EOF")
+            return True
         except Exception as exc:
             print("UNHANDLED EXCEPTION in console.py. This should not happen.")
             raise exc
@@ -137,7 +141,7 @@ def start_console(local_vars=None, show_python=False):
     """Starts a console; modified from code.interact"""
     console_defaults = {
         "set_lang": session.state.set_lang,
-        "set_dialect": session.state.set_dialect
+        "set_dialect": session.state.set_dialect,
     }
 
     if local_vars is None:

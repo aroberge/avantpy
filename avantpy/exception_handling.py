@@ -207,6 +207,34 @@ def handle_MissingRepeatError(exc, original_source):
     return translate.get("MissingRepeatError").format(**info)
 
 
+def handle_MismatchedBracketsError(exc, original_source):
+    """Handles situation where a bracket of one kind '([{'
+       is closed with a bracket of a different kind.
+    """
+    params = exc.args[0]
+    open_linenumber = params["open_linenumber"]
+    close_linenumber = params["close_linenumber"]
+
+    # We need to mark both lines
+    partial_source = get_partial_source(
+        original_source, open_linenumber, close_linenumber - 1, open_linenumber
+    )
+    partial_source += "\n" + get_partial_source(
+        original_source, close_linenumber, close_linenumber, close_linenumber
+    )
+
+    info = {
+        "filename": params["source_name"],
+        "open_bracket": params["open_bracket"],
+        "close_bracket": params["close_bracket"],
+        "open_linenumber": open_linenumber,
+        "close_linenumber": close_linenumber,
+        "partial_source": partial_source,
+        "dialect": params["dialect"],
+    }
+    return translate.get("MismatchedBracketsError").format(**info)
+
+
 def handle_UnknownLanguage(exc, *args):
     """Handles error raised when an unknown language is requested
     """
@@ -234,6 +262,9 @@ dispatch = {
     "NobreakSyntaxError": handle_NobreakSyntaxError,
     "RepeatFirstError": handle_RepeatFirstError,
     "MissingRepeatError": handle_MissingRepeatError,
+    "MismatchedBracketsError": handle_MismatchedBracketsError,
+    # "MissingLeftBracketError": handle_MissingLeftBracketError,
+    # "MissingRightBracketError": handle_MissingRightBracketError,
     "UnknownLanguage": handle_UnknownLanguage,
     "UnknownDialect": handle_UnknownDialect,
 }

@@ -48,6 +48,43 @@ class MissingRepeatError(AvantPyException):
     pass
 
 
+class MismatchedBracketsError(AvantPyException):
+    """Raised if a left parenthesis '(', or square bracket '['
+       or curly bracket '{', is closed by a right 'bracket' of a different type.
+
+       In standard Python, this would be indicated as::
+
+           SyntaxError: invalid syntax
+    """
+
+    pass
+
+
+class MissingLeftBracketError(AvantPyException):
+    """Raised if a right parenthesis ')', or square bracket ']'
+       or curly bracket '}', is found without having a matching left bracket
+       found previously.
+
+       In standard Python, this would be indicated as::
+
+           SyntaxError: invalid syntax
+    """
+
+    pass
+
+
+class MissingRightBracketError(AvantPyException):
+    """Raised if a left parenthesis '(', or square bracket '['
+       or curly bracket '{', is never closed by a corresponding bracket.
+
+       In standard Python, this would be indicated as::
+
+           SyntaxError: unexpected EOF while parsing
+    """
+
+    pass
+
+
 class UnknownDialect(AvantPyException):
     """Raised when attempting to set ``dialect`` to unsupported value."""
 

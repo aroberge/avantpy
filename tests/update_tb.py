@@ -90,5 +90,8 @@ with open(target, "w") as out:
         make_title("UnknownDialect")
         import unknown_dialect
 
+        make_title("MismatchedBracketsError")
+        import matchingbracketerror
+
         make_title("UnexpectedError")
         print("    No example found yet.\n")

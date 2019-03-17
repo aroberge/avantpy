@@ -64,6 +64,14 @@ upper = {
     The AvantPy {nobreak_kwd} keyword cannot be used in
     a TRY/EXCEPT/ELSE/FINALLY clause (Python: try/except/else/finally).
 """,
+    "MismatchedBracketsError": """
+    AVANTPY EXCEPTION: MismatchedBracketsError\n
+    Error found in file {filename} on lines [{open_linenumber} - {close_linenumber}].\n
+    Dialect used: {dialect}\n
+{partial_source}
+
+    The opening {open_bracket} does not match the closing {close_bracket}.
+""",
     "UnknownLanguage": """
     AVANTPY EXCEPTION: UnknownLanguage\n
 

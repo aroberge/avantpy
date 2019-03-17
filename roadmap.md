@@ -34,12 +34,18 @@ Goals:
 
 - [ ] Add option to limit to one dialect only
 
-- [ ] Use .format for string interpolation everywhere.
+- [ ] Use .format for string interpolation everywhere - to allow full translations
 - [ ] Look at having translation for open()
 - [ ] Review builtins and see if translations of other functions are needed.
 - [ ] add syntax check in conversion
   - [ ] Closing ]}) not matching opening
   - [ ] opening [({ never closed
+
+- [ ] Review https://realpython.com/pypi-publish-python-package/
+- [ ] Try to reorganise tests into various subtests directories
+- [ ] Consider switching to writing errors using print("...", file=sys.stderr)
+  - [ ] Actually, have special function, like print_error, which can be redefined by other programs
+- [ ] Always indicate the dialect being used in the console.
 
 Some useful links to use as a start for improving error analysis:
 
@@ -64,11 +70,13 @@ Some useful links to use as a start for improving error analysis:
 - [ ] Command line option to convert from Python to dialect
   - This could be useful to quickly create test suites in a new dialect.
 - [ ] Command line option to convert from dialect to Python
+- [ ] Command line option to convert from dialect_1 to dialect_2
 - [ ] GUI for above
 
 ## Testing
 
 - [ ] Create comprehensive test for given dialect
+  - [ ] use automated tools to convert to other dialects
 
 ## Integrating with other programs
 
