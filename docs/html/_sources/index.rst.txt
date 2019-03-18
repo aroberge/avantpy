@@ -37,19 +37,21 @@ AvantPy will also includes tools to analyze Python tracebacks and translate them
 Who is it for?
 ---------------
 
-The main target audience is composed of students who do not know English and are learning programming for the first time, under the guidance of an
-instructor.
+The main target audience is composed of students who do not know English and
+are learning programming for the first time, under the guidance of an
+instructor. It can also be helpful for students making the transition from
+block-based programming languages to text-based ones.
 
 Executable pseudocode?
 -------------------------
 
 Python is often described as executable pseudocode. Once people have learned a few idiomatic expressions, like::
- 
+
     for variable in range(n)
 
 translating pseudocode written in English into Python is usually very straightforward.
 
-If the pseudocode is not written in English, the translation process is, at least initially, not as straightforward since an additional mental step is required by the translation from the original language into Python's English. 
+If the pseudocode is not written in English, the translation process is, at least initially, not as straightforward since an additional mental step is required by the translation from the original language into Python's English.
 
 Even though the number of Python keywords is small, for absolute beginners who are learning programming concepts (control flow structures, defining functions, etc.), being able to use a language that uses keywords easily understood in their own language can definitely facilitate the learning process.
 **This is the approach taken by people using block-based environment
@@ -58,6 +60,9 @@ to help students learn programming concepts.**
 
 Realistically, many students who learn computer programming as part of a formal course might never use programming again or, if so, it might not be for many years. Given enough time, they would likely forget most of the programming syntax they had learned.
 However they likely would understand and remember programming **concepts** better if they are first learning them in their native language.
+And, as `Mark Guzdial wrote: <https://computinged.wordpress.com/2019/01/07/a-little-bit-of-computing-goes-a-long-way-the-sigcse-50th-anniversary-issue-of-acm-inroads/>`_
+
+   *People code for different purposes, with different ways of appropriating code. The standards of the software engineer are not appropriate to apply to children. Not everybody is going to be a professional software developer, and they don’t need to be.*
 
 Contents
 --------

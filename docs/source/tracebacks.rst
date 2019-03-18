@@ -202,6 +202,25 @@ Example::
     The opening ( does not match the closing ].
 
 
+MissingLeftBracketError
+----------------------- 
+
+Example::
+
+
+    AVANTPY EXCEPTION: MissingRightBracketError
+
+    Error found in file missingleftbracket.pyupper on line 5.
+
+    Dialect used: pyupper
+
+       4:     3, 4,)
+    -->5:     )
+       6: b = 3
+
+    The closing ) does not match anything.
+
+
 UnexpectedError
 --------------- 
 

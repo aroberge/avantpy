@@ -72,6 +72,14 @@ upper = {
 
     The opening {open_bracket} does not match the closing {close_bracket}.
 """,
+    "MissingLeftBracketError": """
+    AVANTPY EXCEPTION: MissingRightBracketError\n
+    Error found in file {filename} on line {linenumber}.\n
+    Dialect used: {dialect}\n
+{partial_source}
+
+    The closing {bracket} does not match anything.
+""",
     "UnknownLanguage": """
     AVANTPY EXCEPTION: UnknownLanguage\n
 

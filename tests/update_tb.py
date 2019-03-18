@@ -93,5 +93,8 @@ with open(target, "w") as out:
         make_title("MismatchedBracketsError")
         import matchingbracketerror
 
+        make_title("MissingLeftBracketError")
+        import missingleftbracket
+
         make_title("UnexpectedError")
         print("    No example found yet.\n")

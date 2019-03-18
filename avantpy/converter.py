@@ -77,19 +77,6 @@ class Converter:
             token = Token(tok)
             self.process_token(token)
 
-        if self.brackets:
-            raise exceptions.MissingRightBracketError(
-                "One or more bracket was never closed.",
-                (
-                    {
-                        "brackets": self.brackets,
-                        "source_name": self.source_name,
-                        "source": self.source,
-                        "dialect": self.dialect,
-                    },
-                ),
-            )
-
         return "".join(self.result)
 
     def init_dialect_vars(self):
@@ -272,13 +259,46 @@ class Converter:
             self.result.append(token.string)
 
     def process_nobreak(self, token):
-        self.identify_potential_nobreak_first_errors(token)
         if (
-            token.start_col in self.indentations
+            self.begin_new_line
+            and token.start_col in self.indentations
             and self.indentations[token.start_col][0] in self.loops_with_else
         ):
-            self.result.append("else")  # done!
-        # == Otherwise, we identify the problem ==
+            self.result.append("else")
+        else:
+            self.handle_nobreak_error(token)
+
+    def process_repeat(self, token):
+        if not self.begin_new_line:  # this is not allowed to happen
+            raise exceptions.RepeatFirstError(
+                "repeat must be first statement on a line",
+                (
+                    {
+                        "repeat keyword": token.string,
+                        "linenumber": token.start_line,
+                        "source_name": self.source_name,
+                        "source": self.source,
+                        "dialect": self.dialect,
+                    },
+                ),
+            )
+        self.just_processed_repeat_kwd = True
+
+    def handle_nobreak_error(self, token):
+        """Identifies potential misuse of nobreak keyword."""
+        if not self.begin_new_line:
+            raise exceptions.NobreakFirstError(
+                "nobreak must be first statement on a line",
+                (
+                    {
+                        "nobreak keyword": token.string,
+                        "linenumber": token.start_line,
+                        "source_name": self.source_name,
+                        "source": self.source,
+                        "dialect": self.dialect,
+                    },
+                ),
+            )
         elif (
             token.start_col in self.indentations
             and self.indentations[token.start_col][0] in self.if_blocks
@@ -326,39 +346,6 @@ class Converter:
                     },
                 ),
             )
-
-    def process_repeat(self, token):
-        if not self.begin_new_line:  # this is not allowed to happen
-            raise exceptions.RepeatFirstError(
-                "repeat must be first statement on a line",
-                (
-                    {
-                        "repeat keyword": token.string,
-                        "linenumber": token.start_line,
-                        "source_name": self.source_name,
-                        "source": self.source,
-                        "dialect": self.dialect,
-                    },
-                ),
-            )
-        self.just_processed_repeat_kwd = True
-
-    def identify_potential_nobreak_first_errors(self, token):
-        """Identifies potential misuse of nobreak keyword."""
-        if not self.begin_new_line:  # this is not allowed to happen
-            raise exceptions.NobreakFirstError(
-                "nobreak must be first statement on a line",
-                (
-                    {
-                        "nobreak keyword": token.string,
-                        "linenumber": token.start_line,
-                        "source_name": self.source_name,
-                        "source": self.source,
-                        "dialect": self.dialect,
-                    },
-                ),
-            )
-        return
 
 
 def convert(source, dialect=None, source_name=None):

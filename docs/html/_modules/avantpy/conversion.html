@@ -258,6 +258,8 @@
     <span class="n">blocks_with_else</span> <span class="o">=</span> <span class="n">if_blocks</span> <span class="o">+</span> <span class="n">try_blocks</span> <span class="o">+</span> <span class="n">loops_with_else</span>
     <span class="n">nobreak_kwd</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;else&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
 
+    <span class="n">brackets</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># keeps track where (), [], {} occur</span>
+
     <span class="c1"># variable names to be used in</span>
     <span class="c1">#    for variable_name in range(...):</span>
     <span class="n">var_names</span> <span class="o">=</span> <span class="n">get_unique_variable_names</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">repeat_kwd</span><span class="p">)</span>
@@ -288,6 +290,46 @@
         <span class="n">end_line</span><span class="p">,</span> <span class="n">end_col</span> <span class="o">=</span> <span class="n">end</span>
         <span class="n">begin_new_line</span> <span class="o">=</span> <span class="n">start_line</span> <span class="o">!=</span> <span class="n">prev_lineno</span>
 
+        <span class="k">if</span> <span class="n">tok_str</span> <span class="ow">in</span> <span class="s2">&quot;([{&quot;</span><span class="p">:</span>
+            <span class="n">brackets</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">tok_str</span><span class="p">,</span> <span class="n">start_line</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">tok_str</span> <span class="ow">in</span> <span class="s2">&quot;)]}&quot;</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">previous_bracket</span> <span class="o">=</span> <span class="n">brackets</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">MissingLeftBracketError</span><span class="p">(</span>
+                    <span class="s2">&quot;Closing bracket found with no matching opening one&quot;</span><span class="p">,</span>
+                    <span class="p">(</span>
+                        <span class="p">{</span>
+                            <span class="s2">&quot;bracket&quot;</span><span class="p">:</span> <span class="n">tok_str</span><span class="p">,</span>
+                            <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">start_line</span><span class="p">,</span>
+                            <span class="s2">&quot;source_name&quot;</span><span class="p">:</span> <span class="n">source_name</span><span class="p">,</span>
+                            <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">source</span><span class="p">,</span>
+                            <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">,</span>
+                        <span class="p">},</span>
+                    <span class="p">),</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">open_bracket</span> <span class="o">=</span> <span class="n">previous_bracket</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="p">(</span><span class="n">open_bracket</span> <span class="o">==</span> <span class="s2">&quot;(&quot;</span> <span class="ow">and</span> <span class="n">tok_str</span> <span class="o">!=</span> <span class="s2">&quot;)&quot;</span><span class="p">)</span>
+                    <span class="ow">or</span> <span class="p">(</span><span class="n">open_bracket</span> <span class="o">==</span> <span class="s2">&quot;[&quot;</span> <span class="ow">and</span> <span class="n">tok_str</span> <span class="o">!=</span> <span class="s2">&quot;]&quot;</span><span class="p">)</span>
+                    <span class="ow">or</span> <span class="p">(</span><span class="n">open_bracket</span> <span class="o">==</span> <span class="s2">&quot;{&quot;</span> <span class="ow">and</span> <span class="n">tok_str</span> <span class="o">!=</span> <span class="s2">&quot;}&quot;</span><span class="p">)</span>
+                <span class="p">):</span>
+                    <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">MismatchedBracketsError</span><span class="p">(</span>
+                        <span class="s2">&quot;Closing bracket found matching a different opening one.&quot;</span><span class="p">,</span>
+                        <span class="p">(</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;close_bracket&quot;</span><span class="p">:</span> <span class="n">tok_str</span><span class="p">,</span>
+                                <span class="s2">&quot;open_bracket&quot;</span><span class="p">:</span> <span class="n">open_bracket</span><span class="p">,</span>
+                                <span class="s2">&quot;close_linenumber&quot;</span><span class="p">:</span> <span class="n">start_line</span><span class="p">,</span>
+                                <span class="s2">&quot;open_linenumber&quot;</span><span class="p">:</span> <span class="n">previous_bracket</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                <span class="s2">&quot;source_name&quot;</span><span class="p">:</span> <span class="n">source_name</span><span class="p">,</span>
+                                <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">source</span><span class="p">,</span>
+                                <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">,</span>
+                            <span class="p">},</span>
+                        <span class="p">),</span>
+                    <span class="p">)</span>
+
         <span class="c1"># We ensure spacing of original file is preserved,</span>
         <span class="c1"># including space between tokens.</span>
         <span class="c1"># When repeat_loop is True, it means we just saw the repeat keyword</span>
@@ -298,6 +340,21 @@
                 <span class="n">prev_col</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">if</span> <span class="n">start_col</span> <span class="o">&gt;</span> <span class="n">prev_col</span> <span class="ow">and</span> <span class="n">tok_str</span> <span class="o">!=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">:</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="p">(</span><span class="n">start_col</span> <span class="o">-</span> <span class="n">prev_col</span><span class="p">))</span>
+            <span class="c1"># Also, if that is the case, we cannot have</span>
+            <span class="c1"># the keywords &#39;until&#39; or &#39;forever&#39;</span>
+            <span class="k">if</span> <span class="n">tok_str</span> <span class="ow">in</span> <span class="p">[</span><span class="n">forever_kwd</span><span class="p">,</span> <span class="n">until_kwd</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">MissingRepeatError</span><span class="p">(</span>
+                    <span class="s2">&quot;until and forever must be preceeded by repeat&quot;</span><span class="p">,</span>
+                    <span class="p">(</span>
+                        <span class="p">{</span>
+                            <span class="s2">&quot;keyword&quot;</span><span class="p">:</span> <span class="n">tok_str</span><span class="p">,</span>
+                            <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">start_line</span><span class="p">,</span>
+                            <span class="s2">&quot;source_name&quot;</span><span class="p">:</span> <span class="n">source_name</span><span class="p">,</span>
+                            <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">source</span><span class="p">,</span>
+                            <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">,</span>
+                        <span class="p">},</span>
+                    <span class="p">),</span>
+                <span class="p">)</span>
         <span class="n">prev_col</span> <span class="o">=</span> <span class="n">end_col</span>
         <span class="n">prev_lineno</span> <span class="o">=</span> <span class="n">end_line</span>
 
@@ -415,6 +472,19 @@
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lang_to_py</span><span class="p">[</span><span class="n">tok_str</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tok_str</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">brackets</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">MissingRightBracketError</span><span class="p">(</span>
+            <span class="s2">&quot;One or more bracket was never closed.&quot;</span><span class="p">,</span>
+            <span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;brackets&quot;</span><span class="p">:</span> <span class="n">brackets</span><span class="p">,</span>
+                    <span class="s2">&quot;source_name&quot;</span><span class="p">:</span> <span class="n">source_name</span><span class="p">,</span>
+                    <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">source</span><span class="p">,</span>
+                    <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">,</span>
+                <span class="p">},</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
 
     <span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">source</span></div>

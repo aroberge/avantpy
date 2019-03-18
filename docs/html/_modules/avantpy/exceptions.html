@@ -95,6 +95,51 @@
     <span class="k">pass</span></div>
 
 
+<div class="viewcode-block" id="MissingRepeatError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.MissingRepeatError">[docs]</a><span class="k">class</span> <span class="nc">MissingRepeatError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raised if ``until`` or ``forever`` is used without being preceeded by</span>
+<span class="sd">       ``repeat``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="MismatchedBracketsError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.MismatchedBracketsError">[docs]</a><span class="k">class</span> <span class="nc">MismatchedBracketsError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raised if a left parenthesis &#39;(&#39;, or square bracket &#39;[&#39;</span>
+<span class="sd">       or curly bracket &#39;{&#39;, is closed by a right &#39;bracket&#39; of a different type.</span>
+
+<span class="sd">       In standard Python, this would be indicated as::</span>
+
+<span class="sd">           SyntaxError: invalid syntax</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="MissingLeftBracketError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.MissingLeftBracketError">[docs]</a><span class="k">class</span> <span class="nc">MissingLeftBracketError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raised if a right parenthesis &#39;)&#39;, or square bracket &#39;]&#39;</span>
+<span class="sd">       or curly bracket &#39;}&#39;, is found without having a matching left bracket</span>
+<span class="sd">       found previously.</span>
+
+<span class="sd">       In standard Python, this would be indicated as::</span>
+
+<span class="sd">           SyntaxError: invalid syntax</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="MissingRightBracketError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.MissingRightBracketError">[docs]</a><span class="k">class</span> <span class="nc">MissingRightBracketError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raised if a left parenthesis &#39;(&#39;, or square bracket &#39;[&#39;</span>
+<span class="sd">       or curly bracket &#39;{&#39;, is never closed by a corresponding bracket.</span>
+
+<span class="sd">       In standard Python, this would be indicated as::</span>
+
+<span class="sd">           SyntaxError: unexpected EOF while parsing</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">pass</span></div>
+
+
 <div class="viewcode-block" id="UnknownDialect"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.UnknownDialect">[docs]</a><span class="k">class</span> <span class="nc">UnknownDialect</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Raised when attempting to set ``dialect`` to unsupported value.&quot;&quot;&quot;</span>
 

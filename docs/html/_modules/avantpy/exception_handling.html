@@ -241,6 +241,76 @@
     <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;RepeatFirstError&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="handle_MissingRepeatError"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.handle_MissingRepeatError">[docs]</a><span class="k">def</span> <span class="nf">handle_MissingRepeatError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original_source</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Handles situation where either ``until`` or ``forever`` was</span>
+<span class="sd">       used without being preceeded by ``repeat``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">linenumber</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">]</span>
+
+    <span class="n">partial_source</span> <span class="o">=</span> <span class="n">get_partial_source</span><span class="p">(</span>
+        <span class="n">original_source</span><span class="p">,</span> <span class="n">linenumber</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">linenumber</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">linenumber</span>
+    <span class="p">)</span>
+
+    <span class="n">info</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;source_name&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;keyword&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;keyword&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;partial_source&quot;</span><span class="p">:</span> <span class="n">partial_source</span><span class="p">,</span>
+        <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">linenumber</span><span class="p">,</span>
+        <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;dialect&quot;</span><span class="p">],</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;MissingRepeatError&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="handle_MismatchedBracketsError"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.handle_MismatchedBracketsError">[docs]</a><span class="k">def</span> <span class="nf">handle_MismatchedBracketsError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original_source</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Handles situation where a bracket of one kind &#39;([{&#39;</span>
+<span class="sd">       is closed with a bracket of a different kind.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">open_linenumber</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;open_linenumber&quot;</span><span class="p">]</span>
+    <span class="n">close_linenumber</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;close_linenumber&quot;</span><span class="p">]</span>
+
+    <span class="c1"># We need to mark both lines</span>
+    <span class="n">partial_source</span> <span class="o">=</span> <span class="n">get_partial_source</span><span class="p">(</span>
+        <span class="n">original_source</span><span class="p">,</span> <span class="n">open_linenumber</span><span class="p">,</span> <span class="n">close_linenumber</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">open_linenumber</span>
+    <span class="p">)</span>
+    <span class="n">partial_source</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">get_partial_source</span><span class="p">(</span>
+        <span class="n">original_source</span><span class="p">,</span> <span class="n">close_linenumber</span><span class="p">,</span> <span class="n">close_linenumber</span><span class="p">,</span> <span class="n">close_linenumber</span>
+    <span class="p">)</span>
+
+    <span class="n">info</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;source_name&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;open_bracket&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;open_bracket&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;close_bracket&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;close_bracket&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;open_linenumber&quot;</span><span class="p">:</span> <span class="n">open_linenumber</span><span class="p">,</span>
+        <span class="s2">&quot;close_linenumber&quot;</span><span class="p">:</span> <span class="n">close_linenumber</span><span class="p">,</span>
+        <span class="s2">&quot;partial_source&quot;</span><span class="p">:</span> <span class="n">partial_source</span><span class="p">,</span>
+        <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;dialect&quot;</span><span class="p">],</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;MismatchedBracketsError&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="handle_MissingLeftBracketError"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.handle_MissingLeftBracketError">[docs]</a><span class="k">def</span> <span class="nf">handle_MissingLeftBracketError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original_source</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Handles situation where at bracket of one kind ),],}</span>
+<span class="sd">       is closed without a corresponding open bracket.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">linenumber</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">]</span>
+
+    <span class="n">partial_source</span> <span class="o">=</span> <span class="n">get_partial_source</span><span class="p">(</span>
+        <span class="n">original_source</span><span class="p">,</span> <span class="n">linenumber</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">linenumber</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">linenumber</span>
+    <span class="p">)</span>
+
+    <span class="n">info</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;source_name&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;partial_source&quot;</span><span class="p">:</span> <span class="n">partial_source</span><span class="p">,</span>
+        <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;dialect&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">linenumber</span><span class="p">,</span>
+        <span class="s2">&quot;bracket&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;bracket&quot;</span><span class="p">],</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;MissingLeftBracketError&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="handle_UnknownLanguage"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.handle_UnknownLanguage">[docs]</a><span class="k">def</span> <span class="nf">handle_UnknownLanguage</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Handles error raised when an unknown language is requested</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -267,6 +337,9 @@
     <span class="s2">&quot;NobreakFirstError&quot;</span><span class="p">:</span> <span class="n">handle_NobreakFirstError</span><span class="p">,</span>
     <span class="s2">&quot;NobreakSyntaxError&quot;</span><span class="p">:</span> <span class="n">handle_NobreakSyntaxError</span><span class="p">,</span>
     <span class="s2">&quot;RepeatFirstError&quot;</span><span class="p">:</span> <span class="n">handle_RepeatFirstError</span><span class="p">,</span>
+    <span class="s2">&quot;MissingRepeatError&quot;</span><span class="p">:</span> <span class="n">handle_MissingRepeatError</span><span class="p">,</span>
+    <span class="s2">&quot;MismatchedBracketsError&quot;</span><span class="p">:</span> <span class="n">handle_MismatchedBracketsError</span><span class="p">,</span>
+    <span class="s2">&quot;MissingLeftBracketError&quot;</span><span class="p">:</span> <span class="n">handle_MissingLeftBracketError</span><span class="p">,</span>
     <span class="s2">&quot;UnknownLanguage&quot;</span><span class="p">:</span> <span class="n">handle_UnknownLanguage</span><span class="p">,</span>
     <span class="s2">&quot;UnknownDialect&quot;</span><span class="p">:</span> <span class="n">handle_UnknownDialect</span><span class="p">,</span>
 <span class="p">}</span>

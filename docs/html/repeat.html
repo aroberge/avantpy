@@ -43,6 +43,7 @@
   <ul>
 <li><a class="reference internal" href="#">Special keyword: <code class="docutils literal notranslate"><span class="pre">repeat</span></code></a><ul>
 <li><a class="reference internal" href="#a-concrete-example">A concrete example</a></li>
+<li><a class="reference internal" href="#more-gradual-approach">More gradual approach</a></li>
 </ul>
 </li>
 </ul>
@@ -84,8 +85,10 @@
 <h1>Special keyword: <code class="docutils literal notranslate"><span class="pre">repeat</span></code><a class="headerlink" href="#special-keyword-repeat" title="Permalink to this headline">¶</a></h1>
 <p>Repeating a series of instructions is something that is often done when
 running programs.  Block-based programming environments, such as
-Scratch and Blockly, have different blocks that can be used for
-this purpose.  For example:</p>
+<a class="reference external" href="https://scratch.mit.edu/">Scratch</a>,
+<a class="reference external" href="https://developers.google.com/blockly/">Blockly</a>,
+<a class="reference external" href="https://gpblocks.org/">GP</a>, etc,
+have different blocks that can be used for this purpose.  For example:</p>
 <a class="reference internal image-reference" href="_images/repeat10.png"><img alt="Repeat 10 block" src="_images/repeat10.png" style="width: 140.0px; height: 83.0px;" /></a>
 <a class="reference internal image-reference" href="_images/repeat_until.png"><img alt="Repeat until block" src="_images/repeat_until.png" style="width: 190.0px; height: 84.0px;" /></a>
 <p>and a “repeat forever” loop in French:</p>
@@ -189,6 +192,21 @@ Using Python, here’s the natural way to do this:</p>
 <li>one new keyword: <code class="docutils literal notranslate"><span class="pre">repeat</span></code>.</li>
 </ol>
 </div></blockquote>
+</div>
+<div class="section" id="more-gradual-approach">
+<h2>More gradual approach<a class="headerlink" href="#more-gradual-approach" title="Permalink to this headline">¶</a></h2>
+<p>As we are writing this, we note that
+<a class="reference external" href="https://gpblocks.org/wiki/doku.php?id=blocks:control">GP control blocks</a>
+includes the following blocs which allow for a gradual
+interpolation between something like <code class="docutils literal notranslate"><span class="pre">repeat</span> <span class="pre">10:</span></code> and the
+more complex and versatile Python idiom:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+    <span class="c1"># block</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/repeat_gp.png"><img alt="Repeat blocks in GP" src="_images/repeat_gp.png" style="width: 842.0px; height: 427.0px;" /></a>
+<p>However, we do not see the need to include this type of granularity
+in AvantPy.</p>
 </div>
 </div>
 

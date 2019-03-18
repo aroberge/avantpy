@@ -66,11 +66,12 @@
 <span class="kn">from</span> <span class="nn">importlib.util</span> <span class="k">import</span> <span class="n">spec_from_file_location</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">session</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">conversion</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">converter</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">exception_handling</span>
 
 
 <span class="n">DIFF</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">MAIN_MODULE_NAME</span> <span class="o">=</span> <span class="kc">None</span>
 
 
 <div class="viewcode-block" id="show_diff"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.show_diff">[docs]</a><span class="k">def</span> <span class="nf">show_diff</span><span class="p">():</span>
@@ -78,9 +79,6 @@
 <span class="sd">    and the converted one can be shown&quot;&quot;&quot;</span>
     <span class="k">global</span> <span class="n">DIFF</span>
     <span class="n">DIFF</span> <span class="o">=</span> <span class="kc">True</span></div>
-
-
-<span class="n">MAIN_MODULE_NAME</span> <span class="o">=</span> <span class="kc">None</span>
 
 
 <div class="viewcode-block" id="import_main"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.import_main">[docs]</a><span class="k">def</span> <span class="nf">import_main</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
@@ -161,7 +159,7 @@
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">session</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">set_dialect</span><span class="p">(</span><span class="n">dialect</span><span class="p">)</span>
-            <span class="n">source</span> <span class="o">=</span> <span class="n">conversion</span><span class="o">.</span><span class="n">to_python</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">dialect</span><span class="p">,</span> <span class="n">source_name</span><span class="o">=</span><span class="n">fullname</span><span class="p">)</span>
+            <span class="n">source</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">dialect</span><span class="p">,</span> <span class="n">source_name</span><span class="o">=</span><span class="n">fullname</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">exception_handling</span><span class="o">.</span><span class="n">handle_exception</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original</span><span class="p">))</span>
             <span class="k">return</span>
@@ -171,11 +169,18 @@
             <span class="n">webbrowser</span><span class="o">.</span><span class="n">open_new_tab</span><span class="p">(</span><span class="n">html_file</span><span class="p">)</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
 
+        <span class="c1"># ------------------------</span>
+        <span class="c1"># Ideally, instead of the following use of exec(source), we would</span>
+        <span class="c1"># proceed in two steps:</span>
+        <span class="c1"># 1. use a custom AST parser that could generate more detailed</span>
+        <span class="c1">#    information when a SyntaxError is found</span>
+        <span class="c1"># 2. If no error is found, exec the code objects produced by the AST.</span>
+        <span class="c1"># -------------------------</span>
+
         <span class="k">try</span><span class="p">:</span>
             <span class="n">exec</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="nb">vars</span><span class="p">(</span><span class="n">module</span><span class="p">))</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">exception_handling</span><span class="o">.</span><span class="n">handle_exception</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original</span><span class="p">))</span></div>
-
 
 <div class="viewcode-block" id="AvantPyLoader.write_html_diff"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.AvantPyLoader.write_html_diff">[docs]</a>    <span class="k">def</span> <span class="nf">write_html_diff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">original</span><span class="p">,</span> <span class="n">transformed</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Writes an html file showing the difference between the original</span>
@@ -185,10 +190,7 @@
         <span class="n">tolines</span> <span class="o">=</span> <span class="n">transformed</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="n">diff</span> <span class="o">=</span> <span class="n">MyHtmlDiff</span><span class="p">()</span><span class="o">.</span><span class="n">make_file</span><span class="p">(</span>
-            <span class="n">fromlines</span><span class="p">,</span>
-            <span class="n">tolines</span><span class="p">,</span>
-            <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">session</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">get_dialect</span><span class="p">(),</span>
-            <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.py&quot;</span><span class="p">,</span>
+            <span class="n">fromlines</span><span class="p">,</span> <span class="n">tolines</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">session</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">get_dialect</span><span class="p">(),</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.py&quot;</span>
         <span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">html_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">the_file</span><span class="p">:</span>
             <span class="n">the_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span>

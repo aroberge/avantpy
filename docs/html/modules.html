@@ -43,7 +43,7 @@
   <ul>
 <li><a class="reference internal" href="#">Other modules</a><ul>
 <li><a class="reference internal" href="#module-avantpy.console">console</a></li>
-<li><a class="reference internal" href="#module-avantpy.conversion">conversion</a></li>
+<li><a class="reference internal" href="#module-avantpy.converter">converter</a></li>
 <li><a class="reference internal" href="#module-avantpy.exception_handling">exception_handling</a></li>
 <li><a class="reference internal" href="#module-avantpy.exceptions">exceptions</a></li>
 <li><a class="reference internal" href="#module-avantpy.import_hook">import_hook</a></li>
@@ -87,7 +87,7 @@
             
   <div class="section" id="other-modules">
 <h1>Other modules<a class="headerlink" href="#other-modules" title="Permalink to this headline">¶</a></h1>
-<p>In addition to <cite>invocation.py</cite> already mentioned, and excluding modules defining individual
+<p>In addition to <code class="docutils literal notranslate"><span class="pre">invocation.py</span></code> already mentioned, and excluding modules defining individual
 dialects, the following are included:</p>
 <div class="section" id="module-avantpy.console">
 <span id="console"></span><h2>console<a class="headerlink" href="#module-avantpy.console" title="Permalink to this headline">¶</a></h2>
@@ -150,13 +150,79 @@ and the syntax error</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-avantpy.conversion">
-<span id="conversion"></span><h2>conversion<a class="headerlink" href="#module-avantpy.conversion" title="Permalink to this headline">¶</a></h2>
-<p>conversion.py</p>
-<p>Keeps track of available dialects, and perform require code transformations.</p>
+<div class="section" id="module-avantpy.converter">
+<span id="converter"></span><h2>converter<a class="headerlink" href="#module-avantpy.converter" title="Permalink to this headline">¶</a></h2>
+<p>New version of previous converter
+This time, class-based to make it more readable</p>
+<dl class="class">
+<dt id="avantpy.converter.Converter">
+<em class="property">class </em><code class="descclassname">avantpy.converter.</code><code class="descname">Converter</code><a class="reference internal" href="_modules/avantpy/converter.html#Converter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter" title="Permalink to this definition">¶</a></dt>
+<dd><p>To be written</p>
+<dl class="method">
+<dt id="avantpy.converter.Converter.convert">
+<code class="descname">convert</code><span class="sig-paren">(</span><em>source</em>, <em>dialect=None</em>, <em>source_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.convert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.convert" title="Permalink to this definition">¶</a></dt>
+<dd><p>to be written</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.converter.Converter.do_close_bracket">
+<code class="descname">do_close_bracket</code><span class="sig-paren">(</span><em>token</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.do_close_bracket"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.do_close_bracket" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keep track of matching brackets so that errors can be flagged</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.converter.Converter.do_until_forever_error">
+<code class="descname">do_until_forever_error</code><span class="sig-paren">(</span><em>token</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.do_until_forever_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.do_until_forever_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>If self.just_processed_repeat_kwd is true, this means that we just saw a
+the keywords ‘until’ or ‘forever’</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.converter.Converter.handle_nobreak_error">
+<code class="descname">handle_nobreak_error</code><span class="sig-paren">(</span><em>token</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.handle_nobreak_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.handle_nobreak_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identifies potential misuse of nobreak keyword.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.converter.Converter.init_bookkeeping_vars">
+<code class="descname">init_bookkeeping_vars</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.init_bookkeeping_vars"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.init_bookkeeping_vars" title="Permalink to this definition">¶</a></dt>
+<dd><p>to be written</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.converter.Converter.init_dialect_vars">
+<code class="descname">init_dialect_vars</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.init_dialect_vars"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.init_dialect_vars" title="Permalink to this definition">¶</a></dt>
+<dd><p>to be written</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.converter.Converter.preserve_repeat_spacing">
+<code class="descname">preserve_repeat_spacing</code><span class="sig-paren">(</span><em>token</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.preserve_repeat_spacing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.preserve_repeat_spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>We ensure spacing of original file is preserved,
+including space between tokens.
+When self.just_processed_repeat_kwd is True, it means we just saw
+the repeat keyword which can simply be dropped;
+we don’t need add the space between “repeat” and the next token.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.converter.Converter.process_token">
+<code class="descname">process_token</code><span class="sig-paren">(</span><em>token</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.process_token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.process_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>docstring to be added</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="avantpy.converter.Token">
+<em class="property">class </em><code class="descclassname">avantpy.converter.</code><code class="descname">Token</code><span class="sig-paren">(</span><em>token</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Token" title="Permalink to this definition">¶</a></dt>
+<dd><p>Token as generated from tokenize.generate_tokens written here in
+a more convenient form for our purpose.</p>
+</dd></dl>
+
 <dl class="function">
-<dt id="avantpy.conversion.get_unique_variable_names">
-<code class="descclassname">avantpy.conversion.</code><code class="descname">get_unique_variable_names</code><span class="sig-paren">(</span><em>source</em>, <em>repeat_kwd</em>, <em>all_count_names=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/conversion.html#get_unique_variable_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.conversion.get_unique_variable_names" title="Permalink to this definition">¶</a></dt>
+<dt id="avantpy.converter.get_unique_variable_names">
+<code class="descclassname">avantpy.converter.</code><code class="descname">get_unique_variable_names</code><span class="sig-paren">(</span><em>source</em>, <em>repeat_kwd</em>, <em>all_count_names=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#get_unique_variable_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.get_unique_variable_names" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of possible variables names that
 are not found in the original source and have not been used
 anywhere.
@@ -166,139 +232,6 @@ These variables will be used in expressions such as</p>
 <p>which will replace</p>
 <blockquote>
 <div>repeat n:</div></blockquote>
-</dd></dl>
-
-<dl class="function">
-<dt id="avantpy.conversion.to_python">
-<code class="descclassname">avantpy.conversion.</code><code class="descname">to_python</code><span class="sig-paren">(</span><em>source</em>, <em>dialect=None</em>, <em>source_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/conversion.html#to_python"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.conversion.to_python" title="Permalink to this definition">¶</a></dt>
-<dd><p>Converts a source in a known dialect into standard Python.</p>
-<p>This function uses Python’s <code class="docutils literal notranslate"><span class="pre">tokenize</span></code> module to convert a
-source into a sequence of tokens. A token might be the name
-of a variable, an operator, a parenthesis, a string, etc.</p>
-<p>This function analyses these tokens,
-replacing some written into a different dialect until all
-are converted into standard Python tokens.  Then, these
-are recombined into a string which is the source to be
-executed.</p>
-<p>Python’s tokenize module includes a function, called
-untokenize, which can be used to combine a series of tokens
-into a valid program.  With a normal Python program, doing
-something similar to:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">new_source</span> <span class="o">=</span> <span class="n">untokenize</span><span class="p">(</span><span class="n">tokenize</span><span class="p">(</span><span class="n">source</span><span class="p">))</span>
-</pre></div>
-</div>
-<p>would be such that executing <code class="docutils literal notranslate"><span class="pre">new_source</span></code> would be the same
-as executing <code class="docutils literal notranslate"><span class="pre">source</span></code>.  However, the spacing between tokens
-would not necessarily be the same for both <code class="docutils literal notranslate"><span class="pre">new_source</span></code>
-and the original program.  For example, the original program
-may include a line like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">variable</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span> <span class="n">argument</span> <span class="p">)</span>
-</pre></div>
-</div>
-<p>which might be converted into:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">variable</span> <span class="o">=</span><span class="n">function</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>One possibility that AvantPy offers is to run program with the
-–diff option to show the difference
-between the code written and standard Python. The difflib
-module, used to do this, shows all differences including
-differences in spaces between tokens.  Since the primary
-goal of the –diff option is to allow users to learn the
-differences between their dialect and standard Python, it is
-important to restrict differences shown to only those that
-are meaningful.  As a result, we do not use Python’s
-untokenize function, and explicitly keep track of spacing
-between tokens.</p>
-<p>To understand how this function works, it is useful to review
-all possible cases, from some of the most complex, ending
-with the simplest ones.</p>
-<ol class="upperalpha simple">
-<li><code class="docutils literal notranslate"><span class="pre">nobreak</span></code></li>
-</ol>
-<p>AvantPy has an additional keyword, named <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> in the
-English dialect, which can be used in <code class="docutils literal notranslate"><span class="pre">for</span></code> or <code class="docutils literal notranslate"><span class="pre">while</span></code>
-loops instead of the standard <code class="docutils literal notranslate"><span class="pre">else</span></code>, as in:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
-    <span class="c1"># code</span>
-<span class="n">nobreak</span><span class="p">:</span>
-    <span class="c1"># code</span>
-</pre></div>
-</div>
-<p>However, <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> cannot be used in an <code class="docutils literal notranslate"><span class="pre">if/elif/else</span></code>
-blocks to replace <code class="docutils literal notranslate"><span class="pre">else</span></code>.</p>
-<p>Furthermore, <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> cannot be used instead of <code class="docutils literal notranslate"><span class="pre">else</span></code>
-in an assignment such as:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="kc">True</span> <span class="k">else</span> <span class="mi">2</span>
-</pre></div>
-</div>
-<p>To identify if a program includes a <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> keyword
-mistakenly, every time we see a leading <code class="docutils literal notranslate"><span class="pre">for</span></code>, <code class="docutils literal notranslate"><span class="pre">while</span></code>,
-<code class="docutils literal notranslate"><span class="pre">if</span></code> or <code class="docutils literal notranslate"><span class="pre">elif</span></code> keyword (or their equivalent in a
-given dialect), we note the indentation (column where the
-first character is written) and the corresponding keyword.
-A list containing these keywords is called <code class="docutils literal notranslate"><span class="pre">blocks_with_else</span></code>
-in this function.</p>
-<p>Later, when we encounter a <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> keyword at a given
-indentation, we check to see if the last <code class="docutils literal notranslate"><span class="pre">blocks_with_else</span></code>
-keyword found at that same indentation was one for which
-it made sense to use <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> or not.  If it was a
-loop, we simply replace <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> by <code class="docutils literal notranslate"><span class="pre">else</span></code>. If not,
-we raise a custom exception which is handled elsewhere.</p>
-<ol class="upperalpha simple" start="2">
-<li><code class="docutils literal notranslate"><span class="pre">repeat</span></code></li>
-</ol>
-<p>In addition to the standard Python loops constructs, AvantPy
-support four additional idioms:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repeat</span> <span class="n">forever</span><span class="p">:</span>           <span class="c1"># while True:</span>
-    <span class="k">pass</span>
-<span class="n">repeat</span> <span class="k">while</span> <span class="n">condition</span><span class="p">:</span>   <span class="c1"># while condition:</span>
-    <span class="k">pass</span>
-<span class="n">repeat</span> <span class="n">until</span> <span class="n">condition</span><span class="p">:</span>   <span class="c1"># while not condition:</span>
-    <span class="k">pass</span>
-<span class="n">repeat</span> <span class="n">n</span><span class="p">:</span>                 <span class="c1"># for some_var in range(n):</span>
-    <span class="k">pass</span>
-</pre></div>
-</div>
-<p>For this last case, <code class="docutils literal notranslate"><span class="pre">n</span></code> could be an expression, possibly
-spanning multiple lines.</p>
-<p>When we encounter the equivalent to the “repeat” keyword in
-the selected dialect, we must make sure that it is the first
-keyword occurring on a logical line; if not, we raise a
-custom exception.</p>
-<p>If <code class="docutils literal notranslate"><span class="pre">repeat</span></code> is the first keyword on a line, we set a flag
-(repeat_loop) to True, preparing to look at the next token.</p>
-<p>a) If the next token is one of <code class="docutils literal notranslate"><span class="pre">forever</span></code>, <code class="docutils literal notranslate"><span class="pre">until</span></code>, <code class="docutils literal notranslate"><span class="pre">while</span></code>,
-or their equivalent in the target dialect
-(remember that including normal Python keywords in a program written
-in a different dialect is allowed)
-we can proceed with the rest in a straightforward manner.</p>
-<p>b) if that is not the case, we set a different flag (repeat_n)
-to True so that we can deal with the relevant for loop.</p>
-<p>For this last case, the variable in the for loop is a dummy
-variable; we must ensure that its name is chosen such that
-it does not occur anywhere else in the source code.
-This is accomplished using a method called
-<code class="docutils literal notranslate"><span class="pre">get_unique_variable_names</span></code>.</p>
-<ol class="upperalpha simple" start="3">
-<li><code class="docutils literal notranslate"><span class="pre">nobreak</span></code> and <code class="docutils literal notranslate"><span class="pre">repeat</span></code></li>
-</ol>
-<p>A <code class="docutils literal notranslate"><span class="pre">repeat</span></code> loop is essentially a <code class="docutils literal notranslate"><span class="pre">for</span></code> or a <code class="docutils literal notranslate"><span class="pre">while</span></code>
-loop. As such, it could have an <code class="docutils literal notranslate"><span class="pre">else</span></code> clause which
-has a clearer meaning if the keyword <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> is used
-instead.  Thus, just like we mentioned before, we also
-keep track of where a leading <code class="docutils literal notranslate"><span class="pre">repeat</span></code> is used.</p>
-<ol class="upperalpha simple" start="4">
-<li>Direct translation</li>
-</ol>
-<p>If a token does not match one of the cases described above,
-we need to see if it is a term used in the dialect; if
-so, we simply translate it into standard Python.</p>
-<ol class="upperalpha simple" start="5">
-<li>Remaining tokens</li>
-</ol>
-<p>Any remaining token is left as is; it is assumed to be valid
-Python.</p>
 </dd></dl>
 
 </div>
@@ -323,6 +256,27 @@ Python.</p>
 <code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_IfNobreakError</code><span class="sig-paren">(</span><em>exc</em>, <em>original_source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_IfNobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_IfNobreakError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles situation where <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> was wrongly use as a
 replacement for <code class="docutils literal notranslate"><span class="pre">else</span></code> in an if/elif/else block.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="avantpy.exception_handling.handle_MismatchedBracketsError">
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_MismatchedBracketsError</code><span class="sig-paren">(</span><em>exc</em>, <em>original_source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_MismatchedBracketsError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_MismatchedBracketsError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles situation where a bracket of one kind ‘([{‘
+is closed with a bracket of a different kind.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="avantpy.exception_handling.handle_MissingLeftBracketError">
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_MissingLeftBracketError</code><span class="sig-paren">(</span><em>exc</em>, <em>original_source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_MissingLeftBracketError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_MissingLeftBracketError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles situation where at bracket of one kind ),],}
+is closed without a corresponding open bracket.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="avantpy.exception_handling.handle_MissingRepeatError">
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_MissingRepeatError</code><span class="sig-paren">(</span><em>exc</em>, <em>original_source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_MissingRepeatError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_MissingRepeatError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles situation where either <code class="docutils literal notranslate"><span class="pre">until</span></code> or <code class="docutils literal notranslate"><span class="pre">forever</span></code> was
+used without being preceeded by <code class="docutils literal notranslate"><span class="pre">repeat</span></code>.</p>
 </dd></dl>
 
 <dl class="function">
@@ -387,6 +341,47 @@ friendlier traceback than Python.</p>
 <dt id="avantpy.exceptions.IfNobreakError">
 <em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">IfNobreakError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#IfNobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.IfNobreakError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raised if <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> is used instead of <code class="docutils literal notranslate"><span class="pre">else</span></code> in an <code class="docutils literal notranslate"><span class="pre">if</span></code> statement</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="avantpy.exceptions.MismatchedBracketsError">
+<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">MismatchedBracketsError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#MismatchedBracketsError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.MismatchedBracketsError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raised if a left parenthesis ‘(‘, or square bracket ‘[‘
+or curly bracket ‘{‘, is closed by a right ‘bracket’ of a different type.</p>
+<p>In standard Python, this would be indicated as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">SyntaxError</span><span class="p">:</span> <span class="n">invalid</span> <span class="n">syntax</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="exception">
+<dt id="avantpy.exceptions.MissingLeftBracketError">
+<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">MissingLeftBracketError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#MissingLeftBracketError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.MissingLeftBracketError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raised if a right parenthesis ‘)’, or square bracket ‘]’
+or curly bracket ‘}’, is found without having a matching left bracket
+found previously.</p>
+<p>In standard Python, this would be indicated as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">SyntaxError</span><span class="p">:</span> <span class="n">invalid</span> <span class="n">syntax</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="exception">
+<dt id="avantpy.exceptions.MissingRepeatError">
+<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">MissingRepeatError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#MissingRepeatError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.MissingRepeatError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raised if <code class="docutils literal notranslate"><span class="pre">until</span></code> or <code class="docutils literal notranslate"><span class="pre">forever</span></code> is used without being preceeded by
+<code class="docutils literal notranslate"><span class="pre">repeat</span></code>.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="avantpy.exceptions.MissingRightBracketError">
+<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">MissingRightBracketError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#MissingRightBracketError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.MissingRightBracketError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raised if a left parenthesis ‘(‘, or square bracket ‘[‘
+or curly bracket ‘{‘, is never closed by a corresponding bracket.</p>
+<p>In standard Python, this would be indicated as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">SyntaxError</span><span class="p">:</span> <span class="n">unexpected</span> <span class="n">EOF</span> <span class="k">while</span> <span class="n">parsing</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="exception">

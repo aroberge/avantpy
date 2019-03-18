@@ -57,6 +57,7 @@
 
 <div class="genindex-jumpbox">
  <a href="#A"><strong>A</strong></a>
+ | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
@@ -78,7 +79,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="modules.html#module-avantpy.console">avantpy.console (module)</a>
 </li>
-      <li><a href="modules.html#module-avantpy.conversion">avantpy.conversion (module)</a>
+      <li><a href="modules.html#module-avantpy.converter">avantpy.converter (module)</a>
 </li>
       <li><a href="modules.html#module-avantpy.exception_handling">avantpy.exception_handling (module)</a>
 </li>
@@ -103,14 +104,30 @@
   </ul></td>
 </tr></table>
 
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#avantpy.converter.Converter.convert">convert() (avantpy.converter.Converter method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#avantpy.converter.Converter">Converter (class in avantpy.converter)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="modules.html#avantpy.exception_handling.disable">disable() (in module avantpy.exception_handling)</a>
 </li>
+      <li><a href="modules.html#avantpy.converter.Converter.do_close_bracket">do_close_bracket() (avantpy.converter.Converter method)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="modules.html#avantpy.console.AvantPyInteractiveConsole.do_transformations">do_transformations() (avantpy.console.AvantPyInteractiveConsole method)</a>
+</li>
+      <li><a href="modules.html#avantpy.converter.Converter.do_until_forever_error">do_until_forever_error() (avantpy.converter.Converter method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -144,7 +161,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="modules.html#avantpy.exception_handling.get_partial_source">get_partial_source() (in module avantpy.exception_handling)</a>
 </li>
-      <li><a href="modules.html#avantpy.conversion.get_unique_variable_names">get_unique_variable_names() (in module avantpy.conversion)</a>
+      <li><a href="modules.html#avantpy.converter.get_unique_variable_names">get_unique_variable_names() (in module avantpy.converter)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -156,12 +173,20 @@
 </li>
       <li><a href="modules.html#avantpy.exception_handling.handle_IfNobreakError">handle_IfNobreakError() (in module avantpy.exception_handling)</a>
 </li>
+      <li><a href="modules.html#avantpy.exception_handling.handle_MismatchedBracketsError">handle_MismatchedBracketsError() (in module avantpy.exception_handling)</a>
+</li>
+      <li><a href="modules.html#avantpy.exception_handling.handle_MissingLeftBracketError">handle_MissingLeftBracketError() (in module avantpy.exception_handling)</a>
+</li>
+      <li><a href="modules.html#avantpy.exception_handling.handle_MissingRepeatError">handle_MissingRepeatError() (in module avantpy.exception_handling)</a>
+</li>
+      <li><a href="modules.html#avantpy.converter.Converter.handle_nobreak_error">handle_nobreak_error() (avantpy.converter.Converter method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="modules.html#avantpy.exception_handling.handle_NobreakFirstError">handle_NobreakFirstError() (in module avantpy.exception_handling)</a>
 </li>
       <li><a href="modules.html#avantpy.exception_handling.handle_NobreakSyntaxError">handle_NobreakSyntaxError() (in module avantpy.exception_handling)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="modules.html#avantpy.exception_handling.handle_RepeatFirstError">handle_RepeatFirstError() (in module avantpy.exception_handling)</a>
 </li>
       <li><a href="modules.html#avantpy.exception_handling.handle_TryNobreakError">handle_TryNobreakError() (in module avantpy.exception_handling)</a>
@@ -178,9 +203,13 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="modules.html#avantpy.exceptions.IfNobreakError">IfNobreakError</a>
 </li>
+      <li><a href="modules.html#avantpy.import_hook.import_main">import_main() (in module avantpy.import_hook)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="modules.html#avantpy.import_hook.import_main">import_main() (in module avantpy.import_hook)</a>
+      <li><a href="modules.html#avantpy.converter.Converter.init_bookkeeping_vars">init_bookkeeping_vars() (avantpy.converter.Converter method)</a>
+</li>
+      <li><a href="modules.html#avantpy.converter.Converter.init_dialect_vars">init_dialect_vars() (avantpy.converter.Converter method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -188,6 +217,16 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#avantpy.exceptions.MismatchedBracketsError">MismatchedBracketsError</a>
+</li>
+      <li><a href="modules.html#avantpy.exceptions.MissingLeftBracketError">MissingLeftBracketError</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#avantpy.exceptions.MissingRepeatError">MissingRepeatError</a>
+</li>
+      <li><a href="modules.html#avantpy.exceptions.MissingRightBracketError">MissingRightBracketError</a>
+</li>
       <li><a href="modules.html#avantpy.import_hook.MyHtmlDiff">MyHtmlDiff (class in avantpy.import_hook)</a>
 </li>
   </ul></td>
@@ -208,6 +247,12 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#avantpy.converter.Converter.preserve_repeat_spacing">preserve_repeat_spacing() (avantpy.converter.Converter method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#avantpy.converter.Converter.process_token">process_token() (avantpy.converter.Converter method)</a>
+</li>
       <li><a href="modules.html#avantpy.console.AvantPyInteractiveConsole.push">push() (avantpy.console.AvantPyInteractiveConsole method)</a>
 </li>
   </ul></td>
@@ -240,7 +285,7 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="modules.html#avantpy.conversion.to_python">to_python() (in module avantpy.conversion)</a>
+      <li><a href="modules.html#avantpy.converter.Token">Token (class in avantpy.converter)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>

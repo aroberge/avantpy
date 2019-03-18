@@ -1,7 +1,7 @@
 Other modules
 ==============
 
-In addition to `invocation.py` already mentioned, and excluding modules defining individual
+In addition to ``invocation.py`` already mentioned, and excluding modules defining individual
 dialects, the following are included:
 
 console
@@ -10,9 +10,9 @@ console
 .. automodule:: avantpy.console
    :members:
 
-conversion
+converter
 ----------
-.. automodule:: avantpy.conversion
+.. automodule:: avantpy.converter
    :members:
 
 

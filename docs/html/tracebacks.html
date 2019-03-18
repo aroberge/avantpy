@@ -47,8 +47,11 @@
 <li><a class="reference internal" href="#nobreakfirsterror">NobreakFirstError</a></li>
 <li><a class="reference internal" href="#nobreaksyntaxerror">NobreakSyntaxError</a></li>
 <li><a class="reference internal" href="#repeatfirsterror">RepeatFirstError</a></li>
+<li><a class="reference internal" href="#missingrepeaterror">MissingRepeatError</a></li>
 <li><a class="reference internal" href="#unknownlanguage">UnknownLanguage</a></li>
 <li><a class="reference internal" href="#unknowndialect">UnknownDialect</a></li>
+<li><a class="reference internal" href="#mismatchedbracketserror">MismatchedBracketsError</a></li>
+<li><a class="reference internal" href="#missingleftbracketerror">MissingLeftBracketError</a></li>
 <li><a class="reference internal" href="#unexpectederror">UnexpectedError</a></li>
 </ul>
 </li>
@@ -193,6 +196,39 @@ Python version: 3.7.0</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="missingrepeaterror">
+<h2>MissingRepeatError<a class="headerlink" href="#missingrepeaterror" title="Permalink to this headline">¶</a></h2>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">MissingRepeatError</span>
+
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="n">until_no_repeat</span><span class="o">.</span><span class="n">pyupper</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">3.</span>
+
+<span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
+
+   <span class="mi">2</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="o">--&gt;</span><span class="mi">3</span><span class="p">:</span> <span class="n">UNTIL</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+   <span class="mi">4</span><span class="p">:</span>     <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="n">The</span> <span class="n">AvantPy</span> <span class="n">UNTIL</span> <span class="n">keyword</span> <span class="n">can</span> <span class="n">be</span> <span class="n">used</span> <span class="n">only</span> <span class="n">when</span> <span class="n">preceded</span> <span class="n">by</span>
+<span class="n">REPEAT</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Example 2:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">MissingRepeatError</span>
+
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="n">forever_no_repeat</span><span class="o">.</span><span class="n">pyupper</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">3.</span>
+
+<span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
+
+   <span class="mi">2</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="o">--&gt;</span><span class="mi">3</span><span class="p">:</span> <span class="n">FOREVER</span><span class="p">:</span>
+   <span class="mi">4</span><span class="p">:</span>     <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="n">The</span> <span class="n">AvantPy</span> <span class="n">FOREVER</span> <span class="n">keyword</span> <span class="n">can</span> <span class="n">be</span> <span class="n">used</span> <span class="n">only</span> <span class="n">when</span> <span class="n">preceded</span> <span class="n">by</span>
+<span class="n">REPEAT</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="unknownlanguage">
 <h2>UnknownLanguage<a class="headerlink" href="#unknownlanguage" title="Permalink to this headline">¶</a></h2>
 <p>Example:</p>
@@ -212,6 +248,42 @@ Python version: 3.7.0</p>
 
 <span class="n">The</span> <span class="n">following</span> <span class="n">unknown</span> <span class="n">dialect</span> <span class="n">was</span> <span class="n">requested</span><span class="p">:</span> <span class="n">pyxx</span><span class="o">.</span>
 <span class="n">The</span> <span class="n">known</span> <span class="n">dialects</span> <span class="n">are</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;pyen&#39;</span><span class="p">,</span> <span class="s1">&#39;pyes&#39;</span><span class="p">,</span> <span class="s1">&#39;pyfr&#39;</span><span class="p">,</span> <span class="s1">&#39;pyupper&#39;</span><span class="p">]</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mismatchedbracketserror">
+<h2>MismatchedBracketsError<a class="headerlink" href="#mismatchedbracketserror" title="Permalink to this headline">¶</a></h2>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">MismatchedBracketsError</span>
+
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="n">matchingbracketerror</span><span class="o">.</span><span class="n">pyupper</span> <span class="n">on</span> <span class="n">lines</span> <span class="p">[</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">6</span><span class="p">]</span><span class="o">.</span>
+
+<span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
+
+<span class="o">--&gt;</span><span class="mi">2</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span>
+   <span class="mi">3</span><span class="p">:</span>     <span class="mi">2</span><span class="p">,</span>
+   <span class="mi">4</span><span class="p">:</span>     <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span>
+   <span class="mi">5</span><span class="p">:</span>     <span class="mi">5</span>
+<span class="o">--&gt;</span><span class="mi">6</span><span class="p">:</span> <span class="p">]</span>
+
+<span class="n">The</span> <span class="n">opening</span> <span class="p">(</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">match</span> <span class="n">the</span> <span class="n">closing</span> <span class="p">]</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="missingleftbracketerror">
+<h2>MissingLeftBracketError<a class="headerlink" href="#missingleftbracketerror" title="Permalink to this headline">¶</a></h2>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">MissingRightBracketError</span>
+
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="n">missingleftbracket</span><span class="o">.</span><span class="n">pyupper</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">5.</span>
+
+<span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
+
+   <span class="mi">4</span><span class="p">:</span>     <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,)</span>
+<span class="o">--&gt;</span><span class="mi">5</span><span class="p">:</span>     <span class="p">)</span>
+   <span class="mi">6</span><span class="p">:</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">The</span> <span class="n">closing</span> <span class="p">)</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">match</span> <span class="n">anything</span><span class="o">.</span>
 </pre></div>
 </div>
 </div>
