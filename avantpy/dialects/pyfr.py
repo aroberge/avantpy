@@ -7,8 +7,8 @@ pyfr = {
     "and": "et",
     "as": "comme",
     "assert": "affirmer",
-    #'async': 'async',  # do not translate
-    #'await': 'await',  # as these are not for beginners
+    # 'async': 'async',  # do not translate
+    # 'await': 'await',  # as these are not for beginners
     "break": "interrompre",
     "class": "classe",
     "continue": "continuer",
@@ -32,7 +32,7 @@ pyfr = {
     "pass": "passer",
     "raise": "lever",
     "return": "retourner",
-    "try": "essaayer",
+    "try": "essayer",
     "while": "tantque",
     "with": "avec",
     "yield": "cède",

@@ -1,4 +1,0 @@
-'''translations: sp.py'''
-
-sp = {
-}

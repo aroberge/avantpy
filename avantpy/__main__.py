@@ -1,1 +1,1 @@
-print("from __main__")
+pass

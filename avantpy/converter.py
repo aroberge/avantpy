@@ -256,11 +256,12 @@ class Converter:
             self.dialect = state.set_dialect(dialect)
         else:
             self.dialect = state.get_dialect()
-
         self.source = source
-        self.source_name = source_name
-        self.init_dialect_vars()
-        self.init_bookkeeping_vars()
+
+        if self.dialect is not None:
+            self.source_name = source_name
+            self.init_dialect_vars()
+            self.init_bookkeeping_vars()
 
     def convert(self):
         """Uses Python's tokenize module to generate tokens from a source.
@@ -344,7 +345,10 @@ class Converter:
                 # keeping track of beginning of for/while/if block so that
                 # we can tell if replacing 'nobreak' by 'else' makes sense
                 self.indentations[token.start_col] = [token.string, token.start_line]
-            self.result.append(token.string)
+            if token.string in self.lang_to_py:
+                self.result.append(self.lang_to_py[token.string])
+            else:
+                self.result.append(token.string)
 
         elif token.string in "([{":
             self.brackets.append((token.string, token.start_line))

@@ -4,15 +4,64 @@ Language or dialect?
 In this documentation, the words "dialect" and "language" are used in what may seem
 at first to be a confusing way.
 
-Python is our main programming language.
-Python's keywords and other names are based on the English language.
-AvantPy enables users to write programs with keywords based on their native language.
-In this documentation, a **dialect** refers to an **extension to the Python programming language**
-which includes non-English based keywords.
-
 A given language is identified by its
 `two-letter code <https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes>`_.
 For example, ``fr`` identifies the French language.
+
+Dialects definitions for language ``xx`` are Python files
+named ``pyxx.py`` and are found in the AvantPy's repository:
+`avantpy/dialects/ directory <https://github.com/aroberge/avantpy/tree/master/avantpy/dialects>`_.
+
+
+Perhaps an example is the best way to demonstrate; we will generate an
+error message by trying to assign the AvantPy keyword ``repeat``
+(``répéter`` in the French **dialect**) and show the error message
+in the otherr language using the AvantPy console::
+
+    $ python -m avantpy
+    avantpy console version 0.0.4. [Python version: 3.7.0]
+
+    ->> set_lang('fr')
+    ->> set_dialect('pyen')
+    'pyen'
+    ->> a = repeat
+
+        Exception AvantPy: RepeatFirstError
+
+        Erreur trouvée dans le fichier REPL à la ligne 1.
+
+        Dialecte utilisé: pyen
+
+        -->1: a = repeat
+
+        Le mot-clé repeat spécifique à Avantpy peut seulement être utilisé
+        pour débuter une nouvelle boucle 'pour' ou 'tantque'
+        (équivalent Python: 'for' ou 'while').
+
+
+    #=============================================
+
+
+    ->> set_lang('en')
+    ->> set_dialect('pyfr')
+    'pyfr'
+    ->> b = répéter
+
+        AvantPy exception: RepeatFirstError
+
+        Error found in file REPL on line 1.
+
+        Dialect used: pyfr
+
+        -->1: b = répéter
+
+        The AvantPy répéter keyword can only be used to begin
+        a new for or while loop.
+
+->>
+
+Existing dialects
+------------------
 
 Dialects definitions for language ``xx`` are Python files
 named ``pyxx.py`` and are found in the AvantPy's repository:
@@ -35,3 +84,16 @@ Finally, an
 of AvantPy's English dialect exists; this is primarily intended to be used as a template
 for other dialects, and for testing.
 
+Existing languages
+------------------
+
+Language translations files for language ``xx`` are Python files
+named ``xx.py`` and are found in the AvantPy's repository:
+`avantpy/translations/ directory <https://github.com/aroberge/avantpy/tree/master/avantpy/translations>`_.
+
+Currently, a **DRAFT** implementation of the following translations exist:
+
+- `English translations <https://github.com/aroberge/avantpy/tree/master/avantpy/translations/en.py>`_
+- `French translations <https://github.com/aroberge/avantpy/tree/master/avantpy/translations/fr.py>`_
+- `English UPPERCASE version <https://github.com/aroberge/avantpy/tree/master/avantpy/translations/pyupper.py>`_ is primarily intended to be used as a template
+  for other languages, and for testing.

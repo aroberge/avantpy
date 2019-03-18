@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Language or dialect? &#8212; AvantPy 0.0.3 documentation</title>
+    <title>Language or dialect? &#8212; AvantPy 0.0.4 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -34,11 +34,20 @@
         <li class="right" >
           <a href="invocation.html" title="Invocation"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.3 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.4 documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Language or dialect?</a><ul>
+<li><a class="reference internal" href="#existing-dialects">Existing dialects</a></li>
+<li><a class="reference internal" href="#existing-languages">Existing languages</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="invocation.html"
                         title="previous chapter">Invocation</a></p>
@@ -76,14 +85,60 @@
 <h1>Language or dialect?<a class="headerlink" href="#language-or-dialect" title="Permalink to this headline">¶</a></h1>
 <p>In this documentation, the words “dialect” and “language” are used in what may seem
 at first to be a confusing way.</p>
-<p>Python is our main programming language.
-Python’s keywords and other names are based on the English language.
-AvantPy enables users to write programs with keywords based on their native language.
-In this documentation, a <strong>dialect</strong> refers to an <strong>extension to the Python programming language</strong>
-which includes non-English based keywords.</p>
 <p>A given language is identified by its
 <a class="reference external" href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">two-letter code</a>.
 For example, <code class="docutils literal notranslate"><span class="pre">fr</span></code> identifies the French language.</p>
+<p>Dialects definitions for language <code class="docutils literal notranslate"><span class="pre">xx</span></code> are Python files
+named <code class="docutils literal notranslate"><span class="pre">pyxx.py</span></code> and are found in the AvantPy’s repository:
+<a class="reference external" href="https://github.com/aroberge/avantpy/tree/master/avantpy/dialects">avantpy/dialects/ directory</a>.</p>
+<p>Perhaps an example is the best way to demonstrate; we will generate an
+error message by trying to assign the AvantPy keyword <code class="docutils literal notranslate"><span class="pre">repeat</span></code>
+(<code class="docutils literal notranslate"><span class="pre">répéter</span></code> in the French <strong>dialect</strong>) and show the error message
+in the otherr language using the AvantPy console:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python -m avantpy
+avantpy console version 0.0.4. [Python version: 3.7.0]
+
+-&gt;&gt; set_lang(&#39;fr&#39;)
+-&gt;&gt; set_dialect(&#39;pyen&#39;)
+&#39;pyen&#39;
+-&gt;&gt; a = repeat
+
+    Exception AvantPy: RepeatFirstError
+
+    Erreur trouvée dans le fichier REPL à la ligne 1.
+
+    Dialecte utilisé: pyen
+
+    --&gt;1: a = repeat
+
+    Le mot-clé repeat spécifique à Avantpy peut seulement être utilisé
+    pour débuter une nouvelle boucle &#39;pour&#39; ou &#39;tantque&#39;
+    (équivalent Python: &#39;for&#39; ou &#39;while&#39;).
+
+
+#=============================================
+
+
+-&gt;&gt; set_lang(&#39;en&#39;)
+-&gt;&gt; set_dialect(&#39;pyfr&#39;)
+&#39;pyfr&#39;
+-&gt;&gt; b = répéter
+
+    AvantPy exception: RepeatFirstError
+
+    Error found in file REPL on line 1.
+
+    Dialect used: pyfr
+
+    --&gt;1: b = répéter
+
+    The AvantPy répéter keyword can only be used to begin
+    a new for or while loop.
+</pre></div>
+</div>
+<p>-&gt;&gt;</p>
+<div class="section" id="existing-dialects">
+<h2>Existing dialects<a class="headerlink" href="#existing-dialects" title="Permalink to this headline">¶</a></h2>
 <p>Dialects definitions for language <code class="docutils literal notranslate"><span class="pre">xx</span></code> are Python files
 named <code class="docutils literal notranslate"><span class="pre">pyxx.py</span></code> and are found in the AvantPy’s repository:
 <a class="reference external" href="https://github.com/aroberge/avantpy/tree/master/avantpy/dialects">avantpy/dialects/ directory</a>.</p>
@@ -101,6 +156,20 @@ equivalent to <code class="docutils literal notranslate"><span class="pre">input
 <a class="reference external" href="https://github.com/aroberge/avantpy/tree/master/avantpy/dialects/pyupper.py">UPPERCASE version</a>
 of AvantPy’s English dialect exists; this is primarily intended to be used as a template
 for other dialects, and for testing.</p>
+</div>
+<div class="section" id="existing-languages">
+<h2>Existing languages<a class="headerlink" href="#existing-languages" title="Permalink to this headline">¶</a></h2>
+<p>Language translations files for language <code class="docutils literal notranslate"><span class="pre">xx</span></code> are Python files
+named <code class="docutils literal notranslate"><span class="pre">xx.py</span></code> and are found in the AvantPy’s repository:
+<a class="reference external" href="https://github.com/aroberge/avantpy/tree/master/avantpy/translations">avantpy/translations/ directory</a>.</p>
+<p>Currently, a <strong>DRAFT</strong> implementation of the following translations exist:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/aroberge/avantpy/tree/master/avantpy/translations/en.py">English translations</a></li>
+<li><a class="reference external" href="https://github.com/aroberge/avantpy/tree/master/avantpy/translations/fr.py">French translations</a></li>
+<li><a class="reference external" href="https://github.com/aroberge/avantpy/tree/master/avantpy/translations/pyupper.py">English UPPERCASE version</a> is primarily intended to be used as a template
+for other languages, and for testing.</li>
+</ul>
+</div>
 </div>
 
 
@@ -124,7 +193,7 @@ for other dialects, and for testing.</p>
         <li class="right" >
           <a href="invocation.html" title="Invocation"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.3 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.4 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

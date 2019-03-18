@@ -5,8 +5,7 @@ This file can be used as a template for translations in other languages.
 """
 
 # Note: as a reminder that these are the error messages from the upper(case)
-# dialect, we begin them with the all-caps words AVANTPY EXCEPTION or
-# PYTHON EXCEPTION
+# dialect, we begin them with the all-caps words AVANTPY EXCEPTION.
 
 upper = {
     "IfNobreakError": """
@@ -52,7 +51,7 @@ upper = {
     Dialect used: {dialect}\n
 {partial_source}
 
-    The AvantPy {repeat_kwd} keyword can be used instead to begin
+    The AvantPy {repeat_kwd} keyword can only be used to begin
     a new loop (Python: equivalent to 'for' or 'while' loop).
 """,
     "TryNobreakError": """
@@ -73,7 +72,7 @@ upper = {
     The opening {open_bracket} does not match the closing {close_bracket}.
 """,
     "MissingLeftBracketError": """
-    AVANTPY EXCEPTION: MissingRightBracketError\n
+    AVANTPY EXCEPTION: MissingLeftBracketError\n
     Error found in file {filename} on line {linenumber}.\n
     Dialect used: {dialect}\n
 {partial_source}
