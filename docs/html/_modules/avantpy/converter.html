@@ -54,8 +54,159 @@
             
   <h1>Source code for avantpy.converter</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">New version of previous converter</span>
-<span class="sd">This time, class-based to make it more readable</span>
+<span class="sd">This module contains all the necessary functions, classes and methods</span>
+<span class="sd">to take a file written in a given dialect and convert it into Python.</span>
+<span class="sd">In doing so, it can identify some mistakes and raise some custom</span>
+<span class="sd">exceptions which can be used to inform users in a way that is less</span>
+<span class="sd">intimidating than the usual Python tracebacks.</span>
+
+<span class="sd">The following can definitely be skipped unless you are interested in</span>
+<span class="sd">(most of) the gory details.</span>
+
+<span class="sd">AvantPy uses Python&#39;s ``tokenize`` module to convert a</span>
+<span class="sd">source into a sequence of tokens. A token might be the name</span>
+<span class="sd">of a variable, an operator, a parenthesis, a string, etc.</span>
+
+<span class="sd">AvantPy analyses these tokens,</span>
+<span class="sd">replacing some written into a different dialect until all</span>
+<span class="sd">are converted into standard Python tokens.  Then, these</span>
+<span class="sd">are recombined into a string which is the source to be</span>
+<span class="sd">executed.</span>
+
+<span class="sd">Python&#39;s tokenize module includes a function, called</span>
+<span class="sd">untokenize, which can be used to combine a series of tokens</span>
+<span class="sd">into a valid program.  With a normal Python program, doing</span>
+<span class="sd">something similar to::</span>
+
+<span class="sd">    new_source = untokenize(tokenize(source))</span>
+
+<span class="sd">would be such that executing ``new_source`` would be the same</span>
+<span class="sd">as executing ``source``.  However, the spacing between tokens</span>
+<span class="sd">would not necessarily be the same for both ``new_source``</span>
+<span class="sd">and the original program.  For example, the original program</span>
+<span class="sd">may include a line like::</span>
+
+<span class="sd">    variable = function( argument )</span>
+
+<span class="sd">which might be converted into::</span>
+
+<span class="sd">    variable =function(argument)</span>
+
+<span class="sd">One possibility that AvantPy offers is to run program with the</span>
+<span class="sd">--diff option to show the difference</span>
+<span class="sd">between the code written and standard Python. The difflib</span>
+<span class="sd">module, used to do this, shows all differences including</span>
+<span class="sd">differences in spaces between tokens.  Since the primary</span>
+<span class="sd">goal of the --diff option is to allow users to learn the</span>
+<span class="sd">differences between their dialect and standard Python, it is</span>
+<span class="sd">important to restrict differences shown to only those that</span>
+<span class="sd">are meaningful.  As a result, we do not use Python&#39;s</span>
+<span class="sd">untokenize function, and explicitly keep track of spacing</span>
+<span class="sd">between tokens.</span>
+
+<span class="sd">To understand how the conversion process works, it is useful to review</span>
+<span class="sd">all possible cases, from some of the most complex, ending</span>
+<span class="sd">with the simplest ones.</span>
+
+<span class="sd">A. ``nobreak``</span>
+
+<span class="sd">AvantPy has an additional keyword, named ``nobreak`` in the</span>
+<span class="sd">English dialect, which can be used in ``for`` or ``while``</span>
+<span class="sd">loops instead of the standard ``else``, as in::</span>
+
+<span class="sd">    while condition:</span>
+<span class="sd">        # code</span>
+<span class="sd">    nobreak:</span>
+<span class="sd">        # code</span>
+
+<span class="sd">However, ``nobreak`` cannot be used in an ``if/elif/else``</span>
+<span class="sd">blocks to replace ``else``.</span>
+
+<span class="sd">Furthermore, ``nobreak`` cannot be used instead of ``else``</span>
+<span class="sd">in an assignment such as::</span>
+
+<span class="sd">    a = 1 if True else 2</span>
+
+<span class="sd">To identify if a program includes a ``nobreak`` keyword</span>
+<span class="sd">mistakenly, every time we see a leading ``for``, ``while``,</span>
+<span class="sd">``if`` or ``elif`` keyword (or their equivalent in a</span>
+<span class="sd">given dialect), we note the indentation (column where the</span>
+<span class="sd">first character is written) and the corresponding keyword.</span>
+<span class="sd">A list containing these keywords is called ``blocks_with_else``</span>
+<span class="sd">in this function.</span>
+
+<span class="sd">Later, when we encounter a ``nobreak`` keyword at a given</span>
+<span class="sd">indentation, we check to see if the last ``blocks_with_else``</span>
+<span class="sd">keyword found at that same indentation was one for which</span>
+<span class="sd">it made sense to use ``nobreak`` or not.  If it was a</span>
+<span class="sd">loop, we simply replace ``nobreak`` by ``else``. If not,</span>
+<span class="sd">we raise a custom exception which is handled elsewhere.</span>
+
+<span class="sd">B. ``repeat``</span>
+
+<span class="sd">In addition to the standard Python loops constructs, AvantPy</span>
+<span class="sd">support four additional idioms::</span>
+
+<span class="sd">    repeat forever:           # while True:</span>
+<span class="sd">        pass</span>
+<span class="sd">    repeat while condition:   # while condition:</span>
+<span class="sd">        pass</span>
+<span class="sd">    repeat until condition:   # while not condition:</span>
+<span class="sd">        pass</span>
+<span class="sd">    repeat n:                 # for some_var in range(n):</span>
+<span class="sd">        pass</span>
+
+<span class="sd">For this last case, ``n`` could be an expression, possibly</span>
+<span class="sd">spanning multiple lines.</span>
+
+<span class="sd">When we encounter the equivalent to the &quot;repeat&quot; keyword in</span>
+<span class="sd">the selected dialect, we must make sure that it is the first</span>
+<span class="sd">keyword occurring on a logical line; if not, we raise a</span>
+<span class="sd">custom exception.</span>
+
+<span class="sd">If ``repeat`` is the first keyword on a line, we set a flag</span>
+<span class="sd">(repeat_loop) to True, preparing to look at the next token.</span>
+
+<span class="sd">a) If the next token is one of ``forever``, ``until``, ``while``,</span>
+<span class="sd">or their equivalent in the target dialect</span>
+<span class="sd">(remember that including normal Python keywords in a program written</span>
+<span class="sd">in a different dialect is allowed)</span>
+<span class="sd">we can proceed with the rest in a straightforward manner.</span>
+
+<span class="sd">b) if that is not the case, we set a different flag (repeat_n)</span>
+<span class="sd">to True so that we can deal with the relevant for loop.</span>
+
+<span class="sd">For this last case, the variable in the for loop is a dummy</span>
+<span class="sd">variable; we must ensure that its name is chosen such that</span>
+<span class="sd">it does not occur anywhere else in the source code.</span>
+<span class="sd">This is accomplished using a method called</span>
+<span class="sd">``get_unique_variable_names``.</span>
+
+<span class="sd">C. ``nobreak`` and ``repeat``</span>
+
+<span class="sd">A ``repeat`` loop is essentially a ``for`` or a ``while``</span>
+<span class="sd">loop. As such, it could have an ``else`` clause which</span>
+<span class="sd">has a clearer meaning if the keyword ``nobreak`` is used</span>
+<span class="sd">instead.  Thus, just like we mentioned before, we also</span>
+<span class="sd">keep track of where a leading ``repeat`` is used.</span>
+
+<span class="sd">D. Direct translation</span>
+
+<span class="sd">If a token does not match one of the cases described above,</span>
+<span class="sd">we need to see if it is a term used in the dialect; if</span>
+<span class="sd">so, we simply translate it into standard Python.</span>
+
+<span class="sd">E. Brackets</span>
+
+<span class="sd">In Python, brackets must always come in pairs: (...), [...],</span>
+<span class="sd">{...}. In the course of processing the file, if we identify</span>
+<span class="sd">brackets which are not paired correctly, an exception</span>
+<span class="sd">is raised.</span>
+
+<span class="sd">F. Remaining tokens</span>
+
+<span class="sd">Any remaining token is left as is; it is assumed to be valid</span>
+<span class="sd">Python.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">tokenize</span>
@@ -111,23 +262,70 @@
 
 
 <div class="viewcode-block" id="Converter"><a class="viewcode-back" href="../../modules.html#avantpy.converter.Converter">[docs]</a><span class="k">class</span> <span class="nc">Converter</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;To be written&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;This class uses Python&#39;s ``tokenize`` module to convert a</span>
+<span class="sd">    source into a sequence of tokens. A token might be the name</span>
+<span class="sd">    of a variable, an operator, a parenthesis, a string, etc.</span>
 
-<div class="viewcode-block" id="Converter.convert"><a class="viewcode-back" href="../../modules.html#avantpy.converter.Converter.convert">[docs]</a>    <span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">dialect</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">source_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="s2">&quot;to be written&quot;</span>
+<span class="sd">    It processes one token at a time, identifying potential misuses,</span>
+<span class="sd">    replacing some tokens written into a different dialect until all</span>
+<span class="sd">    are converted into standard Python tokens.  Then, these</span>
+<span class="sd">    are recombined into a string which is the source to be</span>
+<span class="sd">    executed.</span>
+
+<span class="sd">    Python&#39;s tokenize module includes a function, called</span>
+<span class="sd">    untokenize, which can be used to combine a series of tokens</span>
+<span class="sd">    into a valid program.  With a normal Python program, doing</span>
+<span class="sd">    something similar to::</span>
+
+<span class="sd">        new_source = untokenize(tokenize(source))</span>
+
+<span class="sd">    would be such that executing ``new_source`` would be the same</span>
+<span class="sd">    as executing ``source``.  However, the spacing between tokens</span>
+<span class="sd">    would not necessarily be the same for both ``new_source``</span>
+<span class="sd">    and the original program.  For example, the original program</span>
+<span class="sd">    may include a line like::</span>
+
+<span class="sd">        variable = function( argument )</span>
+
+<span class="sd">    which might be converted into::</span>
+
+<span class="sd">        variable =function(argument)</span>
+
+<span class="sd">    One possibility that AvantPy offers is to run program with the</span>
+<span class="sd">    --diff option to show the difference</span>
+<span class="sd">    between the code written and standard Python. The difflib</span>
+<span class="sd">    module, used to do this, shows all differences including</span>
+<span class="sd">    differences in spaces between tokens.  Since the primary</span>
+<span class="sd">    goal of the --diff option is to allow users to learn the</span>
+<span class="sd">    differences between their dialect and standard Python, it is</span>
+<span class="sd">    important to restrict differences shown to only those that</span>
+<span class="sd">    are meaningful.  As a result, we do not use Python&#39;s</span>
+<span class="sd">    untokenize function, and explicitly keep track of spacing</span>
+<span class="sd">    between tokens.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dialect</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">source_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initializes variables that are used to convert a program</span>
+<span class="sd">           written in a given dialect into Standard Python.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">dialect</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">set_dialect</span><span class="p">(</span><span class="n">dialect</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get_dialect</span><span class="p">()</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">source</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">source_name</span> <span class="o">=</span> <span class="n">source_name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">init_dialect_vars</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">init_bookkeeping_vars</span><span class="p">()</span>
-        <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">generate_tokens</span><span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">readline</span><span class="p">)</span>
 
+<div class="viewcode-block" id="Converter.convert"><a class="viewcode-back" href="../../modules.html#avantpy.converter.Converter.convert">[docs]</a>    <span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">dialect</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">source_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Uses Python&#39;s tokenize module to generate tokens from a source.</span>
+
+<span class="sd">           It calls a function to process each token in turn, and combine</span>
+<span class="sd">           the results to returned a transformed source.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">source</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">generate_tokens</span><span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">readline</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
             <span class="n">token</span> <span class="o">=</span> <span class="n">Token</span><span class="p">(</span><span class="n">tok</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">process_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
@@ -135,7 +333,7 @@
         <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Converter.init_dialect_vars"><a class="viewcode-back" href="../../modules.html#avantpy.converter.Converter.init_dialect_vars">[docs]</a>    <span class="k">def</span> <span class="nf">init_dialect_vars</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="s2">&quot;to be written&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Initialises variables that are dependent on a given dialect.&quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">lang_to_py</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get_to_python</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">)</span>
         <span class="n">py_to_lang</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get_from_python</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">)</span>
@@ -157,29 +355,23 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">nobreak_kwd</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;else&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="Converter.init_bookkeeping_vars"><a class="viewcode-back" href="../../modules.html#avantpy.converter.Converter.init_bookkeeping_vars">[docs]</a>    <span class="k">def</span> <span class="nf">init_bookkeeping_vars</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="s2">&quot;to be written&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Initialises variables that are used for bookkeeping&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">brackets</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># keeps track where (), [], {} occur</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">indentations</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># keeps track of indentation levels of some blocks</span>
 
         <span class="c1"># variable names to be used in</span>
         <span class="c1">#    for variable_name in range(...):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">count_names</span> <span class="o">=</span> <span class="n">get_unique_variable_names</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">repeat_kwd</span><span class="p">)</span>
 
-        <span class="c1"># some book-keeping variables used in the for-loop below</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># accumulates transformed tokens</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">prev_lineno</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">prev_col</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">just_processed_repeat_kwd</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">repeat_n</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">begin_new_line</span> <span class="o">=</span> <span class="kc">True</span>
-
-        <span class="c1"># In order to determine what to do with the nobreak keyword,</span>
-        <span class="c1"># we keep track of which one among if/while/for and their translation</span>
-        <span class="c1"># in a given dialect last appeared in a given column</span>
-        <span class="c1"># format: indentation[column] = keyword</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">indentations</span> <span class="o">=</span> <span class="p">{}</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">begin_new_line</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="Converter.process_token"><a class="viewcode-back" href="../../modules.html#avantpy.converter.Converter.process_token">[docs]</a>    <span class="k">def</span> <span class="nf">process_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;docstring to be added&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Determines what to do for each individual token.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot; </span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">):</span>  <span class="c1"># we keep track of spacing elsewhere</span>
             <span class="k">return</span>
 
@@ -226,7 +418,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">string</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Converter.do_close_bracket"><a class="viewcode-back" href="../../modules.html#avantpy.converter.Converter.do_close_bracket">[docs]</a>    <span class="k">def</span> <span class="nf">do_close_bracket</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Keep track of matching brackets so that errors can be flagged&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Determines if a closing bracket ), ], or }, matches a previously</span>
+<span class="sd">           opened one, and raises an error if that is not the case.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">previous_bracket</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">brackets</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
@@ -282,8 +476,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">prev_lineno</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">end_line</span></div>
 
 <div class="viewcode-block" id="Converter.do_until_forever_error"><a class="viewcode-back" href="../../modules.html#avantpy.converter.Converter.do_until_forever_error">[docs]</a>    <span class="k">def</span> <span class="nf">do_until_forever_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;If self.just_processed_repeat_kwd is true, this means that we just saw a</span>
-<span class="sd">           the keywords &#39;until&#39; or &#39;forever&#39;</span>
+        <span class="sd">&quot;&quot;&quot;This function is called when we see a keyword equivalent to</span>
+<span class="sd">           ``until`` or ``forever`` in a given dialect without them</span>
+<span class="sd">           being preceeded by the keyword ``repeat``. This is not allowed.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">just_processed_repeat_kwd</span>
         <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">MissingRepeatError</span><span class="p">(</span>
@@ -299,7 +494,18 @@
             <span class="p">),</span>
         <span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">process_after_repeat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+<div class="viewcode-block" id="Converter.process_after_repeat"><a class="viewcode-back" href="../../modules.html#avantpy.converter.Converter.process_after_repeat">[docs]</a>    <span class="k">def</span> <span class="nf">process_after_repeat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;After we see the ``repeat`` keyword, there are four possibilities:</span>
+
+<span class="sd">               1. the keyword ``until`` follows</span>
+
+<span class="sd">               2. the keyword ``until`` follows</span>
+
+<span class="sd">               3. the keyword ``forever`` follows</span>
+
+<span class="sd">               4. it is meant to be followed by some_expression which evaluates</span>
+<span class="sd">                  to an integer.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">just_processed_repeat_kwd</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="ow">in</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">while_kwd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">until_kwd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">forever_kwd</span><span class="p">]:</span>
             <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">while_kwd</span><span class="p">:</span>
@@ -311,9 +517,12 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">repeat_n</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;for </span><span class="si">%s</span><span class="s2"> in range(&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">count_names</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">string</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">process_nobreak</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+<div class="viewcode-block" id="Converter.process_nobreak"><a class="viewcode-back" href="../../modules.html#avantpy.converter.Converter.process_nobreak">[docs]</a>    <span class="k">def</span> <span class="nf">process_nobreak</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The ``nobreak`` keyword is allowed to replace ``else`` in</span>
+<span class="sd">           a ``while`` or ``for`` loop only.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">begin_new_line</span>
             <span class="ow">and</span> <span class="n">token</span><span class="o">.</span><span class="n">start_col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">indentations</span>
@@ -321,9 +530,15 @@
         <span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;else&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">handle_nobreak_error</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handle_nobreak_error</span><span class="p">(</span><span class="n">token</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">process_repeat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+<div class="viewcode-block" id="Converter.process_repeat"><a class="viewcode-back" href="../../modules.html#avantpy.converter.Converter.process_repeat">[docs]</a>    <span class="k">def</span> <span class="nf">process_repeat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This identifies if ``repeat`` begins a new line; if so, we</span>
+<span class="sd">           simply set up a flag to indicate that we just saw this keyword,</span>
+<span class="sd">           and otherwise drop it.</span>
+
+<span class="sd">           If it does not begin a new line, we raise an exception.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">begin_new_line</span><span class="p">:</span>  <span class="c1"># this is not allowed to happen</span>
             <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">RepeatFirstError</span><span class="p">(</span>
                 <span class="s2">&quot;repeat must be first statement on a line&quot;</span><span class="p">,</span>
@@ -337,10 +552,10 @@
                     <span class="p">},</span>
                 <span class="p">),</span>
             <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">just_processed_repeat_kwd</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">just_processed_repeat_kwd</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="Converter.handle_nobreak_error"><a class="viewcode-back" href="../../modules.html#avantpy.converter.Converter.handle_nobreak_error">[docs]</a>    <span class="k">def</span> <span class="nf">handle_nobreak_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Identifies potential misuse of nobreak keyword.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Deals with identified misuses of the ``nobreak`` keyword.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">begin_new_line</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">NobreakFirstError</span><span class="p">(</span>
                 <span class="s2">&quot;nobreak must be first statement on a line&quot;</span><span class="p">,</span>
@@ -404,8 +619,8 @@
 
 
 <span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">dialect</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">source_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="n">converter</span> <span class="o">=</span> <span class="n">Converter</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">converter</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span> <span class="n">dialect</span><span class="o">=</span><span class="n">dialect</span><span class="p">,</span> <span class="n">source_name</span><span class="o">=</span><span class="n">source_name</span><span class="p">)</span>
+    <span class="n">converter</span> <span class="o">=</span> <span class="n">Converter</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">dialect</span><span class="o">=</span><span class="n">dialect</span><span class="p">,</span> <span class="n">source_name</span><span class="o">=</span><span class="n">source_name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">converter</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
 </pre></div>
 
           </div>
