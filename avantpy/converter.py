@@ -137,87 +137,92 @@ class Converter:
         self.indentations = {}
 
     def process_token(self, token):
-
+        """docstring to be added"""
         if not token.string.strip(" \t"):  # we keep track of spacing elsewhere
             return
 
         self.begin_new_line = token.start_line != self.prev_lineno
-
-        if token.string in "()[]{}":
-            self.preprocess_bracket(token)
-
-        if not self.just_processed_repeat_kwd:
-            self.preserve_repeat_spacing(token)
-            self.prevent_until_forever_misuses(token)
-
-        self.prev_col = token.end_col
-        self.prev_lineno = token.end_line
-
-        # keeping track of beginning of for/while/if block so that
-        # we can tell if replacing 'nobreak' by 'else' makes sense.
-        if self.begin_new_line:
-            if token.string in self.blocks_with_else:
-                self.indentations[token.start_col] = [token.string, token.start_line]
-
-        if token.string == self.nobreak_kwd:
-            self.identify_potential_nobreak_first_errors(token)
+        self.preserve_repeat_spacing(token)
 
         if token.string == self.repeat_kwd:
             self.process_repeat(token)
+
         elif self.just_processed_repeat_kwd:
             self.process_after_repeat(token)
+
         elif self.repeat_n and token.string == ":":
             self.result.append("):")
             self.repeat_n = False
+
+        elif not self.just_processed_repeat_kwd and token.string in [
+            self.forever_kwd,
+            self.until_kwd,
+        ]:
+            self.do_until_forever_error(token)
+
+        elif token.string in self.blocks_with_else:
+            if self.begin_new_line:
+                # keeping track of beginning of for/while/if block so that
+                # we can tell if replacing 'nobreak' by 'else' makes sense
+                self.indentations[token.start_col] = [token.string, token.start_line]
+            self.result.append(token.string)
+
+        elif token.string in "([{":
+            self.brackets.append((token.string, token.start_line))
+            self.result.append(token.string)
+
+        elif token.string in ")]}":
+            self.do_close_bracket(token)
+
         elif token.string == self.nobreak_kwd:
             self.process_nobreak(token)
+
         elif token.string in self.lang_to_py:
             self.result.append(self.lang_to_py[token.string])
+
         else:
             self.result.append(token.string)
 
-    def preprocess_bracket(self, token):
+    def do_close_bracket(self, token):
         """Keep track of matching brackets so that errors can be flagged"""
-        if token.string in "([{":
-            self.brackets.append((token.string, token.start_line))
-        elif token.string in ")]}":
-            try:
-                previous_bracket = self.brackets.pop()
-            except IndexError:
-                raise exceptions.MissingLeftBracketError(
-                    "Closing bracket found with no matching opening one",
-                    (
-                        {
-                            "bracket": token.string,
-                            "linenumber": token.start_line,
-                            "source_name": self.source_name,
-                            "source": self.source,
-                            "dialect": self.dialect,
-                        },
-                    ),
-                )
-            else:
-                open_bracket = previous_bracket[0]
-                if (
-                    (open_bracket == "(" and token.string != ")")
-                    or (open_bracket == "[" and token.string != "]")
-                    or (open_bracket == "{" and token.string != "}")
-                ):
-                    raise exceptions.MismatchedBracketsError(
-                        "Closing bracket found matching a different opening one.",
-                        (
-                            {
-                                "close_bracket": token.string,
-                                "open_bracket": open_bracket,
-                                "close_linenumber": token.start_line,
-                                "open_linenumber": previous_bracket[1],
-                                "source_name": self.source_name,
-                                "source": self.source,
-                                "dialect": self.dialect,
-                            },
-                        ),
-                    )
-        return
+        try:
+            previous_bracket = self.brackets.pop()
+        except IndexError:
+            raise exceptions.MissingLeftBracketError(
+                "Closing bracket found with no matching opening one",
+                (
+                    {
+                        "bracket": token.string,
+                        "linenumber": token.start_line,
+                        "source_name": self.source_name,
+                        "source": self.source,
+                        "dialect": self.dialect,
+                    },
+                ),
+            )
+
+        open_bracket = previous_bracket[0]
+        if (
+            (open_bracket == "(" and token.string != ")")
+            or (open_bracket == "[" and token.string != "]")
+            or (open_bracket == "{" and token.string != "}")
+        ):
+            raise exceptions.MismatchedBracketsError(
+                "Closing bracket found matching a different opening one.",
+                (
+                    {
+                        "close_bracket": token.string,
+                        "open_bracket": open_bracket,
+                        "close_linenumber": token.start_line,
+                        "open_linenumber": previous_bracket[1],
+                        "source_name": self.source_name,
+                        "source": self.source,
+                        "dialect": self.dialect,
+                    },
+                ),
+            )
+        else:
+            self.result.append(token.string)
 
     def preserve_repeat_spacing(self, token):
         """ We ensure spacing of original file is preserved,
@@ -226,29 +231,31 @@ class Converter:
             the repeat keyword which can simply be dropped;
             we don't need add the space between "repeat" and the next token.
         """
-        if token.start_line > self.prev_lineno:
-            self.prev_col = 0
-        if token.start_col > self.prev_col and token.string != "\n":
-            self.result.append(" " * (token.start_col - self.prev_col))
+        if not self.just_processed_repeat_kwd:
+            if token.start_line > self.prev_lineno:
+                self.prev_col = 0
+            if token.start_col > self.prev_col and token.string != "\n":
+                self.result.append(" " * (token.start_col - self.prev_col))
+        self.prev_col = token.end_col
+        self.prev_lineno = token.end_line
 
-    def prevent_until_forever_misuses(self, token):
+    def do_until_forever_error(self, token):
         """If self.just_processed_repeat_kwd is true, this means that we just saw a
            the keywords 'until' or 'forever'
         """
-        if token.string in [self.forever_kwd, self.until_kwd]:
-            raise exceptions.MissingRepeatError(
-                "until and forever must be preceeded by repeat",
-                (
-                    {
-                        "keyword": token.string,
-                        "linenumber": token.start_line,
-                        "source_name": self.source_name,
-                        "source": self.source,
-                        "dialect": self.dialect,
-                    },
-                ),
-            )
-        return
+        assert not self.just_processed_repeat_kwd
+        raise exceptions.MissingRepeatError(
+            "until and forever must be preceeded by repeat",
+            (
+                {
+                    "keyword": token.string,
+                    "linenumber": token.start_line,
+                    "source_name": self.source_name,
+                    "source": self.source,
+                    "dialect": self.dialect,
+                },
+            ),
+        )
 
     def process_after_repeat(self, token):
         self.just_processed_repeat_kwd = False
@@ -265,11 +272,13 @@ class Converter:
             self.result.append(token.string)
 
     def process_nobreak(self, token):
+        self.identify_potential_nobreak_first_errors(token)
         if (
             token.start_col in self.indentations
             and self.indentations[token.start_col][0] in self.loops_with_else
         ):
-            self.result.append("else")
+            self.result.append("else")  # done!
+        # == Otherwise, we identify the problem ==
         elif (
             token.start_col in self.indentations
             and self.indentations[token.start_col][0] in self.if_blocks
