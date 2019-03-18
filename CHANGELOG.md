@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 0.0.5
+
+- Fixed bug in console
+- Added translations of error messages in French and English
+
 ## Version 0.0.4
 
 First recorded change log.
