@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Testing &#8212; AvantPy 0.0.4 documentation</title>
+    <title>Testing &#8212; AvantPy 0.0.5 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -34,7 +34,7 @@
         <li class="right" >
           <a href="works.html" title="How does it work?"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.4 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.5 documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -44,7 +44,6 @@
 <li><a class="reference internal" href="#">Testing</a><ul>
 <li><a class="reference internal" href="#running-tests">Running tests</a></li>
 <li><a class="reference internal" href="#writing-tests">Writing tests</a></li>
-<li><a class="reference internal" href="#testing-exceptions">Testing exceptions</a></li>
 </ul>
 </li>
 </ul>
@@ -97,7 +96,7 @@ some other symbol or combination of symbol may be used on your computer.</p>
 <p>If you want to run a single test, you don’t need to use pytest, and can use AvantPy directly.
 As an explicit exemple, you can try this:</p>
 <blockquote>
-<div>$ python -m avantpy -s test.test_french</div></blockquote>
+<div>$ python -m avantpy -s tests.pyfr.test_french</div></blockquote>
 <p>If the test is successful, you should see a single line, something like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Success</span><span class="o">.</span>
 </pre></div>
@@ -105,77 +104,10 @@ As an explicit exemple, you can try this:</p>
 </div>
 <div class="section" id="writing-tests">
 <h2>Writing tests<a class="headerlink" href="#writing-tests" title="Permalink to this headline">¶</a></h2>
-<p>To take advantage of pytest’s ease of use for test discovery, you should write your
-test in the <code class="docutils literal notranslate"><span class="pre">tests</span></code> directory.  This directory includes an <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> file
-which ensures that avantpy’s import hook is properly activated when running tests
-using pytest.</p>
-<p>To ensure test discovery, (most of )your file names should also begin with <code class="docutils literal notranslate"><span class="pre">test_</span></code>.
-I will explain below when not to follow this convention.</p>
-<p>As an example, here’s the content of a simple test that should be in the
-tests directory, named <code class="docutils literal notranslate"><span class="pre">test_assert.pyupper</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DEF</span> <span class="n">test_assert</span><span class="p">():</span>
-    <span class="n">ASSERT</span> <span class="n">TRUE</span>
-
-<span class="n">IF</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">test_assert</span><span class="p">()</span>
-    <span class="n">PRINT</span><span class="p">(</span><span class="s1">&#39;Success.&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>The <code class="docutils literal notranslate"><span class="pre">pyupper</span></code> extension of the filename identifies
-this as the dialect where all Python’s keywords are written in uppercase; this
-dialect is intended to be used only for testing purpose.</p>
-<p>The way that pytest works (by default) is to collect all files whose name
-starts with <code class="docutils literal notranslate"><span class="pre">test_</span></code>, import them, and run all functions whose names also
-begin with <code class="docutils literal notranslate"><span class="pre">test_</span></code>.</p>
-<p>When <code class="docutils literal notranslate"><span class="pre">test_assert.pyupper</span></code> is imported, AvantPy’s import mechanism gets invoked
-before the normal Python import mechanism does, identify the file with the <code class="docutils literal notranslate"><span class="pre">.pyupper</span></code>
-extension as being valid, and transforms its source into valid Python code
-before executing it.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">If more than one file has the same base name, but different extension, AvantPy
-will only import one of them.</p>
+<p class="last">Please consult the <strong>readme.md</strong> file in the tests directory.</p>
 </div>
-</div>
-<div class="section" id="testing-exceptions">
-<h2>Testing exceptions<a class="headerlink" href="#testing-exceptions" title="Permalink to this headline">¶</a></h2>
-<p>In the tests directory, the file <code class="docutils literal notranslate"><span class="pre">if_nobreak.pyenv</span></code> has the following content:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_if_nobreak</span><span class="p">():</span>
-    <span class="k">if</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="k">pass</span>
-    <span class="n">nobreak</span><span class="p">:</span>
-        <span class="k">pass</span>
-</pre></div>
-</div>
-<p>A <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> keyword can only be used with a <code class="docutils literal notranslate"><span class="pre">for</span></code> or a <code class="docutils literal notranslate"><span class="pre">while</span></code> loop.
-As a result, AvantPy will initially raise an exception as it processes the file.
-AvantPy’s exception handling results in a <code class="docutils literal notranslate"><span class="pre">print</span></code> statement. To test such
-a file, we need to capture the print output.</p>
-<p>Since this file has a name that does not start with <code class="docutils literal notranslate"><span class="pre">test_</span></code>,
-pytest will ignore it.  In the tests directory, there is another
-file named <code class="docutils literal notranslate"><span class="pre">test_if_nobreak.py</span></code> whose content is the following:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_if_nobreak</span><span class="p">(</span><span class="n">capsys</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">if_nobreak</span>
-    <span class="c1"># if_nobreak raises an error which will result in a</span>
-    <span class="c1"># print statement; it is printed out when pytest</span>
-    <span class="c1"># collects the tests.</span>
-    <span class="c1"># After collecting the test, they are run and</span>
-    <span class="c1"># no print statement will be done from the import</span>
-    <span class="c1"># This is why we cache it so that we can see it</span>
-    <span class="c1"># both times.</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">if_nobreak</span><span class="p">,</span> <span class="s2">&quot;out&quot;</span><span class="p">):</span>
-        <span class="n">info</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">capsys</span><span class="o">.</span><span class="n">readouterr</span><span class="p">())</span>
-        <span class="n">if_nobreak</span><span class="o">.</span><span class="n">out</span> <span class="o">=</span> <span class="n">info</span>
-    <span class="k">assert</span> <span class="s1">&#39;IfnobreakError&#39;</span> <span class="ow">in</span> <span class="n">if_nobreak</span><span class="o">.</span><span class="n">out</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">test_if_nobreak</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Success.&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>This tests the transformation of <code class="docutils literal notranslate"><span class="pre">if_break.pyen</span></code>
-indirectly, in such a way that pytest can do its test correctly.</p>
 </div>
 </div>
 
@@ -200,7 +132,7 @@ indirectly, in such a way that pytest can do its test correctly.</p>
         <li class="right" >
           <a href="works.html" title="How does it work?"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.4 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.5 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

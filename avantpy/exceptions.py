@@ -85,13 +85,13 @@ class MissingRightBracketError(AvantPyException):
     pass
 
 
-class UnknownDialect(AvantPyException):
+class UnknownDialectError(AvantPyException):
     """Raised when attempting to set ``dialect`` to unsupported value."""
 
     pass
 
 
-class UnknownLanguage(AvantPyException):
+class UnknownLanguageError(AvantPyException):
     """Raised when attempting to set ``lang`` to unsupported value."""
 
     pass

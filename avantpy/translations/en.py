@@ -72,14 +72,14 @@ en = {
 
     The closing {bracket} does not match anything.
 """,
-    "UnknownLanguage": """
-    AvantPy exception: UnknownLanguage\n
+    "UnknownLanguageError": """
+    AvantPy exception: UnknownLanguageError\n
 
     The following unknown language was requested: {lang}.
     The known languages are: {all_langs}.
 """,
-    "UnknownDialect": """
-    AvantPy exception: UnknownDialect\n
+    "UnknownDialectError": """
+    AvantPy exception: UnknownDialectError\n
 
     The following unknown dialect was requested: {dialect}.
     The known dialects are: {all_dialects}.

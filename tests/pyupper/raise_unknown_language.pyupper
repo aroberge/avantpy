@@ -1,4 +1,4 @@
-
+'''Raises UnknownLanguageError'''
 import os
 import sys
 
@@ -10,4 +10,4 @@ sys.path.insert(0, parent_dir)
 
 from avantpy import session
 
-session.state.set_dialect('pyxx')
+session.state.set_lang('xx')

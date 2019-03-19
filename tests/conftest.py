@@ -3,6 +3,7 @@ import pytest
 
 
 def pytest_collect_file(parent, path):
-    print(path.ext)
-    if path.ext.startswith(".py") and path.basename.startswith("test"):
+    if path.ext.startswith(".py") and (
+        path.basename.startswith("test_") or path.basename.startswith("catch_")
+    ):
         return pytest.Module(path, parent)

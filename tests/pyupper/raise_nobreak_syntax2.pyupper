@@ -1,2 +1,3 @@
+'''Raises NobreakSyntaxError'''
 DEF test_nobreak_syntax():
     NOBREAK

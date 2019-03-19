@@ -1,4 +1,4 @@
-'''Testing nobreak keyword with if in assignment
+'''Should raise NobreakFirstError
 
 '''
 def test_if_nobreak2_():

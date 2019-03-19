@@ -79,14 +79,14 @@ upper = {
 
     The closing {bracket} does not match anything.
 """,
-    "UnknownLanguage": """
-    AVANTPY EXCEPTION: UnknownLanguage\n
+    "UnknownLanguageError": """
+    AVANTPY EXCEPTION: UnknownLanguageError\n
 
     The following unknown language was requested: {lang}.
     The known languages are: {all_langs}.
 """,
-    "UnknownDialect": """
-    AVANTPY EXCEPTION: UnknownDialect\n
+    "UnknownDialectError": """
+    AVANTPY EXCEPTION: UnknownDialectError\n
 
     The following unknown dialect was requested: {dialect}.
     The known dialects are: {all_dialects}.

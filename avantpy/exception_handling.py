@@ -256,24 +256,24 @@ def handle_MissingLeftBracketError(exc, original_source):
     return translate.get("MissingLeftBracketError").format(**info)
 
 
-def handle_UnknownLanguage(exc, *args):
+def handle_UnknownLanguageError(exc, *args):
     """Handles error raised when an unknown language is requested
     """
     lang = exc.args[0]
     all_langs = exc.args[1]
 
     info = {"lang": lang, "all_langs": all_langs}
-    return translate.get("UnknownLanguage").format(**info)
+    return translate.get("UnknownLanguageError").format(**info)
 
 
-def handle_UnknownDialect(exc, *args):
+def handle_UnknownDialectError(exc, *args):
     """Handles error raised when an unknown dialect is requested
     """
     dialect = exc.args[0]
     all_dialects = exc.args[1]
 
     info = {"dialect": dialect, "all_dialects": all_dialects}
-    return translate.get("UnknownDialect").format(**info)
+    return translate.get("UnknownDialectError").format(**info)
 
 
 dispatch = {
@@ -285,6 +285,6 @@ dispatch = {
     "MissingRepeatError": handle_MissingRepeatError,
     "MismatchedBracketsError": handle_MismatchedBracketsError,
     "MissingLeftBracketError": handle_MissingLeftBracketError,
-    "UnknownLanguage": handle_UnknownLanguage,
-    "UnknownDialect": handle_UnknownDialect,
+    "UnknownLanguageError": handle_UnknownLanguageError,
+    "UnknownDialectError": handle_UnknownDialectError,
 }

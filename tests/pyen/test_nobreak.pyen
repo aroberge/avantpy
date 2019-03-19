@@ -19,13 +19,6 @@ def test_while_nobreak():
         x = 0
     assert x == 2
 
-def test_nobreak_else(capsys):
-    from . import nobreak_syntax_error
-    if not hasattr(nobreak_syntax_error, "out"):
-        info = str(capsys.readouterr())
-        nobreak_syntax_error.out = info
-    assert 'NobreakSyntaxError' in nobreak_syntax_error.out
-
 if notimported:
     test_for_nobreak()
     test_while_nobreak()

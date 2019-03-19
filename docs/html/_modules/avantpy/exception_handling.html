@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>avantpy.exception_handling &#8212; AvantPy 0.0.4 documentation</title>
+    <title>avantpy.exception_handling &#8212; AvantPy 0.0.5 documentation</title>
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -26,7 +26,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.4 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.5 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>
@@ -311,24 +311,24 @@
     <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;MissingLeftBracketError&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="handle_UnknownLanguage"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.handle_UnknownLanguage">[docs]</a><span class="k">def</span> <span class="nf">handle_UnknownLanguage</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="handle_UnknownLanguageError"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.handle_UnknownLanguageError">[docs]</a><span class="k">def</span> <span class="nf">handle_UnknownLanguageError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Handles error raised when an unknown language is requested</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">lang</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">all_langs</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="n">info</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="n">lang</span><span class="p">,</span> <span class="s2">&quot;all_langs&quot;</span><span class="p">:</span> <span class="n">all_langs</span><span class="p">}</span>
-    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;UnknownLanguage&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;UnknownLanguageError&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="handle_UnknownDialect"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.handle_UnknownDialect">[docs]</a><span class="k">def</span> <span class="nf">handle_UnknownDialect</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="handle_UnknownDialectError"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.handle_UnknownDialectError">[docs]</a><span class="k">def</span> <span class="nf">handle_UnknownDialectError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Handles error raised when an unknown dialect is requested</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">dialect</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">all_dialects</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="n">info</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">dialect</span><span class="p">,</span> <span class="s2">&quot;all_dialects&quot;</span><span class="p">:</span> <span class="n">all_dialects</span><span class="p">}</span>
-    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;UnknownDialect&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;UnknownDialectError&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span></div>
 
 
 <span class="n">dispatch</span> <span class="o">=</span> <span class="p">{</span>
@@ -340,8 +340,8 @@
     <span class="s2">&quot;MissingRepeatError&quot;</span><span class="p">:</span> <span class="n">handle_MissingRepeatError</span><span class="p">,</span>
     <span class="s2">&quot;MismatchedBracketsError&quot;</span><span class="p">:</span> <span class="n">handle_MismatchedBracketsError</span><span class="p">,</span>
     <span class="s2">&quot;MissingLeftBracketError&quot;</span><span class="p">:</span> <span class="n">handle_MissingLeftBracketError</span><span class="p">,</span>
-    <span class="s2">&quot;UnknownLanguage&quot;</span><span class="p">:</span> <span class="n">handle_UnknownLanguage</span><span class="p">,</span>
-    <span class="s2">&quot;UnknownDialect&quot;</span><span class="p">:</span> <span class="n">handle_UnknownDialect</span><span class="p">,</span>
+    <span class="s2">&quot;UnknownLanguageError&quot;</span><span class="p">:</span> <span class="n">handle_UnknownLanguageError</span><span class="p">,</span>
+    <span class="s2">&quot;UnknownDialectError&quot;</span><span class="p">:</span> <span class="n">handle_UnknownDialectError</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -359,7 +359,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.4 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.5 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>

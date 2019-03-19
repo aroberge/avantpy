@@ -40,7 +40,7 @@ as in ``python -i -m ...`` or combined with the ``-m`` flag
 as done below, to execute a program to be run as "main" and
 continue with the console.
 
-The following example is run from the rood folder of the AvantPy repository.
+The following example is run from the root folder of the AvantPy repository.
 The file that is run ends with the ``pyfr`` extension which AvantPy uses
 to recognize that the French dialect is to be used::
 

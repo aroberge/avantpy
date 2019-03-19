@@ -75,14 +75,14 @@ fr = {
 
     Le symbole droit {bracket} n'a pas de symbole gauche correspondant.
 """,
-    "UnknownLanguage": """
-    Exception AvantPy: UnknownLanguage\n
+    "UnknownLanguageError": """
+    Exception AvantPy: UnknownLanguageError\n
 
     Le langage inconnu suivant a été demandé: {lang}.
     Les langages connus sont: {all_langs}.
 """,
-    "UnknownDialect": """
-    Exception AvantPy: UnknownDialect\n
+    "UnknownDialectError": """
+    Exception AvantPy: UnknownDialectError\n
 
     Le dialecte inconnu suivant a été demandé: {dialect}.
     Les dialectes connus sont: {all_dialects}.

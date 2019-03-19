@@ -1,4 +1,5 @@
-DEF test_except_else_():
+'''Raises TryNobreakError'''
+DEF test_except_nobreak_():
     TRY:
         A = 1
     EXCEPT:

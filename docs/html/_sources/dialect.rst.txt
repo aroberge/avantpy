@@ -16,7 +16,7 @@ named ``pyxx.py`` and are found in the AvantPy's repository:
 Perhaps an example is the best way to demonstrate; we will generate an
 error message by trying to assign the AvantPy keyword ``repeat``
 (``répéter`` in the French **dialect**) and show the error message
-in the otherr language using the AvantPy console::
+in the other language using the AvantPy console::
 
     $ python -m avantpy
     avantpy console version 0.0.4. [Python version: 3.7.0]
@@ -39,7 +39,7 @@ in the otherr language using the AvantPy console::
         (équivalent Python: 'for' ou 'while').
 
 
-    #=============================================
+    #================= Doing the reverse
 
 
     ->> set_lang('en')

@@ -104,7 +104,7 @@ class _State:
            to set language to the value corresponding to dialect.
         """
         if not self.is_dialect(dialect):
-            raise exceptions.UnknownDialect(
+            raise exceptions.UnknownDialectError(
                 "Unknown dialect %s; known dialects = %s"
                 % (dialect, self.all_dialects()),
                 (dialect, self.all_dialects()),
@@ -114,7 +114,7 @@ class _State:
             if self.current_lang is None:
                 try:
                     self.set_lang(dialect[2:])
-                except exceptions.UnknownLanguage:
+                except exceptions.UnknownLanguageError:
                     pass
         return dialect
 
@@ -127,7 +127,7 @@ class _State:
            to set dialect to the value corresponding to language.
         """
         if not self.is_lang(lang):
-            raise exceptions.UnknownLanguage(
+            raise exceptions.UnknownLanguageError(
                 "Unknown language %s; known languages = %s" % (lang, self.all_langs()),
                 (lang, self.all_langs()),
             )
@@ -136,7 +136,7 @@ class _State:
             if self.current_dialect is None:
                 try:
                     self.set_dialect("py" + lang)
-                except exceptions.UnknownDialect:
+                except exceptions.UnknownDialectErrort:
                     pass
 
 
