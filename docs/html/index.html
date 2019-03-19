@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Bienvenue 환영합니다 Bienvenido - ようこそ Welcome 歡迎光臨 &#8212; AvantPy 0.0.5 documentation</title>
+    <title>Bienvenue 환영합니다 Bienvenido - ようこそ Welcome 歡迎光臨 &#8212; AvantPy 0.0.6 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -30,7 +30,7 @@
         <li class="right" >
           <a href="invocation.html" title="Invocation"
              accesskey="N">next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">AvantPy 0.0.5 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">AvantPy 0.0.6 documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -81,14 +81,17 @@
 <p><strong>AvantPy</strong> - Python with training wheels: executable pseudocode in any language.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">This is pre-alpha software, currently in development.</p>
+<p class="last">This is pre-alpha software, currently in development.
+<strong>Currently</strong>, it is only tested from a local repository, and not installed
+from pypi.org using pip.</p>
 </div>
 <div class="section" id="what-is-avantpy">
 <h2>What is AvantPy?<a class="headerlink" href="#what-is-avantpy" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>AvantPy is a collection of dialects, each dialect being a superset of Python, designed to make it easier to learn programming concepts in a given human language.<ul>
 <li>Each dialect consists of a translations of most Python keywords in a given human language, supplemented by a few additional constructs intended to make some programming concepts easier to learn.</li>
-<li>The current version includes three dialects: English, French and Spanish.
+<li>The current version includes four dialects: English, French and Spanish, as
+well as an UPPERCASE version of the English dialect.
 The translation currently done in these three dialects is subject to change; feel free to make suggestions for alternative to use, or contribute a new dialect.</li>
 </ul>
 </li>
@@ -100,12 +103,12 @@ in parts in a given dialect, and converts it to standard Python prior to executi
 <li>AvantPy is written as a standard Python module/package meant to be usable with any “normal” Python environment. Thus, it could be included as a plugin for a given
 editor, or run with a standard Python interpreter from the command line.</li>
 <li>AvantPy also includes a tool to convert programs written in a given dialect into standard Python, showing the differences between the two, thus helping motivated users to make the transition to using only standard Python.<ul>
-<li>A rough implementation of this idea exists as a <strong>debug</strong> mode.</li>
+<li>It is also possible to translate valid programs from one dialect into another.</li>
 </ul>
 </li>
 <li>AvantPy also includes a custom REPL that can use any of the existing dialects.</li>
+<li>More importantly, AvantPy will also includes tools to analyze Python tracebacks and translate them into easier to understand feedback for beginners.</li>
 </ul>
-<p>AvantPy will also includes tools to analyze Python tracebacks and translate them into easier to understand feedback for beginners.</p>
 </div>
 <div class="section" id="who-is-it-for">
 <h2>Who is it for?<a class="headerlink" href="#who-is-it-for" title="Permalink to this headline">¶</a></h2>
@@ -117,20 +120,22 @@ block-based programming languages to text-based ones.</p>
 <div class="section" id="executable-pseudocode">
 <h2>Executable pseudocode?<a class="headerlink" href="#executable-pseudocode" title="Permalink to this headline">¶</a></h2>
 <p>Python is often described as executable pseudocode. Once people have learned a few idiomatic expressions, like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">variable</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">variable</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
 </pre></div>
 </div>
 <p>translating pseudocode written in English into Python is usually very straightforward.</p>
 <p>If the pseudocode is not written in English, the translation process is, at least initially, not as straightforward since an additional mental step is required by the translation from the original language into Python’s English.</p>
 <p>Even though the number of Python keywords is small, for absolute beginners who are learning programming concepts (control flow structures, defining functions, etc.), being able to use a language that uses keywords easily understood in their own language can definitely facilitate the learning process.
-<strong>This is the approach taken by people using block-based environment
+<strong>This is the approach taken by people using block-based environments
 (Scratch, Blockly, etc.) developed by educational experts
 to help students learn programming concepts.</strong></p>
-<p>Realistically, many students who learn computer programming as part of a formal course might never use programming again or, if so, it might not be for many years. Given enough time, they would likely forget most of the programming syntax they had learned.
-However they likely would understand and remember programming <strong>concepts</strong> better if they are first learning them in their native language.
-And, as <a class="reference external" href="https://computinged.wordpress.com/2019/01/07/a-little-bit-of-computing-goes-a-long-way-the-sigcse-50th-anniversary-issue-of-acm-inroads/">Mark Guzdial wrote:</a></p>
+<p>Realistically, many students who learn computer programming as part of a formal course might never use programming again or, if so, it might not be for many years.
+As <a class="reference external" href="https://computinged.wordpress.com/2019/01/07/a-little-bit-of-computing-goes-a-long-way-the-sigcse-50th-anniversary-issue-of-acm-inroads/">Mark Guzdial wrote:</a></p>
 <blockquote>
-<div><em>People code for different purposes, with different ways of appropriating code. The standards of the software engineer are not appropriate to apply to children. Not everybody is going to be a professional software developer, and they don’t need to be.</em></div></blockquote>
+<div><em>People code for different purposes, with different ways of appropriating code. … Not everybody is going to be a professional software developer, and they don’t need to be.</em></div></blockquote>
+<p>Given enough time, beginners who have just learned programming and stop using it
+would likely forget most of the programming syntax they had learned.
+However they likely would understand and remember programming <strong>concepts</strong> better if they are first learning them in their native language.  This is what AvantPy aims to do for them.</p>
 </div>
 <div class="section" id="contents">
 <h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
@@ -162,7 +167,6 @@ And, as <a class="reference external" href="https://computinged.wordpress.com/20
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nobreak.html"> Special keyword: nobreak</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="nobreak.html#nobreak-instead-of-else-in-if-else"><code class="docutils literal notranslate"><span class="pre">nobreak</span></code> instead of <code class="docutils literal notranslate"><span class="pre">else</span></code> in <code class="docutils literal notranslate"><span class="pre">if/else</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="nobreak.html#think-of-other-languages">Think of other languages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nobreak.html#what-about-try-except">What about try/except?</a></li>
 </ul>
 </li>
@@ -228,7 +232,7 @@ And, as <a class="reference external" href="https://computinged.wordpress.com/20
         <li class="right" >
           <a href="invocation.html" title="Invocation"
              >next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">AvantPy 0.0.5 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">AvantPy 0.0.6 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

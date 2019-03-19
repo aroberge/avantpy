@@ -129,12 +129,13 @@ More gradual approach
 
 As we are writing this, we note that
 `GP control blocks <https://gpblocks.org/wiki/doku.php?id=blocks:control>`_
-includes the following blocs which allow for a gradual
+include the following blocs which allow for a gradual
 interpolation between something like ``repeat 10:`` and the
 more complex and versatile Python idiom::
 
    for i in range(1, 10, step):
-       # block
+       # some
+       # code
 
 .. image:: images/repeat_gp.png
    :scale: 50 %

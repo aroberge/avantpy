@@ -28,9 +28,9 @@ Language of communication
 -------------------------
 
 This project, by its very nature, welcome contributors speaking any language.
-We realise that discussions about particular keyword choices, or phrasing of
+We realise that decisions about particular keyword choices, or phrasing of
 a "simplified traceback" in a given language
-may be subject to discussion amongst speakers of that language.
+may be subject to discussions amongst speakers of that language.
 For this reason, we welcome discussions on issues done in
 any language, as long as it is done respectfully and that a very brief
 description of the main point(s) are provided in English.

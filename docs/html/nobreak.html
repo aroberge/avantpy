@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Special keyword: nobreak &#8212; AvantPy 0.0.5 documentation</title>
+    <title>Special keyword: nobreak &#8212; AvantPy 0.0.6 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -34,7 +34,7 @@
         <li class="right" >
           <a href="repeat.html" title="Special keyword: repeat"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.5 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.6 documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -43,7 +43,6 @@
   <ul>
 <li><a class="reference internal" href="#">Special keyword: <code class="docutils literal notranslate"><span class="pre">nobreak</span></code></a><ul>
 <li><a class="reference internal" href="#nobreak-instead-of-else-in-if-else"><code class="docutils literal notranslate"><span class="pre">nobreak</span></code> instead of <code class="docutils literal notranslate"><span class="pre">else</span></code> in <code class="docutils literal notranslate"><span class="pre">if/else</span></code></a></li>
-<li><a class="reference internal" href="#think-of-other-languages">Think of other languages</a></li>
 <li><a class="reference internal" href="#what-about-try-except">What about try/except?</a></li>
 </ul>
 </li>
@@ -96,11 +95,12 @@ whose meaning is not immediately obvious:</p>
 </pre></div>
 </div>
 <p>When I first understood this, I thought <em>wouldn’t it be nice if, instead
-of using ``else:``, one could write something like</em> <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">no</span> <span class="pre">break:</span></code>.
+of using ``else:``, one could write something like</em> <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">not</span> <span class="pre">break:</span></code> which
+uses only existing Python keywords.
 In theory, it might be possible to do something like this in AvantPy.
 However, wanting to have a one-to-one keyword translation from one
-dialect into another (excluding standard Python), I thought that a
-suggestion made by Raymond Hettinger made the most sense:
+dialect into another (excluding standard Python) whenever possible,
+I thought that a suggestion made by Raymond Hettinger made the most sense:
 AvantPy’s English dialect thus includes <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> as an additional keyword.
 It can be used instead of <code class="docutils literal notranslate"><span class="pre">else</span></code> in the above example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
@@ -131,45 +131,13 @@ translation in some other language would make no sense.</p>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">nobreak</span></code> will <strong>not</strong> be replaced by <code class="docutils literal notranslate"><span class="pre">else</span></code>;
-instead, an explicit <code class="docutils literal notranslate"><span class="pre">raise</span> <span class="pre">SyntaxError</span></code> statement will be inserted
-and the file transformation will be stopped at that point.
-See <a class="reference external" href="https://htmlpreview.github.io/?https://github.com/aroberge/avantpy/blob/master/tests/if_nobreak.html">this link</a> for an explicit example.</p>
+instead, an explicit <code class="docutils literal notranslate"><span class="pre">raise</span> <span class="pre">IfNobreakError</span></code> statement will be inserted
+and the file transformation will be stopped at that point.</p>
 <p>AvantPy aims to provide beginner-friendly tracebacks, written in their
 native language.  Since we can identify this incorrect use of <code class="docutils literal notranslate"><span class="pre">nobreak</span></code>
 in the translation phase, it seems logical to ensure that this syntax error
 will be identified as early as possible, with a meaningful error message
 provided.</p>
-</div>
-<div class="section" id="think-of-other-languages">
-<h2>Think of other languages<a class="headerlink" href="#think-of-other-languages" title="Permalink to this headline">¶</a></h2>
-<p>Using English, one can think of:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">something</span><span class="p">:</span>
-    <span class="n">do_this</span><span class="p">()</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="n">do_that</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>as being equivalent to</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>if something:</dt>
-<dd>do_this()</dd>
-<dt>otherwise:</dt>
-<dd>do_that()</dd>
-</dl>
-</div></blockquote>
-<p>However, <code class="docutils literal notranslate"><span class="pre">otherwise</span></code> would almost certainly be a wrong word choice in:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
-    <span class="n">do_this</span><span class="p">()</span>
-<span class="n">otherwise</span><span class="p">:</span>
-    <span class="n">do_that</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>Now, imagine a new dialect where a keyword equivalent to <code class="docutils literal notranslate"><span class="pre">else</span></code> has
-been chosen in for the <code class="docutils literal notranslate"><span class="pre">if/else</span></code> construct. It is quite possible that
-such a keyword would definitely not convey the right meaning for
-a <code class="docutils literal notranslate"><span class="pre">while/else</span></code> loop.  If only for this reason, we believe it
-makes sense to have an additional keyword, such as <code class="docutils literal notranslate"><span class="pre">nobreak</span></code>.</p>
 </div>
 <div class="section" id="what-about-try-except">
 <h2>What about try/except?<a class="headerlink" href="#what-about-try-except" title="Permalink to this headline">¶</a></h2>
@@ -203,7 +171,7 @@ introducing another keyword - perhaps something like <code class="docutils liter
         <li class="right" >
           <a href="repeat.html" title="Special keyword: repeat"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.5 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.6 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

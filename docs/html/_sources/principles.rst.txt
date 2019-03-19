@@ -12,7 +12,7 @@ AvantPy aims to:
 - make it possible for students to learn **basic** programming concepts in their own language;
 - provide easy to understand basic error messages, simpler than Python tracebacks;
 - reduce the number of non-obvious programming idioms, as compared with
-  Python, such as when introducing ``repeat n``;
+  Python;
 - allow for an easy transition to programming using standard Python.
 
 In a given dialect, AvantPy keywords and functions should not be thought of as
@@ -22,6 +22,14 @@ the function ``input`` is named ``demander`` which would normally be translated 
 Similarly, the French equivalent to ``except`` is ``siexception``
 which is composed of two words, ``si`` and  ``exception``.
 Thus, ``siexception SyntaxError:`` can be read as ``if exception SyntaxError:``.
+
+A design choice that has been made is to do not translate the names of Python
+exceptions, such as ``SyntaxError``. Beginners will very rarely have to write
+these names themselves. Error messages (tracebacks) will be accompanied by
+explanatory text written in the students' preferred language; thus, they will
+not need to know how something like ``SyntaxError`` would be written in their
+language to understand what it means.
+
 
 For contributors
 -----------------

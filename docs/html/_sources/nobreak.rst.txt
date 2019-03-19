@@ -5,7 +5,7 @@ Python's ``for`` and ``while`` loop include an ``else`` clause
 whose meaning is not immediately obvious::
 
     while condition:
-        # some 
+        # some
         # code
         # here
     else:
@@ -13,16 +13,17 @@ whose meaning is not immediately obvious::
         # break statement occurred above
 
 When I first understood this, I thought *wouldn't it be nice if, instead
-of using ``else:``, one could write something like* ``if no break:``.
+of using ``else:``, one could write something like* ``if not break:`` which
+uses only existing Python keywords.
 In theory, it might be possible to do something like this in AvantPy.
 However, wanting to have a one-to-one keyword translation from one
-dialect into another (excluding standard Python), I thought that a
-suggestion made by Raymond Hettinger made the most sense:
+dialect into another (excluding standard Python) whenever possible,
+I thought that a suggestion made by Raymond Hettinger made the most sense:
 AvantPy's English dialect thus includes ``nobreak`` as an additional keyword.
 It can be used instead of ``else`` in the above example::
 
     while condition:
-        # some 
+        # some
         # code
         # here
     nobreak:
@@ -35,7 +36,7 @@ a ``for`` or a ``while`` statement: if that is the case, it replaces
 by ``else``.
 
 
-``nobreak`` instead of ``else`` in ``if/else`` 
+``nobreak`` instead of ``else`` in ``if/else``
 -------------------------------------------------------
 
 The ``else`` keyword has a very different meaning when used as part
@@ -45,52 +46,21 @@ translation in some other language would make no sense.
 As a result, if one attempts to write the following::
 
     if condition:
-        # some 
+        # some
         # code
         # here
     nobreak:
         # more code
 
-``nobreak`` will **not** be replaced by ``else``; 
-instead, an explicit ``raise SyntaxError`` statement will be inserted
-and the file transformation will be stopped at that point. 
-See `this link <https://htmlpreview.github.io/?https://github.com/aroberge/avantpy/blob/master/tests/if_nobreak.html>`_ for an explicit example.
+``nobreak`` will **not** be replaced by ``else``;
+instead, an explicit ``raise IfNobreakError`` statement will be inserted
+and the file transformation will be stopped at that point.
 
 AvantPy aims to provide beginner-friendly tracebacks, written in their
-native language.  Since we can identify this incorrect use of ``nobreak`` 
+native language.  Since we can identify this incorrect use of ``nobreak``
 in the translation phase, it seems logical to ensure that this syntax error
 will be identified as early as possible, with a meaningful error message
 provided.
-
-Think of other languages
-------------------------
-
-Using English, one can think of::
-
-    if something:
-        do_this()
-    else:
-        do_that()
-
-as being equivalent to
-
-    if something:
-        do_this()
-    otherwise:
-        do_that()
-
-However, ``otherwise`` would almost certainly be a wrong word choice in::
-
-    while condition:
-        do_this()
-    otherwise:
-        do_that()
-
-Now, imagine a new dialect where a keyword equivalent to ``else`` has
-been chosen in for the ``if/else`` construct. It is quite possible that
-such a keyword would definitely not convey the right meaning for
-a ``while/else`` loop.  If only for this reason, we believe it
-makes sense to have an additional keyword, such as ``nobreak``.
 
 What about try/except?
 -----------------------
