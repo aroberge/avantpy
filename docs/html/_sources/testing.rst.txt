@@ -27,6 +27,6 @@ If the test is successful, you should see a single line, something like::
 Writing tests
 -------------
 
-.. warning::
+.. important::
 
-    Please consult the **readme.md** file in the tests directory.
+    Please consult the `readme.md file <https://github.com/aroberge/avantpy/blob/master/tests/readme.md>`_ in the tests directory.

@@ -5,7 +5,7 @@ For simplicity, wherever possible, I follow
 simply using Python's `assert` statements and naming test functions within
 these files all starting with `test_` for easy discovery.
 
-`pytest` is not part of Python's standard library and you may have to intall it.
+`pytest` is not part of Python's standard library and you may have to install it.
 
 ## File naming convention
 

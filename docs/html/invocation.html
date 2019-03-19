@@ -42,6 +42,7 @@
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Invocation</a><ul>
+<li><a class="reference internal" href="#from-the-source">From the source</a></li>
 <li><a class="reference internal" href="#basic-invocation">Basic invocation</a></li>
 <li><a class="reference internal" href="#running-programs">Running programs</a></li>
 <li><a class="reference internal" href="#showing-the-corresponding-python-code">Showing the corresponding Python code</a></li>
@@ -91,9 +92,12 @@ here’s how you can do it.</p>
 <p class="last">The content of this page comes from the
 docstring of <cite>invocation.py</cite>.</p>
 </div>
-<span class="target" id="module-avantpy.invocation"></span><p>AvantPy sets up an import hook which
+<span class="target" id="module-avantpy.invocation"></span><div class="section" id="from-the-source">
+<h2>From the source<a class="headerlink" href="#from-the-source" title="Permalink to this headline">¶</a></h2>
+<p>AvantPy sets up an import hook which
 makes it possible to run a file that contains modified Python syntax,
 provided the relevant source transformers can be imported.</p>
+</div>
 <div class="section" id="basic-invocation">
 <h2>Basic invocation<a class="headerlink" href="#basic-invocation" title="Permalink to this headline">¶</a></h2>
 <p>The simplest invocation of AvantPy sets up the import hook,
@@ -130,9 +134,9 @@ continue with the console.</p>
 <p>The following example is run from the root folder of the AvantPy repository.
 The file that is run ends with the <code class="docutils literal notranslate"><span class="pre">pyfr</span></code> extension which AvantPy uses
 to recognize that the French dialect is to be used:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python -im avantpy -s tests.test_french
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python -im avantpy -s tests.pyfr.test_french
 Success.
-avantpy console version 0.0.3. [Python version: 3.7.0]
+avantpy console version 0.0.5. [Python version: 3.7.0]
 
 -&gt;&gt; si Vrai:
 ...     imprime(bonjour)
@@ -154,6 +158,9 @@ file named <code class="docutils literal notranslate"><span class="pre">name.htm
 in the default web browser and display the result.
 This will also end the current execution.
 The code in the source file will not be executed.</p>
+<p>When using the console, one can see the transformed code,
+if it is different from the code entered, by using the
+<code class="docutils literal notranslate"><span class="pre">--show_converted</span></code> option.</p>
 </div>
 </div>
 

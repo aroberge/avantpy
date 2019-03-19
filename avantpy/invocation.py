@@ -1,4 +1,7 @@
 """
+From the source
+---------------
+
 AvantPy sets up an import hook which
 makes it possible to run a file that contains modified Python syntax,
 provided the relevant source transformers can be imported.
@@ -44,9 +47,9 @@ The following example is run from the root folder of the AvantPy repository.
 The file that is run ends with the ``pyfr`` extension which AvantPy uses
 to recognize that the French dialect is to be used::
 
-    $ python -im avantpy -s tests.test_french
+    $ python -im avantpy -s tests.pyfr.test_french
     Success.
-    avantpy console version 0.0.3. [Python version: 3.7.0]
+    avantpy console version 0.0.5. [Python version: 3.7.0]
 
     ->> si Vrai:
     ...     imprime(bonjour)
@@ -68,6 +71,10 @@ file named ``name.html`` in the current directory, open a new tab
 in the default web browser and display the result.
 This will also end the current execution.
 The code in the source file will not be executed.
+
+When using the console, one can see the transformed code,
+if it is different from the code entered, by using the
+``--show_converted`` option.
 """
 import argparse
 import sys
@@ -76,6 +83,7 @@ from . import session
 from . import console
 from . import exception_handling
 from . import import_hook
+from . import transcode
 
 start_console = console.start_console
 show_python = False
@@ -127,6 +135,35 @@ if "-m" in sys.argv:
         action="store_true",
     )
 
+    parser.add_argument(
+        "--show_converted",
+        help="""When using the console, if this flag is set, each time the
+                code entered is compaeed with the code transformed. If the
+                two are not identical, the converted code is printed in
+                the console.""",
+        action="store_true",
+    )
+
+    parser.add_argument(
+        "--transcode",
+        help="""Specifies the name [relative path] of a file (without the extension)
+                to be transcoded from one dialect to another.
+                If -s or --source is specified, this is ignored.
+            """,
+    )
+    parser.add_argument(
+        "--from_dialect",
+        help="""This is used together with the --transcode option to specify the
+                 dialect in which the original file is written.
+             """,
+    )
+    parser.add_argument(
+        "--to_dialect",
+        help="""This is used together with the --transcode option to specify the
+                 dialect in which the transformed file is to be written.
+                 """,
+    )
+
     args = parser.parse_args()
 
     if args.diff:
@@ -138,10 +175,8 @@ if "-m" in sys.argv:
     if args.dialect is not None:
         session.state.set_dialect(args.dialect)
 
-    show_python = True  # FIXME
-    # if args.show_converted:
-    #     show_python = True
-    #     conversion.set_debug(True)
+    if args.show_converted:
+        show_python = True
 
     if args.dev_py:
         exception_handling.disable()
@@ -159,5 +194,13 @@ if "-m" in sys.argv:
         except ModuleNotFoundError:
             print("Could not find module ", args.source, "\n")
             raise
+    elif args.transcode is not None:
+        if args.from_dialect is None:
+            print("--from_dialect must be specified with --transcode.")
+            sys.exit()
+        if args.to_dialect is None:
+            print("--to_dialect must be specified with --transcode.")
+            sys.exit()
+        transcode.transcode_file(args.transcode, args.from_dialect, args.to_dialect)
     else:
         start_console(local_vars=console_dict, show_python=show_python)

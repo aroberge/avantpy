@@ -1,5 +1,8 @@
 # Changelog
 
+- Properly implemented --show_converted option; it was active by default.
+- Reorganized the tests by dialect, introducing new naming convention.
+
 ## Version 0.0.5
 
 - Fixed bug in console

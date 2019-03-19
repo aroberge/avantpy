@@ -91,16 +91,24 @@ For example, <code class="docutils literal notranslate"><span class="pre">fr</sp
 <p>Dialects definitions for language <code class="docutils literal notranslate"><span class="pre">xx</span></code> are Python files
 named <code class="docutils literal notranslate"><span class="pre">pyxx.py</span></code> and are found in the AvantPy’s repository:
 <a class="reference external" href="https://github.com/aroberge/avantpy/tree/master/avantpy/dialects">avantpy/dialects/ directory</a>.</p>
-<p>Perhaps an example is the best way to demonstrate; we will generate an
+<p>Perhaps an example is the best way to demonstrate, using two different
+“languages” in an unusual way.
+We we will generate an
 error message by trying to assign the AvantPy keyword <code class="docutils literal notranslate"><span class="pre">repeat</span></code>
 (<code class="docutils literal notranslate"><span class="pre">répéter</span></code> in the French <strong>dialect</strong>) and show the error message
 in the other language using the AvantPy console:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python -m avantpy
-avantpy console version 0.0.4. [Python version: 3.7.0]
+avantpy console version 0.0.5. [Python version: 3.7.0]
 
 -&gt;&gt; set_lang(&#39;fr&#39;)
 -&gt;&gt; set_dialect(&#39;pyen&#39;)
 &#39;pyen&#39;
+-&gt;&gt; repeat 3:
+...     print(&#39;Hello!&#39;)
+...
+Hello!
+Hello!
+Hello!
 -&gt;&gt; a = repeat
 
     Exception AvantPy: RepeatFirstError
@@ -115,13 +123,16 @@ avantpy console version 0.0.4. [Python version: 3.7.0]
     pour débuter une nouvelle boucle &#39;pour&#39; ou &#39;tantque&#39;
     (équivalent Python: &#39;for&#39; ou &#39;while&#39;).
 
-
-#================= Doing the reverse
-
-
+-&gt;&gt; # Let&#39;s change language and dialect
 -&gt;&gt; set_lang(&#39;en&#39;)
 -&gt;&gt; set_dialect(&#39;pyfr&#39;)
 &#39;pyfr&#39;
+-&gt;&gt; répéter 3:
+...     afficher(&#39;Bonjour !&#39;)
+...
+Bonjour !
+Bonjour !
+Bonjour !
 -&gt;&gt; b = répéter
 
     AvantPy exception: RepeatFirstError
@@ -134,9 +145,10 @@ avantpy console version 0.0.4. [Python version: 3.7.0]
 
     The AvantPy répéter keyword can only be used to begin
     a new for or while loop.
+
+-&gt;&gt;
 </pre></div>
 </div>
-<p>-&gt;&gt;</p>
 <div class="section" id="existing-dialects">
 <h2>Existing dialects<a class="headerlink" href="#existing-dialects" title="Permalink to this headline">¶</a></h2>
 <p>Dialects definitions for language <code class="docutils literal notranslate"><span class="pre">xx</span></code> are Python files

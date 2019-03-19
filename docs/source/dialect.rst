@@ -13,17 +13,25 @@ named ``pyxx.py`` and are found in the AvantPy's repository:
 `avantpy/dialects/ directory <https://github.com/aroberge/avantpy/tree/master/avantpy/dialects>`_.
 
 
-Perhaps an example is the best way to demonstrate; we will generate an
+Perhaps an example is the best way to demonstrate, using two different
+"languages" in an unusual way.
+We we will generate an
 error message by trying to assign the AvantPy keyword ``repeat``
 (``répéter`` in the French **dialect**) and show the error message
 in the other language using the AvantPy console::
 
     $ python -m avantpy
-    avantpy console version 0.0.4. [Python version: 3.7.0]
+    avantpy console version 0.0.5. [Python version: 3.7.0]
 
     ->> set_lang('fr')
     ->> set_dialect('pyen')
     'pyen'
+    ->> repeat 3:
+    ...     print('Hello!')
+    ...
+    Hello!
+    Hello!
+    Hello!
     ->> a = repeat
 
         Exception AvantPy: RepeatFirstError
@@ -38,13 +46,16 @@ in the other language using the AvantPy console::
         pour débuter une nouvelle boucle 'pour' ou 'tantque'
         (équivalent Python: 'for' ou 'while').
 
-
-    #================= Doing the reverse
-
-
+    ->> # Let's change language and dialect
     ->> set_lang('en')
     ->> set_dialect('pyfr')
     'pyfr'
+    ->> répéter 3:
+    ...     afficher('Bonjour !')
+    ...
+    Bonjour !
+    Bonjour !
+    Bonjour !
     ->> b = répéter
 
         AvantPy exception: RepeatFirstError
@@ -58,7 +69,7 @@ in the other language using the AvantPy console::
         The AvantPy répéter keyword can only be used to begin
         a new for or while loop.
 
-->>
+    ->>
 
 Existing dialects
 ------------------
