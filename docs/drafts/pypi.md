@@ -1,4 +1,11 @@
-# Inclusion in Python core vs module on pypi
+# Notes about adding a standard import hook
+
+This file contains some thoughts I had while working on various prototypes
+for an import hook. I thought it useful to think about the pros and cons
+of including a standard, well thought out import hook module in the
+Python standard library vs just having a module on pypi.
+
+## Some thoughts
 
 Nowadays, before a package is added to the Python standard library, it is
 often suggested that it be made available on pypi first.

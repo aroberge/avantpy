@@ -143,3 +143,13 @@ more complex and versatile Python idiom::
 
 However, we do not see the need to include this type of granularity
 in AvantPy.
+
+A final word
+-------------
+
+We've already mentioned the usage in blocks-based programming environment
+of ``repeat``, or some similar alternative in other languages. ``repeat``
+was also the clearer possibility for people unfamiliar with programming jargon
+as found by Andreas Stefik and Susanna Siebert, and published
+"An Empirical Investigation into Programming Language Syntax."
+ACM Transactions on Computing Education, 13(4), Nov. 2013.

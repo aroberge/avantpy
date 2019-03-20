@@ -1,7 +1,12 @@
 # Changelog
 
+
+## Version 0.0.6
+
 - Console prompt is now based on dialect
 - Transocode works.
+  - Test is written, showing how to call it from user's code
+  - Command line option --transcode implemented
 - Properly implemented --show_converted option; it was active by default.
 - Reorganized the tests by dialect, introducing new naming convention.
 

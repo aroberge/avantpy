@@ -4,6 +4,7 @@ Goals:
 
 - version 0.1: first public release
   - a simple tkinter-based IDE has been written
+  - Consider having a simplified and translated turtle module included
 - version 0.2: all Python Errors can be caught and an explanation provided
   - Have decided on whether or not using (py) gettext
     - if yes, document how to use it
@@ -11,7 +12,11 @@ Goals:
     - See, for example https://news.ycombinator.com/item?id=2095334
     - One of many references: https://docs.readthedocs.io/en/latest/i18n.html
 
+
 ## Enhancements
+
+- [ ] Review scratch and blockly for alternative to "continue"
+- [ ] Simple localizable turtle module https://docs.python.org/dev/library/cmd.html#cmd-example
 
 - [ ] Make it possible to show the difflib output in an interactive session without exiting;
   This could be a more useful feature in an IDE environment
@@ -30,6 +35,11 @@ Goals:
 - [ ] Consider switching to writing errors using print("...", file=sys.stderr)
   - [ ] Actually, have special function, like print_error, which can be redefined by other programs
 
+- [ ] thread about international turtle module https://mail.python.org/pipermail/python-ideas/2015-September/035672.html
+  - [ ] Perhaps add a function, say tortue() in French, and turtle() in English,
+    that loads up the turtle module, and activate some translations, providing some
+    additional help...  Perhaps display the help whenever tortue() is typed in.
+
 Some useful links to use as a start for improving error analysis:
 
     http://inventwithpython.com/appendixd.html
@@ -40,6 +50,10 @@ Some useful links to use as a start for improving error analysis:
     http://www.felienne.com/archives/6279
 
     Also, use = in an if statement comparison (and others)
+
+    https://mail.python.org/pipermail/python-ideas/2012-August/015989.html
+
+    http://www.python.org.ar/wiki/MensajesExcepcionales
 
 ## Contributors
 

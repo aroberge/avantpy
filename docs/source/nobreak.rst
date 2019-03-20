@@ -13,7 +13,7 @@ whose meaning is not immediately obvious::
         # break statement occurred above
 
 When I first understood this, I thought *wouldn't it be nice if, instead
-of using ``else:``, one could write something like* ``if not break:`` which
+of using* ``else:``, *one could write something like* ``if not break:`` which
 uses only existing Python keywords.
 In theory, it might be possible to do something like this in AvantPy.
 However, wanting to have a one-to-one keyword translation from one

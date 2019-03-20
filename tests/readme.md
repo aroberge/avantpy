@@ -16,7 +16,7 @@ In addition, you may find some files that begin with `tb_`.
 
    These files are meant to be run directly using Pytest and should be
    files that contain valid syntax - within a given dialect.
-   They should end with a `.pyxx` extension and be located in the
+   Most should end with a `.pyxx` extension and be located in the
    corresponding `pyxx/` sub-directory.
 
    These files can be run without pytest by running them from the
@@ -25,6 +25,8 @@ In addition, you may find some files that begin with `tb_`.
        python -m avantpy -s tests.pyen.test_repeat
 
    Note that the file `test_repeat.pyen` exists in `tests/pyen/`.
+
+   A few standard Python test files, ending with `.py` can possibly be included.
 
 - Files beginning with `raise_`
 
