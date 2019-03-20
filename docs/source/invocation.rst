@@ -2,12 +2,61 @@ Invocation
 ===========
 
 If you cannot wait to try AvantPy before reading the rest of the documentation,
-here's how you can do it.
+here's how you can do it::
+
+    $ python -m avantpy -h
+    usage: -m [-h] [-s SOURCE] [--lang LANG] [--dialect DIALECT] [--diff]
+              [--dev_py] [--show_converted] [--transcode] [--from_path FROM_PATH]
+              [--to_path TO_PATH]
+
+    AvantPy sets up an import hook which makes it possible to run a file that
+    contains modified Python syntax provided the relevant source transformers can
+    be imported.
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      -s SOURCE, --source SOURCE
+                            Source file to be transformed and executed. It is
+                            assumed that it can be imported. Format: path.to.file
+                            -- Do not include an extension.
+      --lang LANG           This sets the language used by AvantPy. Usually this
+                            is a two-letter code such as 'fr' for French. If no
+                            dialect is specified, this will also sets the
+                            corresponding dialect
+      --dialect DIALECT     This sets the dialect used by AvantPy. Usually this is
+                            a two-letter code such as 'pyfr' for French. If 'lang'
+                            is not specified, this will also sets the
+                            corresponding value for lang.
+      --diff                Creates an html file containing a showing how the
+                            original source differs from the transformed one,
+                            opens a tab in the default browser showing this html
+                            file, and exits without executing the code from the
+                            source.
+      --dev_py              This disables the custom exception handling so that
+                            Python tracebacks are printed
+      --show_converted      When using the console, if this flag is set, each time
+                            the code entered is compaeed with the code
+                            transformed. If the two are not identical, the
+                            converted code is printed in the console.
+      --transcode           Indicates that a file is to be transcoded from one
+                            dialect to another. If -s or --source is specified,
+                            this is ignored.
+      --from_path FROM_PATH
+                            This is used together with the --transcode option to
+                            specify the relative path of the file to be
+                            transcoded. The dialect is determined from the
+                            extension.
+      --to_path TO_PATH     This is used together with the --transcode option to
+                            specify the relative path of the file to be
+                            transcoded. The dialect is determined from the
+                            extension.
+
 
 .. sidebar:: Straight from the source
 
-    The content of this page comes from the
-    docstring of `invocation.py`.
+    The content of the rest of this page comes from the
+    docstring of ``invocation.py``.
+
 
 .. automodule:: avantpy.invocation
    :members:

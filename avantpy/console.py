@@ -1,7 +1,6 @@
 import code
 import os
 import platform
-import sys
 from tokenize import TokenError
 
 from . import session
@@ -9,13 +8,6 @@ from . import converter
 from . import version
 from . import exception_handling
 from . import exceptions
-
-
-# define banner and prompt here so that they can be imported in tests
-banner = "avantpy console version {}. [Python version: {}]\n".format(
-    version.__version__, platform.python_version()
-)
-prompt = "->> "
 
 
 class AvantPyInteractiveConsole(code.InteractiveConsole):
@@ -149,7 +141,9 @@ def start_console(local_vars=None, show_python=False):
     else:
         local_vars.update(console_defaults)
 
-    sys.ps1 = prompt
     console = AvantPyInteractiveConsole(locals=local_vars, show_python=show_python)
     console.locals.update(console_defaults)
+    banner = "AvantPy version {}. [Python version: {}]\n".format(
+        version.__version__, platform.python_version()
+    )
     console.interact(banner=banner)

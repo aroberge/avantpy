@@ -20,19 +20,17 @@ error message by trying to assign the AvantPy keyword ``repeat``
 (``répéter`` in the French **dialect**) and show the error message
 in the other language using the AvantPy console::
 
-    $ python -m avantpy
-    avantpy console version 0.0.5. [Python version: 3.7.0]
+    $ python -m avantpy --lang fr --dialect pyen
+    AvantPy version 0.0.6. [Python version: 3.7.0]
 
-    ->> set_lang('fr')
-    ->> set_dialect('pyen')
-    'pyen'
-    ->> repeat 3:
-    ...     print('Hello!')
-    ...
+    pyen-> repeat 3:
+    ... ->     print('Hello!')
+    ... ->
     Hello!
     Hello!
     Hello!
-    ->> a = repeat
+    pyen-> # Let's do something forbidden; the explanation will be in French
+    pyen-> a = repeat
 
         Exception AvantPy: RepeatFirstError
 
@@ -46,17 +44,21 @@ in the other language using the AvantPy console::
         pour débuter une nouvelle boucle 'pour' ou 'tantque'
         (équivalent Python: 'for' ou 'while').
 
-    ->> # Let's change language and dialect
-    ->> set_lang('en')
-    ->> set_dialect('pyfr')
+    pyen-> # Ok, let's do things in opposite languages
+    pyen-> set_lang('en')
+    pyen-> set_dialect('pyfr')
     'pyfr'
-    ->> répéter 3:
-    ...     afficher('Bonjour !')
-    ...
+    pyfr-> répéter 3:
+    ... ->     afficher('Bonjour !')
+    ... ->     print('---')  # Normal Python always recognized.
+    ... ->
     Bonjour !
+    ---
     Bonjour !
+    ---
     Bonjour !
-    ->> b = répéter
+    ---
+    pyfr-> b = répéter
 
         AvantPy exception: RepeatFirstError
 
@@ -69,7 +71,7 @@ in the other language using the AvantPy console::
         The AvantPy répéter keyword can only be used to begin
         a new for or while loop.
 
-    ->>
+    pyfr->
 
 Existing dialects
 ------------------

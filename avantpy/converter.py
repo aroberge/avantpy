@@ -153,7 +153,7 @@ F. Remaining tokens
 Any remaining token is left as is; it is assumed to be valid
 Python.
 """
-
+import os
 import tokenize
 from io import StringIO
 
@@ -568,5 +568,94 @@ class Converter:
 
 
 def convert(source, dialect=None, source_name=None):
+    """Normally used from other functions to call for a conversion
+       of a Python source from a given dialect into Python.
+    """
     converter = Converter(source, dialect=dialect, source_name=source_name)
     return converter.convert()
+
+
+def transcode(source, from_dialect, to_dialect):
+    """Transforms a source (string) written in a known dialect into
+       an equivalent version written in a different dialect.
+       Spacing between tokens is preserved. This means that if a source
+       is transformed from dialect xx to dialect yy, and that the result
+       is transformed back to dialect xx, the original source should be
+       recovered.
+
+       Returns either the transformed source as a string, or None
+       if something prevented the transformation to be successful.
+    """
+    # In many ways, this is a simplified version of Convert, but where
+    # we assume that the syntax of the source is valid.
+    if not source:
+        print("A valid source must be given.")
+        return None
+
+    if from_dialect is None or not state.is_dialect(from_dialect):
+        print("from_dialect %s' is not a valid dialect." % from_dialect)
+        return None
+
+    if to_dialect is None or not state.is_dialect(to_dialect):
+        print("to_dialect %s' is not a valid dialect." % to_dialect)
+        return None
+
+    from_lang = state.get_from_python(from_dialect)
+    to_lang = state.get_from_python(to_dialect)
+
+    new_dict = {}
+    for key, from_value in from_lang.items():
+        to_value = to_lang[key]
+        if isinstance(from_value, str):
+            new_dict[from_value] = to_value
+        else:
+            for f, t in zip(from_value, to_value):
+                new_dict[f] = t
+
+    result = []  # accumulates transformed tokens
+    prev_lineno = -1
+    prev_col = 0
+
+    tokens = tokenize.generate_tokens(StringIO(source).readline)
+    for tok in tokens:
+        token = Token(tok)
+        if not token.string.strip(" \t"):
+            continue
+        if token.start_line > prev_lineno:
+            prev_col = 0
+        if token.start_col > prev_col and token.string != "\n":
+            result.append(" " * (token.start_col - prev_col))
+        prev_col = token.end_col
+        prev_lineno = token.end_line
+
+        if token.string in new_dict:
+            result.append(new_dict[token.string])
+        else:
+            result.append(token.string)
+
+    return "".join(result)
+
+
+def transcode_file(from_path, to_path):
+    """Convenience function to be used from the command line."""
+
+    cwd = os.getcwd()
+    source_path = os.path.normpath(os.path.abspath(os.path.join(cwd, from_path)))
+    if not os.path.isfile(source_path):
+        print("%s does not exist." % source_path)
+        return
+    target_path = os.path.normpath(os.path.abspath(os.path.join(cwd, to_path)))
+
+    _, extension = os.path.splitext(source_path)
+    from_dialect = extension[1:]
+
+    _, extension = os.path.splitext(target_path)
+    to_dialect = extension[1:]
+
+    with open(source_path, encoding="utf8") as f:
+        source = f.read()
+
+    target = transcode(source, from_dialect, to_dialect)
+
+    with open(target_path, "w", encoding="utf8") as f:
+        f.write(target)

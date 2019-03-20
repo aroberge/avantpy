@@ -1,5 +1,5 @@
 """
-From the source
+invocation.py
 ---------------
 
 AvantPy sets up an import hook which
@@ -75,6 +75,20 @@ The code in the source file will not be executed.
 When using the console, one can see the transformed code,
 if it is different from the code entered, by using the
 ``--show_converted`` option.
+
+
+Transcoding from one dialect into another
+-----------------------------------------
+
+It is possible to transcode a file from one dialect to another.
+This is done using the --transcode option, together with two
+other flags: --from_path and --to_path.
+
+For example, assuming test_french.pyfr exists (it does), we can
+obtain a corresponding english version by the following::
+
+    python -m avantpy --transcode --from_path tests/test_french.pyfr
+          --to_path tests/test_english.pyen
 """
 import argparse
 import sys
@@ -83,7 +97,7 @@ from . import session
 from . import console
 from . import exception_handling
 from . import import_hook
-from . import transcode
+from . import converter
 
 start_console = console.start_console
 show_python = False
@@ -100,7 +114,8 @@ if "-m" in sys.argv:
     parser.add_argument(
         "-s",
         "--source",
-        help="""Source file to be transformed.
+        help="""Source file to be transformed and executed.
+                It is assumed that it can be imported.
                 Format: path.to.file -- Do not include an extension.""",
     )
     parser.add_argument(
@@ -146,21 +161,23 @@ if "-m" in sys.argv:
 
     parser.add_argument(
         "--transcode",
-        help="""Specifies the name [relative path] of a file (without the extension)
-                to be transcoded from one dialect to another.
-                If -s or --source is specified, this is ignored.
+        help="""Indicates that a file is to be transcoded from one dialect
+                to another. If -s or --source is specified, this is ignored.
             """,
+        action="store_true",
     )
     parser.add_argument(
-        "--from_dialect",
+        "--from_path",
         help="""This is used together with the --transcode option to specify the
-                 dialect in which the original file is written.
+                 relative path of the file to be transcoded.
+                 The dialect is determined from the extension.
              """,
     )
     parser.add_argument(
-        "--to_dialect",
+        "--to_path",
         help="""This is used together with the --transcode option to specify the
-                 dialect in which the transformed file is to be written.
+                 relative path of the file to be transcoded.
+                 The dialect is determined from the extension.
                  """,
     )
 
@@ -194,13 +211,13 @@ if "-m" in sys.argv:
         except ModuleNotFoundError:
             print("Could not find module ", args.source, "\n")
             raise
-    elif args.transcode is not None:
-        if args.from_dialect is None:
-            print("--from_dialect must be specified with --transcode.")
+    elif args.transcode:
+        if args.from_path is None:
+            print("--from_path must be specified with --transcode.")
             sys.exit()
-        if args.to_dialect is None:
-            print("--to_dialect must be specified with --transcode.")
+        if args.to_path is None:
+            print("--to_path must be specified with --transcode.")
             sys.exit()
-        transcode.transcode_file(args.transcode, args.from_dialect, args.to_dialect)
+        converter.transcode_file(args.from_path, args.to_path)
     else:
         start_console(local_vars=console_dict, show_python=show_python)

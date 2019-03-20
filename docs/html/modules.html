@@ -430,6 +430,13 @@ a more convenient form for our purpose.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="avantpy.converter.convert">
+<code class="descclassname">avantpy.converter.</code><code class="descname">convert</code><span class="sig-paren">(</span><em>source</em>, <em>dialect=None</em>, <em>source_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#convert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.convert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normally used from other functions to call for a conversion
+of a Python source from a given dialect into Python.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="avantpy.converter.get_unique_variable_names">
 <code class="descclassname">avantpy.converter.</code><code class="descname">get_unique_variable_names</code><span class="sig-paren">(</span><em>source</em>, <em>repeat_kwd</em>, <em>all_count_names=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#get_unique_variable_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.get_unique_variable_names" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of possible variables names that
@@ -441,6 +448,25 @@ These variables will be used in expressions such as</p>
 <p>which will replace</p>
 <blockquote>
 <div>repeat n:</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="avantpy.converter.transcode">
+<code class="descclassname">avantpy.converter.</code><code class="descname">transcode</code><span class="sig-paren">(</span><em>source</em>, <em>from_dialect</em>, <em>to_dialect</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#transcode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.transcode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms a source (string) written in a known dialect into
+an equivalent version written in a different dialect.
+Spacing between tokens is preserved. This means that if a source
+is transformed from dialect xx to dialect yy, and that the result
+is transformed back to dialect xx, the original source should be
+recovered.</p>
+<p>Returns either the transformed source as a string, or None
+if something prevented the transformation to be successful.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="avantpy.converter.transcode_file">
+<code class="descclassname">avantpy.converter.</code><code class="descname">transcode_file</code><span class="sig-paren">(</span><em>from_path</em>, <em>to_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#transcode_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.transcode_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function to be used from the command line.</p>
 </dd></dl>
 
 </div>

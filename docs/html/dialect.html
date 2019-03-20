@@ -97,19 +97,17 @@ We we will generate an
 error message by trying to assign the AvantPy keyword <code class="docutils literal notranslate"><span class="pre">repeat</span></code>
 (<code class="docutils literal notranslate"><span class="pre">répéter</span></code> in the French <strong>dialect</strong>) and show the error message
 in the other language using the AvantPy console:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python -m avantpy
-avantpy console version 0.0.5. [Python version: 3.7.0]
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python -m avantpy --lang fr --dialect pyen
+AvantPy version 0.0.6. [Python version: 3.7.0]
 
--&gt;&gt; set_lang(&#39;fr&#39;)
--&gt;&gt; set_dialect(&#39;pyen&#39;)
-&#39;pyen&#39;
--&gt;&gt; repeat 3:
-...     print(&#39;Hello!&#39;)
-...
+pyen-&gt; repeat 3:
+... -&gt;     print(&#39;Hello!&#39;)
+... -&gt;
 Hello!
 Hello!
 Hello!
--&gt;&gt; a = repeat
+pyen-&gt; # Let&#39;s do something forbidden; the explanation will be in French
+pyen-&gt; a = repeat
 
     Exception AvantPy: RepeatFirstError
 
@@ -123,17 +121,21 @@ Hello!
     pour débuter une nouvelle boucle &#39;pour&#39; ou &#39;tantque&#39;
     (équivalent Python: &#39;for&#39; ou &#39;while&#39;).
 
--&gt;&gt; # Let&#39;s change language and dialect
--&gt;&gt; set_lang(&#39;en&#39;)
--&gt;&gt; set_dialect(&#39;pyfr&#39;)
+pyen-&gt; # Ok, let&#39;s do things in opposite languages
+pyen-&gt; set_lang(&#39;en&#39;)
+pyen-&gt; set_dialect(&#39;pyfr&#39;)
 &#39;pyfr&#39;
--&gt;&gt; répéter 3:
-...     afficher(&#39;Bonjour !&#39;)
-...
+pyfr-&gt; répéter 3:
+... -&gt;     afficher(&#39;Bonjour !&#39;)
+... -&gt;     print(&#39;---&#39;)  # Normal Python always recognized.
+... -&gt;
 Bonjour !
+---
 Bonjour !
+---
 Bonjour !
--&gt;&gt; b = répéter
+---
+pyfr-&gt; b = répéter
 
     AvantPy exception: RepeatFirstError
 
@@ -146,7 +148,7 @@ Bonjour !
     The AvantPy répéter keyword can only be used to begin
     a new for or while loop.
 
--&gt;&gt;
+pyfr-&gt;
 </pre></div>
 </div>
 <div class="section" id="existing-dialects">

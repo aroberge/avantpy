@@ -3,7 +3,7 @@
 Goals:
 
 - version 0.1: first public release
-  - a simple editor has been written
+  - a simple tkinter-based IDE has been written
 - version 0.2: all Python Errors can be caught and an explanation provided
   - Have decided on whether or not using (py) gettext
     - if yes, document how to use it
@@ -21,31 +21,14 @@ Goals:
      - [ ] Show the diff for a previously imported module
         - [ ] show errors if not an AvantPy module
      - [ ] Show the diff from a source file which is not imported.
-- [ ] Add check for mixed spaces and tab characters: new lines should either all start with spaces
-  or tabs, but not both.
-- [ ] After implementing basic exception handling, confirm that it works
-  - [ ] for the console
-    - [ ] for SyntaxError
-    - [ ] for other types not derived from SyntaxError
-  - [ ] for imported file (e.g. pyen program import other pyen program, etc.)
-    - [ ] for SyntaxError
-    - [ ] for other types not derived from SyntaxError
+
   - [ ] Add demo GUI-based editor with syntax highlighting, perhaps similar to, but simpler than [this](http://www.bitforestinfo.com/2017/05/how-to-create-python-syntax-highlighting-functions-for-python-tkinter-text-widget-python-magicstick-text-editor-last-part.html)
 
-- [ ] Add option to limit to one dialect only
-
 - [ ] Use .format for string interpolation everywhere - to allow full translations
-- [ ] Look at having translation for open()
 - [ ] Review builtins and see if translations of other functions are needed.
-- [ ] add syntax check in conversion
-  - [ ] Closing ]}) not matching opening
-  - [ ] opening [({ never closed
 
-- [ ] Review https://realpython.com/pypi-publish-python-package/
-- [ ] Try to reorganise tests into various subtests directories
 - [ ] Consider switching to writing errors using print("...", file=sys.stderr)
   - [ ] Actually, have special function, like print_error, which can be redefined by other programs
-- [ ] Always indicate the dialect being used in the console.
 
 Some useful links to use as a start for improving error analysis:
 
@@ -67,11 +50,10 @@ Some useful links to use as a start for improving error analysis:
 
 ## Developers tools
 
-- [ ] Command line option to convert from Python to dialect
-  - This could be useful to quickly create test suites in a new dialect.
 - [ ] Command line option to convert from dialect to Python
-- [ ] Command line option to convert from dialect_1 to dialect_2
+- [x] Command line option to convert from dialect_1 to dialect_2
 - [ ] GUI for above
+- [ ] Combine --diff option with these
 
 ## Testing
 

@@ -1,5 +1,7 @@
 # Changelog
 
+- Console prompt is now based on dialect
+- Transocode works.
 - Properly implemented --show_converted option; it was active by default.
 - Reorganized the tests by dialect, introducing new naming convention.
 

@@ -1,0 +1,38 @@
+''' Just testing a small subset of all the French syntax '''
+
+from math import pi
+
+def test_bool():
+    assert True, "Vrai is True"
+    assert not False, "Faux is False"
+
+def test_for():
+    total = 0
+    for i in range(10):
+        total += i
+    assert total == 45
+
+def test_si_else():
+    if True:
+        x = 0
+    else:
+        x = 1
+    assert x == 0
+
+def test_if_sinon():
+    if True:
+        x = 0
+    else:
+        x = 1
+    assert x == 0
+
+def main():
+    test_bool()
+    test_for()
+    test_si_else()
+    test_if_sinon()
+    print("Success.")
+
+if notimported:
+    main()
+    bonjour = 'Bonjour tout le monde !'  # for console example

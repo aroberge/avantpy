@@ -7,8 +7,9 @@ Bienvenue 환영합니다 Bienvenido - ようこそ Welcome  歡迎光臨
 .. warning::
 
     This is pre-alpha software, currently in development.
-    **Currently**, it is only tested from a local repository, and not installed
-    from pypi.org using pip.
+    **Currently**, it is only tested from a local repository, and while it is
+    available from pypi.org using pip, we do not test with such
+    an installed version.
 
 
 What is AvantPy?

@@ -208,7 +208,7 @@
 <span class="sd">Any remaining token is left as is; it is assumed to be valid</span>
 <span class="sd">Python.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">tokenize</span>
 <span class="kn">from</span> <span class="nn">io</span> <span class="k">import</span> <span class="n">StringIO</span>
 
@@ -622,9 +622,99 @@
             <span class="p">)</span></div></div>
 
 
-<span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">dialect</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">source_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="convert"><a class="viewcode-back" href="../../modules.html#avantpy.converter.convert">[docs]</a><span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">dialect</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">source_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Normally used from other functions to call for a conversion</span>
+<span class="sd">       of a Python source from a given dialect into Python.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">converter</span> <span class="o">=</span> <span class="n">Converter</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">dialect</span><span class="o">=</span><span class="n">dialect</span><span class="p">,</span> <span class="n">source_name</span><span class="o">=</span><span class="n">source_name</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">converter</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">converter</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="transcode"><a class="viewcode-back" href="../../modules.html#avantpy.converter.transcode">[docs]</a><span class="k">def</span> <span class="nf">transcode</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">from_dialect</span><span class="p">,</span> <span class="n">to_dialect</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Transforms a source (string) written in a known dialect into</span>
+<span class="sd">       an equivalent version written in a different dialect.</span>
+<span class="sd">       Spacing between tokens is preserved. This means that if a source</span>
+<span class="sd">       is transformed from dialect xx to dialect yy, and that the result</span>
+<span class="sd">       is transformed back to dialect xx, the original source should be</span>
+<span class="sd">       recovered.</span>
+
+<span class="sd">       Returns either the transformed source as a string, or None</span>
+<span class="sd">       if something prevented the transformation to be successful.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># In many ways, this is a simplified version of Convert, but where</span>
+    <span class="c1"># we assume that the syntax of the source is valid.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">source</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A valid source must be given.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">from_dialect</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">is_dialect</span><span class="p">(</span><span class="n">from_dialect</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;from_dialect </span><span class="si">%s</span><span class="s2">&#39; is not a valid dialect.&quot;</span> <span class="o">%</span> <span class="n">from_dialect</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">to_dialect</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">is_dialect</span><span class="p">(</span><span class="n">to_dialect</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;to_dialect </span><span class="si">%s</span><span class="s2">&#39; is not a valid dialect.&quot;</span> <span class="o">%</span> <span class="n">to_dialect</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">from_lang</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get_from_python</span><span class="p">(</span><span class="n">from_dialect</span><span class="p">)</span>
+    <span class="n">to_lang</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get_from_python</span><span class="p">(</span><span class="n">to_dialect</span><span class="p">)</span>
+
+    <span class="n">new_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">from_value</span> <span class="ow">in</span> <span class="n">from_lang</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">to_value</span> <span class="o">=</span> <span class="n">to_lang</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">from_value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">new_dict</span><span class="p">[</span><span class="n">from_value</span><span class="p">]</span> <span class="o">=</span> <span class="n">to_value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">f</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">from_value</span><span class="p">,</span> <span class="n">to_value</span><span class="p">):</span>
+                <span class="n">new_dict</span><span class="p">[</span><span class="n">f</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># accumulates transformed tokens</span>
+    <span class="n">prev_lineno</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">prev_col</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">generate_tokens</span><span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">readline</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="n">Token</span><span class="p">(</span><span class="n">tok</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot; </span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">):</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">start_line</span> <span class="o">&gt;</span> <span class="n">prev_lineno</span><span class="p">:</span>
+            <span class="n">prev_col</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">start_col</span> <span class="o">&gt;</span> <span class="n">prev_col</span> <span class="ow">and</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">!=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">start_col</span> <span class="o">-</span> <span class="n">prev_col</span><span class="p">))</span>
+        <span class="n">prev_col</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">end_col</span>
+        <span class="n">prev_lineno</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">end_line</span>
+
+        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="ow">in</span> <span class="n">new_dict</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_dict</span><span class="p">[</span><span class="n">token</span><span class="o">.</span><span class="n">string</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="transcode_file"><a class="viewcode-back" href="../../modules.html#avantpy.converter.transcode_file">[docs]</a><span class="k">def</span> <span class="nf">transcode_file</span><span class="p">(</span><span class="n">from_path</span><span class="p">,</span> <span class="n">to_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convenience function to be used from the command line.&quot;&quot;&quot;</span>
+
+    <span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+    <span class="n">source_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cwd</span><span class="p">,</span> <span class="n">from_path</span><span class="p">)))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">source_path</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> does not exist.&quot;</span> <span class="o">%</span> <span class="n">source_path</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="n">target_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cwd</span><span class="p">,</span> <span class="n">to_path</span><span class="p">)))</span>
+
+    <span class="n">_</span><span class="p">,</span> <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">source_path</span><span class="p">)</span>
+    <span class="n">from_dialect</span> <span class="o">=</span> <span class="n">extension</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="n">_</span><span class="p">,</span> <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">target_path</span><span class="p">)</span>
+    <span class="n">to_dialect</span> <span class="o">=</span> <span class="n">extension</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">source_path</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="n">target</span> <span class="o">=</span> <span class="n">transcode</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">from_dialect</span><span class="p">,</span> <span class="n">to_dialect</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">target_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">target</span><span class="p">)</span></div>
 </pre></div>
 
           </div>

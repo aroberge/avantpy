@@ -6,6 +6,7 @@ Keeps track of and updates the state of the session: language and dialect used.
 import glob
 import os.path
 import runpy
+import sys
 
 from . import exceptions
 
@@ -116,6 +117,8 @@ class _State:
                     self.set_lang(dialect[2:])
                 except exceptions.UnknownLanguageError:
                     pass
+        sys.ps1 = dialect + "-> "
+        sys.ps2 = "." * (len(dialect) - 1) + " -> "
         return dialect
 
     def set_lang(self, lang):
