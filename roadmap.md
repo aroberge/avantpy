@@ -15,6 +15,9 @@ Goals:
     - One of many references: https://docs.readthedocs.io/en/latest/i18n.html
   - a simple tkinter-based IDE has been written
 
+# TODO
+
+- [ ] TODO: fix_ending in console might not be needed.
 
 ## Enhancements
 
