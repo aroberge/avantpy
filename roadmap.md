@@ -19,7 +19,7 @@ Goals:
 ## Enhancements
 
 - [ ] Review scratch and blockly for alternative to "continue"
-- [ ] Simple localizable turtle module https://docs.python.org/dev/library/cmd.html#cmd-example
+
 
 - [ ] Make it possible to show the difflib output in an interactive session without exiting;
   This could be a more useful feature in an IDE environment
@@ -42,6 +42,12 @@ Goals:
   - [ ] Perhaps add a function, say tortue() in French, and turtle() in English,
     that loads up the turtle module, and activate some translations, providing some
     additional help...  Perhaps display the help whenever tortue() is typed in.
+    - [ ] Idea: use a keyword like `magicturtle` that would enable all turtle functions.
+  - [ ] Simple localizable turtle module https://docs.python.org/dev/library/cmd.html#cmd-example
+  - [ ] If so, add basic translations of basic colors.
+  - [ ] If so, perhaps add a page in the documentation like https://ecsdtech.com/8-pages/121-python-turtle-colors but adding rgb and hex code for colors
+
+
 
 Some useful links to use as a start for improving error analysis:
 

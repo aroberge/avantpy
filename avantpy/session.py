@@ -22,6 +22,8 @@ class _State:
         self.messages = {}
         self.current_dialect = None
         self.current_lang = None
+        sys.ps1 = ">>> "  # can be reset based on dialect
+        sys.ps2 = "... "
         self.collect_dialects()
         self.collect_languages()
 

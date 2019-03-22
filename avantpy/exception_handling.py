@@ -59,7 +59,7 @@ def handle_exception(exc, original_source):
         # Let normal Python traceback through
         raise exc
 
-    if False:  # Fixme
+    if False:  # FIXME  Currently, just return None
         print("\nInfo from sys")
         print("sys.exc_info(): ", sys.exc_info())
         _maybe_print("sys.last_type: ", sys, "last_type")

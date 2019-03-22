@@ -1,5 +1,8 @@
 # Changelog
 
+
+- Added tracebacks generation in French, with all pyupper examples reproduced
+  - Also added corresponding pytest tests
 - Console prompt is still based on dialect but does not include the py prefix.
 
 ## Version 0.0.6

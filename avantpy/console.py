@@ -15,7 +15,7 @@ class AvantPyInteractiveConsole(code.InteractiveConsole):
        except that it support experimental code transformations.
        It inherits from cPython's ``code.InteractiveConsole``.
 
-       Like the normal Python's interactive console, it attempts to evaluate
+       Like the normal Python interactive console, it attempts to evaluate
        code entered one line at a time by a user.
     """
 
@@ -33,7 +33,7 @@ class AvantPyInteractiveConsole(code.InteractiveConsole):
         indicates that the command was executed or invalid, the buffer
         is reset; otherwise, the command is incomplete, and the buffer
         is left as it was after the line was appended.  The return
-        value is 1 if more input is required, 0 if the line was dealt
+        value is True if more input is required, False if the line was dealt
         with in some way (this is the same as runsource()).
         """
         assert not line.endswith(
@@ -49,7 +49,7 @@ class AvantPyInteractiveConsole(code.InteractiveConsole):
         except exceptions.AvantPyException as exc:
             print(exception_handling.handle_exception(exc, source))
             self.resetbuffer()
-            return
+            return False
         except TokenError as exc:
             exc.args[0].startswith("EOF")
             return True
@@ -84,7 +84,7 @@ class AvantPyInteractiveConsole(code.InteractiveConsole):
     def showsyntaxerror(self, filename=None):
         """Shows the converted source if different than the original
            and the syntax error"""
-        if not self.identical:
+        if self.show_python and not self.identical:
             self.show_converted(self._source)
         super().showsyntaxerror(filename=filename)
 
@@ -142,7 +142,8 @@ def start_console(local_vars=None, show_python=False):
         local_vars.update(console_defaults)
 
     console = AvantPyInteractiveConsole(locals=local_vars, show_python=show_python)
-    console.locals.update(console_defaults)
+    console.locals.update(console_defaults)  # TODO: check if this is needed
+
     banner = "AvantPy version {}. [Python version: {}]\n".format(
         version.__version__, platform.python_version()
     )
