@@ -1,0 +1,329 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Friendly error messages &#8212; AvantPy 0.0.7 documentation</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="How does it work?" href="works.html" />
+    <link rel="prev" title="More than keywords" href="builtins.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="works.html" title="How does it work?"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="builtins.html" title="More than keywords"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.7 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Friendly error messages</a><ul>
+<li><a class="reference internal" href="#ifnobreakerror">IfNobreakError</a></li>
+<li><a class="reference internal" href="#mismatchedbracketserror">MismatchedBracketsError</a></li>
+<li><a class="reference internal" href="#missingleftbracketerror">MissingLeftBracketError</a></li>
+<li><a class="reference internal" href="#missingrepeaterror">MissingRepeatError</a></li>
+<li><a class="reference internal" href="#nobreakfirsterror">NobreakFirstError</a></li>
+<li><a class="reference internal" href="#nobreaksyntaxerror">NobreakSyntaxError</a></li>
+<li><a class="reference internal" href="#repeatfirsterror">RepeatFirstError</a></li>
+<li><a class="reference internal" href="#trynobreakerror">TryNobreakError</a></li>
+<li><a class="reference internal" href="#unknownlanguageerror">UnknownLanguageError</a></li>
+<li><a class="reference internal" href="#unknowndialecterror">UnknownDialectError</a></li>
+<li><a class="reference internal" href="#unexpectederror">UnexpectedError</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="builtins.html"
+                        title="previous chapter">More than keywords</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="works.html"
+                        title="next chapter">How does it work?</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/tracebacks_upper.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="friendly-error-messages">
+<h1>Friendly error messages<a class="headerlink" href="#friendly-error-messages" title="Permalink to this headline">¶</a></h1>
+<p>AvantPy aims to provide friendlier feedback when an exception
+is raised than what is done by Python.
+Such feedback will also be available in languages other than English.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The content of this page is generated by running
+tb_pyupper.py located in the <code class="docutils literal notranslate"><span class="pre">tests/pyupper/</span></code> directory.
+This needs to be done explicitly, independently of updating the
+documentation using Sphinx.</p>
+</div>
+<p>AvantPy version: 0.0.7
+Python version: 3.7.0</p>
+<div class="section" id="ifnobreakerror">
+<h2>IfNobreakError<a class="headerlink" href="#ifnobreakerror" title="Permalink to this headline">¶</a></h2>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">IfNobreakError</span>
+
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="n">raise_if_nobreak</span><span class="o">.</span><span class="n">pyupper</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">4.</span>
+
+<span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
+
+   <span class="mi">2</span><span class="p">:</span> <span class="k">if</span> <span class="kc">True</span><span class="p">:</span>
+   <span class="mi">3</span><span class="p">:</span>     <span class="k">pass</span>
+<span class="o">--&gt;</span><span class="mi">4</span><span class="p">:</span> <span class="n">NOBREAK</span><span class="p">:</span>
+
+<span class="n">The</span> <span class="n">AvantPy</span> <span class="n">NOBREAK</span> <span class="n">keyword</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">used</span> <span class="ow">in</span>
+<span class="n">an</span> <span class="n">IF</span><span class="o">/</span><span class="n">ELIF</span><span class="o">/</span><span class="n">ELSE</span> <span class="n">clause</span> <span class="p">(</span><span class="n">Python</span><span class="p">:</span> <span class="k">if</span><span class="o">/</span><span class="k">elif</span><span class="o">/</span><span class="k">else</span><span class="p">)</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mismatchedbracketserror">
+<h2>MismatchedBracketsError<a class="headerlink" href="#mismatchedbracketserror" title="Permalink to this headline">¶</a></h2>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">MismatchedBracketsError</span>
+
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="n">raise_mismatched_brackets</span><span class="o">.</span><span class="n">pyupper</span> <span class="n">on</span> <span class="n">lines</span> <span class="p">[</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">6</span><span class="p">]</span><span class="o">.</span>
+
+<span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
+
+<span class="o">--&gt;</span><span class="mi">2</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span>
+   <span class="mi">3</span><span class="p">:</span>     <span class="mi">2</span><span class="p">,</span>
+   <span class="mi">4</span><span class="p">:</span>     <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span>
+   <span class="mi">5</span><span class="p">:</span>     <span class="mi">5</span>
+<span class="o">--&gt;</span><span class="mi">6</span><span class="p">:</span> <span class="p">]</span>
+
+<span class="n">The</span> <span class="n">opening</span> <span class="p">(</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">match</span> <span class="n">the</span> <span class="n">closing</span> <span class="p">]</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="missingleftbracketerror">
+<h2>MissingLeftBracketError<a class="headerlink" href="#missingleftbracketerror" title="Permalink to this headline">¶</a></h2>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">MissingLeftBracketError</span>
+
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="n">raise_missing_left_bracket</span><span class="o">.</span><span class="n">pyupper</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">5.</span>
+
+<span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
+
+   <span class="mi">4</span><span class="p">:</span>     <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,)</span>
+<span class="o">--&gt;</span><span class="mi">5</span><span class="p">:</span>     <span class="p">)</span>
+   <span class="mi">6</span><span class="p">:</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">The</span> <span class="n">closing</span> <span class="p">)</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">match</span> <span class="n">anything</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="missingrepeaterror">
+<h2>MissingRepeatError<a class="headerlink" href="#missingrepeaterror" title="Permalink to this headline">¶</a></h2>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">MissingRepeatError</span>
+
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="n">raise_missing_repeat</span><span class="o">.</span><span class="n">pyupper</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">3.</span>
+
+<span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
+
+   <span class="mi">2</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="o">--&gt;</span><span class="mi">3</span><span class="p">:</span> <span class="n">UNTIL</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+   <span class="mi">4</span><span class="p">:</span>     <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="n">The</span> <span class="n">AvantPy</span> <span class="n">UNTIL</span> <span class="n">keyword</span> <span class="n">can</span> <span class="n">be</span> <span class="n">used</span> <span class="n">only</span> <span class="n">when</span> <span class="n">preceded</span> <span class="n">by</span>
+<span class="n">REPEAT</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Example 2:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">MissingRepeatError</span>
+
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="n">raise_missing_repeat2</span><span class="o">.</span><span class="n">pyupper</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">3.</span>
+
+<span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
+
+   <span class="mi">2</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="o">--&gt;</span><span class="mi">3</span><span class="p">:</span> <span class="n">FOREVER</span><span class="p">:</span>
+   <span class="mi">4</span><span class="p">:</span>     <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="n">The</span> <span class="n">AvantPy</span> <span class="n">FOREVER</span> <span class="n">keyword</span> <span class="n">can</span> <span class="n">be</span> <span class="n">used</span> <span class="n">only</span> <span class="n">when</span> <span class="n">preceded</span> <span class="n">by</span>
+<span class="n">REPEAT</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="nobreakfirsterror">
+<h2>NobreakFirstError<a class="headerlink" href="#nobreakfirsterror" title="Permalink to this headline">¶</a></h2>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">NobreakFirstError</span>
+
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="n">raise_nobreak_first</span><span class="o">.</span><span class="n">pyupper</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">3.</span>
+
+<span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
+
+   <span class="mi">2</span><span class="p">:</span> <span class="c1"># Need to prevent NOBREAK being replaced by &#39;else&#39; in this situation.</span>
+<span class="o">--&gt;</span><span class="mi">3</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="kc">True</span> <span class="n">NOBREAK</span> <span class="mi">3</span>
+   <span class="mi">4</span><span class="p">:</span>
+
+<span class="n">The</span> <span class="n">AvantPy</span> <span class="n">NOBREAK</span> <span class="n">keyword</span> <span class="n">can</span> <span class="n">be</span> <span class="n">used</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">ELSE</span> <span class="p">(</span><span class="n">Python</span><span class="p">:</span> <span class="k">else</span><span class="p">)</span>
+<span class="n">only</span> <span class="n">when</span> <span class="n">it</span> <span class="n">begins</span> <span class="n">a</span> <span class="n">new</span> <span class="n">statement</span> <span class="k">for</span> <span class="n">loops</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="nobreaksyntaxerror">
+<h2>NobreakSyntaxError<a class="headerlink" href="#nobreaksyntaxerror" title="Permalink to this headline">¶</a></h2>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">NobreakSyntaxError</span>
+
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="n">raise_nobreak_syntax</span><span class="o">.</span><span class="n">pyupper</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">4.</span>
+
+<span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
+
+   <span class="mi">3</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="o">--&gt;</span><span class="mi">4</span><span class="p">:</span> <span class="n">NOBREAK</span><span class="p">:</span> <span class="k">pass</span>
+   <span class="mi">5</span><span class="p">:</span>
+
+<span class="n">The</span> <span class="n">AvantPy</span> <span class="n">NOBREAK</span> <span class="n">keyword</span> <span class="n">can</span> <span class="n">only</span> <span class="n">be</span> <span class="n">used</span> <span class="k">as</span> <span class="n">a</span> <span class="n">replacement</span>
+<span class="n">of</span> <span class="n">ELSE</span> <span class="p">(</span><span class="n">Python</span><span class="p">:</span> <span class="k">else</span><span class="p">)</span> <span class="k">with</span> <span class="n">a</span> <span class="n">matching</span> <span class="n">FOR</span> <span class="ow">or</span> <span class="n">WHILE</span> <span class="n">loop</span>
+<span class="p">(</span><span class="n">Python</span><span class="p">:</span> <span class="k">for</span><span class="o">/</span><span class="k">while</span><span class="p">)</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="repeatfirsterror">
+<h2>RepeatFirstError<a class="headerlink" href="#repeatfirsterror" title="Permalink to this headline">¶</a></h2>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">RepeatFirstError</span>
+
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="n">raise_repeat_first</span><span class="o">.</span><span class="n">pyupper</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">3.</span>
+
+<span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
+
+   <span class="mi">2</span><span class="p">:</span> <span class="c1"># Catch an early case of using REPEAT not to begin a loop</span>
+<span class="o">--&gt;</span><span class="mi">3</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="n">REPEAT</span>
+   <span class="mi">4</span><span class="p">:</span>
+
+<span class="n">The</span> <span class="n">AvantPy</span> <span class="n">REPEAT</span> <span class="n">keyword</span> <span class="n">can</span> <span class="n">only</span> <span class="n">be</span> <span class="n">used</span> <span class="n">to</span> <span class="n">begin</span>
+<span class="n">a</span> <span class="n">new</span> <span class="n">loop</span> <span class="p">(</span><span class="n">Python</span><span class="p">:</span> <span class="n">equivalent</span> <span class="n">to</span> <span class="s1">&#39;for&#39;</span> <span class="ow">or</span> <span class="s1">&#39;while&#39;</span> <span class="n">loop</span><span class="p">)</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trynobreakerror">
+<h2>TryNobreakError<a class="headerlink" href="#trynobreakerror" title="Permalink to this headline">¶</a></h2>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">TryNobreakError</span>
+
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="n">raise_try_nobreak</span><span class="o">.</span><span class="n">pyupper</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">7.</span>
+
+<span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
+
+   <span class="mi">3</span><span class="p">:</span>     <span class="n">TRY</span><span class="p">:</span>
+   <span class="mi">4</span><span class="p">:</span>         <span class="n">A</span> <span class="o">=</span> <span class="mi">1</span>
+   <span class="mi">5</span><span class="p">:</span>     <span class="n">EXCEPT</span><span class="p">:</span>
+   <span class="mi">6</span><span class="p">:</span>         <span class="n">A</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="o">--&gt;</span><span class="mi">7</span><span class="p">:</span>     <span class="n">NOBREAK</span><span class="p">:</span>
+
+<span class="n">The</span> <span class="n">AvantPy</span> <span class="n">NOBREAK</span> <span class="n">keyword</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">used</span> <span class="ow">in</span>
+<span class="n">a</span> <span class="n">TRY</span><span class="o">/</span><span class="n">EXCEPT</span><span class="o">/</span><span class="n">ELSE</span><span class="o">/</span><span class="n">FINALLY</span> <span class="n">clause</span> <span class="p">(</span><span class="n">Python</span><span class="p">:</span> <span class="k">try</span><span class="o">/</span><span class="k">except</span><span class="o">/</span><span class="k">else</span><span class="o">/</span><span class="k">finally</span><span class="p">)</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="unknownlanguageerror">
+<h2>UnknownLanguageError<a class="headerlink" href="#unknownlanguageerror" title="Permalink to this headline">¶</a></h2>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">UnknownLanguageError</span>
+
+
+<span class="n">The</span> <span class="n">following</span> <span class="n">unknown</span> <span class="n">language</span> <span class="n">was</span> <span class="n">requested</span><span class="p">:</span> <span class="n">xx</span><span class="o">.</span>
+<span class="n">The</span> <span class="n">known</span> <span class="n">languages</span> <span class="n">are</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s1">&#39;fr&#39;</span><span class="p">,</span> <span class="s1">&#39;upper&#39;</span><span class="p">]</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="unknowndialecterror">
+<h2>UnknownDialectError<a class="headerlink" href="#unknowndialecterror" title="Permalink to this headline">¶</a></h2>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">UnknownDialectError</span>
+
+
+<span class="n">The</span> <span class="n">following</span> <span class="n">unknown</span> <span class="n">dialect</span> <span class="n">was</span> <span class="n">requested</span><span class="p">:</span> <span class="n">pyxx</span><span class="o">.</span>
+<span class="n">The</span> <span class="n">known</span> <span class="n">dialects</span> <span class="n">are</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;pyen&#39;</span><span class="p">,</span> <span class="s1">&#39;pyes&#39;</span><span class="p">,</span> <span class="s1">&#39;pyfr&#39;</span><span class="p">,</span> <span class="s1">&#39;pyupper&#39;</span><span class="p">]</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="unexpectederror">
+<h2>UnexpectedError<a class="headerlink" href="#unexpectederror" title="Permalink to this headline">¶</a></h2>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">No</span> <span class="n">example</span> <span class="n">found</span> <span class="n">yet</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="works.html" title="How does it work?"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="builtins.html" title="More than keywords"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.7 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, André Roberge.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

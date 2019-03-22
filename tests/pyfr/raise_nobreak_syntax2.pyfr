@@ -1,0 +1,3 @@
+'''Raises NobreakSyntaxError'''
+définir test_nobreak_syntax():
+    pasinterrompu

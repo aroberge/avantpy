@@ -318,7 +318,12 @@ class Converter:
 
     def process_token(self, token):
         """Determines what to do for each individual token."""
-        if not token.string.strip(" \t"):  # we keep track of spacing elsewhere
+
+        # including indentation as a token can mess up the determination
+        # of whether or not a keyword appears at the beginning of a new
+        # line. Thus, we discard such spaces, and keep track of the required
+        # spacing elsewhere.
+        if not token.string.strip(" \t"):
             return
 
         self.begin_new_line = token.start_line != self.prev_lineno

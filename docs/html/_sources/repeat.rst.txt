@@ -63,6 +63,26 @@ in a natural way::
     repeat forever:
         # condition
 
+.. note:: **Learning from experts**
+
+   The Quorum computing language has been designed based on evidence gathered
+   from `how human learn programming languages <https://quorumlanguage.com/evidence.html>`_.
+
+   It includes `three of the four repeat <https://quorumlanguage.com/tutorials/language/repeat.html>`_ choices mentioned above, with a slightly different syntax::
+
+        repeat 10 times
+            // code
+        end
+
+        repeat while condition
+            // code
+        end
+
+        repeat until condition
+            // code
+        end
+
+
 
 A concrete example
 -------------------
@@ -143,3 +163,13 @@ more complex and versatile Python idiom::
 
 However, we do not see the need to include this type of granularity
 in AvantPy.
+
+A final word
+-------------
+
+We've already mentioned the usage in blocks-based programming environment
+of ``repeat``, or some similar alternative in other languages. ``repeat``
+was also the clearer possibility for people unfamiliar with programming jargon
+as found by Andreas Stefik and Susanna Siebert, and published
+"An Empirical Investigation into Programming Language Syntax."
+ACM Transactions on Computing Education, 13(4), Nov. 2013.

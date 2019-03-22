@@ -1,5 +1,6 @@
 # Changelog
 
+- Console prompt is still based on dialect but does not include the py prefix.
 
 ## Version 0.0.6
 

@@ -1,0 +1,5 @@
+'''Should raise MissingRepeatError'''
+x = 0
+sansfin:
+    x += 1
+    interrompre

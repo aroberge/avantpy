@@ -13,7 +13,7 @@ whose meaning is not immediately obvious::
         # break statement occurred above
 
 When I first understood this, I thought *wouldn't it be nice if, instead
-of using ``else:``, one could write something like* ``if not break:`` which
+of using* ``else:``, *one could write something like* ``if not break:`` which
 uses only existing Python keywords.
 In theory, it might be possible to do something like this in AvantPy.
 However, wanting to have a one-to-one keyword translation from one
@@ -71,3 +71,18 @@ we do not need any other keyword than ``else``.
 If it were found that the use of the equivalent of ``else`` in some language
 would not be appropriate in this construct, we could consider
 introducing another keyword - perhaps something like ``noexcept``.
+
+Is ``nobreak`` really needed?
+------------------------------
+
+Python's use of an ``else`` clause in ``for`` and ``while`` loops is
+rather unusual, relatively poorly known and not easy to understand
+at first glance. It is for this latter reason that we make it possible
+to define an alternative keyword ``nobreak`` or an equivalent translation
+in the user's language.  However, given that is not often used, one could argue
+that it could be left out entirely from AvantPy since AvantPy is intended for
+beginners.
+
+Our decision to include it is to give the possibility, to those instructors
+that wish to teach such a construct/concept, to use a more natural keyword
+in their own language; anyone else is free to ignore it.

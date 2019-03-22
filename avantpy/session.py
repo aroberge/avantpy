@@ -103,6 +103,8 @@ class _State:
 
            If current language is set to None, an attempt will be made
            to set language to the value corresponding to dialect.
+
+           Also sets the default prompt.
         """
         if not self.is_dialect(dialect):
             raise exceptions.UnknownDialectError(
@@ -111,14 +113,15 @@ class _State:
                 (dialect, self.all_dialects()),
             )
         else:
+            lang = dialect[2:]
             self.current_dialect = dialect
             if self.current_lang is None:
                 try:
-                    self.set_lang(dialect[2:])
+                    self.set_lang(lang)
                 except exceptions.UnknownLanguageError:
                     pass
-        sys.ps1 = dialect + "-> "
-        sys.ps2 = "." * (len(dialect) - 1) + " -> "
+        sys.ps1 = lang + "> "
+        sys.ps2 = "." * (len(lang) + 1) + " "
         return dialect
 
     def set_lang(self, lang):

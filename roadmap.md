@@ -3,14 +3,17 @@
 Goals:
 
 - version 0.1: first public release
-  - a simple tkinter-based IDE has been written
   - Consider having a simplified and translated turtle module included
+    - perhaps do this via a special `magicturtle` keyword to be use on its own,
+      which would set everything up and make a small subset of turtle
+      functions available.
 - version 0.2: all Python Errors can be caught and an explanation provided
   - Have decided on whether or not using (py) gettext
     - if yes, document how to use it
     - if no, explain why since using gettext is the standard for internationalization.
     - See, for example https://news.ycombinator.com/item?id=2095334
     - One of many references: https://docs.readthedocs.io/en/latest/i18n.html
+  - a simple tkinter-based IDE has been written
 
 
 ## Enhancements

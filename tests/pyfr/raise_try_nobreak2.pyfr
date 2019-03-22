@@ -1,0 +1,7 @@
+'''Should raise TryNobreakError'''
+essayer:
+    passer
+siexception:
+    passer
+pasinterrompu:
+    passer

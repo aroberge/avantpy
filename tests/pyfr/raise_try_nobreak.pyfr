@@ -1,0 +1,8 @@
+'''Raises TryNobreakError'''
+définir test_except_nobreak_():
+    essayer:
+        A = 1
+    siexception:
+        A = 2
+    pasinterrompu:
+        affirmer A = 1

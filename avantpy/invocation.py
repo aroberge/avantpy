@@ -52,7 +52,7 @@ to recognize that the French dialect is to be used::
     avantpy console version 0.0.5. [Python version: 3.7.0]
 
     ->> si Vrai:
-    ...     imprime(bonjour)
+    ...     afficher(bonjour)
     ...
     Bonjour tout le monde !
     ->>

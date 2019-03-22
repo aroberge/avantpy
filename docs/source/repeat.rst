@@ -63,6 +63,26 @@ in a natural way::
     repeat forever:
         # condition
 
+.. note:: **Learning from experts**
+
+   The Quorum computing language has been designed based on evidence gathered
+   from `how human learn programming languages <https://quorumlanguage.com/evidence.html>`_.
+
+   It includes `three of the four repeat <https://quorumlanguage.com/tutorials/language/repeat.html>`_ choices mentioned above, with a slightly different syntax::
+
+        repeat 10 times
+            // code
+        end
+
+        repeat while condition
+            // code
+        end
+
+        repeat until condition
+            // code
+        end
+
+
 
 A concrete example
 -------------------

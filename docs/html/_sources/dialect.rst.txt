@@ -13,6 +13,16 @@ named ``pyxx.py`` and are found in the AvantPy's repository:
 `avantpy/dialects/ directory <https://github.com/aroberge/avantpy/tree/master/avantpy/dialects>`_.
 
 
+.. warning::
+
+    In the console below, instead of Python's standard main prompt,
+    ``>>> ``, the main prompt shows the **dialect** being used
+    without including the prefix ``py``. This is to keep it to the
+    same length as the standard Python prompt,
+    except when the UPPERCASE dialect (pyupper) is used.
+
+    This could change.
+
 Perhaps an example is the best way to demonstrate, using two different
 "languages" in an unusual way.
 We we will generate an
@@ -21,16 +31,16 @@ error message by trying to assign the AvantPy keyword ``repeat``
 in the other language using the AvantPy console::
 
     $ python -m avantpy --lang fr --dialect pyen
-    AvantPy version 0.0.6. [Python version: 3.7.0]
+    AvantPy version 0.0.7. [Python version: 3.7.0]
 
-    pyen-> repeat 3:
-    ... ->     print('Hello!')
-    ... ->
+    en> repeat 3:
+    ...     print('Hello!')
+    ...
     Hello!
     Hello!
     Hello!
-    pyen-> # Let's do something forbidden; the explanation will be in French
-    pyen-> a = repeat
+    en> # Let's do something forbidden; the explanation will be in French
+    en> a = repeat
 
         Exception AvantPy: RepeatFirstError
 
@@ -44,21 +54,21 @@ in the other language using the AvantPy console::
         pour débuter une nouvelle boucle 'pour' ou 'tantque'
         (équivalent Python: 'for' ou 'while').
 
-    pyen-> # Ok, let's do things in opposite languages
-    pyen-> set_lang('en')
-    pyen-> set_dialect('pyfr')
+    en> # Ok, let's do things in opposite languages
+    en> set_lang('en')
+    en> set_dialect('pyfr')
     'pyfr'
-    pyfr-> répéter 3:
-    ... ->     afficher('Bonjour !')
-    ... ->     print('---')  # Normal Python always recognized.
-    ... ->
+    fr> répéter 3:
+    ...     afficher('Bonjour !')
+    ...     print('---')  # Normal Python always recognized.
+    ...
     Bonjour !
     ---
     Bonjour !
     ---
     Bonjour !
     ---
-    pyfr-> b = répéter
+    fr> b = répéter
 
         AvantPy exception: RepeatFirstError
 
@@ -71,7 +81,6 @@ in the other language using the AvantPy console::
         The AvantPy répéter keyword can only be used to begin
         a new for or while loop.
 
-    pyfr->
 
 Existing dialects
 ------------------

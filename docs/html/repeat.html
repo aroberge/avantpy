@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Special keyword: repeat &#8212; AvantPy 0.0.6 documentation</title>
+    <title>Special keyword: repeat &#8212; AvantPy 0.0.7 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -34,7 +34,7 @@
         <li class="right" >
           <a href="principles.html" title="Guiding principles"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.6 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.7 documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -44,6 +44,7 @@
 <li><a class="reference internal" href="#">Special keyword: <code class="docutils literal notranslate"><span class="pre">repeat</span></code></a><ul>
 <li><a class="reference internal" href="#a-concrete-example">A concrete example</a></li>
 <li><a class="reference internal" href="#more-gradual-approach">More gradual approach</a></li>
+<li><a class="reference internal" href="#a-final-word">A final word</a></li>
 </ul>
 </li>
 </ul>
@@ -133,6 +134,26 @@ in a natural way:</p>
     <span class="c1"># condition</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Learning from experts</strong></p>
+<p>The Quorum computing language has been designed based on evidence gathered
+from <a class="reference external" href="https://quorumlanguage.com/evidence.html">how human learn programming languages</a>.</p>
+<p>It includes <a class="reference external" href="https://quorumlanguage.com/tutorials/language/repeat.html">three of the four repeat</a> choices mentioned above, with a slightly different syntax:</p>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repeat</span> <span class="mi">10</span> <span class="n">times</span>
+    <span class="o">//</span> <span class="n">code</span>
+<span class="n">end</span>
+
+<span class="n">repeat</span> <span class="k">while</span> <span class="n">condition</span>
+    <span class="o">//</span> <span class="n">code</span>
+<span class="n">end</span>
+
+<span class="n">repeat</span> <span class="n">until</span> <span class="n">condition</span>
+    <span class="o">//</span> <span class="n">code</span>
+<span class="n">end</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="a-concrete-example">
 <h2>A concrete example<a class="headerlink" href="#a-concrete-example" title="Permalink to this headline">¶</a></h2>
 <p>Suppose that I am teaching programming to beginners using Python’s turtle module.
@@ -209,6 +230,15 @@ more complex and versatile Python idiom:</p>
 <p>However, we do not see the need to include this type of granularity
 in AvantPy.</p>
 </div>
+<div class="section" id="a-final-word">
+<h2>A final word<a class="headerlink" href="#a-final-word" title="Permalink to this headline">¶</a></h2>
+<p>We’ve already mentioned the usage in blocks-based programming environment
+of <code class="docutils literal notranslate"><span class="pre">repeat</span></code>, or some similar alternative in other languages. <code class="docutils literal notranslate"><span class="pre">repeat</span></code>
+was also the clearer possibility for people unfamiliar with programming jargon
+as found by Andreas Stefik and Susanna Siebert, and published
+“An Empirical Investigation into Programming Language Syntax.”
+ACM Transactions on Computing Education, 13(4), Nov. 2013.</p>
+</div>
 </div>
 
 
@@ -232,7 +262,7 @@ in AvantPy.</p>
         <li class="right" >
           <a href="principles.html" title="Guiding principles"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.6 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.7 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

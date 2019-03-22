@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Special keyword: nobreak &#8212; AvantPy 0.0.6 documentation</title>
+    <title>Special keyword: nobreak &#8212; AvantPy 0.0.7 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -34,7 +34,7 @@
         <li class="right" >
           <a href="repeat.html" title="Special keyword: repeat"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.6 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.7 documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -44,6 +44,7 @@
 <li><a class="reference internal" href="#">Special keyword: <code class="docutils literal notranslate"><span class="pre">nobreak</span></code></a><ul>
 <li><a class="reference internal" href="#nobreak-instead-of-else-in-if-else"><code class="docutils literal notranslate"><span class="pre">nobreak</span></code> instead of <code class="docutils literal notranslate"><span class="pre">else</span></code> in <code class="docutils literal notranslate"><span class="pre">if/else</span></code></a></li>
 <li><a class="reference internal" href="#what-about-try-except">What about try/except?</a></li>
+<li><a class="reference internal" href="#is-nobreak-really-needed">Is <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> really needed?</a></li>
 </ul>
 </li>
 </ul>
@@ -95,7 +96,7 @@ whose meaning is not immediately obvious:</p>
 </pre></div>
 </div>
 <p>When I first understood this, I thought <em>wouldn’t it be nice if, instead
-of using ``else:``, one could write something like</em> <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">not</span> <span class="pre">break:</span></code> which
+of using</em> <code class="docutils literal notranslate"><span class="pre">else:</span></code>, <em>one could write something like</em> <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">not</span> <span class="pre">break:</span></code> which
 uses only existing Python keywords.
 In theory, it might be possible to do something like this in AvantPy.
 However, wanting to have a one-to-one keyword translation from one
@@ -148,6 +149,19 @@ If it were found that the use of the equivalent of <code class="docutils literal
 would not be appropriate in this construct, we could consider
 introducing another keyword - perhaps something like <code class="docutils literal notranslate"><span class="pre">noexcept</span></code>.</p>
 </div>
+<div class="section" id="is-nobreak-really-needed">
+<h2>Is <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> really needed?<a class="headerlink" href="#is-nobreak-really-needed" title="Permalink to this headline">¶</a></h2>
+<p>Python’s use of an <code class="docutils literal notranslate"><span class="pre">else</span></code> clause in <code class="docutils literal notranslate"><span class="pre">for</span></code> and <code class="docutils literal notranslate"><span class="pre">while</span></code> loops is
+rather unusual, relatively poorly known and not easy to understand
+at first glance. It is for this latter reason that we make it possible
+to define an alternative keyword <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> or an equivalent translation
+in the user’s language.  However, given that is not often used, one could argue
+that it could be left out entirely from AvantPy since AvantPy is intended for
+beginners.</p>
+<p>Our decision to include it is to give the possibility, to those instructors
+that wish to teach such a construct/concept, to use a more natural keyword
+in their own language; anyone else is free to ignore it.</p>
+</div>
 </div>
 
 
@@ -171,7 +185,7 @@ introducing another keyword - perhaps something like <code class="docutils liter
         <li class="right" >
           <a href="repeat.html" title="Special keyword: repeat"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.6 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.7 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

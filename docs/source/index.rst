@@ -86,11 +86,12 @@ Contents
     Special keyword: nobreak <nobreak>
     Special keyword: notimported <notimported>
     More than keywords <builtins>
-    Friendly error messages <tracebacks>
+    Friendly error messages <tracebacks_upper>
     How does it work? <works>
     Testing <testing>
     Other modules <modules>
     Contributing <contribute>
+    Friendly error messages - en Français <tracebacks_fr>
 
 
 .. todolist::
