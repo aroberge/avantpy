@@ -14,8 +14,7 @@ def get(msg):
         return messages[lang][msg]
     elif msg in messages[default]:
         response = [
-            "Missing translation in language '%s'" % lang,
-            "Using default.\n",
+            "Missing translation in language '%s'; using default." % lang,
             messages[default][msg],
         ]
         return "\n".join(response)

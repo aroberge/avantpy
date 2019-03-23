@@ -54,7 +54,7 @@ documenter ici tous les exemples possibles tels qu'interprétés par AvantPy.
      à jour du reste de la documentation avec Sphinx.
 
 
-AvantPy, version {avantpy}
+AvantPy, version {avantpy};
 Python, version {python}
 
 """.format(
@@ -87,6 +87,9 @@ def create_tracebacks():
 
             write("\nExample 2::")
             import raise_missing_repeat2
+
+            make_title("NameError")
+            import raise_name_error
 
             make_title("NobreakFirstError")
             import raise_nobreak_first

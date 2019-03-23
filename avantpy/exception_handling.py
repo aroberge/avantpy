@@ -1,11 +1,13 @@
-"""Exception handling
-
-Just a stub for now.
-
+"""The goal of exception_handling.py is to display information about
+exceptions being raised in a way that is much easier to understand
+for beginners than normal Python tracebacks.  These "friendly" tracebacks
+are written so that they can easily be translated into any human language.
 """
 import sys
+import traceback
 
 from . import translate
+from .session import state
 
 ENABLED = True
 
@@ -74,6 +76,10 @@ def write_exception_info(exc, source):
         )
         write_err("name: %s\n" % exc.__class__.__name__)
         write_err("args: " + str(exc.args) + "\n")
+        write_err("Python traceback follows:\n\n")
+        for item in traceback.format_tb(exc.__traceback__):
+            write_err(item)
+        write_err("\n")
 
 
 def handle_exception(exc, source):
@@ -92,6 +98,9 @@ def handle_exception(exc, source):
         return dispatch[name](exc, source)
     else:
         return None
+
+
+# ================= Specific handlers below
 
 
 def handle_IfNobreakError(exc, source):
@@ -114,118 +123,6 @@ def handle_IfNobreakError(exc, source):
         "dialect": params["dialect"],
     }
     return translate.get("IfNobreakError").format(**info)
-
-
-def handle_TryNobreakError(exc, source):
-    """Handles situation where ``nobreak`` was wrongly use as a
-       replacement for ``else`` in an try/except/else/finally block.
-    """
-    params = exc.args[0]
-
-    begin = params["try_linenumber"]
-    end = params["linenumber"]
-    marks = [end]
-
-    partial_source = get_partial_source(source, begin, end, marks=marks)
-
-    info = {
-        "filename": params["source_name"],
-        "nobreak_kwd": params["nobreak keyword"],
-        "partial_source": partial_source,
-        "nobreak_linenumber": end,
-        "dialect": params["dialect"],
-    }
-    return translate.get("TryNobreakError").format(**info)
-
-
-def handle_NobreakSyntaxError(exc, source):
-    """Handles situation where ``nobreak`` is used without a matching
-       ``for`` or ``while`` loop and not already raised.
-    """
-    params = exc.args[0]
-
-    linenumber = params["linenumber"]
-    begin = linenumber - 1
-    end = linenumber + 1
-    marks = [linenumber]
-
-    partial_source = get_partial_source(source, begin, end, marks=marks)
-
-    info = {
-        "filename": params["source_name"],
-        "nobreak_kwd": params["nobreak keyword"],
-        "partial_source": partial_source,
-        "linenumber": linenumber,
-        "dialect": params["dialect"],
-    }
-    return translate.get("NobreakSyntaxError").format(**info)
-
-
-def handle_NobreakFirstError(exc, source):
-    """Handles situation where ``nobreak`` was wrongly use as a
-       replacement for ``else`` in statements like
-       var = x if condition else y.
-    """
-    params = exc.args[0]
-    linenumber = params["linenumber"]
-    begin = linenumber - 1
-    end = linenumber + 1
-    marks = [linenumber]
-
-    partial_source = get_partial_source(source, begin, end, marks=marks)
-
-    info = {
-        "filename": params["source_name"],
-        "nobreak_kwd": params["nobreak keyword"],
-        "partial_source": partial_source,
-        "linenumber": linenumber,
-        "dialect": params["dialect"],
-    }
-    return translate.get("NobreakFirstError").format(**info)
-
-
-def handle_RepeatFirstError(exc, source):
-    """Handles situation where ``repeat`` was uses wrongly as
-       it did not appear as the first keyword of a given statement.
-    """
-    params = exc.args[0]
-    linenumber = params["linenumber"]
-    begin = linenumber - 1
-    end = linenumber + 1
-    marks = [linenumber]
-
-    partial_source = get_partial_source(source, begin, end, marks=marks)
-
-    info = {
-        "filename": params["source_name"],
-        "repeat_kwd": params["repeat keyword"],
-        "partial_source": partial_source,
-        "linenumber": linenumber,
-        "dialect": params["dialect"],
-    }
-    return translate.get("RepeatFirstError").format(**info)
-
-
-def handle_MissingRepeatError(exc, source):
-    """Handles situation where either ``until`` or ``forever`` was
-       used without being preceeded by ``repeat``.
-    """
-    params = exc.args[0]
-    linenumber = params["linenumber"]
-    begin = linenumber - 1
-    end = linenumber + 1
-    marks = [linenumber]
-
-    partial_source = get_partial_source(source, begin, end, marks=marks)
-
-    info = {
-        "filename": params["source_name"],
-        "keyword": params["keyword"],
-        "partial_source": partial_source,
-        "linenumber": linenumber,
-        "dialect": params["dialect"],
-    }
-    return translate.get("MissingRepeatError").format(**info)
 
 
 def handle_MismatchedBracketsError(exc, source):
@@ -273,14 +170,145 @@ def handle_MissingLeftBracketError(exc, source):
     return translate.get("MissingLeftBracketError").format(**info)
 
 
-def handle_UnknownLanguageError(exc, *args):
-    """Handles error raised when an unknown language is requested
+def handle_MissingRepeatError(exc, source):
+    """Handles situation where either ``until`` or ``forever`` was
+       used without being preceeded by ``repeat``.
     """
-    lang = exc.args[0]
-    all_langs = exc.args[1]
+    params = exc.args[0]
+    linenumber = params["linenumber"]
+    begin = linenumber - 1
+    end = linenumber + 1
+    marks = [linenumber]
 
-    info = {"lang": lang, "all_langs": all_langs}
-    return translate.get("UnknownLanguageError").format(**info)
+    partial_source = get_partial_source(source, begin, end, marks=marks)
+
+    info = {
+        "filename": params["source_name"],
+        "keyword": params["keyword"],
+        "partial_source": partial_source,
+        "linenumber": linenumber,
+        "dialect": params["dialect"],
+    }
+    return translate.get("MissingRepeatError").format(**info)
+
+
+def handle_NameError(exc, source):
+    """Handles situation where a NameError is raise."""
+    msg = exc.args[0]
+    var_name = msg.split("'")[1]
+    exc_name = exc.__class__.__name__
+    python_display = "{exc_name}: {msg}".format(exc_name=exc_name, msg=msg)
+
+    last_tb_line = traceback.format_tb(exc.__traceback__)[-1]
+    last_tb_line = last_tb_line.split(",")
+    filename = last_tb_line[0].replace("File ", "").replace('"', "").strip()
+
+    linenumber = int(last_tb_line[1].replace("line ", ""))
+    begin = linenumber - 1
+    end = linenumber + 1
+    marks = [linenumber]
+
+    partial_source = get_partial_source(source, begin, end, marks=marks)
+
+    info = {
+        "filename": filename,
+        "python_display": python_display,
+        "var_name": var_name,
+        "partial_source": partial_source,
+        "linenumber": linenumber,
+        "dialect": state.current_dialect,
+    }
+    return translate.get("NameError").format(**info)
+
+
+def handle_NobreakFirstError(exc, source):
+    """Handles situation where ``nobreak`` was wrongly use as a
+       replacement for ``else`` in statements like
+       var = x if condition else y.
+    """
+    params = exc.args[0]
+    linenumber = params["linenumber"]
+    begin = linenumber - 1
+    end = linenumber + 1
+    marks = [linenumber]
+
+    partial_source = get_partial_source(source, begin, end, marks=marks)
+
+    info = {
+        "filename": params["source_name"],
+        "nobreak_kwd": params["nobreak keyword"],
+        "partial_source": partial_source,
+        "linenumber": linenumber,
+        "dialect": params["dialect"],
+    }
+    return translate.get("NobreakFirstError").format(**info)
+
+
+def handle_NobreakSyntaxError(exc, source):
+    """Handles situation where ``nobreak`` is used without a matching
+       ``for`` or ``while`` loop and not already raised.
+    """
+    params = exc.args[0]
+
+    linenumber = params["linenumber"]
+    begin = linenumber - 1
+    end = linenumber + 1
+    marks = [linenumber]
+
+    partial_source = get_partial_source(source, begin, end, marks=marks)
+
+    info = {
+        "filename": params["source_name"],
+        "nobreak_kwd": params["nobreak keyword"],
+        "partial_source": partial_source,
+        "linenumber": linenumber,
+        "dialect": params["dialect"],
+    }
+    return translate.get("NobreakSyntaxError").format(**info)
+
+
+def handle_RepeatFirstError(exc, source):
+    """Handles situation where ``repeat`` was uses wrongly as
+       it did not appear as the first keyword of a given statement.
+    """
+    params = exc.args[0]
+    linenumber = params["linenumber"]
+    begin = linenumber - 1
+    end = linenumber + 1
+    marks = [linenumber]
+
+    partial_source = get_partial_source(source, begin, end, marks=marks)
+
+    info = {
+        "filename": params["source_name"],
+        "repeat_kwd": params["repeat keyword"],
+        "partial_source": partial_source,
+        "linenumber": linenumber,
+        "dialect": params["dialect"],
+    }
+    return translate.get("RepeatFirstError").format(**info)
+
+
+def handle_TryNobreakError(exc, source):
+    """Handles situation where ``nobreak`` was wrongly use as a
+       replacement for ``else`` in an try/except/else/finally block.
+    """
+    params = exc.args[0]
+
+    begin = params["try_linenumber"]
+    end = params["linenumber"]
+    marks = [end]
+
+    partial_source = get_partial_source(source, begin, end, marks=marks)
+
+    info = {
+        "filename": params["source_name"],
+        "nobreak_kwd": params["nobreak keyword"],
+        "partial_source": partial_source,
+        "nobreak_linenumber": end,
+        "dialect": params["dialect"],
+    }
+    return translate.get("TryNobreakError").format(**info)
 
 
 def handle_UnknownDialectError(exc, *args):
@@ -293,15 +321,26 @@ def handle_UnknownDialectError(exc, *args):
     return translate.get("UnknownDialectError").format(**info)
 
 
+def handle_UnknownLanguageError(exc, *args):
+    """Handles error raised when an unknown language is requested
+    """
+    lang = exc.args[0]
+    all_langs = exc.args[1]
+
+    info = {"lang": lang, "all_langs": all_langs}
+    return translate.get("UnknownLanguageError").format(**info)
+
+
 dispatch = {
     "IfNobreakError": handle_IfNobreakError,
-    "TryNobreakError": handle_TryNobreakError,
+    "NameError": handle_NameError,
+    "MismatchedBracketsError": handle_MismatchedBracketsError,
+    "MissingLeftBracketError": handle_MissingLeftBracketError,
+    "MissingRepeatError": handle_MissingRepeatError,
     "NobreakFirstError": handle_NobreakFirstError,
     "NobreakSyntaxError": handle_NobreakSyntaxError,
     "RepeatFirstError": handle_RepeatFirstError,
-    "MissingRepeatError": handle_MissingRepeatError,
-    "MismatchedBracketsError": handle_MismatchedBracketsError,
-    "MissingLeftBracketError": handle_MissingLeftBracketError,
+    "TryNobreakError": handle_TryNobreakError,
     "UnknownLanguageError": handle_UnknownLanguageError,
     "UnknownDialectError": handle_UnknownDialectError,
 }

@@ -50,7 +50,7 @@ Such feedback will also be available in languages other than English.
      This needs to be done explicitly, independently of updating the
      documentation using Sphinx.
 
-AvantPy version: {avantpy}
+AvantPy version: {avantpy};
 Python version: {python}
 
 """.format(
@@ -83,6 +83,9 @@ def create_tracebacks():
 
             write("\nExample 2::")
             import raise_missing_repeat2
+
+            make_title("NameError")
+            import raise_name_error
 
             make_title("NobreakFirstError")
             import raise_nobreak_first

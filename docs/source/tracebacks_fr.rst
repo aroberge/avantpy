@@ -16,7 +16,7 @@ documenter ici tous les exemples possibles tels qu'interprétés par AvantPy.
      à jour du reste de la documentation avec Sphinx.
 
 
-AvantPy, version 0.0.7
+AvantPy, version 0.0.7;
 Python, version 3.7.0
 
 
@@ -29,10 +29,10 @@ Example::
 
     Exception AvantPy: IfNobreakError
 
-    Erreur trouvée dans le fichier raise_if_nobreak.pyfr à la ligne 4.
+    Erreur trouvée dans le fichier 'raise_if_nobreak.pyfr' à la ligne 4.
 
     Dialecte utilisé: pyfr
-
+    
        2: si Vrai:
        3:     passer
     -->4: pasinterrompu:
@@ -48,11 +48,11 @@ Example::
 
     Exception AvantPy: MismatchedBracketsError
 
-    Erreur trouvée dans le fichier raise_mismatched_brackets.pyfr aux lignes
+    Erreur trouvée dans le fichier 'raise_mismatched_brackets.pyfr' aux lignes
     [2 - 6].
 
     Dialecte utilisé: pyfr
-
+    
     -->2: a = (1,
        3:     2,
        4:     3, 4,
@@ -69,10 +69,10 @@ Example::
 
     Exception AvantPy: MissingLeftBracketError
 
-    Erreur trouvée dans le fichier raise_missing_left_bracket.pyfr à la ligne 5.
+    Erreur trouvée dans le fichier 'raise_missing_left_bracket.pyfr' à la ligne 5.
 
     Dialecte utilisé: pyfr
-
+    
        4:     3, 4,)
     -->5:     )
        6: b = 3
@@ -87,10 +87,10 @@ Example::
 
     Exception AvantPy: MissingRepeatError
 
-    Erreur trouvée dans le fichier raise_missing_repeat.pyfr à la ligne 3.
+    Erreur trouvée dans le fichier 'raise_missing_repeat.pyfr' à la ligne 3.
 
     Dialecte utilisé: pyfr
-
+    
        2: x = 0
     -->3: jusquà x == 2:
        4:     x += 1
@@ -102,16 +102,40 @@ Example 2::
 
     Exception AvantPy: MissingRepeatError
 
-    Erreur trouvée dans le fichier raise_missing_repeat2.pyfr à la ligne 3.
+    Erreur trouvée dans le fichier 'raise_missing_repeat2.pyfr' à la ligne 3.
 
     Dialecte utilisé: pyfr
-
+    
        2: x = 0
     -->3: sansfin:
        4:     x += 1
 
     Le mot-clé sansfin spécifique à Avantpy peut seulement être utilisé
     s'il est précédé de 'répéter'.
+
+NameError
+---------
+
+Example::
+
+
+    Exception Python: NameError: name 'c' is not defined
+
+    Erreur trouvée dans le fichier '<string>' à la ligne 4.
+
+    Dialecte utilisé: pyfr
+    
+       3: a = 1
+    -->4: b = c
+       5: d = 3
+
+    Une exception de type NameError indique qu'une variable ou une fonction
+    dans votre programme est inconnue par Python.
+    Le plus souvent, ceci se produit parce que vous faites une faute
+    d'orthographe dans l'écriture de votre variable ou de votre fonction;
+    ceci peut également se produire si vous invoquez cette fonction ou utilisez
+    cette variable sans l'avoir définie auparavant.
+    Dans votre programme, la variable ou la fonction inconnue est 'c'.
 
 NobreakFirstError
 -----------------
@@ -121,10 +145,10 @@ Example::
 
     Exception AvantPy: NobreakFirstError
 
-    Erreur trouvée dans le fichier raise_nobreak_first.pyfr à la ligne 3.
+    Erreur trouvée dans le fichier 'raise_nobreak_first.pyfr' à la ligne 3.
 
     Dialecte utilisé: pyfr
-
+    
        2: # Need to prevent pasinterrompu being replaced by 'else' in this situation.
     -->3: a = 1 if True pasinterrompu 3
        4: 
@@ -141,10 +165,10 @@ Example::
 
     Exception AvantPy: NobreakSyntaxError
 
-    Erreur trouvée dans le fichier raise_nobreak_syntax.pyfr à la ligne 4.
+    Erreur trouvée dans le fichier 'raise_nobreak_syntax.pyfr' à la ligne 4.
 
     Dialecte utilisé: pyfr
-
+    
        3: a = 1
     -->4: pasinterrompu: pass
        5: 
@@ -161,10 +185,10 @@ Example::
 
     Exception AvantPy: RepeatFirstError
 
-    Erreur trouvée dans le fichier raise_repeat_first.pyfr à la ligne 3.
+    Erreur trouvée dans le fichier 'raise_repeat_first.pyfr' à la ligne 3.
 
     Dialecte utilisé: pyfr
-
+    
        2: # Catch an early case of using répéter not to begin a loop
     -->3: a = répéter
        4: 
@@ -181,10 +205,10 @@ Example::
 
     Exception AvantPy: TryNobreakError
 
-    Erreur trouvée dans le fichier raise_try_nobreak.pyfr à la ligne 7.
+    Erreur trouvée dans le fichier 'raise_try_nobreak.pyfr' à la ligne 7.
 
     Dialecte utilisé: pyfr
-
+    
        3:     essayer:
        4:         A = 1
        5:     siexception:

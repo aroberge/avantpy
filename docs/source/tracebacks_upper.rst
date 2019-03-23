@@ -12,7 +12,7 @@ Such feedback will also be available in languages other than English.
      This needs to be done explicitly, independently of updating the
      documentation using Sphinx.
 
-AvantPy version: 0.0.7
+AvantPy version: 0.0.7;
 Python version: 3.7.0
 
 
@@ -25,10 +25,10 @@ Example::
 
     AVANTPY EXCEPTION: IfNobreakError
 
-    Error found in file raise_if_nobreak.pyupper on line 4.
+    Error found in file 'raise_if_nobreak.pyupper' on line 4.
 
     Dialect used: pyupper
-
+    
        2: if True:
        3:     pass
     -->4: NOBREAK:
@@ -44,10 +44,10 @@ Example::
 
     AVANTPY EXCEPTION: MismatchedBracketsError
 
-    Error found in file raise_mismatched_brackets.pyupper on lines [2 - 10].
+    Error found in file 'raise_mismatched_brackets.pyupper' on lines [2 - 10].
 
     Dialect used: pyupper
-
+    
     -->2: a = (1,   # Large number of lines between ( and ]
        3:     2,
        4:     3, 4,
@@ -66,10 +66,10 @@ Example::
 
     AVANTPY EXCEPTION: MissingLeftBracketError
 
-    Error found in file raise_missing_left_bracket.pyupper on line 5.
+    Error found in file 'raise_missing_left_bracket.pyupper' on line 5.
 
     Dialect used: pyupper
-
+    
        4:     3, 4,)
     -->5:     )
        6: b = 3
@@ -84,10 +84,10 @@ Example::
 
     AVANTPY EXCEPTION: MissingRepeatError
 
-    Error found in file raise_missing_repeat.pyupper on line 3.
+    Error found in file 'raise_missing_repeat.pyupper' on line 3.
 
     Dialect used: pyupper
-
+    
        2: x = 0
     -->3: UNTIL x == 2:
        4:     x += 1
@@ -99,16 +99,38 @@ Example 2::
 
     AVANTPY EXCEPTION: MissingRepeatError
 
-    Error found in file raise_missing_repeat2.pyupper on line 3.
+    Error found in file 'raise_missing_repeat2.pyupper' on line 3.
 
     Dialect used: pyupper
-
+    
        2: x = 0
     -->3: FOREVER:
        4:     x += 1
 
     The AvantPy FOREVER keyword can be used only when preceded by
     REPEAT.
+
+NameError
+---------
+
+Example::
+
+
+    PYTHON EXCEPTION: NameError: name 'c' is not defined
+
+    Error found in file '<string>' on line 4.
+
+    Dialect used: pyupper
+    
+       3: a = 1
+    -->4: b = c
+       5: d = 3
+
+    A NameError exception indicates that a variable or
+    function name is not known to Python.
+    Most often, this is because there is a spelling mistake; however, sometimes
+    it is because it is used before being defined or given a value.
+    In your program, the unknown variable or function is 'c'.
 
 NobreakFirstError
 -----------------
@@ -118,10 +140,10 @@ Example::
 
     AVANTPY EXCEPTION: NobreakFirstError
 
-    Error found in file raise_nobreak_first.pyupper on line 3.
+    Error found in file 'raise_nobreak_first.pyupper' on line 3.
 
     Dialect used: pyupper
-
+    
        2: # Need to prevent NOBREAK being replaced by 'else' in this situation.
     -->3: a = 1 if True NOBREAK 3
        4: 
@@ -137,10 +159,10 @@ Example::
 
     AVANTPY EXCEPTION: NobreakSyntaxError
 
-    Error found in file raise_nobreak_syntax.pyupper on line 4.
+    Error found in file 'raise_nobreak_syntax.pyupper' on line 4.
 
     Dialect used: pyupper
-
+    
        3: a = 1
     -->4: NOBREAK: pass
        5: 
@@ -157,10 +179,10 @@ Example::
 
     AVANTPY EXCEPTION: RepeatFirstError
 
-    Error found in file raise_repeat_first.pyupper on line 3.
+    Error found in file 'raise_repeat_first.pyupper' on line 3.
 
     Dialect used: pyupper
-
+    
        2: # Catch an early case of using REPEAT not to begin a loop
     -->3: a = REPEAT
        4: 
@@ -176,10 +198,10 @@ Example::
 
     AVANTPY EXCEPTION: TryNobreakError
 
-    Error found in file raise_try_nobreak.pyupper on line 7.
+    Error found in file 'raise_try_nobreak.pyupper' on line 7.
 
     Dialect used: pyupper
-
+    
        3:     TRY:
        4:         A = 1
        5:     EXCEPT:
