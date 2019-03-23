@@ -12,7 +12,7 @@ from importlib.util import spec_from_file_location
 
 from . import session
 from . import converter
-from . import exception_handling
+from .exception_handling import write_exception_info
 
 
 DIFF = False
@@ -106,7 +106,7 @@ class AvantPyLoader(Loader):
             session.state.set_dialect(dialect)
             source = converter.convert(source, dialect, source_name=fullname)
         except Exception as exc:
-            print(exception_handling.handle_exception(exc, original))
+            write_exception_info(exc, original)
             return
 
         if DIFF:
@@ -125,7 +125,7 @@ class AvantPyLoader(Loader):
         try:
             exec(source, vars(module))
         except Exception as exc:
-            print(exception_handling.handle_exception(exc, original))
+            write_exception_info(exc, original)
 
     def write_html_diff(self, name, original, transformed):
         """Writes an html file showing the difference between the original

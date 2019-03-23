@@ -18,7 +18,7 @@ Python version: 3.7.0
 
 
 IfNobreakError
--------------- 
+--------------
 
 Example::
 
@@ -36,9 +36,8 @@ Example::
     The AvantPy NOBREAK keyword cannot be used in
     an IF/ELIF/ELSE clause (Python: if/elif/else).
 
-
 MismatchedBracketsError
------------------------ 
+-----------------------
 
 Example::
 
@@ -59,9 +58,8 @@ Example::
 
     The opening ( does not match the closing ].
 
-
 MissingLeftBracketError
------------------------ 
+-----------------------
 
 Example::
 
@@ -78,9 +76,8 @@ Example::
 
     The closing ) does not match anything.
 
-
 MissingRepeatError
------------------- 
+------------------
 
 Example::
 
@@ -98,7 +95,6 @@ Example::
     The AvantPy UNTIL keyword can be used only when preceded by
     REPEAT.
 
-
 Example 2::
 
     AVANTPY EXCEPTION: MissingRepeatError
@@ -114,9 +110,8 @@ Example 2::
     The AvantPy FOREVER keyword can be used only when preceded by
     REPEAT.
 
-
 NobreakFirstError
------------------ 
+-----------------
 
 Example::
 
@@ -134,9 +129,8 @@ Example::
     The AvantPy NOBREAK keyword can be used instead of ELSE (Python: else)
     only when it begins a new statement for loops.
 
-
 NobreakSyntaxError
------------------- 
+------------------
 
 Example::
 
@@ -155,9 +149,8 @@ Example::
     of ELSE (Python: else) with a matching FOR or WHILE loop
     (Python: for/while).
 
-
 RepeatFirstError
----------------- 
+----------------
 
 Example::
 
@@ -175,9 +168,8 @@ Example::
     The AvantPy REPEAT keyword can only be used to begin
     a new loop (Python: equivalent to 'for' or 'while' loop).
 
-
 TryNobreakError
---------------- 
+---------------
 
 Example::
 
@@ -197,9 +189,8 @@ Example::
     The AvantPy NOBREAK keyword cannot be used in
     a TRY/EXCEPT/ELSE/FINALLY clause (Python: try/except/else/finally).
 
-
 UnknownLanguageError
--------------------- 
+--------------------
 
 Example::
 
@@ -210,9 +201,8 @@ Example::
     The following unknown language was requested: xx.
     The known languages are: ['en', 'fr', 'upper'].
 
-
 UnknownDialectError
-------------------- 
+-------------------
 
 Example::
 
@@ -223,9 +213,8 @@ Example::
     The following unknown dialect was requested: pyxx.
     The known dialects are: ['pyen', 'pyes', 'pyfr', 'pyupper'].
 
-
 UnexpectedError
---------------- 
+---------------
 
 Example::
 

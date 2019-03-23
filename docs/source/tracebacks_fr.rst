@@ -22,7 +22,7 @@ Python, version 3.7.0
 
 
 IfNobreakError
--------------- 
+--------------
 
 Example::
 
@@ -40,9 +40,8 @@ Example::
     Le mot-clé pasinterrompu spécifique à Avantpy ne peut pas être utilisé
     dans un énoncé si/sinonsi/sinon (Python: if/elif/else).
 
-
 MismatchedBracketsError
------------------------ 
+-----------------------
 
 Example::
 
@@ -62,9 +61,8 @@ Example::
 
     Le symbole gauche ( ne correspond pas au symbole droit ].
 
-
 MissingLeftBracketError
------------------------ 
+-----------------------
 
 Example::
 
@@ -81,9 +79,8 @@ Example::
 
     Le symbole droit ) n'a pas de symbole gauche correspondant.
 
-
 MissingRepeatError
------------------- 
+------------------
 
 Example::
 
@@ -101,7 +98,6 @@ Example::
     Le mot-clé jusquà spécifique à Avantpy peut seulement être utilisé
     s'il est précédé de 'répéter'.
 
-
 Example 2::
 
     Exception AvantPy: MissingRepeatError
@@ -117,9 +113,8 @@ Example 2::
     Le mot-clé sansfin spécifique à Avantpy peut seulement être utilisé
     s'il est précédé de 'répéter'.
 
-
 NobreakFirstError
------------------ 
+-----------------
 
 Example::
 
@@ -138,9 +133,8 @@ Example::
     au lieu de sinon (Python: else) lorsqu'il débute un nouvel énoncé
     dans des boucles 'pour' ou 'tantque' (Python: for/while).
 
-
 NobreakSyntaxError
------------------- 
+------------------
 
 Example::
 
@@ -159,9 +153,8 @@ Example::
     au lieu de sinon (Python: else) lorsqu'il débute un nouvel énoncé
     dans des boucles 'pour' ou 'tantque' (Python: for/while)
 
-
 RepeatFirstError
----------------- 
+----------------
 
 Example::
 
@@ -180,9 +173,8 @@ Example::
     pour débuter une nouvelle boucle 'pour' ou 'tantque'
     (équivalent Python: 'for' ou 'while').
 
-
 TryNobreakError
---------------- 
+---------------
 
 Example::
 
@@ -202,9 +194,8 @@ Example::
     Le mot-clé pasinterrompu spécifique à Avantpy ne peut pas être utilisé dans
     un énoncé essayer/siexception/sinon/finalement (Python: try/except/else/finally).
 
-
 UnknownLanguageError
--------------------- 
+--------------------
 
 Example::
 
@@ -215,9 +206,8 @@ Example::
     Le langage inconnu suivant a été demandé: xx.
     Les langages connus sont: ['en', 'fr', 'upper'].
 
-
 UnknownDialectError
-------------------- 
+-------------------
 
 Example::
 
@@ -228,9 +218,8 @@ Example::
     Le dialecte inconnu suivant a été demandé: pyxx.
     Les dialectes connus sont: ['pyen', 'pyes', 'pyfr', 'pyupper'].
 
-
 UnexpectedError
---------------- 
+---------------
 
 Example::
 

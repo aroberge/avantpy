@@ -8,7 +8,7 @@ ensure we have the right destination. If so, we actually rewrite it.
 import os
 import sys
 import platform
-from contextlib import redirect_stdout
+from contextlib import redirect_stderr
 
 
 # Make it possible to find avantpy and docs source
@@ -18,16 +18,21 @@ sys.path.insert(0, this_dir)
 sys.path.insert(0, root_dir)
 
 
-import avantpy  # sets up import hook
+# set up import
+import avantpy  # noqa
 
 # Require that a version already exists - to confirm we are at the right location
 target = os.path.normpath(os.path.join(root_dir, "docs/source/tracebacks_upper.rst"))
 
 
+def write(text):
+    sys.stderr.write(text + "\n")
+
+
 try:
     assert os.path.isfile(target)
 except AssertionError:
-    print("Wrong path: {} does not exist.".format(target))
+    write("Wrong path: {} does not exist.".format(target))
     sys.exit()
 
 
@@ -54,16 +59,15 @@ Python version: {python}
 
 
 def make_title(text):
-    print()
-    print(text)
-    print("-" * len(text), "\n")
-    print("Example::\n")
+    write("\n" + text)
+    write("-" * len(text) + "\n")
+    write("Example::\n")
 
 
 def create_tracebacks():
     with open(target, "w", encoding="utf8") as out:
-        with redirect_stdout(out):
-            print(content)
+        with redirect_stderr(out):
+            write(content)
 
             make_title("IfNobreakError")
             import raise_if_nobreak
@@ -77,7 +81,7 @@ def create_tracebacks():
             make_title("MissingRepeatError")
             import raise_missing_repeat
 
-            print("\nExample 2::")
+            write("\nExample 2::")
             import raise_missing_repeat2
 
             make_title("NobreakFirstError")
@@ -99,11 +103,11 @@ def create_tracebacks():
             import raise_unknown_dialect
 
             make_title("UnexpectedError")
-            print("    No example found yet.\n")
+            write("    No example found yet.\n")
 
 
 try:
     create_tracebacks()
 except ImportError:
-    print("ImportError: please try running this program from it location using")
-    print("             python tb_pyupper.py")
+    write("ImportError: please try running this program from it location using")
+    write("             python tb_pyupper.py")

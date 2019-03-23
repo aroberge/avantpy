@@ -57,27 +57,23 @@ In addition, you may find some files that begin with `tb_`.
 
         def test_if_nobreak(capsys):                        # 1
             from . import raise_if_nobreak                  # 2
-            if not hasattr(raise_if_nobreak, "out"):        # 3
+            if not hasattr(raise_if_nobreak, "err"):        # 3
                 info = str(capsys.readouterr())             # 4
-                raise_if_nobreak.out = info                 # 5
-            assert "IfNobreakError" in raise_if_nobreak.out # 6
+                raise_if_nobreak.err = info
+            assert "IfNobreakError" in raise_if_nobreak.err # 5
 
     1. A function begins with test_, thus recognized as a test function by Pytest
 
     2. As we import the file, an exception is going to be raised. When it will
        be executed by Pytest, no new exception will be raised.
 
-    3. After importing the file, it does not have an "out" attribute. When it
+    3. After importing the file, it does not have an "err" attribute. When it
        will be executed by Pytest, it will have such an attribute and the
        code block (4, 5) will be ignored.
 
     4. We capture the output generated, using Pytest's capsys.
 
-    5. Currently, error outputs from AvantPy are printed to stdout and not
-       to stderr; this could change in the future. If it does, we will use
-       'err' instead of 'out' as our attribute.
-
-    6. This should be obvious :-)
+    5. This should be obvious :-)
 
 - Files beginning with `tb_`.
 
