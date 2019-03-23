@@ -9,7 +9,6 @@ this single module.
 import os
 import platform
 import sys
-import traceback
 
 from codeop import CommandCompiler
 from tokenize import TokenError
@@ -37,42 +36,6 @@ class AvantPyInteractiveConsole:
         self.compile = CommandCompiler()
         self.name = "<AvantPy console>"
         self.reset_buffer()
-
-    def do_transformations(self, source):
-        """Performs the source transformations on the current content.
-
-           Returns the transformed source.
-        """
-        source = converter.convert(source, source_name=self.name)
-        self.converted = self.fix_ending(source)
-
-    def fix_ending(self, source):
-        """Ensures that the last blank lines of the transformed source are
-        consistent with what was provided by the user."""
-
-        # Some transformations may add or strip an empty line meant to
-        # end a block, or strip non-empty lines (but with spaces) at the end
-        # mean to continue a block, etc.
-        # We ensure that the transformed source has the same combination
-        # of white spaces and \n characters at the end as the original
-
-        # last_lines = reversed(self.buffer)
-        # blank_lines = []
-        # for line in last_lines:
-        #     if not line.strip():
-        #         blank_lines.append(line)
-        #     else:
-        #         break
-        # blank_lines = reversed(blank_lines)
-
-        # source = source.rstrip()
-        # if source:
-        #     lines = source.split("\n")
-        # else:
-        #     lines = []
-        # lines.extend(blank_lines)
-        # source = "\n".join(lines)
-        return source
 
     def interact(self, banner=None):
         """Emulates the interactive Python console.
@@ -110,18 +73,17 @@ class AvantPyInteractiveConsole:
         value is True if more input is required, False if the line was dealt
         with in some way (this is the same as run_source()).
         """
-        assert not line.endswith(
-            "\n"
-        ), "Forbidden trailing newline in console's push method."
+        assert not line.endswith("\n"), "Forbidden trailing newline in push method."
         self.buffer.append(line)
-        source = "\n".join(self.buffer)
+        self.source = "\n".join(self.buffer)
         self.identical = True
+        self.converted = self.source
         try:
-            self.do_transformations(source)
+            self.converted = converter.convert(self.source, source_name=self.name)
         except SystemExit:
             os._exit(1)
         except exceptions.AvantPyException as exc:
-            print(exception_handling.handle_exception(exc, source))
+            print(exception_handling.handle_exception(exc, self.source))
             self.reset_buffer()
             return False
         except TokenError as exc:
@@ -131,7 +93,7 @@ class AvantPyInteractiveConsole:
             print("UNHANDLED EXCEPTION in console.py. This should not happen.")
             raise exc
 
-        if self.converted != source:
+        if self.converted != self.source:
             self.identical = False
 
         try:
@@ -139,7 +101,7 @@ class AvantPyInteractiveConsole:
         except SystemExit:
             os._exit(1)
         except Exception as exc:
-            print(exception_handling.handle_exception(exc, source))
+            print(exception_handling.handle_exception(exc, self.source))
             self.reset_buffer()
             return False
 
@@ -161,8 +123,7 @@ class AvantPyInteractiveConsole:
         One several things can happen:
 
         1) The input is incorrect; compile_command() raised an
-        exception (SyntaxError or OverflowError).  A syntax traceback
-        will be printed by calling the show_syntax_error() method.
+        exception (SyntaxError or OverflowError).
 
         2) The input is incomplete, and more input is required;
         compile_command() returned None.  Nothing happens.
@@ -178,9 +139,11 @@ class AvantPyInteractiveConsole:
 
         try:
             code = self.compile(source, self.name, symbol)
-        except (OverflowError, SyntaxError, ValueError):
+        except (OverflowError, SyntaxError, ValueError) as exc:
             # Case 1
-            self.show_syntax_error()
+            if self.show_python and not self.identical:
+                self.show_converted(self.converted)
+            print(exception_handling.handle_exception(exc, source))
             return False
 
         if code is None:  # Case 2
@@ -193,21 +156,18 @@ class AvantPyInteractiveConsole:
     def runcode(self, code):
         """Execute a code object.
 
-        When an exception occurs, self.showtraceback() is called to
-        display a traceback.  All exceptions are caught except
-        SystemExit, which is reraised.
+        All exceptions are caught except SystemExit, which is reraised.
 
         A note about KeyboardInterrupt: this exception may occur
         elsewhere in this code, and may not always be caught.  The
         caller should be prepared to deal with it.
-
         """
         try:
             exec(code, self.locals)
         except SystemExit:
             raise
-        except Exception:
-            self.showtraceback()
+        except Exception as exc:
+            print(exception_handling.handle_exception(exc, self.source))
 
     def show_converted(self):
         """Prints the converted source"""
@@ -216,69 +176,6 @@ class AvantPyInteractiveConsole:
             print("|", line)
         print()
         self.identical = True  # prevent from showing again
-
-    def show_syntax_error(self):
-        """Shows the converted source if different than the original
-           and the syntax error"""
-        if self.show_python and not self.identical:
-            self.show_converted(self.converted)
-        self.show_syntax_error_()
-
-    def show_syntax_error_(self):
-        """Display the syntax error that just occurred.
-
-        This doesn't display a stack trace because there isn't one.
-
-        If a filename is given, it is stuffed in the exception instead
-        of what was there before (because Python's parser always uses
-        "<string>" when reading from a string).
-
-        The output is written by self.write(), below.
-
-        """
-        type, value, tb = sys.exc_info()
-        sys.last_type = type
-        sys.last_value = value
-        sys.last_traceback = tb
-        if type is SyntaxError:
-            # Work hard to stuff the correct filename in the exception
-            try:
-                msg, (dummy_filename, lineno, offset, line) = value.args
-            except ValueError:
-                # Not the format we expect; leave it alone
-                pass
-            else:
-                # Stuff in the right filename
-                value = SyntaxError(msg, (self.name, lineno, offset, line))
-                sys.last_value = value
-        if sys.excepthook is sys.__excepthook__:
-            lines = traceback.format_exception_only(type, value)
-            self.write("".join(lines))
-        else:
-            # If someone has set sys.excepthook, we let that take precedence
-            # over self.write
-            sys.excepthook(type, value, tb)
-
-    def showtraceback(self):
-        """Display the exception that just occurred.
-
-        We remove the first stack item because it is our own code.
-
-        The output is written by self.write(), below.
-
-        """
-        sys.last_type, sys.last_value, last_tb = ei = sys.exc_info()
-        sys.last_traceback = last_tb
-        try:
-            lines = traceback.format_exception(ei[0], ei[1], last_tb.tb_next)
-            if sys.excepthook is sys.__excepthook__:
-                self.write("".join(lines))
-            else:
-                # If someone has set sys.excepthook, we let that take precedence
-                # over self.write
-                sys.excepthook(ei[0], ei[1], last_tb)
-        finally:
-            last_tb = ei = None
 
     def write(self, data):
         """Write a string.
