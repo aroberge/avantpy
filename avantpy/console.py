@@ -35,20 +35,16 @@ class AvantPyInteractiveConsole:
         self.show_python = show_python
         self.locals = locals if locals is not None else {}
         self.compile = CommandCompiler()
-        self.filename = "<AvantPy console>"
-        self.resetbuffer()
+        self.name = "<AvantPy console>"
+        self.reset_buffer()
 
     def do_transformations(self, source):
         """Performs the source transformations on the current content.
 
            Returns the transformed source.
         """
-        source = converter.convert(source, source_name="REPL")
-        source = self.fix_ending(source)
-
-        self._source = source  # saved in case we need it if we want to show
-        # a syntax error. See showsyntaxerror() above
-        return source
+        source = converter.convert(source, source_name=self.name)
+        self.converted = self.fix_ending(source)
 
     def fix_ending(self, source):
         """Ensures that the last blank lines of the transformed source are
@@ -60,22 +56,22 @@ class AvantPyInteractiveConsole:
         # We ensure that the transformed source has the same combination
         # of white spaces and \n characters at the end as the original
 
-        last_lines = reversed(self.buffer)
-        blank_lines = []
-        for line in last_lines:
-            if not line.strip():
-                blank_lines.append(line)
-            else:
-                break
-        blank_lines = reversed(blank_lines)
+        # last_lines = reversed(self.buffer)
+        # blank_lines = []
+        # for line in last_lines:
+        #     if not line.strip():
+        #         blank_lines.append(line)
+        #     else:
+        #         break
+        # blank_lines = reversed(blank_lines)
 
-        source = source.rstrip()
-        if source:
-            lines = source.split("\n")
-        else:
-            lines = []
-        lines.extend(blank_lines)
-        source = "\n".join(lines)
+        # source = source.rstrip()
+        # if source:
+        #     lines = source.split("\n")
+        # else:
+        #     lines = []
+        # lines.extend(blank_lines)
+        # source = "\n".join(lines)
         return source
 
     def interact(self, banner=None):
@@ -98,7 +94,7 @@ class AvantPyInteractiveConsole:
                     more = self.push(line)
             except KeyboardInterrupt:
                 self.write("\nKeyboardInterrupt\n")
-                self.resetbuffer()
+                self.reset_buffer()
                 more = False
 
     def push(self, line):
@@ -106,13 +102,13 @@ class AvantPyInteractiveConsole:
 
         The line should not have a trailing newline; it may have
         internal newlines.  The line is transformed and appended to a buffer.
-        The interpreter's runsource() method is called with the
+        The interpreter's run_source() method is called with the
         concatenated contents of the buffer as source.  If this
         indicates that the command was executed or invalid, the buffer
         is reset; otherwise, the command is incomplete, and the buffer
         is left as it was after the line was appended.  The return
         value is True if more input is required, False if the line was dealt
-        with in some way (this is the same as runsource()).
+        with in some way (this is the same as run_source()).
         """
         assert not line.endswith(
             "\n"
@@ -121,12 +117,12 @@ class AvantPyInteractiveConsole:
         source = "\n".join(self.buffer)
         self.identical = True
         try:
-            newsource = self.do_transformations(source)
+            self.do_transformations(source)
         except SystemExit:
             os._exit(1)
         except exceptions.AvantPyException as exc:
             print(exception_handling.handle_exception(exc, source))
-            self.resetbuffer()
+            self.reset_buffer()
             return False
         except TokenError as exc:
             exc.args[0].startswith("EOF")
@@ -135,29 +131,29 @@ class AvantPyInteractiveConsole:
             print("UNHANDLED EXCEPTION in console.py. This should not happen.")
             raise exc
 
-        if newsource != source:
+        if self.converted != source:
             self.identical = False
 
         try:
-            more = self.runsource(newsource)
+            more = self.run_source(self.converted)
         except SystemExit:
             os._exit(1)
         except Exception as exc:
             print(exception_handling.handle_exception(exc, source))
-            self.resetbuffer()
+            self.reset_buffer()
             return False
 
         if not more:
-            self.resetbuffer()
+            self.reset_buffer()
             if self.show_python and not self.identical:
-                self.show_converted(newsource)
+                self.show_converted()
         return more
 
-    def resetbuffer(self):
+    def reset_buffer(self):
         """Reset the input buffer."""
         self.buffer = []
 
-    def runsource(self, source, symbol="single"):
+    def run_source(self, source, symbol="single"):
         """Compile and run some source in the interpreter.
 
         Arguments are as for compile_command().
@@ -166,7 +162,7 @@ class AvantPyInteractiveConsole:
 
         1) The input is incorrect; compile_command() raised an
         exception (SyntaxError or OverflowError).  A syntax traceback
-        will be printed by calling the showsyntaxerror() method.
+        will be printed by calling the show_syntax_error() method.
 
         2) The input is incomplete, and more input is required;
         compile_command() returned None.  Nothing happens.
@@ -181,14 +177,13 @@ class AvantPyInteractiveConsole:
         """
 
         try:
-            code = self.compile(source, self.filename, symbol)
+            code = self.compile(source, self.name, symbol)
         except (OverflowError, SyntaxError, ValueError):
             # Case 1
-            self.showsyntaxerror(self.filename)
+            self.show_syntax_error()
             return False
 
-        if code is None:
-            # Case 2
+        if code is None:  # Case 2
             return True
 
         # Case 3
@@ -214,22 +209,22 @@ class AvantPyInteractiveConsole:
         except Exception:
             self.showtraceback()
 
-    def show_converted(self, source):
+    def show_converted(self):
         """Prints the converted source"""
         print()
-        for line in source.split("\n"):
+        for line in self.converted.split("\n"):
             print("|", line)
         print()
         self.identical = True  # prevent from showing again
 
-    def showsyntaxerror(self, filename=None):
+    def show_syntax_error(self):
         """Shows the converted source if different than the original
            and the syntax error"""
         if self.show_python and not self.identical:
-            self.show_converted(self._source)
-        self.showsyntaxerror_(filename=filename)
+            self.show_converted(self.converted)
+        self.show_syntax_error_()
 
-    def showsyntaxerror_(self, filename=None):
+    def show_syntax_error_(self):
         """Display the syntax error that just occurred.
 
         This doesn't display a stack trace because there isn't one.
@@ -245,7 +240,7 @@ class AvantPyInteractiveConsole:
         sys.last_type = type
         sys.last_value = value
         sys.last_traceback = tb
-        if filename and type is SyntaxError:
+        if type is SyntaxError:
             # Work hard to stuff the correct filename in the exception
             try:
                 msg, (dummy_filename, lineno, offset, line) = value.args
@@ -254,7 +249,7 @@ class AvantPyInteractiveConsole:
                 pass
             else:
                 # Stuff in the right filename
-                value = SyntaxError(msg, (filename, lineno, offset, line))
+                value = SyntaxError(msg, (self.name, lineno, offset, line))
                 sys.last_value = value
         if sys.excepthook is sys.__excepthook__:
             lines = traceback.format_exception_only(type, value)
