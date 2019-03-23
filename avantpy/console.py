@@ -16,7 +16,7 @@ from tokenize import TokenError
 from . import session
 from . import converter
 from . import version
-from . import exception_handling
+from .exception_handling import write_exception_info
 from .exceptions import AvantPyException
 
 
@@ -84,7 +84,7 @@ class AvantPyInteractiveConsole:
         except SystemExit:
             os._exit(1)
         except AvantPyException as exc:
-            print(exception_handling.handle_exception(exc, self.source))
+            write_exception_info(exc, self.source)
             self.reset_buffer()
             return False
         except TokenError as exc:
@@ -99,7 +99,7 @@ class AvantPyInteractiveConsole:
         except SystemExit:
             os._exit(1)
         except Exception as exc:
-            print(exception_handling.handle_exception(exc, self.source))
+            write_exception_info(exc, self.source)
             self.reset_buffer()
             return False
 
@@ -141,7 +141,7 @@ class AvantPyInteractiveConsole:
             # Case 1
             if self.show_python and not self.identical:
                 self.show_converted(self.converted)
-            print(exception_handling.handle_exception(exc, source))
+            write_exception_info(exc, source)
             return False
 
         if code is None:  # Case 2
@@ -165,7 +165,7 @@ class AvantPyInteractiveConsole:
         except SystemExit:
             raise
         except Exception as exc:
-            print(exception_handling.handle_exception(exc, self.source))
+            write_exception_info(exc, self.source)
 
     def show_converted(self):
         """Prints the converted source"""

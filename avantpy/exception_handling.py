@@ -3,6 +3,8 @@
 Just a stub for now.
 
 """
+import sys
+
 from . import translate
 
 ENABLED = True
@@ -56,9 +58,30 @@ def get_partial_source(source, begin, end, marks=None):
     return "\n".join(result)
 
 
+def write_err(msg):
+    """Writes a string to sys.stderr."""
+    sys.stderr.write(msg)
+
+
+def write_exception_info(exc, source):
+    """Writes the information we have after processing the exception."""
+    msg = handle_exception(exc, source)
+    if msg is not None:
+        write_err(msg)
+    else:
+        write_err(
+            "An exception was raised for which we have no simplified traceback:\n"
+        )
+        write_err("name: %s\n" % exc.__class__.__name__)
+        write_err("args: " + str(exc.args) + "\n")
+
+
 def handle_exception(exc, source):
-    """Generic function to handle exceptions and return a
+    """Generic function to handle exceptions and returns a
        friendlier traceback than Python.
+
+       If the exception is not recognized as one for which a friendlier
+       traceback can be provided, None is returned
     """
     if not ENABLED:
         # Let normal Python traceback through
@@ -67,10 +90,8 @@ def handle_exception(exc, source):
     name = exc.__class__.__name__
     if name in dispatch:
         return dispatch[name](exc, source)
-
-    print("An exception was raised:")
-    print("name: ", exc.__class__.__name__)
-    print("args: ", exc.args)
+    else:
+        return None
 
 
 def handle_IfNobreakError(exc, source):
