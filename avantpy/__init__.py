@@ -1,1 +1,1 @@
-from . import invocation
+from . import invocation  # noqa

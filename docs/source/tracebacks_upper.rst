@@ -45,15 +45,17 @@ Example::
 
     AVANTPY EXCEPTION: MismatchedBracketsError
 
-    Error found in file raise_mismatched_brackets.pyupper on lines [2 - 6].
+    Error found in file raise_mismatched_brackets.pyupper on lines [2 - 10].
 
     Dialect used: pyupper
 
-    -->2: a = (1,
+    -->2: a = (1,   # Large number of lines between ( and ]
        3:     2,
        4:     3, 4,
-       5:     5
-    -->6: ]
+           ...
+        8:     8,
+        9:     9,
+    -->10: ]
 
     The opening ( does not match the closing ].
 

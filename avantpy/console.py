@@ -17,7 +17,7 @@ from . import session
 from . import converter
 from . import version
 from . import exception_handling
-from . import exceptions
+from .exceptions import AvantPyException
 
 
 class AvantPyInteractiveConsole:
@@ -73,16 +73,17 @@ class AvantPyInteractiveConsole:
         value is True if more input is required, False if the line was dealt
         with in some way (this is the same as run_source()).
         """
-        assert not line.endswith("\n"), "Forbidden trailing newline in push method."
+        assert not line.endswith("\n"), "Forbidden trailing newline in push()."
+
         self.buffer.append(line)
         self.source = "\n".join(self.buffer)
-        self.identical = True
-        self.converted = self.source
+
         try:
             self.converted = converter.convert(self.source, source_name=self.name)
+            self.identical = self.converted == self.source
         except SystemExit:
             os._exit(1)
-        except exceptions.AvantPyException as exc:
+        except AvantPyException as exc:
             print(exception_handling.handle_exception(exc, self.source))
             self.reset_buffer()
             return False
@@ -92,9 +93,6 @@ class AvantPyInteractiveConsole:
         except Exception as exc:
             print("UNHANDLED EXCEPTION in console.py. This should not happen.")
             raise exc
-
-        if self.converted != self.source:
-            self.identical = False
 
         try:
             more = self.run_source(self.converted)
