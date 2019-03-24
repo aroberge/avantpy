@@ -91,26 +91,25 @@
 dialects, the following are included:</p>
 <div class="section" id="module-avantpy.console">
 <span id="console"></span><h2>console<a class="headerlink" href="#module-avantpy.console" title="Permalink to this headline">¶</a></h2>
+<p>Console adapted from Python’s console found in code.py.</p>
+<p>An earlier version of this code was subclassing code.InteractiveConsole.
+However, as more and more changes were introduced, dealing with
+code transformation and especially customized error handling,
+it seemed to make sense to “rewrite” every relevant part in
+this single module.</p>
 <dl class="class">
 <dt id="avantpy.console.AvantPyInteractiveConsole">
 <em class="property">class </em><code class="descclassname">avantpy.console.</code><code class="descname">AvantPyInteractiveConsole</code><span class="sig-paren">(</span><em>locals=None</em>, <em>show_python=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole" title="Permalink to this definition">¶</a></dt>
 <dd><p>A Python console that tries to emulate the normal Python interpreter
 except that it support experimental code transformations.
-It inherits from cPython’s <code class="docutils literal notranslate"><span class="pre">code.InteractiveConsole</span></code>.</p>
-<p>Like the normal Python’s interactive console, it attempts to evaluate
+It is adapted from cPython’s <code class="docutils literal notranslate"><span class="pre">code.InteractiveConsole</span></code> and its
+parent.</p>
+<p>Like the normal Python interactive console, it attempts to evaluate
 code entered one line at a time by a user.</p>
 <dl class="method">
-<dt id="avantpy.console.AvantPyInteractiveConsole.do_transformations">
-<code class="descname">do_transformations</code><span class="sig-paren">(</span><em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.do_transformations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.do_transformations" title="Permalink to this definition">¶</a></dt>
-<dd><p>Performs the source transformations on the current content.</p>
-<p>Returns the transformed source.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="avantpy.console.AvantPyInteractiveConsole.fix_ending">
-<code class="descname">fix_ending</code><span class="sig-paren">(</span><em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.fix_ending"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.fix_ending" title="Permalink to this definition">¶</a></dt>
-<dd><p>Ensures that the last blank lines of the transformed source are
-consistent with what was provided by the user.</p>
+<dt id="avantpy.console.AvantPyInteractiveConsole.interact">
+<code class="descname">interact</code><span class="sig-paren">(</span><em>banner=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.interact"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.interact" title="Permalink to this definition">¶</a></dt>
+<dd><p>Emulates the interactive Python console.</p>
 </dd></dl>
 
 <dl class="method">
@@ -119,26 +118,61 @@ consistent with what was provided by the user.</p>
 <dd><p>Pushes a transformed line to the interpreter.</p>
 <p>The line should not have a trailing newline; it may have
 internal newlines.  The line is transformed and appended to a buffer.
-The interpreter’s runsource() method is called with the
+The interpreter’s run_source() method is called with the
 concatenated contents of the buffer as source.  If this
 indicates that the command was executed or invalid, the buffer
 is reset; otherwise, the command is incomplete, and the buffer
 is left as it was after the line was appended.  The return
-value is 1 if more input is required, 0 if the line was dealt
-with in some way (this is the same as runsource()).</p>
+value is True if more input is required, False if the line was dealt
+with in some way (this is the same as run_source()).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.console.AvantPyInteractiveConsole.reset_buffer">
+<code class="descname">reset_buffer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.reset_buffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.reset_buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the input buffer.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.console.AvantPyInteractiveConsole.run_source">
+<code class="descname">run_source</code><span class="sig-paren">(</span><em>source</em>, <em>symbol='single'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.run_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.run_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compile and run some source in the interpreter.</p>
+<p>Arguments are as for compile_command().</p>
+<p>One several things can happen:</p>
+<p>1) The input is incorrect; compile_command() raised an
+exception (SyntaxError or OverflowError).</p>
+<p>2) The input is incomplete, and more input is required;
+compile_command() returned None.  Nothing happens.</p>
+<p>3) The input is complete; compile_command() returned a code
+object.  The code is executed by calling self.runcode() (which
+also handles run-time exceptions, except for SystemExit).</p>
+<p>The return value is True in case 2, False in the other cases (unless
+an exception is raised).  The return value can be used to
+decide which prompt to use next line.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.console.AvantPyInteractiveConsole.runcode">
+<code class="descname">runcode</code><span class="sig-paren">(</span><em>code</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.runcode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.runcode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a code object.</p>
+<p>All exceptions are caught except SystemExit, which is reraised.</p>
+<p>A note about KeyboardInterrupt: this exception may occur
+elsewhere in this code, and may not always be caught.  The
+caller should be prepared to deal with it.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="avantpy.console.AvantPyInteractiveConsole.show_converted">
-<code class="descname">show_converted</code><span class="sig-paren">(</span><em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.show_converted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.show_converted" title="Permalink to this definition">¶</a></dt>
+<code class="descname">show_converted</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.show_converted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.show_converted" title="Permalink to this definition">¶</a></dt>
 <dd><p>Prints the converted source</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="avantpy.console.AvantPyInteractiveConsole.showsyntaxerror">
-<code class="descname">showsyntaxerror</code><span class="sig-paren">(</span><em>filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.showsyntaxerror"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.showsyntaxerror" title="Permalink to this definition">¶</a></dt>
-<dd><p>Shows the converted source if different than the original
-and the syntax error</p>
+<dt id="avantpy.console.AvantPyInteractiveConsole.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a string.</p>
+<p>The base implementation writes to sys.stderr; a subclass may
+replace this with a different implementation.</p>
 </dd></dl>
 
 </dd></dl>
@@ -472,8 +506,10 @@ if something prevented the transformation to be successful.</p>
 </div>
 <div class="section" id="module-avantpy.exception_handling">
 <span id="exception-handling"></span><h2>exception_handling<a class="headerlink" href="#module-avantpy.exception_handling" title="Permalink to this headline">¶</a></h2>
-<p>Exception handling</p>
-<p>Just a stub for now.</p>
+<p>The goal of exception_handling.py is to display information about
+exceptions being raised in a way that is much easier to understand
+for beginners than normal Python tracebacks.  These “friendly” tracebacks
+are written so that they can easily be translated into any human language.</p>
 <dl class="function">
 <dt id="avantpy.exception_handling.disable">
 <code class="descclassname">avantpy.exception_handling.</code><code class="descname">disable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#disable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.disable" title="Permalink to this definition">¶</a></dt>
@@ -482,41 +518,50 @@ if something prevented the transformation to be successful.</p>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.get_partial_source">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">get_partial_source</code><span class="sig-paren">(</span><em>source</em>, <em>begin</em>, <em>end</em>, <em>mark=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#get_partial_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.get_partial_source" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extracts a few relevant lines from a source file</p>
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">get_partial_source</code><span class="sig-paren">(</span><em>source</em>, <em>begin</em>, <em>end</em>, <em>marks=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#get_partial_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.get_partial_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracts a few relevant lines from a source file.</p>
+<p>If the number of lines would exceed a certain limit (currently 7)
+the function is called recursively to only show the a few lines
+at the beginning and at the end.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.handle_IfNobreakError">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_IfNobreakError</code><span class="sig-paren">(</span><em>exc</em>, <em>original_source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_IfNobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_IfNobreakError" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_IfNobreakError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_IfNobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_IfNobreakError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles situation where <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> was wrongly use as a
 replacement for <code class="docutils literal notranslate"><span class="pre">else</span></code> in an if/elif/else block.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.handle_MismatchedBracketsError">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_MismatchedBracketsError</code><span class="sig-paren">(</span><em>exc</em>, <em>original_source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_MismatchedBracketsError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_MismatchedBracketsError" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_MismatchedBracketsError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_MismatchedBracketsError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_MismatchedBracketsError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles situation where a bracket of one kind ‘([{‘
 is closed with a bracket of a different kind.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.handle_MissingLeftBracketError">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_MissingLeftBracketError</code><span class="sig-paren">(</span><em>exc</em>, <em>original_source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_MissingLeftBracketError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_MissingLeftBracketError" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_MissingLeftBracketError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_MissingLeftBracketError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_MissingLeftBracketError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles situation where at bracket of one kind ),],}
 is closed without a corresponding open bracket.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.handle_MissingRepeatError">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_MissingRepeatError</code><span class="sig-paren">(</span><em>exc</em>, <em>original_source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_MissingRepeatError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_MissingRepeatError" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_MissingRepeatError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_MissingRepeatError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_MissingRepeatError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles situation where either <code class="docutils literal notranslate"><span class="pre">until</span></code> or <code class="docutils literal notranslate"><span class="pre">forever</span></code> was
 used without being preceeded by <code class="docutils literal notranslate"><span class="pre">repeat</span></code>.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="avantpy.exception_handling.handle_NameError">
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_NameError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_NameError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_NameError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles situation where a NameError is raise.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="avantpy.exception_handling.handle_NobreakFirstError">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_NobreakFirstError</code><span class="sig-paren">(</span><em>exc</em>, <em>original_source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_NobreakFirstError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_NobreakFirstError" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_NobreakFirstError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_NobreakFirstError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_NobreakFirstError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles situation where <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> was wrongly use as a
 replacement for <code class="docutils literal notranslate"><span class="pre">else</span></code> in statements like
 var = x if condition else y.</p>
@@ -524,21 +569,21 @@ var = x if condition else y.</p>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.handle_NobreakSyntaxError">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_NobreakSyntaxError</code><span class="sig-paren">(</span><em>exc</em>, <em>original_source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_NobreakSyntaxError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_NobreakSyntaxError" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_NobreakSyntaxError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_NobreakSyntaxError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_NobreakSyntaxError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles situation where <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> is used without a matching
 <code class="docutils literal notranslate"><span class="pre">for</span></code> or <code class="docutils literal notranslate"><span class="pre">while</span></code> loop and not already raised.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.handle_RepeatFirstError">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_RepeatFirstError</code><span class="sig-paren">(</span><em>exc</em>, <em>original_source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_RepeatFirstError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_RepeatFirstError" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_RepeatFirstError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_RepeatFirstError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_RepeatFirstError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles situation where <code class="docutils literal notranslate"><span class="pre">repeat</span></code> was uses wrongly as
 it did not appear as the first keyword of a given statement.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.handle_TryNobreakError">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_TryNobreakError</code><span class="sig-paren">(</span><em>exc</em>, <em>original_source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_TryNobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_TryNobreakError" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_TryNobreakError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_TryNobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_TryNobreakError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles situation where <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> was wrongly use as a
 replacement for <code class="docutils literal notranslate"><span class="pre">else</span></code> in an try/except/else/finally block.</p>
 </dd></dl>
@@ -557,9 +602,23 @@ replacement for <code class="docutils literal notranslate"><span class="pre">els
 
 <dl class="function">
 <dt id="avantpy.exception_handling.handle_exception">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_exception</code><span class="sig-paren">(</span><em>exc</em>, <em>original_source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_exception"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_exception" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generic function to handle exceptions and return a
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_exception</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_exception"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_exception" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generic function to handle exceptions and returns a
 friendlier traceback than Python.</p>
+<p>If the exception is not recognized as one for which a friendlier
+traceback can be provided, None is returned</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="avantpy.exception_handling.write_err">
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">write_err</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#write_err"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.write_err" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes a string to sys.stderr.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="avantpy.exception_handling.write_exception_info">
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">write_exception_info</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#write_exception_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.write_exception_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes the information we have after processing the exception.</p>
 </dd></dl>
 
 </div>

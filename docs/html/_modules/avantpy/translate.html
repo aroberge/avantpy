@@ -69,8 +69,7 @@
         <span class="k">return</span> <span class="n">messages</span><span class="p">[</span><span class="n">lang</span><span class="p">][</span><span class="n">msg</span><span class="p">]</span>
     <span class="k">elif</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">messages</span><span class="p">[</span><span class="n">default</span><span class="p">]:</span>
         <span class="n">response</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s2">&quot;Missing translation in language &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">lang</span><span class="p">,</span>
-            <span class="s2">&quot;Using default.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Missing translation in language &#39;</span><span class="si">%s</span><span class="s2">&#39;; using default.&quot;</span> <span class="o">%</span> <span class="n">lang</span><span class="p">,</span>
             <span class="n">messages</span><span class="p">[</span><span class="n">default</span><span class="p">][</span><span class="n">msg</span><span class="p">],</span>
         <span class="p">]</span>
         <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>

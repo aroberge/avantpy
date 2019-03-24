@@ -46,6 +46,7 @@
 <li><a class="reference internal" href="#mismatchedbracketserror">MismatchedBracketsError</a></li>
 <li><a class="reference internal" href="#missingleftbracketerror">MissingLeftBracketError</a></li>
 <li><a class="reference internal" href="#missingrepeaterror">MissingRepeatError</a></li>
+<li><a class="reference internal" href="#nameerror">NameError</a></li>
 <li><a class="reference internal" href="#nobreakfirsterror">NobreakFirstError</a></li>
 <li><a class="reference internal" href="#nobreaksyntaxerror">NobreakSyntaxError</a></li>
 <li><a class="reference internal" href="#repeatfirsterror">RepeatFirstError</a></li>
@@ -102,14 +103,14 @@ tb_pyupper.py located in the <code class="docutils literal notranslate"><span cl
 This needs to be done explicitly, independently of updating the
 documentation using Sphinx.</p>
 </div>
-<p>AvantPy version: 0.0.7
+<p>AvantPy version: 0.0.7;
 Python version: 3.7.0</p>
 <div class="section" id="ifnobreakerror">
 <h2>IfNobreakError<a class="headerlink" href="#ifnobreakerror" title="Permalink to this headline">¶</a></h2>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">IfNobreakError</span>
 
-<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="n">raise_if_nobreak</span><span class="o">.</span><span class="n">pyupper</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">4.</span>
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;raise_if_nobreak.pyupper&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">4.</span>
 
 <span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
 
@@ -127,15 +128,17 @@ Python version: 3.7.0</p>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">MismatchedBracketsError</span>
 
-<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="n">raise_mismatched_brackets</span><span class="o">.</span><span class="n">pyupper</span> <span class="n">on</span> <span class="n">lines</span> <span class="p">[</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">6</span><span class="p">]</span><span class="o">.</span>
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;raise_mismatched_brackets.pyupper&#39;</span> <span class="n">on</span> <span class="n">lines</span> <span class="p">[</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">10</span><span class="p">]</span><span class="o">.</span>
 
 <span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
 
-<span class="o">--&gt;</span><span class="mi">2</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span>
+<span class="o">--&gt;</span><span class="mi">2</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span>   <span class="c1"># Large number of lines between ( and ]</span>
    <span class="mi">3</span><span class="p">:</span>     <span class="mi">2</span><span class="p">,</span>
    <span class="mi">4</span><span class="p">:</span>     <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span>
-   <span class="mi">5</span><span class="p">:</span>     <span class="mi">5</span>
-<span class="o">--&gt;</span><span class="mi">6</span><span class="p">:</span> <span class="p">]</span>
+       <span class="o">...</span>
+    <span class="mi">8</span><span class="p">:</span>     <span class="mi">8</span><span class="p">,</span>
+    <span class="mi">9</span><span class="p">:</span>     <span class="mi">9</span><span class="p">,</span>
+<span class="o">--&gt;</span><span class="mi">10</span><span class="p">:</span> <span class="p">]</span>
 
 <span class="n">The</span> <span class="n">opening</span> <span class="p">(</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">match</span> <span class="n">the</span> <span class="n">closing</span> <span class="p">]</span><span class="o">.</span>
 </pre></div>
@@ -146,7 +149,7 @@ Python version: 3.7.0</p>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">MissingLeftBracketError</span>
 
-<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="n">raise_missing_left_bracket</span><span class="o">.</span><span class="n">pyupper</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">5.</span>
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;raise_missing_left_bracket.pyupper&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">5.</span>
 
 <span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
 
@@ -163,7 +166,7 @@ Python version: 3.7.0</p>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">MissingRepeatError</span>
 
-<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="n">raise_missing_repeat</span><span class="o">.</span><span class="n">pyupper</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">3.</span>
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;raise_missing_repeat.pyupper&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">3.</span>
 
 <span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
 
@@ -178,7 +181,7 @@ Python version: 3.7.0</p>
 <p>Example 2:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">MissingRepeatError</span>
 
-<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="n">raise_missing_repeat2</span><span class="o">.</span><span class="n">pyupper</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">3.</span>
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;raise_missing_repeat2.pyupper&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">3.</span>
 
 <span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
 
@@ -191,12 +194,33 @@ Python version: 3.7.0</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="nameerror">
+<h2>NameError<a class="headerlink" href="#nameerror" title="Permalink to this headline">¶</a></h2>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PYTHON</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="ne">NameError</span><span class="p">:</span> <span class="n">name</span> <span class="s1">&#39;c&#39;</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">defined</span>
+
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;&lt;string&gt;&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">4.</span>
+
+<span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
+
+   <span class="mi">3</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="o">--&gt;</span><span class="mi">4</span><span class="p">:</span> <span class="n">b</span> <span class="o">=</span> <span class="n">c</span>
+   <span class="mi">5</span><span class="p">:</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">A</span> <span class="ne">NameError</span> <span class="n">exception</span> <span class="n">indicates</span> <span class="n">that</span> <span class="n">a</span> <span class="n">variable</span> <span class="ow">or</span>
+<span class="n">function</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">known</span> <span class="n">to</span> <span class="n">Python</span><span class="o">.</span>
+<span class="n">Most</span> <span class="n">often</span><span class="p">,</span> <span class="n">this</span> <span class="ow">is</span> <span class="n">because</span> <span class="n">there</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">spelling</span> <span class="n">mistake</span><span class="p">;</span> <span class="n">however</span><span class="p">,</span> <span class="n">sometimes</span>
+<span class="n">it</span> <span class="ow">is</span> <span class="n">because</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">used</span> <span class="n">before</span> <span class="n">being</span> <span class="n">defined</span> <span class="ow">or</span> <span class="n">given</span> <span class="n">a</span> <span class="n">value</span><span class="o">.</span>
+<span class="n">In</span> <span class="n">your</span> <span class="n">program</span><span class="p">,</span> <span class="n">the</span> <span class="n">unknown</span> <span class="n">variable</span> <span class="ow">or</span> <span class="n">function</span> <span class="ow">is</span> <span class="s1">&#39;c&#39;</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="nobreakfirsterror">
 <h2>NobreakFirstError<a class="headerlink" href="#nobreakfirsterror" title="Permalink to this headline">¶</a></h2>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">NobreakFirstError</span>
 
-<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="n">raise_nobreak_first</span><span class="o">.</span><span class="n">pyupper</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">3.</span>
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;raise_nobreak_first.pyupper&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">3.</span>
 
 <span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
 
@@ -214,7 +238,7 @@ Python version: 3.7.0</p>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">NobreakSyntaxError</span>
 
-<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="n">raise_nobreak_syntax</span><span class="o">.</span><span class="n">pyupper</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">4.</span>
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;raise_nobreak_syntax.pyupper&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">4.</span>
 
 <span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
 
@@ -233,7 +257,7 @@ Python version: 3.7.0</p>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">RepeatFirstError</span>
 
-<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="n">raise_repeat_first</span><span class="o">.</span><span class="n">pyupper</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">3.</span>
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;raise_repeat_first.pyupper&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">3.</span>
 
 <span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
 
@@ -251,7 +275,7 @@ Python version: 3.7.0</p>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">TryNobreakError</span>
 
-<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="n">raise_try_nobreak</span><span class="o">.</span><span class="n">pyupper</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">7.</span>
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;raise_try_nobreak.pyupper&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">7.</span>
 
 <span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
 
