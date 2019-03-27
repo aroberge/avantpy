@@ -21,6 +21,7 @@ class _State:
         self.messages = {}
         self.current_dialect = None
         self.current_lang = None
+        self.current_filename = None
         self.prompt1 = ">>> "  # can be reset based on dialect
         self.prompt2 = "... "
         self.collect_dialects()
@@ -143,7 +144,7 @@ class _State:
             if self.current_dialect is None:
                 try:
                     self.set_dialect("py" + lang)
-                except exceptions.UnknownDialectErrort:
+                except exceptions.UnknownDialectError:
                     pass
 
 

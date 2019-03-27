@@ -16,8 +16,8 @@ pyupper = {
     "and": "AND",
     "as": "AS",
     "assert": "ASSERT",
-    #'async': 'async',  # do not translate
-    #'await': 'await',  # as these are not for beginners
+    "async": "async",  # do not translate
+    "await": "await",  # as these are not for beginners
     "break": "BREAK",
     "class": "CLASS",
     "continue": "CONTINUE",

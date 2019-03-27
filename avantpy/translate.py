@@ -9,7 +9,6 @@ def get(msg):
     """Returns the translation of msg given lang"""
     default = "upper"
     lang = session.state.get_lang()
-    messages
     if lang is not None and msg in messages[lang]:
         return messages[lang][msg]
     elif msg in messages[default]:

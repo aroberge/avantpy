@@ -47,6 +47,7 @@ are learning programming for the first time, under the guidance of an
 instructor. It can also be helpful for students making the transition from
 block-based programming languages to text-based ones.
 
+
 Executable pseudocode?
 -------------------------
 
@@ -68,9 +69,14 @@ As `Mark Guzdial wrote: <https://computinged.wordpress.com/2019/01/07/a-little-b
 
    *People code for different purposes, with different ways of appropriating code. ... Not everybody is going to be a professional software developer, and they don’t need to be.*
 
+And, he also `wrote in a later blog post: <https://computinged.wordpress.com/2019/03/25/task-specific-programming-languages-past-guzdial-is-smarter-than-present-guzdial/>`_ something
+I very much agree with:
+
+   *If we want people to program, make it easy. Remove the barriers. That’s what we’re about.* [Note: I am using this quote in a different context than that of the blog post.]
+
 Given enough time, beginners who have just learned programming and stop using it
 would likely forget most of the programming syntax they had learned.
-However they likely would understand and remember programming **concepts** better if they are first learning them in their native language.  This is what AvantPy aims to do for them.
+However I claim that they likely would understand and remember programming **concepts** better if they are first learning them in their native language.  This is what AvantPy aims to do for them.
 
 
 Contents

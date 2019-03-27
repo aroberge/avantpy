@@ -8,8 +8,8 @@ pyen = {
     "and": "and",
     "as": "as",
     "assert": "assert",
-    #'async': 'async',  # do not translate
-    #'await': 'await',  # as these are not for beginners
+    "async": "async",  # do not translate
+    "await": "await",  # as these are not for beginners
     "break": "break",
     "class": "class",
     "continue": "continue",
@@ -42,10 +42,10 @@ pyen = {
     "forever": "forever",
     "until": "until",
     # a few builtins useful for beginners
-    "input": "ask",
+    "input": "input",
     "print": "print",
     "range": "range",
-    "exit": "exit",  # useful for console
+    "exit": "exit",
     # a well-known python expression
     '__name__ == "__main__"': "notimported",
 }

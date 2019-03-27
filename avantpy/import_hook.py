@@ -13,6 +13,7 @@ from importlib.util import spec_from_file_location
 from . import session
 from . import converter
 from .exception_handling import write_exception_info
+from .session import state
 
 
 DIFF = False
@@ -88,7 +89,7 @@ class AvantPyLoader(Loader):
         self.filename = filename
 
     def exec_module(self, module):
-        """import the source code, conversion it before executing it."""
+        """import the source code, converts it before executing it."""
 
         if module.__name__ == MAIN_MODULE_NAME:
             module.__name__ = "__main__"
@@ -125,6 +126,7 @@ class AvantPyLoader(Loader):
         try:
             exec(source, vars(module))
         except Exception as exc:
+            state.current_filename = fullname
             write_exception_info(exc, original)
 
     def write_html_diff(self, name, original, transformed):

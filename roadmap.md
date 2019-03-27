@@ -7,22 +7,21 @@ Goals:
     - perhaps do this via a special `magicturtle` keyword to be use on its own,
       which would set everything up and make a small subset of turtle
       functions available.
-- version 0.2: all Python Errors can be caught and an explanation provided
+- all standard Python Errors can be caught and an explanation provided
   - Have decided on whether or not using (py) gettext
     - if yes, document how to use it
     - if no, explain why since using gettext is the standard for internationalization.
     - See, for example https://news.ycombinator.com/item?id=2095334
     - One of many references: https://docs.readthedocs.io/en/latest/i18n.html
-  - a simple tkinter-based IDE has been written
+  - a simple tkinter-based IDE has been written as a demo
 
-# TODO
+## TODO
 
-- [ ] TODO: fix_ending in console might not be needed.
-
-## Enhancements
-
-- [ ] Review scratch and blockly for alternative to "continue"
-
+- [ ] Change error handling to pass original and transformed source so as
+      to compare with Python's info about line of code when it is provided
+      as a confirmation that we are not making a mistake in the processing.
+    - [ ] Pass the name of the source as well, rather than storing it in
+      a global state.
 
 - [ ] Make it possible to show the difflib output in an interactive session without exiting;
   This could be a more useful feature in an IDE environment
@@ -60,6 +59,7 @@ Some useful links to use as a start for improving error analysis:
     https://www2.cs.arizona.edu/people/mccann/errors-python
     https://tobiaskohn.ch/files/Dissertation_TKohn.pdf
     http://www.felienne.com/archives/6279
+    https://swcarpentry.github.io/python-novice-inflammation/07-errors/index.html
 
     Also, use = in an if statement comparison (and others)
 

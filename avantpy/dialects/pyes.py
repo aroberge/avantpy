@@ -7,8 +7,8 @@ pyes = {
     "and": "y",
     "as": "como",
     "assert": "afirmar",
-    #'async': 'async',  # do not translate
-    #'await': 'await',  # as these are not for beginners
+    "async": "async",  # do not translate
+    "await": "await",  # as these are not for beginners
     "break": "interrumpir",
     "class": "clase",
     "continue": "continuar",

@@ -20,7 +20,7 @@ def disable():
 
 def _maybe_print(msg, obj, attribute):
     try:
-        print(msg, getattr(object, attribute))
+        print(msg, getattr(obj, attribute))
     except AttributeError:
         print(msg, "does not exist")
 
@@ -97,7 +97,7 @@ def handle_exception(exc, source):
     if name in dispatch:
         return dispatch[name](exc, source)
     else:
-        return None
+        return None  # just want to be explicit
 
 
 # ================= Specific handlers below
@@ -200,10 +200,14 @@ def handle_NameError(exc, source):
     python_display = "{exc_name}: {msg}".format(exc_name=exc_name, msg=msg)
 
     last_tb_line = traceback.format_tb(exc.__traceback__)[-1]
-    last_tb_line = last_tb_line.split(",")
+    # For last_tb_line, we expect something like
+    # File "filename", line 1, in <module>
+    splitted_line = last_tb_line.split(",")
     filename = last_tb_line[0].replace("File ", "").replace('"', "").strip()
+    if filename == "<string>" and state.current_filename is not None:
+        filename = state.current_filename
 
-    linenumber = int(last_tb_line[1].replace("line ", ""))
+    linenumber = int(splitted_line[1].replace("line ", ""))
     begin = linenumber - 1
     end = linenumber + 1
     marks = [linenumber]
