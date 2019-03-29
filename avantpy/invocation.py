@@ -94,93 +94,100 @@ import argparse
 import sys
 
 from . import session
-from . import console
 from . import exception_handling
 from . import import_hook
 from . import converter
+from . import gui
+from . import console
 
-start_console = console.start_console
-show_python = False
 
-if "-m" in sys.argv:
-    console_dict = {}
-    parser = argparse.ArgumentParser(
-        description="""
-        AvantPy sets up an import hook which
-        makes it possible to run a file that contains modified Python syntax
-        provided the relevant source transformers can be imported.
-        """
-    )
-    parser.add_argument(
-        "-s",
-        "--source",
-        help="""Source file to be transformed and executed.
-                It is assumed that it can be imported.
-                Format: path.to.file -- Do not include an extension.""",
-    )
-    parser.add_argument(
-        "--lang",
-        help="""This sets the language used by AvantPy.
-                Usually this is a two-letter code such as 'fr' for French.
-                If no dialect is specified, this will also sets the corresponding
-                dialect""",
-    )
+parser = argparse.ArgumentParser(
+    description="""
+    AvantPy sets up an import hook which
+    makes it possible to run a file that contains modified Python syntax
+    provided the relevant source transformers can be imported.
+    """
+)
+parser.add_argument(
+    "-s",
+    "--source",
+    help="""Source file to be transformed and executed.
+            It is assumed that it can be imported.
+            Format: path.to.file -- Do not include an extension.""",
+)
+parser.add_argument(
+    "--lang",
+    help="""This sets the language used by AvantPy.
+            Usually this is a two-letter code such as 'fr' for French.
+            If no dialect is specified, this will also sets the corresponding
+            dialect""",
+)
 
-    parser.add_argument(
-        "--dialect",
-        help="""This sets the dialect used by AvantPy.
-                Usually this is a two-letter code such as 'pyfr' for French.
-                If 'lang' is not specified, this will also sets the corresponding
-                value for lang.""",
-    )
+parser.add_argument(
+    "--dialect",
+    help="""This sets the dialect used by AvantPy.
+            Usually this is a two-letter code such as 'pyfr' for French.
+            If 'lang' is not specified, this will also sets the corresponding
+            value for lang.""",
+)
 
-    parser.add_argument(
-        "--diff",
-        help="""Creates an html file containing a showing
-                how the original source differs from the transformed one,
-                opens a tab in the default browser showing this html file,
-                and exits without executing the code from the source.""",
-        action="store_true",
-    )
+parser.add_argument(
+    "--diff",
+    help="""Creates an html file containing a showing
+            how the original source differs from the transformed one,
+            opens a tab in the default browser showing this html file,
+            and exits without executing the code from the source.""",
+    action="store_true",
+)
 
-    parser.add_argument(
-        "--dev_py",
-        help="""This disables the custom exception handling so that Python
-                tracebacks are printed""",
-        action="store_true",
-    )
+parser.add_argument(
+    "--dev_py",
+    help="""This disables the custom exception handling so that Python
+            tracebacks are printed""",
+    action="store_true",
+)
 
-    parser.add_argument(
-        "--show_converted",
-        help="""When using the console, if this flag is set, each time the
-                code entered is compaeed with the code transformed. If the
-                two are not identical, the converted code is printed in
-                the console.""",
-        action="store_true",
-    )
+parser.add_argument(
+    "--show_converted",
+    help="""When using the console, if this flag is set, each time the
+            code entered is compaeed with the code transformed. If the
+            two are not identical, the converted code is printed in
+            the console.""",
+    action="store_true",
+)
 
-    parser.add_argument(
-        "--transcode",
-        help="""Indicates that a file is to be transcoded from one dialect
-                to another. If -s or --source is specified, this is ignored.
-            """,
-        action="store_true",
-    )
-    parser.add_argument(
-        "--from_path",
-        help="""This is used together with the --transcode option to specify the
-                 relative path of the file to be transcoded.
-                 The dialect is determined from the extension.
+parser.add_argument(
+    "--transcode",
+    help="""Indicates that a file is to be transcoded from one dialect
+            to another. If -s or --source is specified, this is ignored.
+        """,
+    action="store_true",
+)
+parser.add_argument(
+    "--from_path",
+    help="""This is used together with the --transcode option to specify the
+             relative path of the file to be transcoded.
+             The dialect is determined from the extension.
+         """,
+)
+parser.add_argument(
+    "--to_path",
+    help="""This is used together with the --transcode option to specify the
+             relative path of the file to be transcoded.
+             The dialect is determined from the extension.
              """,
-    )
-    parser.add_argument(
-        "--to_path",
-        help="""This is used together with the --transcode option to specify the
-                 relative path of the file to be transcoded.
-                 The dialect is determined from the extension.
-                 """,
-    )
+)
+parser.add_argument(
+    "--gui",
+    help="""Launches a GUI interface, useful for some conversion operations.
+                  """,
+    action="store_true",
+)
 
+
+def main():
+    console_dict = {}
+    show_python = False
     args = parser.parse_args()
 
     if args.diff:
@@ -207,7 +214,7 @@ if "-m" in sys.argv:
                     if var in ["__cached__", "__loader__", "__package__", "__spec__"]:
                         continue
                     main_dict[var] = getattr(main_module, var)
-                start_console(local_vars=main_dict, show_python=show_python)
+                console.start_console(local_vars=main_dict, show_python=show_python)
         except ModuleNotFoundError:
             print("Could not find module ", args.source, "\n")
             raise
@@ -219,5 +226,11 @@ if "-m" in sys.argv:
             print("--to_path must be specified with --transcode.")
             sys.exit()
         converter.transcode_file(args.from_path, args.to_path)
+    elif args.gui:
+        gui.main()
     else:
-        start_console(local_vars=console_dict, show_python=show_python)
+        console.start_console(local_vars=console_dict, show_python=show_python)
+
+
+if "-m" in sys.argv:
+    main()

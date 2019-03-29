@@ -13,9 +13,9 @@ import sys
 from codeop import CommandCompiler
 from tokenize import TokenError
 
-from . import session
-from . import converter
 from . import version
+from .converter import convert
+from .session import state
 from .exception_handling import write_exception_info
 from .exceptions import AvantPyException
 
@@ -45,9 +45,9 @@ class AvantPyInteractiveConsole:
         while True:
             try:
                 if more:
-                    prompt = session.state.prompt2
+                    prompt = state.prompt2
                 else:
-                    prompt = session.state.prompt1
+                    prompt = state.prompt1
                 try:
                     line = input(prompt)
                 except EOFError:
@@ -79,7 +79,7 @@ class AvantPyInteractiveConsole:
         self.source = "\n".join(self.buffer)
 
         try:
-            self.converted = converter.convert(self.source, source_name=self.name)
+            self.converted = convert(self.source, source_name=self.name)
             self.identical = self.converted == self.source
         except SystemExit:
             os._exit(1)
@@ -187,10 +187,7 @@ class AvantPyInteractiveConsole:
 
 def start_console(local_vars=None, show_python=False):
     """Starts a console; modified from code.interact"""
-    console_defaults = {
-        "set_lang": session.state.set_lang,
-        "set_dialect": session.state.set_dialect,
-    }
+    console_defaults = {"set_lang": state.set_lang, "set_dialect": state.set_dialect}
 
     if local_vars is None:
         local_vars = console_defaults

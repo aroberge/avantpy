@@ -1,14 +1,14 @@
 """Provide mechanism to get translations of messages"""
 
-from . import session
+from .session import state
 
-messages = session.state.messages
+messages = state.messages
 
 
 def get(msg):
     """Returns the translation of msg given lang"""
     default = "upper"
-    lang = session.state.get_lang()
+    lang = state.get_lang()
     if lang is not None and msg in messages[lang]:
         return messages[lang][msg]
     elif msg in messages[default]:
