@@ -1,19 +1,21 @@
 import os
 import tkinter as tk
-from tkinter import filedialog
-
-import keyword
 import tokenize
-from io import StringIO
 
-from .converter import transcode
+from io import StringIO
+from tkinter import filedialog, ttk
+
+from . import converter
+from .session import state
 from .utils import Token
 
 
 class TextEditor:
-    def __init__(self, parent):
+    def __init__(self, parent, title="Window title", app=None):
         self.text_to_write = ""
         self.parent = parent
+        self.app = app
+        self.parent.title(title)
         self.parent.geometry("600x550")
         self.frame = tk.Frame(self.parent, width=600, height=550)
         self.text_area = self.init_text_area()
@@ -31,11 +33,12 @@ class TextEditor:
             height=550,
             padx=10,
             pady=10,
-            font="Monaco 11",
+            font="Monaco 14",
         )
-        text_area.tag_config("blue", foreground="blue")
+        text_area.tag_config("Python", font="Monaco 14 bold", foreground="forest green")
+        text_area.tag_config("source", font="Monaco 14 bold", foreground="blue")
         text_area.tag_config(
-            "bold", font="Monaco 11 bold", foreground="lime green"  # dark violet
+            "converted", font="Monaco 14 bold", foreground="dark violet"
         )
         return text_area
 
@@ -58,18 +61,9 @@ class TextEditor:
         """Makes the main menu"""
         menu = tk.Menu(self.parent)
         file_menu = tk.Menu(menu, tearoff=0)
-        file_menu.add_command(label="Open", command=self.open_file)
         file_menu.add_command(label="Save", command=self.save_file)
         menu.add_cascade(label="File", menu=file_menu)
         self.parent.config(menu=menu)
-
-    def open_file(self, event=None):
-        """Opens a file by looking first from the current directory."""
-        txt_file = filedialog.askopenfilename(initialdir=os.getcwd())
-        if txt_file:
-            self.text_area.delete(1.0, tk.END)
-            with open(txt_file) as new_file:
-                self.insert_text(new_file.read())
 
     def insert_text(self, txt):
         """Inserts the text in the editor, replacing any previously existing
@@ -90,18 +84,28 @@ class TextEditor:
         tokens = tokenize.generate_tokens(StringIO(content).readline)
         for tok in tokens:
             token = Token(tok)
-            if token.string in keyword.kwlist:
+            if token.string in self.app.python_words:
                 begin_index = "{0}.{1}".format(token.start_line, token.start_col)
                 end_index = "{0}.{1}".format(token.end_line, token.end_col)
-                self.text_area.tag_add("bold", begin_index, end_index)
+                self.text_area.tag_add("Python", begin_index, end_index)
+            elif token.string in self.app.source_words:
+                begin_index = "{0}.{1}".format(token.start_line, token.start_col)
+                end_index = "{0}.{1}".format(token.end_line, token.end_col)
+                self.text_area.tag_add("source", begin_index, end_index)
+            elif token.string in self.app.converted_words:
+                begin_index = "{0}.{1}".format(token.start_line, token.start_col)
+                end_index = "{0}.{1}".format(token.end_line, token.end_col)
+                self.text_area.tag_add("converted", begin_index, end_index)
 
     def save_file(self, event=None):
         """Saves the file currently in the Texteditor"""
-        file = filedialog.asksaveasfile(mode="w")
-        if file is not None:
-            data = self.get_text()
-            file.write(data)
-            file.close()
+        filename = filedialog.asksaveasfilename(
+            filetypes=(("AvantPy/Python", "*.py*"),)
+        )
+        if filename is not None:
+            with open(filename, "w", encoding="utf8") as f:
+                data = self.get_text()
+                f.write(data)
 
 
 class App(tk.Tk):
@@ -111,31 +115,65 @@ class App(tk.Tk):
         super().__init__()
         self.title(title)
         self.geometry("300x100")
-        self.add_ui()
         self.source_window = None
         self.converted_window = None
+        self.all_dialects = ["py"] + state.all_dialects()
+        ext = ["*.%s" % d for d in self.all_dialects]
+        self.filetypes = " ".join(ext)
+        self.add_ui()
+        self.python_words = []
+        self.source_words = []
+        self.converted_words = []
 
     def add_ui(self):
         button = tk.Button(self, text="Open Source File", command=self.get_source)
         button.pack()
         button = tk.Button(self, text="Convert Source", command=self.convert_source)
         button.pack()
+        # if the following is assigned a local value, it will be garbage collected
+        # and the combobox will show nothing initially.
+        self._choice = tk.StringVar()
+        self.dialects = ttk.Combobox(
+            self, textvariable=self._choice, values=self.all_dialects
+        )
+        self.dialects.current(0)
+        self.dialects.bind("<<ComboboxSelected>>", self.get_conversion_dialect)
+        self.dialects.pack()
+        self.conversion_dialect = self.all_dialects[0]
+
+    def get_conversion_dialect(self, event):
+        self.conversion_dialect = self.dialects.get()
 
     def get_source(self, event=None):
         """Opens a file by looking first from the current directory."""
-        txt_file = filedialog.askopenfilename(initialdir=os.getcwd())
+        txt_file = filedialog.askopenfilename(
+            initialdir=os.getcwd(), filetypes=(("AvantPy", self.filetypes),)
+        )
+        self.source_dialect = txt_file.split(".")[-1]
+        if self.source_dialect == "py":
+            self.source_dialect = "pyen"
+        self.python_words = set(state.get_from_python(self.source_dialect).keys())
+        self.source_words = set(state.get_to_python(self.source_dialect).keys())
         if txt_file:
             if self.source_window is None:
                 self.source_window = tk.Toplevel()
                 self.source_window.protocol(
                     "WM_DELETE_WINDOW", self.close_source_window
                 )
-                self.source = TextEditor(self.source_window)
-            self.source_window.title("Source: %s" % os.path.basename(txt_file))
+                self.source = TextEditor(
+                    self.source_window,
+                    title="Source: %s" % os.path.basename(txt_file),
+                    app=self,
+                )
             with open(txt_file, encoding="utf8") as new_file:
                 self.source.insert_text(new_file.read())
 
     def close_source_window(self):
+        """Closes the source window"""
+        # When we get a notice that a request to close the window has been made,
+        # , we close it explicitly and set its
+        # reference to None, to avoid exceptions being raised if
+        # another request is made.
         self.source_window.destroy()
         self.source_window = None
 
@@ -146,10 +184,22 @@ class App(tk.Tk):
             self.converted_window.protocol(
                 "WM_DELETE_WINDOW", self.close_converted_window
             )
-            self.converted = TextEditor(self.converted_window)
-        self.converted_window.title("Converted")
+            self.converted = TextEditor(
+                self.converted_window,
+                title="Converted: dialect = %s" % self.conversion_dialect,
+                app=self,
+            )
         text = self.source.get_text()
-        new_text = transcode(text, "pyfr", "pyen")
+        if self.conversion_dialect != "py":
+            self.converted_words = set(
+                state.get_to_python(self.conversion_dialect).keys()
+            )
+            new_text = converter.transcode(
+                text, self.source_dialect, self.conversion_dialect
+            )
+        else:
+            self.converted_words = set(state.get_from_python("pyen").keys())
+            new_text = converter.convert(text, self.source_dialect, "<source>")
         self.converted.insert_text(new_text)
 
     def close_converted_window(self):
