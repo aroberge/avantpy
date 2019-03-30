@@ -75,7 +75,7 @@
 
 <span class="k">def</span> <span class="nf">_maybe_print</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">attribute</span><span class="p">):</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">attribute</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">attribute</span><span class="p">))</span>
     <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="s2">&quot;does not exist&quot;</span><span class="p">)</span>
 
@@ -152,7 +152,7 @@
     <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">dispatch</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">dispatch</span><span class="p">[</span><span class="n">name</span><span class="p">](</span><span class="n">exc</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
+        <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># just want to be explicit</span></div>
 
 
 <span class="c1"># ================= Specific handlers below</span>
@@ -255,10 +255,14 @@
     <span class="n">python_display</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{exc_name}</span><span class="s2">: </span><span class="si">{msg}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exc_name</span><span class="o">=</span><span class="n">exc_name</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span>
 
     <span class="n">last_tb_line</span> <span class="o">=</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_tb</span><span class="p">(</span><span class="n">exc</span><span class="o">.</span><span class="n">__traceback__</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">last_tb_line</span> <span class="o">=</span> <span class="n">last_tb_line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+    <span class="c1"># For last_tb_line, we expect something like</span>
+    <span class="c1"># File &quot;filename&quot;, line 1, in &lt;module&gt;</span>
+    <span class="n">splitted_line</span> <span class="o">=</span> <span class="n">last_tb_line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
     <span class="n">filename</span> <span class="o">=</span> <span class="n">last_tb_line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;File &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">filename</span> <span class="o">==</span> <span class="s2">&quot;&lt;string&gt;&quot;</span> <span class="ow">and</span> <span class="n">state</span><span class="o">.</span><span class="n">current_filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">current_filename</span>
 
-    <span class="n">linenumber</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">last_tb_line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;line &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+    <span class="n">linenumber</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">splitted_line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;line &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
     <span class="n">begin</span> <span class="o">=</span> <span class="n">linenumber</span> <span class="o">-</span> <span class="mi">1</span>
     <span class="n">end</span> <span class="o">=</span> <span class="n">linenumber</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="n">marks</span> <span class="o">=</span> <span class="p">[</span><span class="n">linenumber</span><span class="p">]</span>

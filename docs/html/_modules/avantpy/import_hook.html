@@ -55,12 +55,10 @@
   <h1>Source code for avantpy.import_hook</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;A custom importer making use of the import hook capability</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">difflib</span>
 <span class="kn">import</span> <span class="nn">importlib</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">webbrowser</span>
 
 <span class="kn">from</span> <span class="nn">importlib.abc</span> <span class="k">import</span> <span class="n">Loader</span><span class="p">,</span> <span class="n">MetaPathFinder</span>
 <span class="kn">from</span> <span class="nn">importlib.util</span> <span class="k">import</span> <span class="n">spec_from_file_location</span>
@@ -68,17 +66,9 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">session</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">converter</span>
 <span class="kn">from</span> <span class="nn">.exception_handling</span> <span class="k">import</span> <span class="n">write_exception_info</span>
+<span class="kn">from</span> <span class="nn">.session</span> <span class="k">import</span> <span class="n">state</span>
 
-
-<span class="n">DIFF</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="n">MAIN_MODULE_NAME</span> <span class="o">=</span> <span class="kc">None</span>
-
-
-<div class="viewcode-block" id="show_diff"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.show_diff">[docs]</a><span class="k">def</span> <span class="nf">show_diff</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Sets the flag so that the difference between the original source</span>
-<span class="sd">    and the converted one can be shown&quot;&quot;&quot;</span>
-    <span class="k">global</span> <span class="n">DIFF</span>
-    <span class="n">DIFF</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 
 <div class="viewcode-block" id="import_main"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.import_main">[docs]</a><span class="k">def</span> <span class="nf">import_main</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
@@ -143,7 +133,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
 
 <div class="viewcode-block" id="AvantPyLoader.exec_module"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.AvantPyLoader.exec_module">[docs]</a>    <span class="k">def</span> <span class="nf">exec_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;import the source code, conversion it before executing it.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;import the source code, converts it before executing it.&quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">module</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="n">MAIN_MODULE_NAME</span><span class="p">:</span>
             <span class="n">module</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;__main__&quot;</span>
@@ -164,11 +154,6 @@
             <span class="n">write_exception_info</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original</span><span class="p">)</span>
             <span class="k">return</span>
 
-        <span class="k">if</span> <span class="n">DIFF</span><span class="p">:</span>
-            <span class="n">html_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_html_diff</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">original</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
-            <span class="n">webbrowser</span><span class="o">.</span><span class="n">open_new_tab</span><span class="p">(</span><span class="n">html_file</span><span class="p">)</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
-
         <span class="c1"># ------------------------</span>
         <span class="c1"># Ideally, instead of the following use of exec(source), we would</span>
         <span class="c1"># proceed in two steps:</span>
@@ -180,64 +165,8 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">exec</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="nb">vars</span><span class="p">(</span><span class="n">module</span><span class="p">))</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-            <span class="n">write_exception_info</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="AvantPyLoader.write_html_diff"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.AvantPyLoader.write_html_diff">[docs]</a>    <span class="k">def</span> <span class="nf">write_html_diff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">original</span><span class="p">,</span> <span class="n">transformed</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Writes an html file showing the difference between the original</span>
-<span class="sd">           and the transformed source.&quot;&quot;&quot;</span>
-        <span class="n">html_file</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.html&quot;</span>
-        <span class="n">fromlines</span> <span class="o">=</span> <span class="n">original</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">tolines</span> <span class="o">=</span> <span class="n">transformed</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-
-        <span class="n">diff</span> <span class="o">=</span> <span class="n">MyHtmlDiff</span><span class="p">()</span><span class="o">.</span><span class="n">make_file</span><span class="p">(</span>
-            <span class="n">fromlines</span><span class="p">,</span> <span class="n">tolines</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">session</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">get_dialect</span><span class="p">(),</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.py&quot;</span>
-        <span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">html_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">the_file</span><span class="p">:</span>
-            <span class="n">the_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">html_file</span></div></div>
-
-
-<span class="n">my_file_template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">&lt;!DOCTYPE html&quot;&gt;</span>
-<span class="s2">&lt;html&gt;</span>
-<span class="s2">&lt;head&gt;</span>
-<span class="s2">    &lt;meta charset=&quot;utf-8&quot;/&gt;</span>
-<span class="s2">    &lt;title&gt;&lt;/title&gt;</span>
-<span class="s2">    &lt;style type=&quot;text/css&quot;&gt;</span><span class="si">%(styles)s</span><span class="s2"></span>
-<span class="s2">    &lt;/style&gt;</span>
-<span class="s2">&lt;/head&gt;</span>
-<span class="s2">&lt;body&gt;</span>
-<span class="s2">    </span><span class="si">%(table)s%(legend)s</span><span class="s2"></span>
-<span class="s2">&lt;/body&gt;</span>
-<span class="s2">&lt;/html&gt;&quot;&quot;&quot;</span>
-
-<span class="n">my_styles</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        a {display: none}</span>
-<span class="s2">        table.diff {font-family:Courier; border:medium; font-weight:bold}</span>
-<span class="s2">        .diff_header {background-color:#e0e0e0}</span>
-<span class="s2">        td.diff_header {text-align:right}</span>
-<span class="s2">        .diff_next {background-color:#c0c0c0}</span>
-<span class="s2">        .diff_add {background-color:#aaffaa}</span>
-<span class="s2">        .diff_chg {background-color:#ffcc00}</span>
-<span class="s2">        .diff_sub {background-color:#ffaaaa}&quot;&quot;&quot;</span>
-
-<span class="c1"># my_legend = &quot;&quot;&quot;</span>
-<span class="c1">#     &lt;table class=&quot;diff&quot; summary=&quot;Legends&quot;&gt;</span>
-<span class="c1">#         &lt;tr&gt; &lt;th&gt; Legends &lt;/th&gt; &lt;/tr&gt;</span>
-<span class="c1">#         &lt;tr&gt; &lt;td&gt; &lt;table border=&quot;&quot; summary=&quot;Colors&quot;&gt;</span>
-<span class="c1">#                       &lt;tr&gt;&lt;th&gt; Colors &lt;/th&gt; &lt;/tr&gt;</span>
-<span class="c1">#                       &lt;tr&gt;&lt;td class=&quot;diff_add&quot;&gt;&amp;nbsp;Added&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="c1">#                       &lt;tr&gt;&lt;td class=&quot;diff_chg&quot;&gt;Changed&lt;/td&gt; &lt;/tr&gt;</span>
-<span class="c1">#                       &lt;tr&gt;&lt;td class=&quot;diff_sub&quot;&gt;Deleted&lt;/td&gt; &lt;/tr&gt;</span>
-<span class="c1">#                   &lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="c1">#     &lt;/table&gt;&quot;&quot;&quot;</span>
-<span class="n">my_legend</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-
-
-<div class="viewcode-block" id="MyHtmlDiff"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.MyHtmlDiff">[docs]</a><span class="k">class</span> <span class="nc">MyHtmlDiff</span><span class="p">(</span><span class="n">difflib</span><span class="o">.</span><span class="n">HtmlDiff</span><span class="p">):</span>
-    <span class="n">_filetemplate</span> <span class="o">=</span> <span class="n">my_file_template</span>
-    <span class="n">_legend</span> <span class="o">=</span> <span class="n">my_legend</span>
-    <span class="n">_styles</span> <span class="o">=</span> <span class="n">my_styles</span></div>
+            <span class="n">state</span><span class="o">.</span><span class="n">current_filename</span> <span class="o">=</span> <span class="n">fullname</span>
+            <span class="n">write_exception_info</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>

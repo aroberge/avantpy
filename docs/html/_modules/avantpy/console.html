@@ -68,9 +68,9 @@
 <span class="kn">from</span> <span class="nn">codeop</span> <span class="k">import</span> <span class="n">CommandCompiler</span>
 <span class="kn">from</span> <span class="nn">tokenize</span> <span class="k">import</span> <span class="n">TokenError</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">session</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">converter</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">version</span>
+<span class="kn">from</span> <span class="nn">.converter</span> <span class="k">import</span> <span class="n">convert</span>
+<span class="kn">from</span> <span class="nn">.session</span> <span class="k">import</span> <span class="n">state</span>
 <span class="kn">from</span> <span class="nn">.exception_handling</span> <span class="k">import</span> <span class="n">write_exception_info</span>
 <span class="kn">from</span> <span class="nn">.exceptions</span> <span class="k">import</span> <span class="n">AvantPyException</span>
 
@@ -100,9 +100,9 @@
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">more</span><span class="p">:</span>
-                    <span class="n">prompt</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">prompt2</span>
+                    <span class="n">prompt</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">prompt2</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">prompt</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">prompt1</span>
+                    <span class="n">prompt</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">prompt1</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">line</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">EOFError</span><span class="p">:</span>
@@ -134,7 +134,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">)</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">converted</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">source_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">converted</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">source_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">identical</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">converted</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span>
         <span class="k">except</span> <span class="ne">SystemExit</span><span class="p">:</span>
             <span class="n">os</span><span class="o">.</span><span class="n">_exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -242,10 +242,7 @@
 
 <div class="viewcode-block" id="start_console"><a class="viewcode-back" href="../../modules.html#avantpy.console.start_console">[docs]</a><span class="k">def</span> <span class="nf">start_console</span><span class="p">(</span><span class="n">local_vars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show_python</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Starts a console; modified from code.interact&quot;&quot;&quot;</span>
-    <span class="n">console_defaults</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;set_lang&quot;</span><span class="p">:</span> <span class="n">session</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">set_lang</span><span class="p">,</span>
-        <span class="s2">&quot;set_dialect&quot;</span><span class="p">:</span> <span class="n">session</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">set_dialect</span><span class="p">,</span>
-    <span class="p">}</span>
+    <span class="n">console_defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;set_lang&quot;</span><span class="p">:</span> <span class="n">state</span><span class="o">.</span><span class="n">set_lang</span><span class="p">,</span> <span class="s2">&quot;set_dialect&quot;</span><span class="p">:</span> <span class="n">state</span><span class="o">.</span><span class="n">set_dialect</span><span class="p">}</span>
 
     <span class="k">if</span> <span class="n">local_vars</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">local_vars</span> <span class="o">=</span> <span class="n">console_defaults</span>

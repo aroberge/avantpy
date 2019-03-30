@@ -28,6 +28,12 @@ exceptions
 .. automodule:: avantpy.exceptions
    :members:
 
+gui
+---
+
+.. automodule:: avantpy.gui
+   :members:
+
 import_hook
 -----------
 

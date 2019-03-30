@@ -1,6 +1,13 @@
 # Changelog
 
 
+- Added GUI for conversion
+  - Removed obsolete corresponding command line option
+  - Removed --diff command line option as it is done better with the GUI.
+- Tracebacks now written to stderr instead of stdout
+- Simplified traceback for NameError done
+- Improvement for long partial sources quoted in tracebacks
+- Simple test added for transcoding
 - Added tracebacks generation in French, with all pyupper examples reproduced
   - Also added corresponding pytest tests
 - Console prompt is still based on dialect but does not include the py prefix.

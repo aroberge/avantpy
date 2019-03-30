@@ -45,8 +45,6 @@
 <li><a class="reference internal" href="#invocation-py">invocation.py</a></li>
 <li><a class="reference internal" href="#basic-invocation">Basic invocation</a></li>
 <li><a class="reference internal" href="#running-programs">Running programs</a></li>
-<li><a class="reference internal" href="#showing-the-corresponding-python-code">Showing the corresponding Python code</a></li>
-<li><a class="reference internal" href="#transcoding-from-one-dialect-into-another">Transcoding from one dialect into another</a></li>
 </ul>
 </li>
 </ul>
@@ -89,9 +87,8 @@
 <p>If you cannot wait to try AvantPy before reading the rest of the documentation,
 here’s how you can do it:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python -m avantpy -h
-usage: -m [-h] [-s SOURCE] [--lang LANG] [--dialect DIALECT] [--diff]
-          [--dev_py] [--show_converted] [--transcode] [--from_path FROM_PATH]
-          [--to_path TO_PATH]
+usage: -m [-h] [-s SOURCE] [--lang LANG] [--dialect DIALECT] [--dev_py]
+          [--show_converted] [--gui]
 
 AvantPy sets up an import hook which makes it possible to run a file that
 contains modified Python syntax provided the relevant source transformers can
@@ -104,36 +101,22 @@ optional arguments:
                         assumed that it can be imported. Format: path.to.file
                         -- Do not include an extension.
   --lang LANG           This sets the language used by AvantPy. Usually this
-                        is a two-letter code such as &#39;fr&#39; for French. If no
-                        dialect is specified, this will also sets the
-                        corresponding dialect
+                        is a two-letter code such as &#39;fr&#39; for French. If
+                        DIALECT is not specified, this will also sets the
+                        corresponding DIALECT.
   --dialect DIALECT     This sets the dialect used by AvantPy. Usually this is
-                        a two-letter code such as &#39;pyfr&#39; for French. If &#39;lang&#39;
+                        a two-letter code such as &#39;pyfr&#39; for French. If LANG
                         is not specified, this will also sets the
-                        corresponding value for lang.
-  --diff                Creates an html file containing a showing how the
-                        original source differs from the transformed one,
-                        opens a tab in the default browser showing this html
-                        file, and exits without executing the code from the
-                        source.
+                        corresponding value for LANG.
   --dev_py              This disables the custom exception handling so that
-                        Python tracebacks are printed
+                        Python tracebacks are printed.
   --show_converted      When using the console, if this flag is set, each time
                         the code entered is compaeed with the code
                         transformed. If the two are not identical, the
                         converted code is printed in the console.
-  --transcode           Indicates that a file is to be transcoded from one
-                        dialect to another. If -s or --source is specified,
-                        this is ignored.
-  --from_path FROM_PATH
-                        This is used together with the --transcode option to
-                        specify the relative path of the file to be
-                        transcoded. The dialect is determined from the
-                        extension.
-  --to_path TO_PATH     This is used together with the --transcode option to
-                        specify the relative path of the file to be
-                        transcoded. The dialect is determined from the
-                        extension.
+  --gui                 Launches a basic GUI interface, useful for some
+                        converting programs from one dialect into another or
+                        into Python.
 </pre></div>
 </div>
 <div class="sidebar">
@@ -192,34 +175,6 @@ avantpy console version 0.0.5. [Python version: 3.7.0]
 ...
 Bonjour tout le monde !
 -&gt;&gt;
-</pre></div>
-</div>
-</div>
-<div class="section" id="showing-the-corresponding-python-code">
-<h2>Showing the corresponding Python code<a class="headerlink" href="#showing-the-corresponding-python-code" title="Permalink to this headline">¶</a></h2>
-<p>If you want to view how avantpy transformed an input file,
-you can use the <code class="docutils literal notranslate"><span class="pre">--diff</span></code> option:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">avantpy</span> <span class="o">--</span><span class="n">source</span> <span class="n">name</span> <span class="o">--</span><span class="n">diff</span>
-</pre></div>
-</div>
-<p>This will use Python’s <code class="docutils literal notranslate"><span class="pre">difflib</span></code> module to write the result in a
-file named <code class="docutils literal notranslate"><span class="pre">name.html</span></code> in the current directory, open a new tab
-in the default web browser and display the result.
-This will also end the current execution.
-The code in the source file will not be executed.</p>
-<p>When using the console, one can see the transformed code,
-if it is different from the code entered, by using the
-<code class="docutils literal notranslate"><span class="pre">--show_converted</span></code> option.</p>
-</div>
-<div class="section" id="transcoding-from-one-dialect-into-another">
-<h2>Transcoding from one dialect into another<a class="headerlink" href="#transcoding-from-one-dialect-into-another" title="Permalink to this headline">¶</a></h2>
-<p>It is possible to transcode a file from one dialect to another.
-This is done using the –transcode option, together with two
-other flags: –from_path and –to_path.</p>
-<p>For example, assuming test_french.pyfr exists (it does), we can
-obtain a corresponding english version by the following:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">avantpy</span> <span class="o">--</span><span class="n">transcode</span> <span class="o">--</span><span class="n">from_path</span> <span class="n">tests</span><span class="o">/</span><span class="n">test_french</span><span class="o">.</span><span class="n">pyfr</span>
-      <span class="o">--</span><span class="n">to_path</span> <span class="n">tests</span><span class="o">/</span><span class="n">test_english</span><span class="o">.</span><span class="n">pyen</span>
 </pre></div>
 </div>
 </div>

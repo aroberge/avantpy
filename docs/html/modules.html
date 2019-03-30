@@ -46,6 +46,7 @@
 <li><a class="reference internal" href="#module-avantpy.converter">converter</a></li>
 <li><a class="reference internal" href="#module-avantpy.exception_handling">exception_handling</a></li>
 <li><a class="reference internal" href="#module-avantpy.exceptions">exceptions</a></li>
+<li><a class="reference internal" href="#module-avantpy.gui">gui</a></li>
 <li><a class="reference internal" href="#module-avantpy.import_hook">import_hook</a></li>
 <li><a class="reference internal" href="#module-avantpy.translate">translate</a></li>
 </ul>
@@ -456,13 +457,6 @@ and otherwise drop it.</p>
 
 </dd></dl>
 
-<dl class="class">
-<dt id="avantpy.converter.Token">
-<em class="property">class </em><code class="descclassname">avantpy.converter.</code><code class="descname">Token</code><span class="sig-paren">(</span><em>token</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Token" title="Permalink to this definition">¶</a></dt>
-<dd><p>Token as generated from tokenize.generate_tokens written here in
-a more convenient form for our purpose.</p>
-</dd></dl>
-
 <dl class="function">
 <dt id="avantpy.converter.convert">
 <code class="descclassname">avantpy.converter.</code><code class="descname">convert</code><span class="sig-paren">(</span><em>source</em>, <em>dialect=None</em>, <em>source_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#convert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.convert" title="Permalink to this definition">¶</a></dt>
@@ -722,6 +716,94 @@ be cavered by a specific excption.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="module-avantpy.gui">
+<span id="gui"></span><h2>gui<a class="headerlink" href="#module-avantpy.gui" title="Permalink to this headline">¶</a></h2>
+<p>This module provides a GUI to the conversion function.</p>
+<p>It makes it possible to load up a source file written in a given dialect
+and convert it into another dialect or into Python, showing both the
+original source and the converted one in two different editor frames,
+with Python keyword, as well as their counterpart in various dialects,
+highlighted.</p>
+<dl class="class">
+<dt id="avantpy.gui.App">
+<em class="property">class </em><code class="descclassname">avantpy.gui.</code><code class="descname">App</code><span class="sig-paren">(</span><em>title='Converter'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#App"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.App" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="avantpy.gui.App.add_ui">
+<code class="descname">add_ui</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#App.add_ui"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.App.add_ui" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds UI elements to the main window</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.gui.App.close_converted_window">
+<code class="descname">close_converted_window</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#App.close_converted_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.App.close_converted_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the converted window.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.gui.App.close_source_window">
+<code class="descname">close_source_window</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#App.close_source_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.App.close_source_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the source window</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.gui.App.convert_source">
+<code class="descname">convert_source</code><span class="sig-paren">(</span><em>event=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#App.convert_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.App.convert_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the content of the source window into the requested dialect.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.gui.App.get_conversion_dialect">
+<code class="descname">get_conversion_dialect</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#App.get_conversion_dialect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.App.get_conversion_dialect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the conversion dialect selected from the ComboBox.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.gui.App.get_source">
+<code class="descname">get_source</code><span class="sig-paren">(</span><em>event=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#App.get_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.App.get_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens a file by looking first from the current directory.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="avantpy.gui.TextEditor">
+<em class="property">class </em><code class="descclassname">avantpy.gui.</code><code class="descname">TextEditor</code><span class="sig-paren">(</span><em>parent</em>, <em>title='Window title'</em>, <em>app=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#TextEditor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.TextEditor" title="Permalink to this definition">¶</a></dt>
+<dd><p>A scrollable text editor, that can save files.</p>
+<dl class="method">
+<dt id="avantpy.gui.TextEditor.colorize">
+<code class="descname">colorize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#TextEditor.colorize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.TextEditor.colorize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Colorizes the Python keywords and a few builtins, as well as the
+corresponding version in other dialects.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.gui.TextEditor.get_text">
+<code class="descname">get_text</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#TextEditor.get_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.TextEditor.get_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the current content and returns it as a string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.gui.TextEditor.insert_text">
+<code class="descname">insert_text</code><span class="sig-paren">(</span><em>txt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#TextEditor.insert_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.TextEditor.insert_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inserts the text in the editor, replacing any previously existing
+content.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.gui.TextEditor.make_menu">
+<code class="descname">make_menu</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#TextEditor.make_menu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.TextEditor.make_menu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes the main menu</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="avantpy.gui.TextEditor.save_file">
+<code class="descname">save_file</code><span class="sig-paren">(</span><em>event=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#TextEditor.save_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.TextEditor.save_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the file currently in the Texteditor</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-avantpy.import_hook">
 <span id="import-hook"></span><h2>import_hook<a class="headerlink" href="#module-avantpy.import_hook" title="Permalink to this headline">¶</a></h2>
 <p>A custom importer making use of the import hook capability</p>
@@ -732,14 +814,7 @@ be cavered by a specific excption.</p>
 <dl class="method">
 <dt id="avantpy.import_hook.AvantPyLoader.exec_module">
 <code class="descname">exec_module</code><span class="sig-paren">(</span><em>module</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#AvantPyLoader.exec_module"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.AvantPyLoader.exec_module" title="Permalink to this definition">¶</a></dt>
-<dd><p>import the source code, conversion it before executing it.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="avantpy.import_hook.AvantPyLoader.write_html_diff">
-<code class="descname">write_html_diff</code><span class="sig-paren">(</span><em>name</em>, <em>original</em>, <em>transformed</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#AvantPyLoader.write_html_diff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.AvantPyLoader.write_html_diff" title="Permalink to this definition">¶</a></dt>
-<dd><p>Writes an html file showing the difference between the original
-and the transformed source.</p>
+<dd><p>import the source code, converts it before executing it.</p>
 </dd></dl>
 
 </dd></dl>
@@ -759,11 +834,6 @@ its loader.</p>
 
 </dd></dl>
 
-<dl class="class">
-<dt id="avantpy.import_hook.MyHtmlDiff">
-<em class="property">class </em><code class="descclassname">avantpy.import_hook.</code><code class="descname">MyHtmlDiff</code><span class="sig-paren">(</span><em>tabsize=8</em>, <em>wrapcolumn=None</em>, <em>linejunk=None</em>, <em>charjunk=&lt;function IS_CHARACTER_JUNK&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#MyHtmlDiff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.MyHtmlDiff" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="function">
 <dt id="avantpy.import_hook.import_main">
 <code class="descclassname">avantpy.import_hook.</code><code class="descname">import_main</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#import_main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.import_main" title="Permalink to this definition">¶</a></dt>
@@ -775,13 +845,6 @@ as in:</p>
 </pre></div>
 </div>
 <p>Python identifies avantpy as the main script, which is not what we want.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="avantpy.import_hook.show_diff">
-<code class="descclassname">avantpy.import_hook.</code><code class="descname">show_diff</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#show_diff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.show_diff" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the flag so that the difference between the original source
-and the converted one can be shown</p>
 </dd></dl>
 
 </div>

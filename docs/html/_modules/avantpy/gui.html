@@ -1,0 +1,313 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>avantpy.gui &#8212; AvantPy 0.0.7 documentation</title>
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.7 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for avantpy.gui</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;This module provides a GUI to the conversion function.</span>
+
+<span class="sd">It makes it possible to load up a source file written in a given dialect</span>
+<span class="sd">and convert it into another dialect or into Python, showing both the</span>
+<span class="sd">original source and the converted one in two different editor frames,</span>
+<span class="sd">with Python keyword, as well as their counterpart in various dialects,</span>
+<span class="sd">highlighted.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">tkinter</span> <span class="k">as</span> <span class="nn">tk</span>
+<span class="kn">import</span> <span class="nn">tokenize</span>
+
+<span class="kn">from</span> <span class="nn">io</span> <span class="k">import</span> <span class="n">StringIO</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="k">import</span> <span class="n">filedialog</span><span class="p">,</span> <span class="n">ttk</span>
+
+<span class="kn">from</span> <span class="nn">.converter</span> <span class="k">import</span> <span class="n">transcode</span>
+<span class="kn">from</span> <span class="nn">.session</span> <span class="k">import</span> <span class="n">state</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="n">Token</span>
+
+
+<div class="viewcode-block" id="TextEditor"><a class="viewcode-back" href="../../modules.html#avantpy.gui.TextEditor">[docs]</a><span class="k">class</span> <span class="nc">TextEditor</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A scrollable text editor, that can save files.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Window title&quot;</span><span class="p">,</span> <span class="n">app</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_to_write</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">app</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s2">&quot;600x550&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">550</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_text_area</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_horizontal_scroll</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_vertical_scroll</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_area</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">make_menu</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">init_text_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">text_area</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="p">,</span>
+            <span class="n">wrap</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
+            <span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span>
+            <span class="n">height</span><span class="o">=</span><span class="mi">550</span><span class="p">,</span>
+            <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">font</span><span class="o">=</span><span class="s2">&quot;Monaco 14&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">text_area</span><span class="o">.</span><span class="n">tag_config</span><span class="p">(</span><span class="s2">&quot;Python&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="s2">&quot;Monaco 14 bold&quot;</span><span class="p">,</span> <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;forest green&quot;</span><span class="p">)</span>
+        <span class="n">text_area</span><span class="o">.</span><span class="n">tag_config</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="s2">&quot;Monaco 14 bold&quot;</span><span class="p">,</span> <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+        <span class="n">text_area</span><span class="o">.</span><span class="n">tag_config</span><span class="p">(</span>
+            <span class="s2">&quot;converted&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="s2">&quot;Monaco 14 bold&quot;</span><span class="p">,</span> <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;dark violet&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">text_area</span>
+
+    <span class="k">def</span> <span class="nf">set_horizontal_scroll</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">scroll_x</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Scrollbar</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;horizontal&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">text_area</span><span class="o">.</span><span class="n">xview</span>
+        <span class="p">)</span>
+        <span class="n">scroll_x</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">text_area</span><span class="o">.</span><span class="n">xview</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_area</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">xscrollcommand</span><span class="o">=</span><span class="n">scroll_x</span><span class="o">.</span><span class="n">set</span><span class="p">)</span>
+        <span class="n">scroll_x</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">set_vertical_scroll</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Scroll Bar y For Height</span>
+        <span class="n">scroll_y</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Scrollbar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="p">)</span>
+        <span class="n">scroll_y</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">text_area</span><span class="o">.</span><span class="n">yview</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_area</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">yscrollcommand</span><span class="o">=</span><span class="n">scroll_y</span><span class="o">.</span><span class="n">set</span><span class="p">)</span>
+        <span class="n">scroll_y</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TextEditor.make_menu"><a class="viewcode-back" href="../../modules.html#avantpy.gui.TextEditor.make_menu">[docs]</a>    <span class="k">def</span> <span class="nf">make_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Makes the main menu&quot;&quot;&quot;</span>
+        <span class="n">menu</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Menu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
+        <span class="n">file_menu</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Menu</span><span class="p">(</span><span class="n">menu</span><span class="p">,</span> <span class="n">tearoff</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">file_menu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Save&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">save_file</span><span class="p">)</span>
+        <span class="n">menu</span><span class="o">.</span><span class="n">add_cascade</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;File&quot;</span><span class="p">,</span> <span class="n">menu</span><span class="o">=</span><span class="n">file_menu</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">menu</span><span class="o">=</span><span class="n">menu</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TextEditor.insert_text"><a class="viewcode-back" href="../../modules.html#avantpy.gui.TextEditor.insert_text">[docs]</a>    <span class="k">def</span> <span class="nf">insert_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">txt</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Inserts the text in the editor, replacing any previously existing</span>
+<span class="sd">           content.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_area</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_area</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">txt</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">update_idletasks</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colorize</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TextEditor.get_text"><a class="viewcode-back" href="../../modules.html#avantpy.gui.TextEditor.get_text">[docs]</a>    <span class="k">def</span> <span class="nf">get_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets the current content and returns it as a string&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_area</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span> <span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TextEditor.colorize"><a class="viewcode-back" href="../../modules.html#avantpy.gui.TextEditor.colorize">[docs]</a>    <span class="k">def</span> <span class="nf">colorize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Colorizes the Python keywords and a few builtins, as well as the</span>
+<span class="sd">           corresponding version in other dialects.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_area</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span> <span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">)</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">generate_tokens</span><span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="o">.</span><span class="n">readline</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+            <span class="n">token</span> <span class="o">=</span> <span class="n">Token</span><span class="p">(</span><span class="n">tok</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">python_words</span><span class="p">:</span>
+                <span class="n">begin_index</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">.</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">start_line</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">start_col</span><span class="p">)</span>
+                <span class="n">end_index</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">.</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">end_line</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">end_col</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">text_area</span><span class="o">.</span><span class="n">tag_add</span><span class="p">(</span><span class="s2">&quot;Python&quot;</span><span class="p">,</span> <span class="n">begin_index</span><span class="p">,</span> <span class="n">end_index</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">source_words</span><span class="p">:</span>
+                <span class="n">begin_index</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">.</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">start_line</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">start_col</span><span class="p">)</span>
+                <span class="n">end_index</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">.</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">end_line</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">end_col</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">text_area</span><span class="o">.</span><span class="n">tag_add</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="n">begin_index</span><span class="p">,</span> <span class="n">end_index</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">converted_words</span><span class="p">:</span>
+                <span class="n">begin_index</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">.</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">start_line</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">start_col</span><span class="p">)</span>
+                <span class="n">end_index</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">.</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">end_line</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">end_col</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">text_area</span><span class="o">.</span><span class="n">tag_add</span><span class="p">(</span><span class="s2">&quot;converted&quot;</span><span class="p">,</span> <span class="n">begin_index</span><span class="p">,</span> <span class="n">end_index</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TextEditor.save_file"><a class="viewcode-back" href="../../modules.html#avantpy.gui.TextEditor.save_file">[docs]</a>    <span class="k">def</span> <span class="nf">save_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Saves the file currently in the Texteditor&quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">filedialog</span><span class="o">.</span><span class="n">asksaveasfilename</span><span class="p">(</span>
+            <span class="n">filetypes</span><span class="o">=</span><span class="p">((</span><span class="s2">&quot;AvantPy/Python&quot;</span><span class="p">,</span> <span class="s2">&quot;*.py*&quot;</span><span class="p">),)</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="App"><a class="viewcode-back" href="../../modules.html#avantpy.gui.App">[docs]</a><span class="k">class</span> <span class="nc">App</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Converter&quot;</span><span class="p">):</span>
+        <span class="c1"># self.geometry(&quot;200x100&quot;)</span>
+        <span class="c1"># self.title = &quot;Main app&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s2">&quot;300x100&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source_window</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">converted_window</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_dialects</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;py&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">state</span><span class="o">.</span><span class="n">all_dialects</span><span class="p">()</span>
+        <span class="n">ext</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;*.</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_dialects</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filetypes</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ext</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_ui</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">python_words</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source_words</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">converted_words</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="App.add_ui"><a class="viewcode-back" href="../../modules.html#avantpy.gui.App.add_ui">[docs]</a>    <span class="k">def</span> <span class="nf">add_ui</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds UI elements to the main window&quot;&quot;&quot;</span>
+        <span class="n">button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Open Source File&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_source</span><span class="p">)</span>
+        <span class="n">button</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+        <span class="n">button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Convert Source&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">convert_source</span><span class="p">)</span>
+        <span class="n">button</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+        <span class="c1"># if the following is assigned a local value, it will be garbage collected</span>
+        <span class="c1"># and the combobox will show nothing initially.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_choice</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialects</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Combobox</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_choice</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">all_dialects</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialects</span><span class="o">.</span><span class="n">current</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialects</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;&lt;&lt;ComboboxSelected&gt;&gt;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_conversion_dialect</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialects</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conversion_dialect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_dialects</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="App.get_conversion_dialect"><a class="viewcode-back" href="../../modules.html#avantpy.gui.App.get_conversion_dialect">[docs]</a>    <span class="k">def</span> <span class="nf">get_conversion_dialect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets the conversion dialect selected from the ComboBox.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conversion_dialect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialects</span><span class="o">.</span><span class="n">get</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="App.get_source"><a class="viewcode-back" href="../../modules.html#avantpy.gui.App.get_source">[docs]</a>    <span class="k">def</span> <span class="nf">get_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Opens a file by looking first from the current directory.&quot;&quot;&quot;</span>
+        <span class="n">txt_file</span> <span class="o">=</span> <span class="n">filedialog</span><span class="o">.</span><span class="n">askopenfilename</span><span class="p">(</span>
+            <span class="n">initialdir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">filetypes</span><span class="o">=</span><span class="p">((</span><span class="s2">&quot;AvantPy&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filetypes</span><span class="p">),)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source_dialect</span> <span class="o">=</span> <span class="n">txt_file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_dialect</span> <span class="o">==</span> <span class="s2">&quot;py&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">source_dialect</span> <span class="o">=</span> <span class="s2">&quot;pyen&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">python_words</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">get_from_python</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source_dialect</span><span class="p">)</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source_words</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">get_to_python</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source_dialect</span><span class="p">)</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">txt_file</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_window</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">source_window</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Toplevel</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">source_window</span><span class="o">.</span><span class="n">protocol</span><span class="p">(</span>
+                    <span class="s2">&quot;WM_DELETE_WINDOW&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">close_source_window</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">TextEditor</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">source_window</span><span class="p">,</span>
+                    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Source: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">txt_file</span><span class="p">),</span>
+                    <span class="n">app</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">txt_file</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">new_file</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">insert_text</span><span class="p">(</span><span class="n">new_file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="App.close_source_window"><a class="viewcode-back" href="../../modules.html#avantpy.gui.App.close_source_window">[docs]</a>    <span class="k">def</span> <span class="nf">close_source_window</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Closes the source window&quot;&quot;&quot;</span>
+        <span class="c1"># When we get a notice that a request to close the window has been made,</span>
+        <span class="c1"># , we close it explicitly and set its</span>
+        <span class="c1"># reference to None, to avoid exceptions being raised if</span>
+        <span class="c1"># another request is made.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source_window</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source_window</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="App.convert_source"><a class="viewcode-back" href="../../modules.html#avantpy.gui.App.convert_source">[docs]</a>    <span class="k">def</span> <span class="nf">convert_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Converts the content of the source window into the requested dialect.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">converted_window</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">converted_window</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Toplevel</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">converted_window</span><span class="o">.</span><span class="n">protocol</span><span class="p">(</span>
+                <span class="s2">&quot;WM_DELETE_WINDOW&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">close_converted_window</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">converted</span> <span class="o">=</span> <span class="n">TextEditor</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">converted_window</span><span class="p">,</span>
+                <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Converted: dialect = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">conversion_dialect</span><span class="p">,</span>
+                <span class="n">app</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">conversion_dialect</span> <span class="o">!=</span> <span class="s2">&quot;py&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">converted_words</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span>
+                <span class="n">state</span><span class="o">.</span><span class="n">get_to_python</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_dialect</span><span class="p">)</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">converted_words</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">get_from_python</span><span class="p">(</span><span class="s2">&quot;pyen&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+        <span class="n">new_text</span> <span class="o">=</span> <span class="n">transcode</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_dialect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">conversion_dialect</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">converted</span><span class="o">.</span><span class="n">insert_text</span><span class="p">(</span><span class="n">new_text</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="App.close_converted_window"><a class="viewcode-back" href="../../modules.html#avantpy.gui.App.close_converted_window">[docs]</a>    <span class="k">def</span> <span class="nf">close_converted_window</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Closes the converted window.&quot;&quot;&quot;</span>
+        <span class="c1"># See close_source_window for an explanation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">converted_window</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">converted_window</span> <span class="o">=</span> <span class="kc">None</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.7 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, André Roberge.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>
