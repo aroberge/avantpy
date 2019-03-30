@@ -1,13 +1,12 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR ORGANIZATION
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# English translation for AvantPy
+# André Roberge <andre.roberge@gmail.com>.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2019-03-30 07:59-0300\n"
 "PO-Revision-Date: 2019-03-30 08:22-0300\n"
-"Last-Translator: \n"
+"Last-Translator: andre.roberge@gmail.com\n"
 "Language-Team: \n"
 "Language: en\n"
 "MIME-Version: 1.0\n"

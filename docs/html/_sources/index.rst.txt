@@ -96,6 +96,7 @@ Contents
     Testing <testing>
     Other modules <modules>
     Contributing <contribute>
+    Notes on translations <translations_notes>
     Friendly error messages - en Français <tracebacks_fr>
 
 

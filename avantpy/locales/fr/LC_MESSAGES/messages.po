@@ -1,6 +1,5 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR ORGANIZATION
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# French translation for AvantPy
+# André Roberge <andre.roberge@gmail.com>.
 #
 msgid ""
 msgstr ""
@@ -13,9 +12,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 "X-Generator: Poedit 2.2.1\n"
-"Last-Translator: \n"
+"Last-Translator: andre.roberge@gmail.com\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Language: fr_CA\n"
+"Language: fr\n"
 
 #: exception_handling.py:126
 msgid ""
