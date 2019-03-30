@@ -5,7 +5,7 @@ import tokenize
 from io import StringIO
 from tkinter import filedialog, ttk
 
-from . import converter
+from .converter import transcode
 from .session import state
 from .utils import Token
 
@@ -194,12 +194,10 @@ class App(tk.Tk):
             self.converted_words = set(
                 state.get_to_python(self.conversion_dialect).keys()
             )
-            new_text = converter.transcode(
-                text, self.source_dialect, self.conversion_dialect
-            )
         else:
             self.converted_words = set(state.get_from_python("pyen").keys())
-            new_text = converter.convert(text, self.source_dialect, "<source>")
+
+        new_text = transcode(text, self.source_dialect, self.conversion_dialect)
         self.converted.insert_text(new_text)
 
     def close_converted_window(self):

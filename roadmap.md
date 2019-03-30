@@ -23,22 +23,13 @@ Goals:
     - [ ] Pass the name of the source as well, rather than storing it in
       a global state.
 
-- [ ] Make it possible to show the difflib output in an interactive session without exiting;
-  This could be a more useful feature in an IDE environment
-   - [ ] Have the possible options:
-     - [ ] Only show the diff without executing the module
-     - [ ] Show the diff and execute the module
-     - [ ] Show the diff for a previously imported module
-        - [ ] show errors if not an AvantPy module
-     - [ ] Show the diff from a source file which is not imported.
-
-  - [ ] Add demo GUI-based editor with syntax highlighting, perhaps similar to, but simpler than [this](http://www.bitforestinfo.com/2017/05/how-to-create-python-syntax-highlighting-functions-for-python-tkinter-text-widget-python-magicstick-text-editor-last-part.html)
+- [ ] Remove difflib option; new gui is better
+- [ ] Remove converter option from command line
+  - [ ] Update documentation
 
 - [ ] Use .format for string interpolation everywhere - to allow full translations
 - [ ] Review builtins and see if translations of other functions are needed.
 
-- [ ] Consider switching to writing errors using print("...", file=sys.stderr)
-  - [ ] Actually, have special function, like print_error, which can be redefined by other programs
 
 - [ ] thread about international turtle module https://mail.python.org/pipermail/python-ideas/2015-September/035672.html
   - [ ] Perhaps add a function, say tortue() in French, and turtle() in English,
@@ -73,13 +64,6 @@ Some useful links to use as a start for improving error analysis:
   - [x] Bug report
   - [x] Feature request or contributions
   - [ ] Others
-
-## Developers tools
-
-- [ ] Command line option to convert from dialect to Python
-- [x] Command line option to convert from dialect_1 to dialect_2
-- [ ] GUI for above
-- [ ] Combine --diff option with these
 
 ## Testing
 

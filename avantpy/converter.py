@@ -579,20 +579,23 @@ def transcode(source, from_dialect, to_dialect):
     """
     # In many ways, this is a simplified version of Convert, but where
     # we assume that the syntax of the source is valid.
-    if not source:
-        print("A valid source must be given.")
-        return None
+    if from_dialect == to_dialect:
+        return source
 
-    if from_dialect is None or not state.is_dialect(from_dialect):
-        print("from_dialect %s' is not a valid dialect." % from_dialect)
-        return None
+    if to_dialect == "py":
+        return convert(source, dialect=from_dialect, source_name="<transcode>")
 
-    if to_dialect is None or not state.is_dialect(to_dialect):
-        print("to_dialect %s' is not a valid dialect." % to_dialect)
-        return None
+    if from_dialect == "py":
+        from_python = True
+        from_dialect = "pyen"
+    else:
+        from_python = False
 
     from_lang = state.get_from_python(from_dialect)
     to_lang = state.get_from_python(to_dialect)
+
+    if from_python:
+        from_lang["lambda"] = "lambda"  # intead of "function" in pyen
 
     new_dict = {}
     for key, from_value in from_lang.items():
@@ -624,7 +627,13 @@ def transcode(source, from_dialect, to_dialect):
         else:
             result.append(token.string)
 
-    return "".join(result)
+    result = "".join(result)
+
+    if from_python:
+        result = "".join(result)
+        result.replace('__name__ == "__main__"', to_lang['__name__ == "__main__"'])
+
+    return result
 
 
 def transcode_file(from_path, to_path):

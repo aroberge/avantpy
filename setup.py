@@ -1,9 +1,8 @@
 # pylint: skip-file
-import pathlib
 from setuptools import setup, find_packages
 
-HERE = pathlib.Path(__file__).parent
-README = (HERE / "README.md").read_text()
+with open("README.md", encoding="utf8") as f:
+    README = f.read()
 
 with open("avantpy/version.py") as f:
     version_ = f.read().split("=")[-1].strip()[1:-1]

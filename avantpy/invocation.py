@@ -57,38 +57,6 @@ to recognize that the French dialect is to be used::
     Bonjour tout le monde !
     ->>
 
-
-Showing the corresponding Python code
---------------------------------------
-
-If you want to view how avantpy transformed an input file,
-you can use the ``--diff`` option::
-
-    python -m avantpy --source name --diff
-
-This will use Python's ``difflib`` module to write the result in a
-file named ``name.html`` in the current directory, open a new tab
-in the default web browser and display the result.
-This will also end the current execution.
-The code in the source file will not be executed.
-
-When using the console, one can see the transformed code,
-if it is different from the code entered, by using the
-``--show_converted`` option.
-
-
-Transcoding from one dialect into another
------------------------------------------
-
-It is possible to transcode a file from one dialect to another.
-This is done using the --transcode option, together with two
-other flags: --from_path and --to_path.
-
-For example, assuming test_french.pyfr exists (it does), we can
-obtain a corresponding english version by the following::
-
-    python -m avantpy --transcode --from_path tests/test_french.pyfr
-          --to_path tests/test_english.pyen
 """
 import argparse
 import sys
@@ -96,7 +64,6 @@ import sys
 from . import session
 from . import exception_handling
 from . import import_hook
-from . import converter
 from . import gui
 from . import console
 
@@ -132,15 +99,6 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    "--diff",
-    help="""Creates an html file containing a showing
-            how the original source differs from the transformed one,
-            opens a tab in the default browser showing this html file,
-            and exits without executing the code from the source.""",
-    action="store_true",
-)
-
-parser.add_argument(
     "--dev_py",
     help="""This disables the custom exception handling so that Python
             tracebacks are printed""",
@@ -157,27 +115,6 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    "--transcode",
-    help="""Indicates that a file is to be transcoded from one dialect
-            to another. If -s or --source is specified, this is ignored.
-        """,
-    action="store_true",
-)
-parser.add_argument(
-    "--from_path",
-    help="""This is used together with the --transcode option to specify the
-             relative path of the file to be transcoded.
-             The dialect is determined from the extension.
-         """,
-)
-parser.add_argument(
-    "--to_path",
-    help="""This is used together with the --transcode option to specify the
-             relative path of the file to be transcoded.
-             The dialect is determined from the extension.
-             """,
-)
-parser.add_argument(
     "--gui",
     help="""Launches a GUI interface, useful for some conversion operations.
                   """,
@@ -189,9 +126,6 @@ def main():
     console_dict = {}
     show_python = False
     args = parser.parse_args()
-
-    if args.diff:
-        import_hook.show_diff()
 
     if args.lang is not None:
         session.state.set_lang(args.lang)
@@ -218,14 +152,6 @@ def main():
         except ModuleNotFoundError:
             print("Could not find module ", args.source, "\n")
             raise
-    elif args.transcode:
-        if args.from_path is None:
-            print("--from_path must be specified with --transcode.")
-            sys.exit()
-        if args.to_path is None:
-            print("--to_path must be specified with --transcode.")
-            sys.exit()
-        converter.transcode_file(args.from_path, args.to_path)
     elif args.gui:
         gui.main()
     else:

@@ -1,11 +1,9 @@
 """A custom importer making use of the import hook capability
 """
-import difflib
 import importlib
 import os
 import os.path
 import sys
-import webbrowser
 
 from importlib.abc import Loader, MetaPathFinder
 from importlib.util import spec_from_file_location
@@ -15,16 +13,7 @@ from . import converter
 from .exception_handling import write_exception_info
 from .session import state
 
-
-DIFF = False
 MAIN_MODULE_NAME = None
-
-
-def show_diff():
-    """Sets the flag so that the difference between the original source
-    and the converted one can be shown"""
-    global DIFF
-    DIFF = True
 
 
 def import_main(name):
@@ -110,11 +99,6 @@ class AvantPyLoader(Loader):
             write_exception_info(exc, original)
             return
 
-        if DIFF:
-            html_file = self.write_html_diff(name, original, source)
-            webbrowser.open_new_tab(html_file)
-            sys.exit()
-
         # ------------------------
         # Ideally, instead of the following use of exec(source), we would
         # proceed in two steps:
@@ -128,60 +112,3 @@ class AvantPyLoader(Loader):
         except Exception as exc:
             state.current_filename = fullname
             write_exception_info(exc, original)
-
-    def write_html_diff(self, name, original, transformed):
-        """Writes an html file showing the difference between the original
-           and the transformed source."""
-        html_file = name + ".html"
-        fromlines = original.split("\n")
-        tolines = transformed.split("\n")
-
-        diff = MyHtmlDiff().make_file(
-            fromlines, tolines, name + "." + session.state.get_dialect(), name + ".py"
-        )
-        with open(html_file, "w", encoding="utf8") as the_file:
-            the_file.write(diff)
-        return html_file
-
-
-my_file_template = """
-<!DOCTYPE html">
-<html>
-<head>
-    <meta charset="utf-8"/>
-    <title></title>
-    <style type="text/css">%(styles)s
-    </style>
-</head>
-<body>
-    %(table)s%(legend)s
-</body>
-</html>"""
-
-my_styles = """
-        a {display: none}
-        table.diff {font-family:Courier; border:medium; font-weight:bold}
-        .diff_header {background-color:#e0e0e0}
-        td.diff_header {text-align:right}
-        .diff_next {background-color:#c0c0c0}
-        .diff_add {background-color:#aaffaa}
-        .diff_chg {background-color:#ffcc00}
-        .diff_sub {background-color:#ffaaaa}"""
-
-# my_legend = """
-#     <table class="diff" summary="Legends">
-#         <tr> <th> Legends </th> </tr>
-#         <tr> <td> <table border="" summary="Colors">
-#                       <tr><th> Colors </th> </tr>
-#                       <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
-#                       <tr><td class="diff_chg">Changed</td> </tr>
-#                       <tr><td class="diff_sub">Deleted</td> </tr>
-#                   </table></td></tr>
-#     </table>"""
-my_legend = ""
-
-
-class MyHtmlDiff(difflib.HtmlDiff):
-    _filetemplate = my_file_template
-    _legend = my_legend
-    _styles = my_styles
