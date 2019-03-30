@@ -33,7 +33,6 @@ What is AvantPy?
 
   - It is also possible to translate valid programs from one dialect into another.
 
-
 - AvantPy also includes a custom REPL that can use any of the existing dialects.
 
 - More importantly, AvantPy will also includes tools to analyze Python tracebacks and translate them into easier to understand feedback for beginners.

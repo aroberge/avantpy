@@ -1,3 +1,11 @@
+"""This module provides a GUI to the conversion function.
+
+It makes it possible to load up a source file written in a given dialect
+and convert it into another dialect or into Python, showing both the
+original source and the converted one in two different editor frames,
+with Python keyword, as well as their counterpart in various dialects,
+highlighted.
+"""
 import os
 import tkinter as tk
 import tokenize
@@ -11,6 +19,8 @@ from .utils import Token
 
 
 class TextEditor:
+    """A scrollable text editor, that can save files."""
+
     def __init__(self, parent, title="Window title", app=None):
         self.text_to_write = ""
         self.parent = parent
@@ -79,7 +89,11 @@ class TextEditor:
         return self.text_area.get("1.0", tk.END)
 
     def colorize(self):
-        """Colorizes the Python keywords"""
+        """Colorizes the Python keywords and a few builtins, as well as the
+           corresponding version in other dialects.
+        """
+        if self.app is None:
+            return
         content = self.text_area.get("1.0", tk.END)
         tokens = tokenize.generate_tokens(StringIO(content).readline)
         for tok in tokens:
@@ -126,6 +140,7 @@ class App(tk.Tk):
         self.converted_words = []
 
     def add_ui(self):
+        """Adds UI elements to the main window"""
         button = tk.Button(self, text="Open Source File", command=self.get_source)
         button.pack()
         button = tk.Button(self, text="Convert Source", command=self.convert_source)
@@ -142,6 +157,7 @@ class App(tk.Tk):
         self.conversion_dialect = self.all_dialects[0]
 
     def get_conversion_dialect(self, event):
+        """Gets the conversion dialect selected from the ComboBox."""
         self.conversion_dialect = self.dialects.get()
 
     def get_source(self, event=None):
@@ -178,7 +194,7 @@ class App(tk.Tk):
         self.source_window = None
 
     def convert_source(self, event=None):
-        """Opens a file by looking first from the current directory."""
+        """Converts the content of the source window into the requested dialect."""
         if self.converted_window is None:
             self.converted_window = tk.Toplevel()
             self.converted_window.protocol(
@@ -201,6 +217,8 @@ class App(tk.Tk):
         self.converted.insert_text(new_text)
 
     def close_converted_window(self):
+        """Closes the converted window."""
+        # See close_source_window for an explanation
         self.converted_window.destroy()
         self.converted_window = None
 

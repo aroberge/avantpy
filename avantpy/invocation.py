@@ -69,39 +69,42 @@ from . import console
 
 
 parser = argparse.ArgumentParser(
-    description="""
-    AvantPy sets up an import hook which
-    makes it possible to run a file that contains modified Python syntax
-    provided the relevant source transformers can be imported.
-    """
+    description="""AvantPy sets up an import hook which
+            makes it possible to run a file that contains modified Python syntax
+            provided the relevant source transformers can be imported.
+        """
 )
 parser.add_argument(
     "-s",
     "--source",
     help="""Source file to be transformed and executed.
             It is assumed that it can be imported.
-            Format: path.to.file -- Do not include an extension.""",
+            Format: path.to.file -- Do not include an extension.
+         """,
 )
 parser.add_argument(
     "--lang",
     help="""This sets the language used by AvantPy.
             Usually this is a two-letter code such as 'fr' for French.
-            If no dialect is specified, this will also sets the corresponding
-            dialect""",
+            If DIALECT is not specified, this will also sets the corresponding
+            DIALECT.
+         """,
 )
 
 parser.add_argument(
     "--dialect",
     help="""This sets the dialect used by AvantPy.
             Usually this is a two-letter code such as 'pyfr' for French.
-            If 'lang' is not specified, this will also sets the corresponding
-            value for lang.""",
+            If LANG is not specified, this will also sets the corresponding
+            value for LANG.
+         """,
 )
 
 parser.add_argument(
     "--dev_py",
     help="""This disables the custom exception handling so that Python
-            tracebacks are printed""",
+            tracebacks are printed.
+         """,
     action="store_true",
 )
 
@@ -110,14 +113,16 @@ parser.add_argument(
     help="""When using the console, if this flag is set, each time the
             code entered is compaeed with the code transformed. If the
             two are not identical, the converted code is printed in
-            the console.""",
+            the console.
+         """,
     action="store_true",
 )
 
 parser.add_argument(
     "--gui",
-    help="""Launches a GUI interface, useful for some conversion operations.
-                  """,
+    help="""Launches a basic GUI interface, useful for some converting
+            programs from one dialect into another or into Python.
+         """,
     action="store_true",
 )
 
