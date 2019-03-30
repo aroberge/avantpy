@@ -6,7 +6,6 @@ are written so that they can easily be translated into any human language.
 import sys
 import traceback
 
-from . import translate
 from .session import state
 
 ENABLED = True
@@ -72,7 +71,7 @@ def write_exception_info(exc, source):
         write_err(msg)
     else:
         write_err(
-            "An exception was raised for which we have no simplified traceback:\n"
+            _("An exception was raised for which we have no simplified traceback:\n")
         )
         write_err("name: %s\n" % exc.__class__.__name__)
         write_err("args: " + str(exc.args) + "\n")
@@ -125,14 +124,18 @@ def handle_IfNobreakError(exc, source):
 
     return _(
         """
-        AVANTPY EXCEPTION: IfNobreakError\n
-        Error found in file '{filename}' on line {nobreak_linenumber}.\n
-        Dialect used: {dialect}
-        \n{partial_source}
+    AVANTPY EXCEPTION: IfNobreakError
 
-        The AvantPy {nobreak_kwd} keyword cannot be used in
-        an IF/ELIF/ELSE clause (Python: if/elif/else).
-    \n"""
+    Error found in file '{filename}' on line {nobreak_linenumber}.
+
+    Dialect used: {dialect}
+
+{partial_source}
+
+    The AvantPy {nobreak_kwd} keyword cannot be used in
+    an IF/ELIF/ELSE clause (Python: if/elif/else).
+
+"""
     ).format(**info)
 
 
@@ -151,12 +154,25 @@ def handle_MismatchedBracketsError(exc, source):
         "filename": params["source_name"],
         "open_bracket": params["open_bracket"],
         "close_bracket": params["close_bracket"],
-        "open_linenumber": begin,
-        "close_linenumber": end,
+        "begin": begin,
+        "end": end,
         "partial_source": partial_source,
         "dialect": params["dialect"],
     }
-    return translate.get("MismatchedBracketsError").format(**info)
+    return _(
+        """
+    AVANTPY EXCEPTION: MismatchedBracketsError
+
+    Error found in file '{filename}' on lines [{begin} - {end}].
+
+    Dialect used: {dialect}
+
+{partial_source}
+
+    The opening {open_bracket} does not match the closing {close_bracket}.
+
+"""
+    ).format(**info)
 
 
 def handle_MissingLeftBracketError(exc, source):
@@ -178,7 +194,20 @@ def handle_MissingLeftBracketError(exc, source):
         "linenumber": linenumber,
         "bracket": params["bracket"],
     }
-    return translate.get("MissingLeftBracketError").format(**info)
+    return _(
+        """
+    AVANTPY EXCEPTION: MissingLeftBracketError
+
+    Error found in file '{filename}' on line {linenumber}.
+
+    Dialect used: {dialect}
+
+{partial_source}
+
+    The closing {bracket} does not match anything.
+
+"""
+    ).format(**info)
 
 
 def handle_MissingRepeatError(exc, source):
@@ -200,7 +229,20 @@ def handle_MissingRepeatError(exc, source):
         "linenumber": linenumber,
         "dialect": params["dialect"],
     }
-    return translate.get("MissingRepeatError").format(**info)
+    return _(
+        """
+    AVANTPY EXCEPTION: MissingRepeatError
+
+    Error found in file '{filename}' on line {linenumber}.
+
+    Dialect used: {dialect}
+
+{partial_source}
+
+    The AvantPy {keyword} keyword can be used only when preceded by REPEAT.
+
+"""
+    ).format(**info)
 
 
 def handle_NameError(exc, source):
@@ -233,7 +275,24 @@ def handle_NameError(exc, source):
         "linenumber": linenumber,
         "dialect": state.current_dialect,
     }
-    return translate.get("NameError").format(**info)
+    return _(
+        """
+    PYTHON EXCEPTION: {python_display}
+
+    Error found in file '{filename}' on line {linenumber}.
+
+    Dialect used: {dialect}
+
+{partial_source}
+
+    A NameError exception indicates that a variable or
+    function name is not known to Python.
+    Most often, this is because there is a spelling mistake; however,
+    sometimes it is because it is used before being defined or given a value.
+    In your program, the unknown variable or function is '{var_name}'.
+
+"""
+    ).format(**info)
 
 
 def handle_NobreakFirstError(exc, source):
@@ -256,7 +315,21 @@ def handle_NobreakFirstError(exc, source):
         "linenumber": linenumber,
         "dialect": params["dialect"],
     }
-    return translate.get("NobreakFirstError").format(**info)
+    return _(
+        """
+    AVANTPY EXCEPTION: NobreakFirstError
+
+    Error found in file '{filename}' on line {linenumber}.
+
+    Dialect used: {dialect}
+
+{partial_source}
+
+    The AvantPy {nobreak_kwd} keyword can be used instead of ELSE
+    (Python: else) only when it begins a new statement for loops.
+
+"""
+    ).format(**info)
 
 
 def handle_NobreakSyntaxError(exc, source):
@@ -279,7 +352,22 @@ def handle_NobreakSyntaxError(exc, source):
         "linenumber": linenumber,
         "dialect": params["dialect"],
     }
-    return translate.get("NobreakSyntaxError").format(**info)
+    return _(
+        """
+    AVANTPY EXCEPTION: NobreakSyntaxError
+
+    Error found in file '{filename}' on line {linenumber}.
+
+    Dialect used: {dialect}
+
+{partial_source}
+
+    The AvantPy {nobreak_kwd} keyword can only be used as a replacement
+    of ELSE (Python: else) with a matching FOR or WHILE loop
+    (Python: for/while).
+
+"""
+    ).format(**info)
 
 
 def handle_RepeatFirstError(exc, source):
@@ -301,7 +389,21 @@ def handle_RepeatFirstError(exc, source):
         "linenumber": linenumber,
         "dialect": params["dialect"],
     }
-    return translate.get("RepeatFirstError").format(**info)
+    return _(
+        """
+    AVANTPY EXCEPTION: RepeatFirstError
+
+    Error found in file '{filename}' on line {linenumber}.
+
+    Dialect used: {dialect}
+
+{partial_source}
+
+    The AvantPy {repeat_kwd} keyword can only be used to begin
+    a new loop (Python: equivalent to 'for' or 'while' loop).
+
+"""
+    ).format(**info)
 
 
 def handle_TryNobreakError(exc, source):
@@ -323,7 +425,21 @@ def handle_TryNobreakError(exc, source):
         "nobreak_linenumber": end,
         "dialect": params["dialect"],
     }
-    return translate.get("TryNobreakError").format(**info)
+    return _(
+        """
+    AVANTPY EXCEPTION: TryNobreakError
+
+    Error found in file '{filename}' on line {nobreak_linenumber}.
+
+    Dialect used: {dialect}
+
+{partial_source}
+
+    The AvantPy {nobreak_kwd} keyword cannot be used in
+    a TRY/EXCEPT/ELSE/FINALLY clause (Python: try/except/else/finally).
+
+"""
+    ).format(**info)
 
 
 def handle_UnknownDialectError(exc, *args):
@@ -333,7 +449,16 @@ def handle_UnknownDialectError(exc, *args):
     all_dialects = exc.args[1]
 
     info = {"dialect": dialect, "all_dialects": all_dialects}
-    return translate.get("UnknownDialectError").format(**info)
+    return _(
+        """
+    AVANTPY EXCEPTION: UnknownDialectError
+
+    The following unknown dialect was requested: {dialect}.
+
+    The known dialects are: {all_dialects}.
+
+"""
+    ).format(**info)
 
 
 def handle_UnknownLanguageError(exc, *args):
@@ -343,7 +468,17 @@ def handle_UnknownLanguageError(exc, *args):
     all_langs = exc.args[1]
 
     info = {"lang": lang, "all_langs": all_langs}
-    return translate.get("UnknownLanguageError").format(**info)
+
+    return _(
+        """
+    AVANTPY EXCEPTION: UnknownLanguageError
+
+    The following unknown language was requested: {lang}.
+
+    The known languages are: {all_langs}.
+
+"""
+    ).format(**info)
 
 
 dispatch = {

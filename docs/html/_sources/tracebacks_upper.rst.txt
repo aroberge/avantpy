@@ -12,7 +12,7 @@ Such feedback will also be available in languages other than English.
      This needs to be done explicitly, independently of updating the
      documentation using Sphinx.
 
-AvantPy version: 0.0.7;
+AvantPy version: 0.0.8;
 Python version: 3.7.0
 
 
@@ -28,13 +28,14 @@ Example::
     Error found in file 'raise_if_nobreak.pyupper' on line 4.
 
     Dialect used: pyupper
-    
+
        2: if True:
        3:     pass
     -->4: NOBREAK:
 
     The AvantPy NOBREAK keyword cannot be used in
     an IF/ELIF/ELSE clause (Python: if/elif/else).
+
 
 MismatchedBracketsError
 -----------------------
@@ -47,7 +48,7 @@ Example::
     Error found in file 'raise_mismatched_brackets.pyupper' on lines [2 - 10].
 
     Dialect used: pyupper
-    
+
     -->2: a = (1,   # Large number of lines between ( and ]
        3:     2,
        4:     3, 4,
@@ -57,6 +58,7 @@ Example::
     -->10: ]
 
     The opening ( does not match the closing ].
+
 
 MissingLeftBracketError
 -----------------------
@@ -69,12 +71,13 @@ Example::
     Error found in file 'raise_missing_left_bracket.pyupper' on line 5.
 
     Dialect used: pyupper
-    
+
        4:     3, 4,)
     -->5:     )
        6: b = 3
 
     The closing ) does not match anything.
+
 
 MissingRepeatError
 ------------------
@@ -87,13 +90,13 @@ Example::
     Error found in file 'raise_missing_repeat.pyupper' on line 3.
 
     Dialect used: pyupper
-    
+
        2: x = 0
     -->3: UNTIL x == 2:
        4:     x += 1
 
-    The AvantPy UNTIL keyword can be used only when preceded by
-    REPEAT.
+    The AvantPy UNTIL keyword can be used only when preceded by REPEAT.
+
 
 Example 2::
 
@@ -102,13 +105,13 @@ Example 2::
     Error found in file 'raise_missing_repeat2.pyupper' on line 3.
 
     Dialect used: pyupper
-    
+
        2: x = 0
     -->3: FOREVER:
        4:     x += 1
 
-    The AvantPy FOREVER keyword can be used only when preceded by
-    REPEAT.
+    The AvantPy FOREVER keyword can be used only when preceded by REPEAT.
+
 
 NameError
 ---------
@@ -118,19 +121,20 @@ Example::
 
     PYTHON EXCEPTION: NameError: name 'c' is not defined
 
-    Error found in file '<string>' on line 4.
+    Error found in file '' on line 4.
 
     Dialect used: pyupper
-    
+
        3: a = 1
     -->4: b = c
        5: d = 3
 
     A NameError exception indicates that a variable or
     function name is not known to Python.
-    Most often, this is because there is a spelling mistake; however, sometimes
-    it is because it is used before being defined or given a value.
+    Most often, this is because there is a spelling mistake; however,
+    sometimes it is because it is used before being defined or given a value.
     In your program, the unknown variable or function is 'c'.
+
 
 NobreakFirstError
 -----------------
@@ -143,13 +147,14 @@ Example::
     Error found in file 'raise_nobreak_first.pyupper' on line 3.
 
     Dialect used: pyupper
-    
+
        2: # Need to prevent NOBREAK being replaced by 'else' in this situation.
     -->3: a = 1 if True NOBREAK 3
        4: 
 
-    The AvantPy NOBREAK keyword can be used instead of ELSE (Python: else)
-    only when it begins a new statement for loops.
+    The AvantPy NOBREAK keyword can be used instead of ELSE
+    (Python: else) only when it begins a new statement for loops.
+
 
 NobreakSyntaxError
 ------------------
@@ -162,7 +167,7 @@ Example::
     Error found in file 'raise_nobreak_syntax.pyupper' on line 4.
 
     Dialect used: pyupper
-    
+
        3: a = 1
     -->4: NOBREAK: pass
        5: 
@@ -170,6 +175,7 @@ Example::
     The AvantPy NOBREAK keyword can only be used as a replacement
     of ELSE (Python: else) with a matching FOR or WHILE loop
     (Python: for/while).
+
 
 RepeatFirstError
 ----------------
@@ -182,13 +188,14 @@ Example::
     Error found in file 'raise_repeat_first.pyupper' on line 3.
 
     Dialect used: pyupper
-    
+
        2: # Catch an early case of using REPEAT not to begin a loop
     -->3: a = REPEAT
        4: 
 
     The AvantPy REPEAT keyword can only be used to begin
     a new loop (Python: equivalent to 'for' or 'while' loop).
+
 
 TryNobreakError
 ---------------
@@ -201,7 +208,7 @@ Example::
     Error found in file 'raise_try_nobreak.pyupper' on line 7.
 
     Dialect used: pyupper
-    
+
        3:     TRY:
        4:         A = 1
        5:     EXCEPT:
@@ -211,6 +218,7 @@ Example::
     The AvantPy NOBREAK keyword cannot be used in
     a TRY/EXCEPT/ELSE/FINALLY clause (Python: try/except/else/finally).
 
+
 UnknownLanguageError
 --------------------
 
@@ -219,9 +227,10 @@ Example::
 
     AVANTPY EXCEPTION: UnknownLanguageError
 
-
     The following unknown language was requested: xx.
+
     The known languages are: ['en', 'fr', 'upper'].
+
 
 UnknownDialectError
 -------------------
@@ -231,9 +240,10 @@ Example::
 
     AVANTPY EXCEPTION: UnknownDialectError
 
-
     The following unknown dialect was requested: pyxx.
+
     The known dialects are: ['pyen', 'pyes', 'pyfr', 'pyupper'].
+
 
 UnexpectedError
 ---------------

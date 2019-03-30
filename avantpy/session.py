@@ -24,8 +24,10 @@ class _State:
         self.current_filename = None
         self.prompt1 = ">>> "  # can be reset based on dialect
         self.prompt2 = "... "
+        self.console_active = False
         self.collect_dialects()
         self.collect_languages()
+        self.install_gettext("xx")  # Simply install _()
 
     def collect_dialects(self):
         """Find known dialects and create corresponding dictionaries."""
@@ -122,9 +124,13 @@ class _State:
                     self.set_lang(lang)
                 except exceptions.UnknownLanguageError:
                     pass
+            elif self.console_active:
+                print(
+                    "NEEDS TRANSLATION: lang=%s, dialect=%s"
+                    % (self.current_lang, self.current_dialect)
+                )
         self.prompt1 = lang + "> "
         self.prompt2 = "." * (len(lang) + 1) + " "
-        return dialect
 
     def set_lang(self, lang):
         """Sets the current language.
@@ -141,20 +147,29 @@ class _State:
             )
         else:
             self.current_lang = lang
-            gettext_lang = gettext.translation(
-                "messages",
-                localedir=os.path.normpath(
-                    os.path.join(os.path.dirname(__file__), "locales")
-                ),
-                languages=[lang],
-                fallback=True,
-            )
-            gettext_lang.install()
+            self.install_gettext(lang)
             if self.current_dialect is None:
                 try:
                     self.set_dialect("py" + lang)
                 except exceptions.UnknownDialectError:
                     pass
+            elif self.console_active:
+                print(
+                    "NEEDS TRANSLATION: lang=%s, dialect=%s"
+                    % (self.current_lang, self.current_dialect)
+                )
+
+    def install_gettext(self, lang):
+        """Sets the current language for gettext."""
+        gettext_lang = gettext.translation(
+            "messages",
+            localedir=os.path.normpath(
+                os.path.join(os.path.dirname(__file__), "locales")
+            ),
+            languages=[lang],
+            fallback=True,
+        )
+        gettext_lang.install()
 
 
 state = _State()

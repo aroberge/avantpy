@@ -239,9 +239,8 @@ class Converter:
            written in a given dialect into Standard Python.
         """
         if dialect is not None:
-            self.dialect = state.set_dialect(dialect)
-        else:
-            self.dialect = state.get_dialect()
+            state.set_dialect(dialect)
+        self.dialect = state.get_dialect()
         self.source = source
 
         if self.dialect is not None:

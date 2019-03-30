@@ -1,5 +1,6 @@
 # Changelog
 
+- Added basic gettext support
 
 ## version 0.0.7
 

@@ -6,14 +6,14 @@
       which would set everything up and make a small subset of turtle
       functions available.
   - all standard Python Errors can be caught and an explanation provided
-    - Have decided on whether or not using (py) gettext
-      - if yes, document how to use it
-      - if no, explain why since using gettext is the standard for internationalization.
-      - See, for example https://news.ycombinator.com/item?id=2095334
-      - One of many references: https://docs.readthedocs.io/en/latest/i18n.html
     - a simple tkinter-based IDE has been written as a demo
 
 ## TODO
+
+- [ ] When changing language or dialect, print information about which ones
+      are used.
+
+- [ ] Add explanation about unusual spacing of translation files.
 
 - [ ] Add screen capture of GUI to docs
 - [ ] Add error handling in GUI

@@ -36,6 +36,7 @@ class AvantPyInteractiveConsole:
         self.compile = CommandCompiler()
         self.name = "<AvantPy console>"
         self.reset_buffer()
+        state.console_active = True
 
     def interact(self, banner=None):
         """Emulates the interactive Python console.
