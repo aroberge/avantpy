@@ -122,7 +122,18 @@ def handle_IfNobreakError(exc, source):
         "nobreak_linenumber": end,
         "dialect": params["dialect"],
     }
-    return translate.get("IfNobreakError").format(**info)
+
+    return _(
+        """
+        AVANTPY EXCEPTION: IfNobreakError\n
+        Error found in file '{filename}' on line {nobreak_linenumber}.\n
+        Dialect used: {dialect}
+        \n{partial_source}
+
+        The AvantPy {nobreak_kwd} keyword cannot be used in
+        an IF/ELIF/ELSE clause (Python: if/elif/else).
+    \n"""
+    ).format(**info)
 
 
 def handle_MismatchedBracketsError(exc, source):

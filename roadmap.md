@@ -1,21 +1,24 @@
 # Roadmap
 
-Goals:
-
-- version 0.1: first public release
+- version 0.1: first public release (with announcement on blog)
   - Consider having a simplified and translated turtle module included
     - perhaps do this via a special `magicturtle` keyword to be use on its own,
       which would set everything up and make a small subset of turtle
       functions available.
-- all standard Python Errors can be caught and an explanation provided
-  - Have decided on whether or not using (py) gettext
-    - if yes, document how to use it
-    - if no, explain why since using gettext is the standard for internationalization.
-    - See, for example https://news.ycombinator.com/item?id=2095334
-    - One of many references: https://docs.readthedocs.io/en/latest/i18n.html
-  - a simple tkinter-based IDE has been written as a demo
+  - all standard Python Errors can be caught and an explanation provided
+    - Have decided on whether or not using (py) gettext
+      - if yes, document how to use it
+      - if no, explain why since using gettext is the standard for internationalization.
+      - See, for example https://news.ycombinator.com/item?id=2095334
+      - One of many references: https://docs.readthedocs.io/en/latest/i18n.html
+    - a simple tkinter-based IDE has been written as a demo
 
 ## TODO
+
+- [ ] Add screen capture of GUI to docs
+- [ ] Add error handling in GUI
+- [ ] Improve appearance of main GUI window by using grid manager
+- [ ] Look into creating GUI for REPL
 
 - [ ] Change error handling to pass original and transformed source so as
       to compare with Python's info about line of code when it is provided
@@ -23,13 +26,8 @@ Goals:
     - [ ] Pass the name of the source as well, rather than storing it in
       a global state.
 
-- [ ] Remove difflib option; new gui is better
-- [ ] Remove converter option from command line
-  - [ ] Update documentation
-
 - [ ] Use .format for string interpolation everywhere - to allow full translations
 - [ ] Review builtins and see if translations of other functions are needed.
-
 
 - [ ] thread about international turtle module https://mail.python.org/pipermail/python-ideas/2015-September/035672.html
   - [ ] Perhaps add a function, say tortue() in French, and turtle() in English,
@@ -39,8 +37,6 @@ Goals:
   - [ ] Simple localizable turtle module https://docs.python.org/dev/library/cmd.html#cmd-example
   - [ ] If so, add basic translations of basic colors.
   - [ ] If so, perhaps add a page in the documentation like https://ecsdtech.com/8-pages/121-python-turtle-colors but adding rgb and hex code for colors
-
-
 
 Some useful links to use as a start for improving error analysis:
 

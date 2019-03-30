@@ -15,3 +15,5 @@ exclude =
     z/*,
     # ignore this tool
     update_tb*
+builtins =
+    _

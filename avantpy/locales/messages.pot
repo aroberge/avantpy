@@ -1,0 +1,33 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2019-03-30 07:59-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=cp1252\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+
+
+#: exception_handling.py:126
+msgid ""
+"\n"
+"        AVANTPY EXCEPTION: IfNobreakError\n"
+"\n"
+"        Error found in file '{filename}' on line {nobreak_linenumber}.\n"
+"\n"
+"        Dialect used: {dialect}\n"
+"        \n"
+"{partial_source}\n"
+"\n"
+"        The AvantPy {nobreak_kwd} keyword cannot be used in\n"
+"        an IF/ELIF/ELSE clause (Python: if/elif/else).\n"
+"    \n"
+msgstr ""
+

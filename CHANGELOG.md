@@ -1,6 +1,8 @@
 # Changelog
 
 
+## version 0.0.7
+
 - Added GUI for conversion
   - Removed obsolete corresponding command line option
   - Removed --diff command line option as it is done better with the GUI.

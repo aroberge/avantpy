@@ -2,7 +2,7 @@
 
 Keeps track of and updates the state of the session: language and dialect used.
 """
-
+import gettext
 import glob
 import os.path
 import runpy
@@ -141,6 +141,15 @@ class _State:
             )
         else:
             self.current_lang = lang
+            gettext_lang = gettext.translation(
+                "messages",
+                localedir=os.path.normpath(
+                    os.path.join(os.path.dirname(__file__), "locales")
+                ),
+                languages=[lang],
+                fallback=True,
+            )
+            gettext_lang.install()
             if self.current_dialect is None:
                 try:
                     self.set_dialect("py" + lang)
