@@ -33,12 +33,12 @@ directory structure of this project, showing some relevant files::
             locales/
                 en/
                     LC_MESSAGES/
-                        messages.mo
-                        messages.po
+                        en.mo
+                        en.po
                 fr/
                     LC_MESSAGES/
-                        messages.mo
-                        messages.po
+                        fr.mo
+                        fr.po
                 messages.pot
             exception_handling.py
             make_pot.bat
@@ -128,6 +128,11 @@ With Poedit, you have the choice of either creating a new translation
 from a ``.pot`` file, or from a ``.po`` file. Open the relevant file,
 choose a language, and start translating the various strings.
 
+If you are updating an existing translation, open the ``.po`` file
+and use Poedit's "Catalog" menu (fourth at the top of the menu
+bar) to first update the source (``messages.pot``) from which the
+``.po`` file is derived.
+
 Poedit gives the choice to translate for specific regions (e.g. fr_CA for
 French used in Canada). For this project, I prefer to choose a generic
 two-letter code (fr) as it is assumed to be the case in various places.
@@ -135,12 +140,16 @@ two-letter code (fr) as it is assumed to be the case in various places.
 .. warning::
 
     If, for a given language, you absolutely need different language
-    translations, specific toa region, please file an issue
-    first so that this can be discussed and the impact on the structure
-    of the project can be evaluated.
+    translations, specific to a region, please file an issue
+    first so that this can be discussed and the impact on the rest of
+    the code can be properly evaluated.
 
-When it comes time to save the ``.po`` file, use the name ``messages.po``
-instead of the name suggested by Poedit (for example ``en.po``) and save
+    One of the goals of this project is to provide easier to understand
+    tracebacks than those provided by Python. These do not need to be
+    absolutely perfect.
+
+When it comes time to save the ``.po`` file, use a similar structure
+as that shown above and save
 it in the ``LC_MESSAGES`` directory of the appropriate language.
 Note that Poedit will automatically save another file with
 a ``.mo`` extension; this is a "machine object" file that will actually
@@ -149,6 +158,9 @@ be used by your program.
 In addition to strings to be translated, ``.po`` files contain some
 information about who translated the file and some copyright information.
 In general, you might want to fill in the appropriate information.
+Note that Poedit allows you to set your personal information (name
+and email address) which will be automatically used, so that you don't
+have to edit the created file by hand.
 
 .. warning::
 

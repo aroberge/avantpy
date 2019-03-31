@@ -21,11 +21,6 @@ standard tracebacks.
 Note that normal Python keywords are allowed into a file written
 in another dialect.
 
-For a concrete example showing a file written in the French dialect, using a mix
-of French dialect constructs and normal Python keywords, and the source
-transformed into standard Python, see
-`this link <https://htmlpreview.github.io/?https://github.com/aroberge/avantpy/blob/master/tests/test_french.html>`_.
-
 The conversion process in some details
 ---------------------------------------
 
@@ -61,15 +56,11 @@ which might be converted into::
 
     variable =function(argument)
 
-One possibility that AvantPy offers is to run program with the
---diff option to show the difference
-between the code written and standard Python. The difflib
-module, used to do this, shows all differences including
-differences in spaces between tokens.  Since the primary
-goal of the --diff option is to allow users to learn the
-differences between their dialect and standard Python, it is
-important to restrict differences shown to only those that
-are meaningful.  As a result, we do not use Python's
+This could make it more difficult to compare the original
+code with the converted one, as it is possible to do
+using one of the utilises provided with AvantPy,
+or any "diff" program.
+As a result, we do not use Python's
 untokenize function, and explicitly keep track of spacing
 between tokens.
 

@@ -1,6 +1,6 @@
 # Changelog
 
-- Added gettext support
+- Changed translations so that they are done with gettext
 - Removed old way of supporting translations of human languages
 - Printing information about language and dialect used in console
   when they are changed.

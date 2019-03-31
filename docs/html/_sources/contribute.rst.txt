@@ -52,3 +52,19 @@ Before submitting a pull request
 Before you think of writing code to be submitted as a pull request,
 you **should** first file an issue about it.
 If possible, create a separate branch identified with the issue number.
+
+
+New language contribution
+-------------------------
+
+If you are contributing to add a new language which
+includes translated tracebacks, you might want to include an adapted
+version of all the tests that show tracebacks (see ``tb_pyupper.py``
+in tests/pyupper/) so that they can be included in this documentation.
+
+You can use the existing functions to write a simple script that will
+help automate this process.
+
+.. todo::
+
+    Give an example of how to do so.

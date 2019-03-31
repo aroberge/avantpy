@@ -10,6 +10,13 @@
 
 ## TODO
 
+- [ ] Remove all information about removed --diff option, including example
+      in html file
+
+- [ ] Create full example for pyupper dialect.
+- [ ] Add script showing how to convert existing example in pyupper tests
+      directory.
+
 - [ ] Remove redundant variable "info" in exception_handling.py
 
 - [ ] Add explanation about unusual spacing of translation files.
@@ -61,13 +68,6 @@ Some useful links to use as a start for improving error analysis:
   - [x] Bug report
   - [x] Feature request or contributions
   - [ ] Others
-
-## Testing
-
-- [ ] Create comprehensive test for given dialect
-  - [ ] use automated tools to convert to other dialects
-- [ ] Write simple script that converts existing tests in a directory for
-  a given dialect into a different dialect, copying them in the other directory.
 
 ## Integrating with other programs
 

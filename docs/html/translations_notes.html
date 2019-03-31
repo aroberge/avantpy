@@ -112,12 +112,12 @@ directory structure of this project, showing some relevant files:</p>
         <span class="n">locales</span><span class="o">/</span>
             <span class="n">en</span><span class="o">/</span>
                 <span class="n">LC_MESSAGES</span><span class="o">/</span>
-                    <span class="n">messages</span><span class="o">.</span><span class="n">mo</span>
-                    <span class="n">messages</span><span class="o">.</span><span class="n">po</span>
+                    <span class="n">en</span><span class="o">.</span><span class="n">mo</span>
+                    <span class="n">en</span><span class="o">.</span><span class="n">po</span>
             <span class="n">fr</span><span class="o">/</span>
                 <span class="n">LC_MESSAGES</span><span class="o">/</span>
-                    <span class="n">messages</span><span class="o">.</span><span class="n">mo</span>
-                    <span class="n">messages</span><span class="o">.</span><span class="n">po</span>
+                    <span class="n">fr</span><span class="o">.</span><span class="n">mo</span>
+                    <span class="n">fr</span><span class="o">.</span><span class="n">po</span>
             <span class="n">messages</span><span class="o">.</span><span class="n">pot</span>
         <span class="n">exception_handling</span><span class="o">.</span><span class="n">py</span>
         <span class="n">make_pot</span><span class="o">.</span><span class="n">bat</span>
@@ -201,25 +201,35 @@ for this task.</p>
 <p>With Poedit, you have the choice of either creating a new translation
 from a <code class="docutils literal notranslate"><span class="pre">.pot</span></code> file, or from a <code class="docutils literal notranslate"><span class="pre">.po</span></code> file. Open the relevant file,
 choose a language, and start translating the various strings.</p>
+<p>If you are updating an existing translation, open the <code class="docutils literal notranslate"><span class="pre">.po</span></code> file
+and use Poedit’s “Catalog” menu (fourth at the top of the menu
+bar) to first update the source (<code class="docutils literal notranslate"><span class="pre">messages.pot</span></code>) from which the
+<code class="docutils literal notranslate"><span class="pre">.po</span></code> file is derived.</p>
 <p>Poedit gives the choice to translate for specific regions (e.g. fr_CA for
 French used in Canada). For this project, I prefer to choose a generic
 two-letter code (fr) as it is assumed to be the case in various places.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">If, for a given language, you absolutely need different language
-translations, specific toa region, please file an issue
-first so that this can be discussed and the impact on the structure
-of the project can be evaluated.</p>
+<p>If, for a given language, you absolutely need different language
+translations, specific to a region, please file an issue
+first so that this can be discussed and the impact on the rest of
+the code can be properly evaluated.</p>
+<p class="last">One of the goals of this project is to provide easier to understand
+tracebacks than those provided by Python. These do not need to be
+absolutely perfect.</p>
 </div>
-<p>When it comes time to save the <code class="docutils literal notranslate"><span class="pre">.po</span></code> file, use the name <code class="docutils literal notranslate"><span class="pre">messages.po</span></code>
-instead of the name suggested by Poedit (for example <code class="docutils literal notranslate"><span class="pre">en.po</span></code>) and save
+<p>When it comes time to save the <code class="docutils literal notranslate"><span class="pre">.po</span></code> file, use a similar structure
+as that shown above and save
 it in the <code class="docutils literal notranslate"><span class="pre">LC_MESSAGES</span></code> directory of the appropriate language.
 Note that Poedit will automatically save another file with
 a <code class="docutils literal notranslate"><span class="pre">.mo</span></code> extension; this is a “machine object” file that will actually
 be used by your program.</p>
 <p>In addition to strings to be translated, <code class="docutils literal notranslate"><span class="pre">.po</span></code> files contain some
 information about who translated the file and some copyright information.
-In general, you might want to fill in the appropriate information.</p>
+In general, you might want to fill in the appropriate information.
+Note that Poedit allows you to set your personal information (name
+and email address) which will be automatically used, so that you don’t
+have to edit the created file by hand.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">Do not contribute translations to AvantPy where you attribute the
