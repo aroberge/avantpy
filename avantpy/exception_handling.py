@@ -326,7 +326,7 @@ def handle_NobreakFirstError(exc, source):
 {partial_source}
 
     The AvantPy {nobreak_kwd} keyword can be used instead of ELSE
-    (Python: else) only when it begins a new statement for loops.
+    (Python: else) only when it begins a new statement in FOR/WHILE loops.
 
 """
     ).format(**info)

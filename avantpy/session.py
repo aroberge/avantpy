@@ -162,7 +162,7 @@ class _State:
     def install_gettext(self, lang):
         """Sets the current language for gettext."""
         gettext_lang = gettext.translation(
-            "messages",
+            lang,
             localedir=os.path.normpath(
                 os.path.join(os.path.dirname(__file__), "locales")
             ),
