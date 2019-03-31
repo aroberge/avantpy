@@ -39,9 +39,3 @@ import_hook
 
 .. automodule:: avantpy.import_hook
    :members:
-
-translate
----------
-
-.. automodule:: avantpy.translate
-   :members:

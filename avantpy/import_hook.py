@@ -33,7 +33,7 @@ def import_main(name):
         main = importlib.import_module(name)
         return main
     except ModuleNotFoundError:
-        print("Cannot find main module: ", name)
+        print(_("Cannot find main module: "), name)
 
 
 class AvantPyMetaFinder(MetaPathFinder):

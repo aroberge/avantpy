@@ -18,7 +18,7 @@ class _State:
     def __init__(self):
         self.dict_to_py = {}
         self.dict_from_py = {}
-        self.messages = {}
+        self.languages = set([])
         self.current_dialect = None
         self.current_lang = None
         self.current_filename = None
@@ -27,7 +27,7 @@ class _State:
         self.console_active = False
         self.collect_dialects()
         self.collect_languages()
-        self.install_gettext("xx")  # Simply install _()
+        self.install_gettext("xx")  # Simply adds _() to builtins
 
     def collect_dialects(self):
         """Find known dialects and create corresponding dictionaries."""
@@ -51,22 +51,16 @@ class _State:
                 self.dict_to_py[dialect] = to_py
 
     def collect_languages(self):
-        """Find messages from known languages and create corresponding dictionaries"""
-        languages = glob.glob(os.path.dirname(__file__) + "/translations/*.py")
+        """Creates a set of known languages."""
+        languages = glob.glob(os.path.dirname(__file__) + "/locales/*")
         for f in languages:
-            if os.path.isfile(f) and not f.endswith("__init__.py"):
-
-                lang = os.path.basename(f).split(".")[0]
-                _module = runpy.run_path(f)
-                self.messages[lang] = _module[lang]
+            if os.path.isdir(f):
+                lang = os.path.basename(f)
+                self.languages.add(lang)
 
     def all_dialects(self):
         """Returns a list of all known dialects."""
         return [k for k in self.dict_from_py.keys()]
-
-    def all_langs(self):
-        """Returns a list of all known languages."""
-        return [k for k in self.messages.keys()]
 
     def is_dialect(self, dialect):
         """Returns True if `dialect` is a known dialect, False otherwise."""
@@ -76,7 +70,7 @@ class _State:
         """Returns True if `lang` is known as part of a dialect,
                    False otherwise
         """
-        return lang in self.messages
+        return lang in self.languages
 
     def get_dialect(self):
         """Returns the current dialect."""
@@ -125,12 +119,9 @@ class _State:
                 except exceptions.UnknownLanguageError:
                     pass
             elif self.console_active:
-                print(
-                    "NEEDS TRANSLATION: lang=%s, dialect=%s"
-                    % (self.current_lang, self.current_dialect)
-                )
-        self.prompt1 = lang + "> "
-        self.prompt2 = "." * (len(lang) + 1) + " "
+                self.print_lang_info()
+        self.prompt1 = dialect + "> "
+        self.prompt2 = "..." + " " * (len(dialect) - 1)
 
     def set_lang(self, lang):
         """Sets the current language.
@@ -142,8 +133,8 @@ class _State:
         """
         if not self.is_lang(lang):
             raise exceptions.UnknownLanguageError(
-                "Unknown language %s; known languages = %s" % (lang, self.all_langs()),
-                (lang, self.all_langs()),
+                "Unknown language %s; known languages = %s" % (lang, self.languages),
+                (lang, self.languages),
             )
         else:
             self.current_lang = lang
@@ -154,10 +145,7 @@ class _State:
                 except exceptions.UnknownDialectError:
                     pass
             elif self.console_active:
-                print(
-                    "NEEDS TRANSLATION: lang=%s, dialect=%s"
-                    % (self.current_lang, self.current_dialect)
-                )
+                self.print_lang_info()
 
     def install_gettext(self, lang):
         """Sets the current language for gettext."""
@@ -170,6 +158,17 @@ class _State:
             fallback=True,
         )
         gettext_lang.install()
+
+    def print_lang_info(self):
+        """Prints language and dialect selected.
+
+           Intended to be used in the console.
+        """
+        print(
+            _("    ==> LANGUAGE: {lang} | AVANTPY DIALECT: {dialect}").format(
+                lang=self.current_lang, dialect=self.current_dialect
+            )
+        )
 
 
 state = _State()

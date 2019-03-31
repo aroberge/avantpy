@@ -49,7 +49,6 @@
 <li><a class="reference internal" href="#trynobreakerror">TryNobreakError</a></li>
 <li><a class="reference internal" href="#unknownlanguageerror">UnknownLanguageError</a></li>
 <li><a class="reference internal" href="#unknowndialecterror">UnknownDialectError</a></li>
-<li><a class="reference internal" href="#unexpectederror">UnexpectedError</a></li>
 </ul>
 </li>
 </ul>
@@ -98,16 +97,16 @@ Ceci a besoin d’être fait de manière explicite lorsqu’on veut
 faire des corrections ou des ajouts, avant de faire la mise
 à jour du reste de la documentation avec Sphinx.</p>
 </div>
-<p>AvantPy, version 0.0.7;
+<p>AvantPy, version 0.0.8;
 Python, version 3.7.0</p>
 <div class="section" id="ifnobreakerror">
 <h2>IfNobreakError<a class="headerlink" href="#ifnobreakerror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span><span class="p">:</span> <span class="n">IfNobreakError</span>
+<p>Exemple:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span> <span class="p">:</span> <span class="n">IfNobreakError</span>
 
 <span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;raise_if_nobreak.pyfr&#39;</span> <span class="n">à</span> <span class="n">la</span> <span class="n">ligne</span> <span class="mf">4.</span>
 
-<span class="n">Dialecte</span> <span class="n">utilisé</span><span class="p">:</span> <span class="n">pyfr</span>
+<span class="n">Dialecte</span> <span class="n">utilisé</span> <span class="p">:</span> <span class="n">pyfr</span>
 
    <span class="mi">2</span><span class="p">:</span> <span class="n">si</span> <span class="n">Vrai</span><span class="p">:</span>
    <span class="mi">3</span><span class="p">:</span>     <span class="n">passer</span>
@@ -120,13 +119,12 @@ Python, version 3.7.0</p>
 </div>
 <div class="section" id="mismatchedbracketserror">
 <h2>MismatchedBracketsError<a class="headerlink" href="#mismatchedbracketserror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span><span class="p">:</span> <span class="n">MismatchedBracketsError</span>
+<p>Exemple:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span> <span class="p">:</span> <span class="n">MismatchedBracketsError</span>
 
-<span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;raise_mismatched_brackets.pyfr&#39;</span> <span class="n">aux</span> <span class="n">lignes</span>
-<span class="p">[</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">6</span><span class="p">]</span><span class="o">.</span>
+<span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;raise_mismatched_brackets.pyfr&#39;</span> <span class="n">aux</span> <span class="n">lignes</span> <span class="p">[</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">6</span><span class="p">]</span><span class="o">.</span>
 
-<span class="n">Dialecte</span> <span class="n">utilisé</span><span class="p">:</span> <span class="n">pyfr</span>
+<span class="n">Dialecte</span> <span class="n">utilisé</span> <span class="p">:</span> <span class="n">pyfr</span>
 
 <span class="o">--&gt;</span><span class="mi">2</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span>
    <span class="mi">3</span><span class="p">:</span>     <span class="mi">2</span><span class="p">,</span>
@@ -140,12 +138,12 @@ Python, version 3.7.0</p>
 </div>
 <div class="section" id="missingleftbracketerror">
 <h2>MissingLeftBracketError<a class="headerlink" href="#missingleftbracketerror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span><span class="p">:</span> <span class="n">MissingLeftBracketError</span>
+<p>Exemple:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span> <span class="p">:</span> <span class="n">MissingLeftBracketError</span>
 
 <span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;raise_missing_left_bracket.pyfr&#39;</span> <span class="n">à</span> <span class="n">la</span> <span class="n">ligne</span> <span class="mf">5.</span>
 
-<span class="n">Dialecte</span> <span class="n">utilisé</span><span class="p">:</span> <span class="n">pyfr</span>
+<span class="n">Dialecte</span> <span class="n">utilisé</span> <span class="p">:</span> <span class="n">pyfr</span>
 
    <span class="mi">4</span><span class="p">:</span>     <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,)</span>
 <span class="o">--&gt;</span><span class="mi">5</span><span class="p">:</span>     <span class="p">)</span>
@@ -157,8 +155,8 @@ Python, version 3.7.0</p>
 </div>
 <div class="section" id="missingrepeaterror">
 <h2>MissingRepeatError<a class="headerlink" href="#missingrepeaterror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span><span class="p">:</span> <span class="n">MissingRepeatError</span>
+<p>Exemple:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span> <span class="p">:</span> <span class="n">MissingRepeatError</span>
 
 <span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;raise_missing_repeat.pyfr&#39;</span> <span class="n">à</span> <span class="n">la</span> <span class="n">ligne</span> <span class="mf">3.</span>
 
@@ -172,8 +170,8 @@ Python, version 3.7.0</p>
 <span class="n">s</span><span class="s1">&#39;il est précédé de &#39;</span><span class="n">répéter</span><span class="s1">&#39;.</span>
 </pre></div>
 </div>
-<p>Example 2:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span><span class="p">:</span> <span class="n">MissingRepeatError</span>
+<p>Exemple 2:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span> <span class="p">:</span> <span class="n">MissingRepeatError</span>
 
 <span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;raise_missing_repeat2.pyfr&#39;</span> <span class="n">à</span> <span class="n">la</span> <span class="n">ligne</span> <span class="mf">3.</span>
 
@@ -190,35 +188,35 @@ Python, version 3.7.0</p>
 </div>
 <div class="section" id="nameerror">
 <h2>NameError<a class="headerlink" href="#nameerror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">Python</span><span class="p">:</span> <span class="ne">NameError</span><span class="p">:</span> <span class="n">name</span> <span class="s1">&#39;c&#39;</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">defined</span>
+<p>Exemple:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">Python</span> <span class="p">:</span> <span class="ne">NameError</span><span class="p">:</span> <span class="n">name</span> <span class="s1">&#39;c&#39;</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">defined</span>
 
-<span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;&lt;string&gt;&#39;</span> <span class="n">à</span> <span class="n">la</span> <span class="n">ligne</span> <span class="mf">4.</span>
+<span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;&#39;</span> <span class="n">à</span> <span class="n">la</span> <span class="n">ligne</span> <span class="mf">4.</span>
 
-<span class="n">Dialecte</span> <span class="n">utilisé</span><span class="p">:</span> <span class="n">pyfr</span>
+<span class="n">Dialecte</span> <span class="n">utilisé</span> <span class="p">:</span> <span class="n">pyfr</span>
 
    <span class="mi">3</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="o">--&gt;</span><span class="mi">4</span><span class="p">:</span> <span class="n">b</span> <span class="o">=</span> <span class="n">c</span>
    <span class="mi">5</span><span class="p">:</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">3</span>
 
-<span class="n">Une</span> <span class="n">exception</span> <span class="n">de</span> <span class="nb">type</span> <span class="ne">NameError</span> <span class="n">indique</span> <span class="n">qu</span><span class="s1">&#39;une variable ou une fonction</span>
-<span class="n">dans</span> <span class="n">votre</span> <span class="n">programme</span> <span class="n">est</span> <span class="n">inconnue</span> <span class="n">par</span> <span class="n">Python</span><span class="o">.</span>
+<span class="n">Une</span> <span class="n">exception</span> <span class="n">de</span> <span class="nb">type</span> <span class="ne">NameError</span> <span class="n">indique</span> <span class="n">que</span> <span class="n">le</span> <span class="n">nom</span> <span class="n">d</span><span class="s1">&#39;une variable</span>
+<span class="n">ou</span> <span class="n">d</span><span class="s1">&#39;une fonction utilisée dans votre programme est inconnu par Python.</span>
 <span class="n">Le</span> <span class="n">plus</span> <span class="n">souvent</span><span class="p">,</span> <span class="n">ceci</span> <span class="n">se</span> <span class="n">produit</span> <span class="n">parce</span> <span class="n">que</span> <span class="n">vous</span> <span class="n">faites</span> <span class="n">une</span> <span class="n">faute</span>
 <span class="n">d</span><span class="s1">&#39;orthographe dans l&#39;</span><span class="n">écriture</span> <span class="n">de</span> <span class="n">votre</span> <span class="n">variable</span> <span class="n">ou</span> <span class="n">de</span> <span class="n">votre</span> <span class="n">fonction</span><span class="p">;</span>
 <span class="n">ceci</span> <span class="n">peut</span> <span class="n">également</span> <span class="n">se</span> <span class="n">produire</span> <span class="n">si</span> <span class="n">vous</span> <span class="n">invoquez</span> <span class="n">cette</span> <span class="n">fonction</span> <span class="n">ou</span> <span class="n">utilisez</span>
 <span class="n">cette</span> <span class="n">variable</span> <span class="n">sans</span> <span class="n">l</span><span class="s1">&#39;avoir définie auparavant.</span>
-<span class="n">Dans</span> <span class="n">votre</span> <span class="n">programme</span><span class="p">,</span> <span class="n">la</span> <span class="n">variable</span> <span class="n">ou</span> <span class="n">la</span> <span class="n">fonction</span> <span class="n">inconnue</span> <span class="n">est</span> <span class="s1">&#39;c&#39;</span><span class="o">.</span>
+<span class="n">Dans</span> <span class="n">votre</span> <span class="n">programme</span><span class="p">,</span> <span class="n">le</span> <span class="n">nom</span> <span class="n">inconnu</span> <span class="n">est</span> <span class="s1">&#39;c&#39;</span><span class="o">.</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="nobreakfirsterror">
 <h2>NobreakFirstError<a class="headerlink" href="#nobreakfirsterror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span><span class="p">:</span> <span class="n">NobreakFirstError</span>
+<p>Exemple:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span> <span class="p">:</span> <span class="n">NobreakFirstError</span>
 
 <span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;raise_nobreak_first.pyfr&#39;</span> <span class="n">à</span> <span class="n">la</span> <span class="n">ligne</span> <span class="mf">3.</span>
 
-<span class="n">Dialecte</span> <span class="n">utilisé</span><span class="p">:</span> <span class="n">pyfr</span>
+<span class="n">Dialecte</span> <span class="n">utilisé</span> <span class="p">:</span> <span class="n">pyfr</span>
 
    <span class="mi">2</span><span class="p">:</span> <span class="c1"># Need to prevent pasinterrompu being replaced by &#39;else&#39; in this situation.</span>
 <span class="o">--&gt;</span><span class="mi">3</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="kc">True</span> <span class="n">pasinterrompu</span> <span class="mi">3</span>
@@ -232,12 +230,12 @@ Python, version 3.7.0</p>
 </div>
 <div class="section" id="nobreaksyntaxerror">
 <h2>NobreakSyntaxError<a class="headerlink" href="#nobreaksyntaxerror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span><span class="p">:</span> <span class="n">NobreakSyntaxError</span>
+<p>Exemple:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span> <span class="p">:</span> <span class="n">IfNobreakError</span>
 
 <span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;raise_nobreak_syntax.pyfr&#39;</span> <span class="n">à</span> <span class="n">la</span> <span class="n">ligne</span> <span class="mf">4.</span>
 
-<span class="n">Dialecte</span> <span class="n">utilisé</span><span class="p">:</span> <span class="n">pyfr</span>
+<span class="n">Dialecte</span> <span class="n">utilisé</span> <span class="p">:</span> <span class="n">pyfr</span>
 
    <span class="mi">3</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="o">--&gt;</span><span class="mi">4</span><span class="p">:</span> <span class="n">pasinterrompu</span><span class="p">:</span> <span class="k">pass</span>
@@ -245,18 +243,18 @@ Python, version 3.7.0</p>
 
 <span class="n">Le</span> <span class="n">mot</span><span class="o">-</span><span class="n">clé</span> <span class="n">pasinterrompu</span> <span class="n">spécifique</span> <span class="n">à</span> <span class="n">Avantpy</span> <span class="n">peut</span> <span class="n">seulement</span> <span class="n">être</span> <span class="n">utilisé</span>
 <span class="n">au</span> <span class="n">lieu</span> <span class="n">de</span> <span class="n">sinon</span> <span class="p">(</span><span class="n">Python</span><span class="p">:</span> <span class="k">else</span><span class="p">)</span> <span class="n">lorsqu</span><span class="s1">&#39;il débute un nouvel énoncé</span>
-<span class="n">dans</span> <span class="n">des</span> <span class="n">boucles</span> <span class="s1">&#39;pour&#39;</span> <span class="n">ou</span> <span class="s1">&#39;tantque&#39;</span> <span class="p">(</span><span class="n">Python</span><span class="p">:</span> <span class="k">for</span><span class="o">/</span><span class="k">while</span><span class="p">)</span>
+<span class="n">dans</span> <span class="n">des</span> <span class="n">boucles</span> <span class="s1">&#39;pour&#39;</span> <span class="n">ou</span> <span class="s1">&#39;tantque&#39;</span> <span class="p">(</span><span class="n">Python</span><span class="p">:</span> <span class="k">for</span><span class="o">/</span><span class="k">while</span><span class="p">)</span><span class="o">.</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="repeatfirsterror">
 <h2>RepeatFirstError<a class="headerlink" href="#repeatfirsterror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span><span class="p">:</span> <span class="n">RepeatFirstError</span>
+<p>Exemple:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span> <span class="p">:</span> <span class="n">RepeatFirstError</span>
 
 <span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;raise_repeat_first.pyfr&#39;</span> <span class="n">à</span> <span class="n">la</span> <span class="n">ligne</span> <span class="mf">3.</span>
 
-<span class="n">Dialecte</span> <span class="n">utilisé</span><span class="p">:</span> <span class="n">pyfr</span>
+<span class="n">Dialecte</span> <span class="n">utilisé</span> <span class="p">:</span> <span class="n">pyfr</span>
 
    <span class="mi">2</span><span class="p">:</span> <span class="c1"># Catch an early case of using répéter not to begin a loop</span>
 <span class="o">--&gt;</span><span class="mi">3</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="n">répéter</span>
@@ -270,12 +268,12 @@ Python, version 3.7.0</p>
 </div>
 <div class="section" id="trynobreakerror">
 <h2>TryNobreakError<a class="headerlink" href="#trynobreakerror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span><span class="p">:</span> <span class="n">TryNobreakError</span>
+<p>Exemple:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span> <span class="p">:</span> <span class="n">TryNobreakError</span>
 
 <span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;raise_try_nobreak.pyfr&#39;</span> <span class="n">à</span> <span class="n">la</span> <span class="n">ligne</span> <span class="mf">7.</span>
 
-<span class="n">Dialecte</span> <span class="n">utilisé</span><span class="p">:</span> <span class="n">pyfr</span>
+<span class="n">Dialecte</span> <span class="n">utilisé</span> <span class="p">:</span> <span class="n">pyfr</span>
 
    <span class="mi">3</span><span class="p">:</span>     <span class="n">essayer</span><span class="p">:</span>
    <span class="mi">4</span><span class="p">:</span>         <span class="n">A</span> <span class="o">=</span> <span class="mi">1</span>
@@ -290,30 +288,23 @@ Python, version 3.7.0</p>
 </div>
 <div class="section" id="unknownlanguageerror">
 <h2>UnknownLanguageError<a class="headerlink" href="#unknownlanguageerror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span><span class="p">:</span> <span class="n">UnknownLanguageError</span>
+<p>Exemple:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span> <span class="p">:</span> <span class="n">UnknownLanguageError</span>
 
+<span class="n">Le</span> <span class="n">langage</span> <span class="n">inconnu</span> <span class="n">suivant</span> <span class="n">a</span> <span class="n">été</span> <span class="n">demandé</span> <span class="p">:</span> <span class="n">xx</span><span class="o">.</span>
 
-<span class="n">Le</span> <span class="n">langage</span> <span class="n">inconnu</span> <span class="n">suivant</span> <span class="n">a</span> <span class="n">été</span> <span class="n">demandé</span><span class="p">:</span> <span class="n">xx</span><span class="o">.</span>
-<span class="n">Les</span> <span class="n">langages</span> <span class="n">connus</span> <span class="n">sont</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s1">&#39;fr&#39;</span><span class="p">,</span> <span class="s1">&#39;upper&#39;</span><span class="p">]</span><span class="o">.</span>
+<span class="n">Les</span> <span class="n">langages</span> <span class="n">connus</span> <span class="n">sont</span> <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s1">&#39;fr&#39;</span><span class="p">}</span><span class="o">.</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="unknowndialecterror">
 <h2>UnknownDialectError<a class="headerlink" href="#unknowndialecterror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span><span class="p">:</span> <span class="n">UnknownDialectError</span>
+<p>Exemple:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span> <span class="p">:</span> <span class="n">UnknownDialectError</span>
 
+<span class="n">Le</span> <span class="n">dialecte</span> <span class="n">inconnu</span> <span class="n">suivant</span> <span class="n">a</span> <span class="n">été</span> <span class="n">demandé</span> <span class="p">:</span> <span class="n">pyxx</span><span class="o">.</span>
 
-<span class="n">Le</span> <span class="n">dialecte</span> <span class="n">inconnu</span> <span class="n">suivant</span> <span class="n">a</span> <span class="n">été</span> <span class="n">demandé</span><span class="p">:</span> <span class="n">pyxx</span><span class="o">.</span>
-<span class="n">Les</span> <span class="n">dialectes</span> <span class="n">connus</span> <span class="n">sont</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;pyen&#39;</span><span class="p">,</span> <span class="s1">&#39;pyes&#39;</span><span class="p">,</span> <span class="s1">&#39;pyfr&#39;</span><span class="p">,</span> <span class="s1">&#39;pyupper&#39;</span><span class="p">]</span><span class="o">.</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="unexpectederror">
-<h2>UnexpectedError<a class="headerlink" href="#unexpectederror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">No</span> <span class="n">example</span> <span class="n">found</span> <span class="n">yet</span><span class="o">.</span>
+<span class="n">Les</span> <span class="n">dialectes</span> <span class="n">connus</span> <span class="n">sont</span> <span class="p">:</span> <span class="p">[</span><span class="s1">&#39;pyen&#39;</span><span class="p">,</span> <span class="s1">&#39;pyes&#39;</span><span class="p">,</span> <span class="s1">&#39;pyfr&#39;</span><span class="p">,</span> <span class="s1">&#39;pyupper&#39;</span><span class="p">]</span><span class="o">.</span>
 </pre></div>
 </div>
 </div>

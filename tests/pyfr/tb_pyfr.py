@@ -65,7 +65,7 @@ Python, version {python}
 def make_title(text):
     write("\n" + text)
     write("-" * len(text) + "\n")
-    write("Example::\n")
+    write("Exemple::\n")
 
 
 def create_tracebacks():
@@ -85,7 +85,7 @@ def create_tracebacks():
             make_title("MissingRepeatError")
             import raise_missing_repeat
 
-            write("\nExample 2::")
+            write("\nExemple 2::")
             import raise_missing_repeat2
 
             make_title("NameError")
@@ -108,9 +108,6 @@ def create_tracebacks():
 
             make_title("UnknownDialectError")
             import raise_unknown_dialect
-
-            make_title("UnexpectedError")
-            write("    No example found yet.\n")
 
 
 try:

@@ -88,7 +88,7 @@
         <span class="n">main</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">main</span>
     <span class="k">except</span> <span class="n">ModuleNotFoundError</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cannot find main module: &quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
+        <span class="nb">print</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Cannot find main module: &quot;</span><span class="p">),</span> <span class="n">name</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="AvantPyMetaFinder"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.AvantPyMetaFinder">[docs]</a><span class="k">class</span> <span class="nc">AvantPyMetaFinder</span><span class="p">(</span><span class="n">MetaPathFinder</span><span class="p">):</span>

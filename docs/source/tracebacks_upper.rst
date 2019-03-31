@@ -49,9 +49,9 @@ Example::
 
     Dialect used: pyupper
 
-    -->2: a = (1,   # Large number of lines between ( and ]
-       3:     2,
-       4:     3, 4,
+    --> 2: a = (1,   # Large number of lines between ( and ]
+        3:     2,
+        4:     3, 4,
            ...
         8:     8,
         9:     9,
@@ -133,7 +133,7 @@ Example::
     function name is not known to Python.
     Most often, this is because there is a spelling mistake; however,
     sometimes it is because it is used before being defined or given a value.
-    In your program, the unknown variable or function is 'c'.
+    In your program, the unknown name is 'c'.
 
 
 NobreakFirstError
@@ -153,7 +153,7 @@ Example::
        4: 
 
     The AvantPy NOBREAK keyword can be used instead of ELSE
-    (Python: else) only when it begins a new statement for loops.
+    (Python: else) only when it begins a new statement in FOR/WHILE loops.
 
 
 NobreakSyntaxError
@@ -229,7 +229,7 @@ Example::
 
     The following unknown language was requested: xx.
 
-    The known languages are: ['en', 'fr', 'upper'].
+    The known languages are: {'en', 'fr'}.
 
 
 UnknownDialectError
@@ -243,12 +243,4 @@ Example::
     The following unknown dialect was requested: pyxx.
 
     The known dialects are: ['pyen', 'pyes', 'pyfr', 'pyupper'].
-
-
-UnexpectedError
----------------
-
-Example::
-
-    No example found yet.
 

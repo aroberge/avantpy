@@ -10,15 +10,16 @@
 
 ## TODO
 
-- [ ] When changing language or dialect, print information about which ones
-      are used.
+- [ ] Remove redundant variable "info" in exception_handling.py
 
 - [ ] Add explanation about unusual spacing of translation files.
 
-- [ ] Add screen capture of GUI to docs
-- [ ] Add error handling in GUI
-- [ ] Improve appearance of main GUI window by using grid manager
-- [ ] Look into creating GUI for REPL
+- GUI
+  - [ ] Add screen capture of GUI to docs
+  - [ ] Add error handling in GUI
+  - [ ] Improve appearance of main GUI window by using grid manager
+  - [ ] Look into creating GUI for REPL
+  - [ ] Translate GUI
 
 - [ ] Change error handling to pass original and transformed source so as
       to compare with Python's info about line of code when it is provided
@@ -65,6 +66,8 @@ Some useful links to use as a start for improving error analysis:
 
 - [ ] Create comprehensive test for given dialect
   - [ ] use automated tools to convert to other dialects
+- [ ] Write simple script that converts existing tests in a directory for
+  a given dialect into a different dialect, copying them in the other directory.
 
 ## Integrating with other programs
 
@@ -81,3 +84,72 @@ to integrate it with other programs.
     I would like to know how to do this for SublimeText and Visual Studio Code..
 - [ ] Can it be integrated with Mu?
 - [ ] Can it be integrated with Thonny?
+
+## Reference: known exceptions
+
+In the following, those that are followed by an * have been implemented.
+
+BaseException
+ +-- SystemExit
+ +-- KeyboardInterrupt
+ +-- GeneratorExit
+ +-- Exception
+      +-- StopIteration
+      +-- StopAsyncIteration
+      +-- ArithmeticError
+      |    +-- FloatingPointError
+      |    +-- OverflowError
+      |    +-- ZeroDivisionError
+      +-- AssertionError
+      +-- AttributeError
+      +-- BufferError
+      +-- EOFError
+      +-- ImportError
+      |    +-- ModuleNotFoundError
+      +-- LookupError
+      |    +-- IndexError
+      |    +-- KeyError
+      +-- MemoryError
+      +-- NameError  *
+      |    +-- UnboundLocalError
+      +-- OSError
+      |    +-- BlockingIOError
+      |    +-- ChildProcessError
+      |    +-- ConnectionError
+      |    |    +-- BrokenPipeError
+      |    |    +-- ConnectionAbortedError
+      |    |    +-- ConnectionRefusedError
+      |    |    +-- ConnectionResetError
+      |    +-- FileExistsError
+      |    +-- FileNotFoundError
+      |    +-- InterruptedError
+      |    +-- IsADirectoryError
+      |    +-- NotADirectoryError
+      |    +-- PermissionError
+      |    +-- ProcessLookupError
+      |    +-- TimeoutError
+      +-- ReferenceError
+      +-- RuntimeError
+      |    +-- NotImplementedError
+      |    +-- RecursionError
+      +-- SyntaxError
+      |    +-- IndentationError
+      |         +-- TabError
+      +-- SystemError
+      +-- TypeError
+      +-- ValueError
+      |    +-- UnicodeError
+      |         +-- UnicodeDecodeError
+      |         +-- UnicodeEncodeError
+      |         +-- UnicodeTranslateError
+      +-- Warning
+           +-- DeprecationWarning
+           +-- PendingDeprecationWarning
+           +-- RuntimeWarning
+           +-- SyntaxWarning
+           +-- UserWarning
+           +-- FutureWarning
+           +-- ImportWarning
+           +-- UnicodeWarning
+           +-- BytesWarning
+           +-- ResourceWarning

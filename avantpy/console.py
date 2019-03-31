@@ -92,7 +92,7 @@ class AvantPyInteractiveConsole:
             exc.args[0].startswith("EOF")
             return True
         except Exception as exc:
-            print("UNHANDLED EXCEPTION in console.py. This should not happen.")
+            print(_("UNHANDLED EXCEPTION in console.py. This should not happen."))
             raise exc
 
         try:

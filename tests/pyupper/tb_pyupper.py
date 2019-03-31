@@ -105,9 +105,6 @@ def create_tracebacks():
             make_title("UnknownDialectError")
             import raise_unknown_dialect
 
-            make_title("UnexpectedError")
-            write("    No example found yet.\n")
-
 
 try:
     create_tracebacks()

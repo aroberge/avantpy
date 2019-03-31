@@ -72,21 +72,15 @@
     <span class="n">ENABLED</span> <span class="o">=</span> <span class="kc">False</span></div>
 
 
-<span class="k">def</span> <span class="nf">_maybe_print</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">attribute</span><span class="p">):</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">attribute</span><span class="p">))</span>
-    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="s2">&quot;does not exist&quot;</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="get_partial_source"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.get_partial_source">[docs]</a><span class="k">def</span> <span class="nf">get_partial_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">marks</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="get_partial_source"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.get_partial_source">[docs]</a><span class="k">def</span> <span class="nf">get_partial_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">marks</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nb_digits</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Extracts a few relevant lines from a source file.</span>
 
 <span class="sd">       If the number of lines would exceed a certain limit (currently 7)</span>
 <span class="sd">       the function is called recursively to only show the a few lines</span>
 <span class="sd">       at the beginning and at the end.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">nb_digits</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">end</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">nb_digits</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">nb_digits</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">end</span><span class="p">))</span>
     <span class="n">no_mark</span> <span class="o">=</span> <span class="s2">&quot;       {:</span><span class="si">%d</span><span class="s2">}: &quot;</span> <span class="o">%</span> <span class="n">nb_digits</span>
     <span class="n">with_mark</span> <span class="o">=</span> <span class="s2">&quot;    --&gt;{:</span><span class="si">%d</span><span class="s2">}: &quot;</span> <span class="o">%</span> <span class="n">nb_digits</span>
     <span class="n">continuation</span> <span class="o">=</span> <span class="s2">&quot;           ...&quot;</span>
@@ -96,7 +90,18 @@
 
     <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">if</span> <span class="n">end</span> <span class="o">-</span> <span class="n">begin</span> <span class="o">&gt;</span> <span class="mi">7</span><span class="p">:</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_partial_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">begin</span><span class="p">,</span> <span class="n">begin</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">marks</span><span class="o">=</span><span class="n">marks</span><span class="p">))</span>
+        <span class="c1"># Suppose the source spans line numbers 1 to 12. Splitting it to show</span>
+        <span class="c1"># partial result would show lines 1 to 3, followed by 10 to 12.</span>
+        <span class="c1"># If we want the indentation of the first part to match the indentation</span>
+        <span class="c1"># of the second part, we must specify the length of the</span>
+        <span class="c1"># indentation of the first part.</span>
+        <span class="c1"># See the traceback for MismatchedBracketsError in the</span>
+        <span class="c1"># documentation for an example.</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">get_partial_source</span><span class="p">(</span>
+                <span class="n">source</span><span class="p">,</span> <span class="n">begin</span><span class="p">,</span> <span class="n">begin</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">marks</span><span class="o">=</span><span class="n">marks</span><span class="p">,</span> <span class="n">nb_digits</span><span class="o">=</span><span class="n">nb_digits</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
         <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">continuation</span><span class="p">)</span>
         <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_partial_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">end</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">marks</span><span class="o">=</span><span class="n">marks</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
@@ -344,7 +349,7 @@
 <span class="sd">    function name is not known to Python.</span>
 <span class="sd">    Most often, this is because there is a spelling mistake; however,</span>
 <span class="sd">    sometimes it is because it is used before being defined or given a value.</span>
-<span class="sd">    In your program, the unknown variable or function is &#39;{var_name}&#39;.</span>
+<span class="sd">    In your program, the unknown name is &#39;{var_name}&#39;.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
     <span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span></div>
@@ -381,7 +386,7 @@
 <span class="sd">{partial_source}</span>
 
 <span class="sd">    The AvantPy {nobreak_kwd} keyword can be used instead of ELSE</span>
-<span class="sd">    (Python: else) only when it begins a new statement for loops.</span>
+<span class="sd">    (Python: else) only when it begins a new statement in FOR/WHILE loops.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
     <span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span></div>

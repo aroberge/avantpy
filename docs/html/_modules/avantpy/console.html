@@ -147,7 +147,7 @@
             <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;EOF&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;UNHANDLED EXCEPTION in console.py. This should not happen.&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;UNHANDLED EXCEPTION in console.py. This should not happen.&quot;</span><span class="p">))</span>
             <span class="k">raise</span> <span class="n">exc</span>
 
         <span class="k">try</span><span class="p">:</span>

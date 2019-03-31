@@ -48,7 +48,6 @@
 <li><a class="reference internal" href="#module-avantpy.exceptions">exceptions</a></li>
 <li><a class="reference internal" href="#module-avantpy.gui">gui</a></li>
 <li><a class="reference internal" href="#module-avantpy.import_hook">import_hook</a></li>
-<li><a class="reference internal" href="#module-avantpy.translate">translate</a></li>
 </ul>
 </li>
 </ul>
@@ -512,7 +511,7 @@ are written so that they can easily be translated into any human language.</p>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.get_partial_source">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">get_partial_source</code><span class="sig-paren">(</span><em>source</em>, <em>begin</em>, <em>end</em>, <em>marks=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#get_partial_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.get_partial_source" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">get_partial_source</code><span class="sig-paren">(</span><em>source</em>, <em>begin</em>, <em>end</em>, <em>marks=None</em>, <em>nb_digits=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#get_partial_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.get_partial_source" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extracts a few relevant lines from a source file.</p>
 <p>If the number of lines would exceed a certain limit (currently 7)
 the function is called recursively to only show the a few lines
@@ -845,16 +844,6 @@ as in:</p>
 </pre></div>
 </div>
 <p>Python identifies avantpy as the main script, which is not what we want.</p>
-</dd></dl>
-
-</div>
-<div class="section" id="module-avantpy.translate">
-<span id="translate"></span><h2>translate<a class="headerlink" href="#module-avantpy.translate" title="Permalink to this headline">¶</a></h2>
-<p>Provide mechanism to get translations of messages</p>
-<dl class="function">
-<dt id="avantpy.translate.get">
-<code class="descclassname">avantpy.translate.</code><code class="descname">get</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/translate.html#get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.translate.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the translation of msg given lang</p>
 </dd></dl>
 
 </div>

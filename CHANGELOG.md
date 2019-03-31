@@ -1,6 +1,10 @@
 # Changelog
 
-- Added basic gettext support
+- Added gettext support
+- Removed old way of supporting translations of human languages
+- Printing information about language and dialect used in console
+  when they are changed.
+- console prompt now shows the py prefix to decrease potential confusion
 
 ## version 0.0.7
 

@@ -17,21 +17,15 @@ def disable():
     ENABLED = False
 
 
-def _maybe_print(msg, obj, attribute):
-    try:
-        print(msg, getattr(obj, attribute))
-    except AttributeError:
-        print(msg, "does not exist")
-
-
-def get_partial_source(source, begin, end, marks=None):
+def get_partial_source(source, begin, end, marks=None, nb_digits=None):
     """Extracts a few relevant lines from a source file.
 
        If the number of lines would exceed a certain limit (currently 7)
        the function is called recursively to only show the a few lines
        at the beginning and at the end.
     """
-    nb_digits = len(str(end))
+    if nb_digits is None:
+        nb_digits = len(str(end))
     no_mark = "       {:%d}: " % nb_digits
     with_mark = "    -->{:%d}: " % nb_digits
     continuation = "           ..."
@@ -41,7 +35,18 @@ def get_partial_source(source, begin, end, marks=None):
 
     result = []
     if end - begin > 7:
-        result.append(get_partial_source(source, begin, begin + 2, marks=marks))
+        # Suppose the source spans line numbers 1 to 12. Splitting it to show
+        # partial result would show lines 1 to 3, followed by 10 to 12.
+        # If we want the indentation of the first part to match the indentation
+        # of the second part, we must specify the length of the
+        # indentation of the first part.
+        # See the traceback for MismatchedBracketsError in the
+        # documentation for an example.
+        result.append(
+            get_partial_source(
+                source, begin, begin + 2, marks=marks, nb_digits=nb_digits
+            )
+        )
         result.append(continuation)
         result.append(get_partial_source(source, end - 2, end, marks=marks))
     else:
@@ -289,7 +294,7 @@ def handle_NameError(exc, source):
     function name is not known to Python.
     Most often, this is because there is a spelling mistake; however,
     sometimes it is because it is used before being defined or given a value.
-    In your program, the unknown variable or function is '{var_name}'.
+    In your program, the unknown name is '{var_name}'.
 
 """
     ).format(**info)
