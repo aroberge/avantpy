@@ -78,6 +78,9 @@ def create_tracebacks():
             make_title("MissingLeftBracketError")
             import raise_missing_left_bracket
 
+            make_title("MissingRepeatColonError")
+            import raise_missing_repeat_colon
+
             make_title("MissingRepeatError")
             import raise_missing_repeat
 

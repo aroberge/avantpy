@@ -158,6 +158,14 @@ from .session import state
 from .utils import Token
 
 
+# =================================
+# Note: the strings in this module do not need to be translated.
+# In particular, the exception 'messages' can essentially be taken
+# as comments, since they will be properly processed (and translated)
+# in another module.
+# =================================
+
+
 def get_unique_variable_names(source, repeat_kwd, all_count_names=[]):
     """Returns a list of possible variables names that
        are not found in the original source and have not been used
@@ -291,6 +299,7 @@ class Converter:
         self.prev_col = 0
         self.just_processed_repeat_kwd = False
         self.repeat_n = False
+        self.repeat_line = False
         self.begin_new_line = True
 
     def process_token(self, token):
@@ -304,6 +313,7 @@ class Converter:
             return
 
         self.begin_new_line = token.start_line != self.prev_lineno
+
         self.preserve_repeat_spacing(token)
 
         if token.string == self.repeat_kwd:
@@ -314,7 +324,26 @@ class Converter:
 
         elif self.repeat_n and token.string == ":":
             self.result.append("):")
+            self.repeat_line = False
             self.repeat_n = False
+
+        elif self.begin_new_line and self.repeat_line:
+            raise exceptions.MissingRepeatColonError(
+                "Missing colon on line beginning with repeat",
+                (
+                    {
+                        "repeat_kwd": self.repeat_kwd,
+                        "linenumber": token.start_line,
+                        "source_name": self.source_name,
+                        "source": self.source,
+                        "dialect": self.dialect,
+                    },
+                ),
+            )
+
+        elif self.repeat_line and token.string == ":":
+            self.repeat_line = False
+            self.result.append(":")
 
         elif not self.just_processed_repeat_kwd and token.string in [
             self.forever_kwd,
@@ -421,6 +450,7 @@ class Converter:
                     "source_name": self.source_name,
                     "source": self.source,
                     "dialect": self.dialect,
+                    "repeat_kwd": self.repeat_kwd,
                 },
             ),
         )
@@ -484,6 +514,7 @@ class Converter:
                 ),
             )
         self.just_processed_repeat_kwd = True
+        self.repeat_line = True
 
     def handle_nobreak_error(self, token):
         """Deals with identified misuses of the ``nobreak`` keyword."""

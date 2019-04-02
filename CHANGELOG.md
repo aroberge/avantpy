@@ -5,6 +5,8 @@
 - Printing information about language and dialect used in console
   when they are changed.
 - console prompt now shows the py prefix to decrease potential confusion
+- Removed information about --diff option from documentation, including
+  docstrings.
 
 ## version 0.0.7
 

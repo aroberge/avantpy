@@ -9,13 +9,24 @@
     - a simple tkinter-based IDE has been written as a demo
 
 ## TODO
+- [ ] replace IF/TRY/EXCEPT/ELSE etc in exceptions handling by proper keywords
+      from the dialect.
 
-- [ ] Remove all information about removed --diff option, including example
-      in html file
+- [ ] Require a statement beginning with repeat to be on a single line
+      ending in a colon; this will make it easier to catch missing
+      colon mistakes.
 
 - [ ] Create full example for pyupper dialect.
 - [ ] Add script showing how to convert existing example in pyupper tests
-      directory.
+      directory. This script should probably go in an appendix about
+      tracebacks in various dialects.
+
+- [ ] The tests/tb_dialect.py files should be rewritten so that the imports
+      are made from a common list and the result be added, for each dialect,
+      in a separate page in the documentation.
+
+- [ ] Write a script to prepare a new release. This script should ensure that
+      all the traceback pages are updated.
 
 - [ ] Remove redundant variable "info" in exception_handling.py
 

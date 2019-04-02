@@ -215,6 +215,42 @@ def handle_MissingLeftBracketError(exc, source):
     ).format(**info)
 
 
+def handle_MissingRepeatColonError(exc, source):
+    """Handles situation where a statement beginning with repeat
+       does not end with a colon.
+    """
+    params = exc.args[0]
+    linenumber = params["linenumber"] - 1
+    begin = linenumber - 12
+    end = linenumber + 1
+    marks = [linenumber]
+
+    partial_source = get_partial_source(source, begin, end, marks=marks)
+
+    info = {
+        "filename": params["source_name"],
+        "repeat_kwd": params["repeat_kwd"],
+        "partial_source": partial_source,
+        "linenumber": linenumber,
+        "dialect": params["dialect"],
+    }
+    return _(
+        """
+    AVANTPY EXCEPTION: MissingRepeatColonError
+
+    Error found in file '{filename}' on line {linenumber}.
+
+    Dialect used: {dialect}
+
+{partial_source}
+
+    A statement beginning with the '{repeat_kwd}' keyword must be on a single
+    line ending with a colon (:).
+
+"""
+    ).format(**info)
+
+
 def handle_MissingRepeatError(exc, source):
     """Handles situation where either ``until`` or ``forever`` was
        used without being preceeded by ``repeat``.
@@ -233,6 +269,7 @@ def handle_MissingRepeatError(exc, source):
         "partial_source": partial_source,
         "linenumber": linenumber,
         "dialect": params["dialect"],
+        "repeat_kwd": params["repeat_kwd"],
     }
     return _(
         """
@@ -244,7 +281,7 @@ def handle_MissingRepeatError(exc, source):
 
 {partial_source}
 
-    The AvantPy {keyword} keyword can be used only when preceded by REPEAT.
+    The AvantPy '{keyword}'' keyword can be used only when preceded by '{repeat_kwd}'.
 
 """
     ).format(**info)
@@ -330,7 +367,7 @@ def handle_NobreakFirstError(exc, source):
 
 {partial_source}
 
-    The AvantPy {nobreak_kwd} keyword can be used instead of ELSE
+    The AvantPy '{nobreak_kwd}' keyword can be used instead of ELSE
     (Python: else) only when it begins a new statement in FOR/WHILE loops.
 
 """
@@ -367,7 +404,7 @@ def handle_NobreakSyntaxError(exc, source):
 
 {partial_source}
 
-    The AvantPy {nobreak_kwd} keyword can only be used as a replacement
+    The AvantPy '{nobreak_kwd}' keyword can only be used as a replacement
     of ELSE (Python: else) with a matching FOR or WHILE loop
     (Python: for/while).
 
@@ -404,7 +441,7 @@ def handle_RepeatFirstError(exc, source):
 
 {partial_source}
 
-    The AvantPy {repeat_kwd} keyword can only be used to begin
+    The AvantPy '{repeat_kwd}' keyword can only be used to begin
     a new loop (Python: equivalent to 'for' or 'while' loop).
 
 """
@@ -440,7 +477,7 @@ def handle_TryNobreakError(exc, source):
 
 {partial_source}
 
-    The AvantPy {nobreak_kwd} keyword cannot be used in
+    The AvantPy '{nobreak_kwd}' keyword cannot be used in
     a TRY/EXCEPT/ELSE/FINALLY clause (Python: try/except/else/finally).
 
 """
@@ -491,6 +528,7 @@ dispatch = {
     "NameError": handle_NameError,
     "MismatchedBracketsError": handle_MismatchedBracketsError,
     "MissingLeftBracketError": handle_MissingLeftBracketError,
+    "MissingRepeatColonError": handle_MissingRepeatColonError,
     "MissingRepeatError": handle_MissingRepeatError,
     "NobreakFirstError": handle_NobreakFirstError,
     "NobreakSyntaxError": handle_NobreakSyntaxError,

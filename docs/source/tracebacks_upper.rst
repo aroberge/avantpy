@@ -79,6 +79,28 @@ Example::
     The closing ) does not match anything.
 
 
+MissingRepeatColonError
+-----------------------
+
+Example::
+
+
+    AVANTPY EXCEPTION: MissingRepeatColonError
+
+    Error found in file 'raise_missing_repeat_colon.pyupper' on line 3.
+
+    Dialect used: pyupper
+
+
+           ...
+       2: x = 0
+    -->3: REPEAT UNTIL (x ==
+       4:          1):
+
+    A statement beginning with the 'REPEAT' keyword must be on a single
+    line ending with a colon (:).
+
+
 MissingRepeatError
 ------------------
 
@@ -95,7 +117,7 @@ Example::
     -->3: UNTIL x == 2:
        4:     x += 1
 
-    The AvantPy UNTIL keyword can be used only when preceded by REPEAT.
+    The AvantPy 'UNTIL'' keyword can be used only when preceded by 'REPEAT'.
 
 
 Example 2::
@@ -110,7 +132,7 @@ Example 2::
     -->3: FOREVER:
        4:     x += 1
 
-    The AvantPy FOREVER keyword can be used only when preceded by REPEAT.
+    The AvantPy 'FOREVER'' keyword can be used only when preceded by 'REPEAT'.
 
 
 NameError
@@ -152,7 +174,7 @@ Example::
     -->3: a = 1 if True NOBREAK 3
        4: 
 
-    The AvantPy NOBREAK keyword can be used instead of ELSE
+    The AvantPy 'NOBREAK' keyword can be used instead of ELSE
     (Python: else) only when it begins a new statement in FOR/WHILE loops.
 
 
@@ -172,7 +194,7 @@ Example::
     -->4: NOBREAK: pass
        5: 
 
-    The AvantPy NOBREAK keyword can only be used as a replacement
+    The AvantPy 'NOBREAK' keyword can only be used as a replacement
     of ELSE (Python: else) with a matching FOR or WHILE loop
     (Python: for/while).
 
@@ -193,7 +215,7 @@ Example::
     -->3: a = REPEAT
        4: 
 
-    The AvantPy REPEAT keyword can only be used to begin
+    The AvantPy 'REPEAT' keyword can only be used to begin
     a new loop (Python: equivalent to 'for' or 'while' loop).
 
 
@@ -215,7 +237,7 @@ Example::
        6:         A = 2
     -->7:     NOBREAK:
 
-    The AvantPy NOBREAK keyword cannot be used in
+    The AvantPy 'NOBREAK' keyword cannot be used in
     a TRY/EXCEPT/ELSE/FINALLY clause (Python: try/except/else/finally).
 
 
