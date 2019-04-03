@@ -1,0 +1,189 @@
+"""test_pyXX.pyXX
+
+This file should contain only valid code, with all the possible
+keywords of the pyXX dialect used at least once.
+
+It is either the original test_pyupper.pyupper or has been converted
+from it into another dialect.
+"""
+
+CONSTANT = -1
+
+
+def test_singletons():
+    assert False is False
+    assert True is True
+    assert None is None
+
+
+def test_logical():
+    assert True and True
+    assert True or False
+    assert not False
+
+
+def test_if_elif_else():
+    if True:
+        assert True
+    elif False:
+        pass
+    else:
+        pass
+
+
+def test_while_break_nobreak():
+    x = 0
+    while x < 2:
+        x += 1
+    nobreak:
+        x = -1
+
+    assert x == -1
+
+    while True:
+        x += 1
+        if x == 2:
+            break
+    nobreak:
+        x = -1
+
+    assert x == 2
+
+
+def test_import():
+    import math
+    from math import pi as PI
+    assert PI == math.pi
+
+
+def test_for_in_range_continue():
+    result = []
+    for i in range(4):
+        if i == 2:
+            continue
+        result.append(i)
+    assert result == [0, 1, 3]
+
+
+def test_try_except_else_finally():
+    try:
+        a = b
+    except NameError:
+        b = 1
+    finally:
+        c = 2
+
+    assert b == 1
+    assert c == 2
+
+    try:
+        a = b
+    except NameError:
+        a = 3
+    else:
+        a = c
+
+    assert a == 2
+
+
+def test_del():
+    a = 1
+    assert a == 1
+    del a
+
+    try:
+        b = a
+    except NameError:
+        b = 2
+
+    assert b == 2
+
+
+def test_global_nonlocal():
+    global CONSTANT
+    CONSTANT += 1
+    assert CONSTANT == 0
+    x = 3
+
+    def inner():
+        nonlocal x
+        x += 1
+
+    inner()
+    assert x == 4
+
+    def other():
+        x = 5
+
+    other()
+    assert x == 4
+
+
+def test_lambda():
+    square = function x: x*x
+    assert square(3) == 9
+
+
+def test_raise():
+    try:
+        raise NameError
+    except NameError:
+        pass
+
+
+def test_builtins():
+    assert input
+    assert print
+    assert list(range(3)) == [0, 1, 2]
+    assert exit
+
+
+def test_return():
+    def sq(x):
+       return x*x
+
+    assert sq(5) == 25
+
+
+def test_if_name_eq_main():
+    assert not notimported
+
+
+def test_repeat():
+    x = 0
+    repeat 4:
+        x += 1
+    assert x == 4
+
+    repeat while x != 6:
+        x += 1
+    assert x == 6
+
+    repeat until x == 8:
+        x += 1
+    assert x == 8
+
+    repeat forever:
+        x += 1
+        if x == 10:
+            break
+    assert x == 10
+
+
+def test_with():
+    with open(__file__) as f:
+        lines = f.readlines()
+    assert 'pyXX' in lines[0]
+
+
+def test_yield():
+    def sq_gen():
+        for i in [1, 2, 3]:
+            yield i*i
+
+    result = []
+    my_sq_gen = sq_gen()
+    for j in my_sq_gen:
+        result.append(j)
+
+    assert result == [1, 4, 9]

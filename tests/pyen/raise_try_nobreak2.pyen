@@ -1,0 +1,7 @@
+'''Should raise TryNobreakError'''
+try:
+    pass
+except:
+    pass
+nobreak:
+    pass

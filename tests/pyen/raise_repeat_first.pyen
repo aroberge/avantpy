@@ -1,0 +1,4 @@
+'''Should raise RepeatFirstError'''
+# Catch an early case of using REPEAT not to begin a loop
+a = repeat
+

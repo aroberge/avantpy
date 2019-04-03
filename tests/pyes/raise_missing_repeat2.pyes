@@ -1,0 +1,5 @@
+'''Should raise MissingRepeatError'''
+x = 0
+parasiempre:
+    x += 1
+    interrumpir

@@ -1,0 +1,3 @@
+'''Raises NobreakSyntaxError'''
+def test_nobreak_syntax():
+    nointerrumpir

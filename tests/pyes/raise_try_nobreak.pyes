@@ -1,0 +1,8 @@
+'''Raises TryNobreakError'''
+def test_except_nobreak_():
+    intentar:
+        A = 1
+    excepto:
+        A = 2
+    nointerrumpir:
+        afirmar A = 1

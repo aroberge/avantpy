@@ -1,0 +1,189 @@
+"""test_pyXX.pyXX
+
+This file should contain only valid code, with all the possible
+keywords of the pyXX dialect used at least once.
+
+It is either the original test_pyupper.pyupper or has been converted
+from it into another dialect.
+"""
+
+CONSTANT = -1
+
+
+def test_singletons():
+    afirmar Falso es False
+    afirmar Verdadero es True
+    afirmar Nada es None
+
+
+def test_logical():
+    afirmar Verdadero y Verdadero
+    afirmar Verdadero o Falso
+    afirmar no Falso
+
+
+def test_if_elif_else():
+    si Verdadero:
+        afirmar Verdadero
+    osi Falso:
+        seguir
+    sino:
+        seguir
+
+
+def test_while_break_nobreak():
+    x = 0
+    mientras x < 2:
+        x += 1
+    nointerrumpir:
+        x = -1
+
+    afirmar x == -1
+
+    mientras Verdadero:
+        x += 1
+        si x == 2:
+            interrumpir
+    nointerrumpir:
+        x = -1
+
+    afirmar x == 2
+
+
+def test_import():
+    importar math
+    de math import pi como PI
+    afirmar PI == math.pi
+
+
+def test_for_in_range_continue():
+    result = []
+    para i en intervalo(4):
+        si i == 2:
+            continuar
+        result.append(i)
+    afirmar result == [0, 1, 3]
+
+
+def test_try_except_else_finally():
+    intentar:
+        a = b
+    excepto NameError:
+        b = 1
+    finalmente:
+        c = 2
+
+    afirmar b == 1
+    afirmar c == 2
+
+    intentar:
+        a = b
+    excepto NameError:
+        a = 3
+    sino:
+        a = c
+
+    afirmar a == 2
+
+
+def test_del():
+    a = 1
+    afirmar a == 1
+    eliminar a
+
+    intentar:
+        b = a
+    excepto NameError:
+        b = 2
+
+    afirmar b == 2
+
+
+def test_global_nonlocal():
+    global CONSTANT
+    CONSTANT += 1
+    afirmar CONSTANT == 0
+    x = 3
+
+    def inner():
+        nolocal x
+        x += 1
+
+    inner()
+    afirmar x == 4
+
+    def other():
+        x = 5
+
+    other()
+    afirmar x == 4
+
+
+def test_lambda():
+    square = función x: x*x
+    afirmar square(3) == 9
+
+
+def test_raise():
+    intentar:
+        elevar NameError
+    excepto NameError:
+        seguir
+
+
+def test_builtins():
+    afirmar entrada
+    afirmar imprimir
+    afirmar list(intervalo(3)) == [0, 1, 2]
+    afirmar salir
+
+
+def test_return():
+    def sq(x):
+       retornar x*x
+
+    afirmar sq(5) == 25
+
+
+def test_if_name_eq_main():
+    afirmar no noimportado
+
+
+def test_repeat():
+    x = 0
+    repetir 4:
+        x += 1
+    afirmar x == 4
+
+    repetir mientras x != 6:
+        x += 1
+    afirmar x == 6
+
+    repetir hasta x == 8:
+        x += 1
+    afirmar x == 8
+
+    repetir parasiempre:
+        x += 1
+        si x == 10:
+            interrumpir
+    afirmar x == 10
+
+
+def test_with():
+    con open(__file__) como f:
+        lines = f.readlines()
+    afirmar 'pyXX' en lines[0]
+
+
+def test_yield():
+    def sq_gen():
+        para i en [1, 2, 3]:
+            ceder i*i
+
+    result = []
+    my_sq_gen = sq_gen()
+    para j en my_sq_gen:
+        result.append(j)
+
+    afirmar result == [1, 4, 9]

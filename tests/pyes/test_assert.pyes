@@ -1,0 +1,6 @@
+def test_assert():
+    afirmar Verdadero
+
+si __name__ == '__main__':
+    test_assert()
+    imprimir('Success.')

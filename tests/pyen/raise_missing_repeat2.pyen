@@ -1,0 +1,5 @@
+'''Should raise MissingRepeatError'''
+x = 0
+forever:
+    x += 1
+    break

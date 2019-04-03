@@ -1,0 +1,4 @@
+'''Should raise NobreakSyntaxError'''
+# Need to prevent NOBREAK being replaced by 'else' in this situation.
+a = 1
+nobreak: pass

@@ -1,0 +1,13 @@
+'''Raises UnknownLanguageError'''
+import os
+import sys
+
+
+# Make it possible to find avantpy
+this_dir = os.path.dirname(__file__)
+parent_dir = os.path.abspath(os.path.join(this_dir, ".."))
+sys.path.insert(0, parent_dir)
+
+from avantpy import session
+
+session.state.set_lang('xx')
