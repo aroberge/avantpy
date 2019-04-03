@@ -40,7 +40,7 @@ pyupper = {
     "or": "OR",
     "pass": "PASS",
     "raise": "RAISE",
-    "return": "return",
+    "return": "RETURN",
     "try": "TRY",
     "while": "WHILE",
     "with": "WITH",
@@ -50,7 +50,7 @@ pyupper = {
     "forever": "FOREVER",
     "until": "UNTIL",
     # a few builtins useful for beginners
-    "input": "ASK",
+    "input": "INPUT",
     "print": "PRINT",
     "range": "RANGE",
     "exit": "EXIT",  # useful for console

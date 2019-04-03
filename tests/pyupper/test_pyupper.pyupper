@@ -1,0 +1,189 @@
+"""test_pyXX.pyXX
+
+This file should contain only valid code, with all the possible
+keywords of the pyXX dialect used at least once.
+
+It is either the original test_pyupper.pyupper or has been converted
+from it into another dialect.
+"""
+
+CONSTANT = -1
+
+
+DEF test_singletons():
+    ASSERT FALSE IS False
+    ASSERT TRUE IS True
+    ASSERT NONE IS None
+
+
+DEF test_logical():
+    ASSERT TRUE AND TRUE
+    ASSERT TRUE OR FALSE
+    ASSERT NOT FALSE
+
+
+DEF test_if_elif_else():
+    IF TRUE:
+        ASSERT TRUE
+    ELIF FALSE:
+        PASS
+    ELSE:
+        PASS
+
+
+DEF test_while_break_nobreak():
+    x = 0
+    WHILE x < 2:
+        x += 1
+    NOBREAK:
+        x = -1
+
+    ASSERT x == -1
+
+    WHILE TRUE:
+        x += 1
+        IF x == 2:
+            BREAK
+    NOBREAK:
+        x = -1
+
+    ASSERT x == 2
+
+
+DEF test_import():
+    IMPORT math
+    FROM math import pi AS PI
+    ASSERT PI == math.pi
+
+
+DEF test_for_in_range_continue():
+    result = []
+    FOR i IN RANGE(4):
+        IF i == 2:
+            CONTINUE
+        result.append(i)
+    ASSERT result == [0, 1, 3]
+
+
+DEF test_try_except_else_finally():
+    TRY:
+        a = b
+    EXCEPT NameError:
+        b = 1
+    FINALLY:
+        c = 2
+
+    ASSERT b == 1
+    ASSERT c == 2
+
+    TRY:
+        a = b
+    EXCEPT NameError:
+        a = 3
+    ELSE:
+        a = c
+
+    ASSERT a == 2
+
+
+DEF test_del():
+    a = 1
+    ASSERT a == 1
+    DEL a
+
+    TRY:
+        b = a
+    EXCEPT NameError:
+        b = 2
+
+    ASSERT b == 2
+
+
+DEF test_global_nonlocal():
+    GLOBAL CONSTANT
+    CONSTANT += 1
+    ASSERT CONSTANT == 0
+    x = 3
+
+    def inner():
+        NONLOCAL x
+        x += 1
+
+    inner()
+    ASSERT x == 4
+
+    def other():
+        x = 5
+
+    other()
+    ASSERT x == 4
+
+
+DEF test_lambda():
+    square = FUNCTION x: x*x
+    ASSERT square(3) == 9
+
+
+DEF test_raise():
+    TRY:
+        RAISE NameError
+    EXCEPT NameError:
+        PASS
+
+
+DEF test_builtins():
+    ASSERT INPUT
+    ASSERT PRINT
+    ASSERT list(RANGE(3)) == [0, 1, 2]
+    ASSERT EXIT
+
+
+DEF test_return():
+    DEF sq(x):
+       RETURN x*x
+
+    ASSERT sq(5) == 25
+
+
+DEF test_if_name_eq_main():
+    ASSERT NOT NOTIMPORTED
+
+
+DEF test_repeat():
+    x = 0
+    REPEAT 4:
+        x += 1
+    ASSERT x == 4
+
+    REPEAT WHILE x != 6:
+        x += 1
+    ASSERT x == 6
+
+    REPEAT UNTIL x == 8:
+        x += 1
+    ASSERT x == 8
+
+    REPEAT FOREVER:
+        x += 1
+        IF x == 10:
+            BREAK
+    ASSERT x == 10
+
+
+DEF test_with():
+    WITH open(__file__) AS f:
+        lines = f.readlines()
+    ASSERT 'pyXX' IN lines[0]
+
+
+DEF test_yield():
+    DEF sq_gen():
+        FOR i IN [1, 2, 3]:
+            YIELD i*i
+
+    result = []
+    my_sq_gen = sq_gen()
+    FOR j IN my_sq_gen:
+        result.append(j)
+
+    ASSERT result == [1, 4, 9]
