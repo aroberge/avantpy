@@ -1,6 +1,23 @@
 Special keyword: ``repeat``
 ============================
 
+.. important::
+
+    AvantPy includes a restriction that all statements that begin with
+    ``repeat`` must be on a single physical line ending with a colon that
+    introduces an indented block, with no other colon appearing on that line.
+    There is no technical reason for imposing this single-line limitation;
+    in fact, it does add some small complexity to AvantPy's code.
+    However, by the time conditions on a ``repeat`` statement become long enough
+    to warrant the use of additional lines, it is likely that students are ready
+    to use the appropriate Python construct.
+
+    However, this single-line limitation could be removed based on feedback from
+    instructors. Nonetheless, the requirement that no other colon is allowed
+    on that line would remain: it might not be flagged as an error but
+    could give rise to incorrectly converted code.
+
+
 Repeating a series of instructions is something that is often done when
 running programs.  Block-based programming environments, such as
 `Scratch <https://scratch.mit.edu/>`_,

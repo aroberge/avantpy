@@ -26,7 +26,6 @@ all_imports = {
     "MissingLeftBracketError": "raise_missing_left_bracket",
     "MissingRepeatColonError": "raise_missing_repeat_colon",
     "MissingRepeatError": "raise_missing_repeat",
-    "MissingRepeatError - 2": "raise_missing_repeat2",
     "NameError": "raise_name_error",
     "NobreakFirstError": "raise_nobreak_first",
     "NobreakSyntaxError": "raise_nobreak_syntax",
@@ -37,10 +36,10 @@ all_imports = {
 }
 
 
-def create_tracebacks(target, content):
+def create_tracebacks(target, intro_text):
     with open(target, "w", encoding="utf8") as out:
         with redirect_stderr(out):
-            write(content)
+            write(intro_text)
 
             for title in all_imports:
                 make_title(title)

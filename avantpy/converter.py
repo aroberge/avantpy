@@ -323,25 +323,18 @@ class Converter:
             self.process_after_repeat(token)
 
         elif self.repeat_n and token.string == ":":
+            if self.brackets:
+                self.raise_missing_repeat_colon(token.start_line)
             self.result.append("):")
             self.repeat_line = False
             self.repeat_n = False
 
         elif self.begin_new_line and self.repeat_line:
-            raise exceptions.MissingRepeatColonError(
-                "Missing colon on line beginning with repeat",
-                (
-                    {
-                        "repeat_kwd": self.repeat_kwd,
-                        "linenumber": token.start_line,
-                        "source_name": self.source_name,
-                        "source": self.source,
-                        "dialect": self.dialect,
-                    },
-                ),
-            )
+            self.raise_missing_repeat_colon(token.start_line - 1)
 
         elif self.repeat_line and token.string == ":":
+            if self.brackets:  # Inside a slice or other construct with colon
+                self.raise_missing_repeat_colon(token.start_line)
             self.repeat_line = False
             self.result.append(":")
 
@@ -376,6 +369,23 @@ class Converter:
 
         else:
             self.result.append(token.string)
+
+    def raise_missing_repeat_colon(self, linenumber):
+        """Raised if a repeat statement does not end with a colon on the same
+           line with no other colon appearing on that line.
+        """
+        raise exceptions.MissingRepeatColonError(
+            "Missing colon on line beginning with repeat",
+            (
+                {
+                    "repeat_kwd": self.repeat_kwd,
+                    "linenumber": linenumber,
+                    "source_name": self.source_name,
+                    "source": self.source,
+                    "dialect": self.dialect,
+                },
+            ),
+        )
 
     def do_close_bracket(self, token):
         """Determines if a closing bracket ), ], or }, matches a previously

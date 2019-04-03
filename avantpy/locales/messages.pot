@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-03-31 08:31-0300\n"
+"POT-Creation-Date: 2019-04-03 07:12-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -73,6 +73,23 @@ msgstr ""
 #: exception_handling.py:237
 msgid ""
 "\n"
+"    AVANTPY EXCEPTION: MissingRepeatColonError\n"
+"\n"
+"    Error found in file '{filename}' on line {linenumber}.\n"
+"\n"
+"    Dialect used: {dialect}\n"
+"\n"
+"{partial_source}\n"
+"\n"
+"    A statement beginning with the '{repeat_kwd}' keyword must be on a single\n"
+"    line ending with a colon (:) that indicates the beginning of an indented\n"
+"    block of code, with no other colon appearing on that line.\n"
+"\n"
+msgstr ""
+
+#: exception_handling.py:275
+msgid ""
+"\n"
 "    AVANTPY EXCEPTION: MissingRepeatError\n"
 "\n"
 "    Error found in file '{filename}' on line {linenumber}.\n"
@@ -81,11 +98,11 @@ msgid ""
 "\n"
 "{partial_source}\n"
 "\n"
-"    The AvantPy {keyword} keyword can be used only when preceded by REPEAT.\n"
+"    The AvantPy '{keyword}'' keyword can be used only when preceded by '{repeat_kwd}'.\n"
 "\n"
 msgstr ""
 
-#: exception_handling.py:283
+#: exception_handling.py:321
 msgid ""
 "\n"
 "    PYTHON EXCEPTION: {python_display}\n"
@@ -104,7 +121,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: exception_handling.py:323
+#: exception_handling.py:361
 msgid ""
 "\n"
 "    AVANTPY EXCEPTION: NobreakFirstError\n"
@@ -115,12 +132,12 @@ msgid ""
 "\n"
 "{partial_source}\n"
 "\n"
-"    The AvantPy {nobreak_kwd} keyword can be used instead of ELSE\n"
+"    The AvantPy '{nobreak_kwd}' keyword can be used instead of ELSE\n"
 "    (Python: else) only when it begins a new statement in FOR/WHILE loops.\n"
 "\n"
 msgstr ""
 
-#: exception_handling.py:360
+#: exception_handling.py:398
 msgid ""
 "\n"
 "    AVANTPY EXCEPTION: NobreakSyntaxError\n"
@@ -131,13 +148,13 @@ msgid ""
 "\n"
 "{partial_source}\n"
 "\n"
-"    The AvantPy {nobreak_kwd} keyword can only be used as a replacement\n"
+"    The AvantPy '{nobreak_kwd}' keyword can only be used as a replacement\n"
 "    of ELSE (Python: else) with a matching FOR or WHILE loop\n"
 "    (Python: for/while).\n"
 "\n"
 msgstr ""
 
-#: exception_handling.py:397
+#: exception_handling.py:435
 msgid ""
 "\n"
 "    AVANTPY EXCEPTION: RepeatFirstError\n"
@@ -148,12 +165,12 @@ msgid ""
 "\n"
 "{partial_source}\n"
 "\n"
-"    The AvantPy {repeat_kwd} keyword can only be used to begin\n"
+"    The AvantPy '{repeat_kwd}' keyword can only be used to begin\n"
 "    a new loop (Python: equivalent to 'for' or 'while' loop).\n"
 "\n"
 msgstr ""
 
-#: exception_handling.py:433
+#: exception_handling.py:471
 msgid ""
 "\n"
 "    AVANTPY EXCEPTION: TryNobreakError\n"
@@ -164,12 +181,12 @@ msgid ""
 "\n"
 "{partial_source}\n"
 "\n"
-"    The AvantPy {nobreak_kwd} keyword cannot be used in\n"
+"    The AvantPy '{nobreak_kwd}' keyword cannot be used in\n"
 "    a TRY/EXCEPT/ELSE/FINALLY clause (Python: try/except/else/finally).\n"
 "\n"
 msgstr ""
 
-#: exception_handling.py:457
+#: exception_handling.py:495
 msgid ""
 "\n"
 "    AVANTPY EXCEPTION: UnknownDialectError\n"
@@ -180,7 +197,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: exception_handling.py:477
+#: exception_handling.py:515
 msgid ""
 "\n"
 "    AVANTPY EXCEPTION: UnknownLanguageError\n"

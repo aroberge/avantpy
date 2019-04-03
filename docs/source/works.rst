@@ -2,8 +2,8 @@ How does it work?
 =================
 
 AvantPy uses an `import hook <https://docs.python.org/3/reference/import.html#import-hooks>`_
-to load program files written in a known dialect (``xx``), recognizing them based on their
-extension (``.pyxx``).
+to load program files written in a known dialect (``xx``),
+recognizing them based on their extension (``.pyxx``).
 It uses the information in the definition file (``xx.py``) to translate keywords found
 into that definition file into the corresponding Python keyword or idiom.
 During this process, some errors can be caught and custom exceptions raised.
@@ -116,8 +116,9 @@ support four additional idioms::
     repeat n:                 # for some_var in range(n):
         pass
 
-For this last case, ``n`` could be an expression, possibly
-spanning multiple lines.
+For this last case, ``n`` could be an expression that evaluates
+to an integer. However, the only colon that can appear must be
+the end of statement colon.
 
 When we encounter the equivalent to the "repeat" keyword in
 the selected dialect, we must make sure that it is the first

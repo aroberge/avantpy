@@ -15,15 +15,24 @@
 - [ ] Require a statement beginning with repeat to be on a single line
       ending in a colon; this will make it easier to catch missing
       colon mistakes.
+      [x] do for pyupper
+      [ ] do for pyfr
+      [ ] do for pyen
+      [ ] update poedit
 
 - [ ] Create full example for pyupper dialect.
 - [ ] Add script showing how to convert existing example in pyupper tests
       directory. This script should probably go in an appendix about
       tracebacks in various dialects.
 
-- [ ] The tests/tb_dialect.py files should be rewritten so that the imports
-      are made from a common list and the result be added, for each dialect,
-      in a separate page in the documentation.
+- [ ] new tb_dialect
+  - [x] The tests/tb_dialect.py files should be rewritten so that the imports
+        are made from a common list and the result be added, for each dialect,
+        in a separate page in the documentation.
+  - [ ] revise readme in tests/
+  - [ ] adapt tb_pyfr
+
+
 
 - [ ] Write a script to prepare a new release. This script should ensure that
       all the traceback pages are updated.

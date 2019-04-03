@@ -1,4 +1,4 @@
-def test_if_nobreak2(capsys):
+def test_nobreak_first(capsys):
     from . import raise_nobreak_first
 
     if not hasattr(raise_nobreak_first, "err"):

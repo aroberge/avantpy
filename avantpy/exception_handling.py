@@ -220,7 +220,7 @@ def handle_MissingRepeatColonError(exc, source):
        does not end with a colon.
     """
     params = exc.args[0]
-    linenumber = params["linenumber"] - 1
+    linenumber = params["linenumber"]
     begin = linenumber - 1
     end = linenumber + 1
     marks = [linenumber]
@@ -245,7 +245,8 @@ def handle_MissingRepeatColonError(exc, source):
 {partial_source}
 
     A statement beginning with the '{repeat_kwd}' keyword must be on a single
-    line ending with a colon (:).
+    line ending with a colon (:) that indicates the beginning of an indented
+    block of code, with no other colon appearing on that line.
 
 """
     ).format(**info)

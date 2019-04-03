@@ -1,0 +1,7 @@
+'''Should raise MissingRepeatColonError'''
+x = 0
+répéter jusquà (x ==
+         1):
+    x += 1
+
+
