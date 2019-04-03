@@ -270,6 +270,42 @@
     <span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="handle_MissingRepeatColonError"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.handle_MissingRepeatColonError">[docs]</a><span class="k">def</span> <span class="nf">handle_MissingRepeatColonError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Handles situation where a statement beginning with repeat</span>
+<span class="sd">       does not end with a colon.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">linenumber</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">begin</span> <span class="o">=</span> <span class="n">linenumber</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">linenumber</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">marks</span> <span class="o">=</span> <span class="p">[</span><span class="n">linenumber</span><span class="p">]</span>
+
+    <span class="n">partial_source</span> <span class="o">=</span> <span class="n">get_partial_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">marks</span><span class="o">=</span><span class="n">marks</span><span class="p">)</span>
+
+    <span class="n">info</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;source_name&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;repeat_kwd&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;repeat_kwd&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;partial_source&quot;</span><span class="p">:</span> <span class="n">partial_source</span><span class="p">,</span>
+        <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">linenumber</span><span class="p">,</span>
+        <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;dialect&quot;</span><span class="p">],</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">_</span><span class="p">(</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    AVANTPY EXCEPTION: MissingRepeatColonError</span>
+
+<span class="sd">    Error found in file &#39;{filename}&#39; on line {linenumber}.</span>
+
+<span class="sd">    Dialect used: {dialect}</span>
+
+<span class="sd">{partial_source}</span>
+
+<span class="sd">    A statement beginning with the &#39;{repeat_kwd}&#39; keyword must be on a single</span>
+<span class="sd">    line ending with a colon (:).</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="handle_MissingRepeatError"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.handle_MissingRepeatError">[docs]</a><span class="k">def</span> <span class="nf">handle_MissingRepeatError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Handles situation where either ``until`` or ``forever`` was</span>
 <span class="sd">       used without being preceeded by ``repeat``.</span>
@@ -288,6 +324,7 @@
         <span class="s2">&quot;partial_source&quot;</span><span class="p">:</span> <span class="n">partial_source</span><span class="p">,</span>
         <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">linenumber</span><span class="p">,</span>
         <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;dialect&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;repeat_kwd&quot;</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;repeat_kwd&quot;</span><span class="p">],</span>
     <span class="p">}</span>
     <span class="k">return</span> <span class="n">_</span><span class="p">(</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -299,7 +336,7 @@
 
 <span class="sd">{partial_source}</span>
 
-<span class="sd">    The AvantPy {keyword} keyword can be used only when preceded by REPEAT.</span>
+<span class="sd">    The AvantPy &#39;{keyword}&#39;&#39; keyword can be used only when preceded by &#39;{repeat_kwd}&#39;.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
     <span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">info</span><span class="p">)</span></div>
@@ -385,7 +422,7 @@
 
 <span class="sd">{partial_source}</span>
 
-<span class="sd">    The AvantPy {nobreak_kwd} keyword can be used instead of ELSE</span>
+<span class="sd">    The AvantPy &#39;{nobreak_kwd}&#39; keyword can be used instead of ELSE</span>
 <span class="sd">    (Python: else) only when it begins a new statement in FOR/WHILE loops.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
@@ -422,7 +459,7 @@
 
 <span class="sd">{partial_source}</span>
 
-<span class="sd">    The AvantPy {nobreak_kwd} keyword can only be used as a replacement</span>
+<span class="sd">    The AvantPy &#39;{nobreak_kwd}&#39; keyword can only be used as a replacement</span>
 <span class="sd">    of ELSE (Python: else) with a matching FOR or WHILE loop</span>
 <span class="sd">    (Python: for/while).</span>
 
@@ -459,7 +496,7 @@
 
 <span class="sd">{partial_source}</span>
 
-<span class="sd">    The AvantPy {repeat_kwd} keyword can only be used to begin</span>
+<span class="sd">    The AvantPy &#39;{repeat_kwd}&#39; keyword can only be used to begin</span>
 <span class="sd">    a new loop (Python: equivalent to &#39;for&#39; or &#39;while&#39; loop).</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
@@ -495,7 +532,7 @@
 
 <span class="sd">{partial_source}</span>
 
-<span class="sd">    The AvantPy {nobreak_kwd} keyword cannot be used in</span>
+<span class="sd">    The AvantPy &#39;{nobreak_kwd}&#39; keyword cannot be used in</span>
 <span class="sd">    a TRY/EXCEPT/ELSE/FINALLY clause (Python: try/except/else/finally).</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
@@ -546,6 +583,7 @@
     <span class="s2">&quot;NameError&quot;</span><span class="p">:</span> <span class="n">handle_NameError</span><span class="p">,</span>
     <span class="s2">&quot;MismatchedBracketsError&quot;</span><span class="p">:</span> <span class="n">handle_MismatchedBracketsError</span><span class="p">,</span>
     <span class="s2">&quot;MissingLeftBracketError&quot;</span><span class="p">:</span> <span class="n">handle_MissingLeftBracketError</span><span class="p">,</span>
+    <span class="s2">&quot;MissingRepeatColonError&quot;</span><span class="p">:</span> <span class="n">handle_MissingRepeatColonError</span><span class="p">,</span>
     <span class="s2">&quot;MissingRepeatError&quot;</span><span class="p">:</span> <span class="n">handle_MissingRepeatError</span><span class="p">,</span>
     <span class="s2">&quot;NobreakFirstError&quot;</span><span class="p">:</span> <span class="n">handle_NobreakFirstError</span><span class="p">,</span>
     <span class="s2">&quot;NobreakSyntaxError&quot;</span><span class="p">:</span> <span class="n">handle_NobreakSyntaxError</span><span class="p">,</span>

@@ -221,7 +221,7 @@ def handle_MissingRepeatColonError(exc, source):
     """
     params = exc.args[0]
     linenumber = params["linenumber"] - 1
-    begin = linenumber - 12
+    begin = linenumber - 1
     end = linenumber + 1
     marks = [linenumber]
 

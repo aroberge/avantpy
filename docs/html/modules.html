@@ -532,6 +532,13 @@ is closed without a corresponding open bracket.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="avantpy.exception_handling.handle_MissingRepeatColonError">
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_MissingRepeatColonError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_MissingRepeatColonError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_MissingRepeatColonError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles situation where a statement beginning with repeat
+does not end with a colon.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="avantpy.exception_handling.handle_MissingRepeatError">
 <code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_MissingRepeatError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_MissingRepeatError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_MissingRepeatError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles situation where either <code class="docutils literal notranslate"><span class="pre">until</span></code> or <code class="docutils literal notranslate"><span class="pre">forever</span></code> was
@@ -646,6 +653,12 @@ found previously.</p>
 </dd></dl>
 
 <dl class="exception">
+<dt id="avantpy.exceptions.MissingRepeatColonError">
+<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">MissingRepeatColonError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#MissingRepeatColonError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.MissingRepeatColonError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raised if a line beginning with <code class="docutils literal notranslate"><span class="pre">repeat</span></code> does not end with a colon.</p>
+</dd></dl>
+
+<dl class="exception">
 <dt id="avantpy.exceptions.MissingRepeatError">
 <em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">MissingRepeatError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#MissingRepeatError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.MissingRepeatError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raised if <code class="docutils literal notranslate"><span class="pre">until</span></code> or <code class="docutils literal notranslate"><span class="pre">forever</span></code> is used without being preceeded by
@@ -685,13 +698,6 @@ or curly bracket ‘{‘, is never closed by a corresponding bracket.</p>
 <dt id="avantpy.exceptions.TryNobreakError">
 <em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">TryNobreakError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#TryNobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.TryNobreakError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raised if <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> is used instead of <code class="docutils literal notranslate"><span class="pre">else</span></code> in <code class="docutils literal notranslate"><span class="pre">try/except</span></code> statement</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="avantpy.exceptions.UnexpectedError">
-<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">UnexpectedError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#UnexpectedError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.UnexpectedError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Raised when some unexpected condition occurs which should
-be cavered by a specific excption.</p>
 </dd></dl>
 
 <dl class="exception">

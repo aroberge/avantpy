@@ -71,38 +71,6 @@
     <span class="k">pass</span></div>
 
 
-<div class="viewcode-block" id="TryNobreakError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.TryNobreakError">[docs]</a><span class="k">class</span> <span class="nc">TryNobreakError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Raised if ``nobreak`` is used instead of ``else`` in ``try/except`` statement&quot;&quot;&quot;</span>
-
-    <span class="k">pass</span></div>
-
-
-<div class="viewcode-block" id="NobreakFirstError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.NobreakFirstError">[docs]</a><span class="k">class</span> <span class="nc">NobreakFirstError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Raised if ``nobreak`` is used somewhere other than at the beginning of a line.&quot;&quot;&quot;</span>
-
-    <span class="k">pass</span></div>
-
-
-<div class="viewcode-block" id="NobreakSyntaxError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.NobreakSyntaxError">[docs]</a><span class="k">class</span> <span class="nc">NobreakSyntaxError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Raised if ``nobreak`` is without a matching block.&quot;&quot;&quot;</span>
-
-    <span class="k">pass</span></div>
-
-
-<div class="viewcode-block" id="RepeatFirstError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.RepeatFirstError">[docs]</a><span class="k">class</span> <span class="nc">RepeatFirstError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Raised if ``repeat`` is used somewhere other than at the beginning of a line.&quot;&quot;&quot;</span>
-
-    <span class="k">pass</span></div>
-
-
-<div class="viewcode-block" id="MissingRepeatError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.MissingRepeatError">[docs]</a><span class="k">class</span> <span class="nc">MissingRepeatError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Raised if ``until`` or ``forever`` is used without being preceeded by</span>
-<span class="sd">       ``repeat``.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">pass</span></div>
-
-
 <div class="viewcode-block" id="MismatchedBracketsError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.MismatchedBracketsError">[docs]</a><span class="k">class</span> <span class="nc">MismatchedBracketsError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Raised if a left parenthesis &#39;(&#39;, or square bracket &#39;[&#39;</span>
 <span class="sd">       or curly bracket &#39;{&#39;, is closed by a right &#39;bracket&#39; of a different type.</span>
@@ -128,6 +96,21 @@
     <span class="k">pass</span></div>
 
 
+<div class="viewcode-block" id="MissingRepeatError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.MissingRepeatError">[docs]</a><span class="k">class</span> <span class="nc">MissingRepeatError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raised if ``until`` or ``forever`` is used without being preceeded by</span>
+<span class="sd">       ``repeat``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="MissingRepeatColonError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.MissingRepeatColonError">[docs]</a><span class="k">class</span> <span class="nc">MissingRepeatColonError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raised if a line beginning with ``repeat`` does not end with a colon.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">pass</span></div>
+
+
 <div class="viewcode-block" id="MissingRightBracketError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.MissingRightBracketError">[docs]</a><span class="k">class</span> <span class="nc">MissingRightBracketError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Raised if a left parenthesis &#39;(&#39;, or square bracket &#39;[&#39;</span>
 <span class="sd">       or curly bracket &#39;{&#39;, is never closed by a corresponding bracket.</span>
@@ -140,6 +123,30 @@
     <span class="k">pass</span></div>
 
 
+<div class="viewcode-block" id="NobreakFirstError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.NobreakFirstError">[docs]</a><span class="k">class</span> <span class="nc">NobreakFirstError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raised if ``nobreak`` is used somewhere other than at the beginning of a line.&quot;&quot;&quot;</span>
+
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="NobreakSyntaxError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.NobreakSyntaxError">[docs]</a><span class="k">class</span> <span class="nc">NobreakSyntaxError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raised if ``nobreak`` is without a matching block.&quot;&quot;&quot;</span>
+
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="RepeatFirstError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.RepeatFirstError">[docs]</a><span class="k">class</span> <span class="nc">RepeatFirstError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raised if ``repeat`` is used somewhere other than at the beginning of a line.&quot;&quot;&quot;</span>
+
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="TryNobreakError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.TryNobreakError">[docs]</a><span class="k">class</span> <span class="nc">TryNobreakError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raised if ``nobreak`` is used instead of ``else`` in ``try/except`` statement&quot;&quot;&quot;</span>
+
+    <span class="k">pass</span></div>
+
+
 <div class="viewcode-block" id="UnknownDialectError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.UnknownDialectError">[docs]</a><span class="k">class</span> <span class="nc">UnknownDialectError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Raised when attempting to set ``dialect`` to unsupported value.&quot;&quot;&quot;</span>
 
@@ -148,13 +155,6 @@
 
 <div class="viewcode-block" id="UnknownLanguageError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.UnknownLanguageError">[docs]</a><span class="k">class</span> <span class="nc">UnknownLanguageError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Raised when attempting to set ``lang`` to unsupported value.&quot;&quot;&quot;</span>
-
-    <span class="k">pass</span></div>
-
-
-<div class="viewcode-block" id="UnexpectedError"><a class="viewcode-back" href="../../modules.html#avantpy.exceptions.UnexpectedError">[docs]</a><span class="k">class</span> <span class="nc">UnexpectedError</span><span class="p">(</span><span class="n">AvantPyException</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Raised when some unexpected condition occurs which should</span>
-<span class="sd">       be cavered by a specific excption.&quot;&quot;&quot;</span>
 
     <span class="k">pass</span></div>
 </pre></div>

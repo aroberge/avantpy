@@ -213,6 +213,14 @@
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="n">Token</span>
 
 
+<span class="c1"># =================================</span>
+<span class="c1"># Note: the strings in this module do not need to be translated.</span>
+<span class="c1"># In particular, the exception &#39;messages&#39; can essentially be taken</span>
+<span class="c1"># as comments, since they will be properly processed (and translated)</span>
+<span class="c1"># in another module.</span>
+<span class="c1"># =================================</span>
+
+
 <div class="viewcode-block" id="get_unique_variable_names"><a class="viewcode-back" href="../../modules.html#avantpy.converter.get_unique_variable_names">[docs]</a><span class="k">def</span> <span class="nf">get_unique_variable_names</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">repeat_kwd</span><span class="p">,</span> <span class="n">all_count_names</span><span class="o">=</span><span class="p">[]):</span>
     <span class="sd">&quot;&quot;&quot;Returns a list of possible variables names that</span>
 <span class="sd">       are not found in the original source and have not been used</span>
@@ -346,6 +354,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">prev_col</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">just_processed_repeat_kwd</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">repeat_n</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">repeat_line</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">begin_new_line</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="Converter.process_token"><a class="viewcode-back" href="../../modules.html#avantpy.converter.Converter.process_token">[docs]</a>    <span class="k">def</span> <span class="nf">process_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
@@ -359,6 +368,7 @@
             <span class="k">return</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">begin_new_line</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">start_line</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prev_lineno</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">preserve_repeat_spacing</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">repeat_kwd</span><span class="p">:</span>
@@ -369,7 +379,26 @@
 
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">repeat_n</span> <span class="ow">and</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="s2">&quot;:&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;):&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">repeat_line</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">repeat_n</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">begin_new_line</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">repeat_line</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">MissingRepeatColonError</span><span class="p">(</span>
+                <span class="s2">&quot;Missing colon on line beginning with repeat&quot;</span><span class="p">,</span>
+                <span class="p">(</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;repeat_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">repeat_kwd</span><span class="p">,</span>
+                        <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">start_line</span><span class="p">,</span>
+                        <span class="s2">&quot;source_name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_name</span><span class="p">,</span>
+                        <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
+                        <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">,</span>
+                    <span class="p">},</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">repeat_line</span> <span class="ow">and</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="s2">&quot;:&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">repeat_line</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
 
         <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">just_processed_repeat_kwd</span> <span class="ow">and</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="ow">in</span> <span class="p">[</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">forever_kwd</span><span class="p">,</span>
@@ -476,6 +505,7 @@
                     <span class="s2">&quot;source_name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_name</span><span class="p">,</span>
                     <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
                     <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">,</span>
+                    <span class="s2">&quot;repeat_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">repeat_kwd</span><span class="p">,</span>
                 <span class="p">},</span>
             <span class="p">),</span>
         <span class="p">)</span></div>
@@ -538,7 +568,8 @@
                     <span class="p">},</span>
                 <span class="p">),</span>
             <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">just_processed_repeat_kwd</span> <span class="o">=</span> <span class="kc">True</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">just_processed_repeat_kwd</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">repeat_line</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="Converter.handle_nobreak_error"><a class="viewcode-back" href="../../modules.html#avantpy.converter.Converter.handle_nobreak_error">[docs]</a>    <span class="k">def</span> <span class="nf">handle_nobreak_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Deals with identified misuses of the ``nobreak`` keyword.&quot;&quot;&quot;</span>

@@ -9,7 +9,8 @@ Notes on translations - using gettext
     that was important for my project.
 
     I wrote these notes mostly for myself, but they may be useful for
-    you as well.
+    you as well, perhaps even more so if you read a "standard" tutorial
+    on using gettext first.
 
 
 What is gettext?
@@ -83,12 +84,12 @@ It is very likely not on the normal path where it can be found by Python.
 If you don't know where your python files are located, you can use
 Python's REPL and do the following::
 
-    >>> import pydoc
-    >>> print(pydoc.__file__)
-    C:\Users\andre\AppData\Local\Programs\Python\Python37\lib\pydoc.py
+    >>> import sys
+    >>> print(sys.prefix)
+    C:\Users\andre\AppData\Local\Programs\Python\Python37
 
 You can then navigate to the directory containing the Python version
-you are using. Instead of the ``lib`` subdirectory, you will almost certainly
+you are using and will almost certainly
 find ``pygettext.py`` under the ``tools\i18n`` subdirectory.
 
 ``pygettext`` will extract all the strings surronded by ``_( )`` in the
@@ -122,15 +123,16 @@ In principle, template files can be edited with any standard text editor
 to create "portable object" (``.po``) files from a template file.
 However, this is more easily done using
 `Poedit <https://poedit.net/>`_ which is a free program especially designed
-for this task.
+for this task. There is a paid version but it is really not required for
+most tasks.
 
-With Poedit, you have the choice of either creating a new translation
-from a ``.pot`` file, or from a ``.po`` file. Open the relevant file,
+With Poedit, you have the choice of **creating** a new translation
+either from a ``.pot`` file, or from a ``.po`` file. Open the relevant file,
 choose a language, and start translating the various strings.
 
-If you are updating an existing translation, open the ``.po`` file
+If you are **updating** an existing translation, open the ``.po`` file
 and use Poedit's "Catalog" menu (fourth at the top of the menu
-bar) to first update the source (``messages.pot``) from which the
+bar) to first update from the source (``messages.pot``) from which the
 ``.po`` file is derived.
 
 Poedit gives the choice to translate for specific regions (e.g. fr_CA for
@@ -139,7 +141,7 @@ two-letter code (fr) as it is assumed to be the case in various places.
 
 .. warning::
 
-    If, for a given language, you absolutely need different language
+    If, for a given language, you **absolutely** need different language
     translations, specific to a region, please file an issue
     first so that this can be discussed and the impact on the rest of
     the code can be properly evaluated.
@@ -152,7 +154,7 @@ When it comes time to save the ``.po`` file, use a similar structure
 as that shown above and save
 it in the ``LC_MESSAGES`` directory of the appropriate language.
 Note that Poedit will automatically save another file with
-a ``.mo`` extension; this is a "machine object" file that will actually
+a ``.mo`` extension; this is a "machine object" (binary) file that will actually
 be used by your program.
 
 In addition to strings to be translated, ``.po`` files contain some
@@ -164,7 +166,7 @@ have to edit the created file by hand.
 
 .. warning::
 
-    Do not contribute translations to AvantPy where you attribute the
+    Please, do not contribute translations to AvantPy where you attribute the
     copyright to yourself. Either do not include any copyright information
     (which is what I have done) or attribute it to the AvantPy project.
 
@@ -180,7 +182,7 @@ is done using the ``set_lang`` method; the relevant parts are as follows::
 
     def set_lang(self, lang):
         gettext_lang = gettext.translation(
-            "messages",  # 1
+            lang,  # 1
             localedir=os.path.normpath(
                 os.path.join(os.path.dirname(__file__), "locales")  # 2
             ),
@@ -191,7 +193,7 @@ is done using the ``set_lang`` method; the relevant parts are as follows::
 
 Here is an explanation for the numbered comments above:
 
-    1. Indicates that translations will be found in files named "messages.mo"
+    1. Indicates that translations will be found in files named ``lang + ".mo"``
 
     2. "Foolproof" way of locating the translation directory
 
@@ -200,7 +202,7 @@ Here is an explanation for the numbered comments above:
        By using ``fallback=True``, the untranslated string (as it exists in
        the source file) is used instead.  By using at least some UPPERCASE
        words, the messages is still readable (in English) while giving us
-       a clue that a translation is missing.
+       a clue that a translation is missing (from the English version.)
 
     4. This adds the function named ``_`` to the builtins. So, it will be known
        to any module that imports ``session.py``.  ``install`` takes an

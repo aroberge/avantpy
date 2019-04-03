@@ -94,7 +94,8 @@ that, no matter what individual explanation I read, it was either
 incomplete, too specific, or otherwise glossing over some minor point
 that was important for my project.</p>
 <p class="last">I wrote these notes mostly for myself, but they may be useful for
-you as well.</p>
+you as well, perhaps even more so if you read a “standard” tutorial
+on using gettext first.</p>
 </div>
 <div class="section" id="what-is-gettext">
 <h2>What is gettext?<a class="headerlink" href="#what-is-gettext" title="Permalink to this headline">¶</a></h2>
@@ -159,13 +160,13 @@ I use <code class="docutils literal notranslate"><span class="pre">pygettext.py<
 It is very likely not on the normal path where it can be found by Python.
 If you don’t know where your python files are located, you can use
 Python’s REPL and do the following:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pydoc</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">pydoc</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span>
-<span class="go">C:\Users\andre\AppData\Local\Programs\Python\Python37\lib\pydoc.py</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">prefix</span><span class="p">)</span>
+<span class="go">C:\Users\andre\AppData\Local\Programs\Python\Python37</span>
 </pre></div>
 </div>
 <p>You can then navigate to the directory containing the Python version
-you are using. Instead of the <code class="docutils literal notranslate"><span class="pre">lib</span></code> subdirectory, you will almost certainly
+you are using and will almost certainly
 find <code class="docutils literal notranslate"><span class="pre">pygettext.py</span></code> under the <code class="docutils literal notranslate"><span class="pre">tools\i18n</span></code> subdirectory.</p>
 <p><code class="docutils literal notranslate"><span class="pre">pygettext</span></code> will extract all the strings surronded by <code class="docutils literal notranslate"><span class="pre">_(</span> <span class="pre">)</span></code> in the
 input file you specify and create a “template” file (identified by a <code class="docutils literal notranslate"><span class="pre">.pot</span></code>
@@ -197,20 +198,21 @@ sections.</p>
 to create “portable object” (<code class="docutils literal notranslate"><span class="pre">.po</span></code>) files from a template file.
 However, this is more easily done using
 <a class="reference external" href="https://poedit.net/">Poedit</a> which is a free program especially designed
-for this task.</p>
-<p>With Poedit, you have the choice of either creating a new translation
-from a <code class="docutils literal notranslate"><span class="pre">.pot</span></code> file, or from a <code class="docutils literal notranslate"><span class="pre">.po</span></code> file. Open the relevant file,
+for this task. There is a paid version but it is really not required for
+most tasks.</p>
+<p>With Poedit, you have the choice of <strong>creating</strong> a new translation
+either from a <code class="docutils literal notranslate"><span class="pre">.pot</span></code> file, or from a <code class="docutils literal notranslate"><span class="pre">.po</span></code> file. Open the relevant file,
 choose a language, and start translating the various strings.</p>
-<p>If you are updating an existing translation, open the <code class="docutils literal notranslate"><span class="pre">.po</span></code> file
+<p>If you are <strong>updating</strong> an existing translation, open the <code class="docutils literal notranslate"><span class="pre">.po</span></code> file
 and use Poedit’s “Catalog” menu (fourth at the top of the menu
-bar) to first update the source (<code class="docutils literal notranslate"><span class="pre">messages.pot</span></code>) from which the
+bar) to first update from the source (<code class="docutils literal notranslate"><span class="pre">messages.pot</span></code>) from which the
 <code class="docutils literal notranslate"><span class="pre">.po</span></code> file is derived.</p>
 <p>Poedit gives the choice to translate for specific regions (e.g. fr_CA for
 French used in Canada). For this project, I prefer to choose a generic
 two-letter code (fr) as it is assumed to be the case in various places.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p>If, for a given language, you absolutely need different language
+<p>If, for a given language, you <strong>absolutely</strong> need different language
 translations, specific to a region, please file an issue
 first so that this can be discussed and the impact on the rest of
 the code can be properly evaluated.</p>
@@ -222,7 +224,7 @@ absolutely perfect.</p>
 as that shown above and save
 it in the <code class="docutils literal notranslate"><span class="pre">LC_MESSAGES</span></code> directory of the appropriate language.
 Note that Poedit will automatically save another file with
-a <code class="docutils literal notranslate"><span class="pre">.mo</span></code> extension; this is a “machine object” file that will actually
+a <code class="docutils literal notranslate"><span class="pre">.mo</span></code> extension; this is a “machine object” (binary) file that will actually
 be used by your program.</p>
 <p>In addition to strings to be translated, <code class="docutils literal notranslate"><span class="pre">.po</span></code> files contain some
 information about who translated the file and some copyright information.
@@ -232,7 +234,7 @@ and email address) which will be automatically used, so that you don’t
 have to edit the created file by hand.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">Do not contribute translations to AvantPy where you attribute the
+<p class="last">Please, do not contribute translations to AvantPy where you attribute the
 copyright to yourself. Either do not include any copyright information
 (which is what I have done) or attribute it to the AvantPy project.</p>
 </div>
@@ -247,7 +249,7 @@ At the top of <code class="docutils literal notranslate"><span class="pre">sessi
 is done using the <code class="docutils literal notranslate"><span class="pre">set_lang</span></code> method; the relevant parts are as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">set_lang</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lang</span><span class="p">):</span>
     <span class="n">gettext_lang</span> <span class="o">=</span> <span class="n">gettext</span><span class="o">.</span><span class="n">translation</span><span class="p">(</span>
-        <span class="s2">&quot;messages&quot;</span><span class="p">,</span>  <span class="c1"># 1</span>
+        <span class="n">lang</span><span class="p">,</span>  <span class="c1"># 1</span>
         <span class="n">localedir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span>
             <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;locales&quot;</span><span class="p">)</span>  <span class="c1"># 2</span>
         <span class="p">),</span>
@@ -260,14 +262,14 @@ is done using the <code class="docutils literal notranslate"><span class="pre">s
 <p>Here is an explanation for the numbered comments above:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Indicates that translations will be found in files named “messages.mo”</li>
+<li>Indicates that translations will be found in files named <code class="docutils literal notranslate"><span class="pre">lang</span> <span class="pre">+</span> <span class="pre">&quot;.mo&quot;</span></code></li>
 <li>“Foolproof” way of locating the translation directory</li>
 <li>By default, fallback is <code class="docutils literal notranslate"><span class="pre">False</span></code>. If the default is used and a request
 is made to use a non-existing translation, an exception is raised.
 By using <code class="docutils literal notranslate"><span class="pre">fallback=True</span></code>, the untranslated string (as it exists in
 the source file) is used instead.  By using at least some UPPERCASE
 words, the messages is still readable (in English) while giving us
-a clue that a translation is missing.</li>
+a clue that a translation is missing (from the English version.)</li>
 <li>This adds the function named <code class="docutils literal notranslate"><span class="pre">_</span></code> to the builtins. So, it will be known
 to any module that imports <code class="docutils literal notranslate"><span class="pre">session.py</span></code>.  <code class="docutils literal notranslate"><span class="pre">install</span></code> takes an
 optional argument which makes it possible to use different behaviour.
