@@ -9,13 +9,9 @@
     - a simple tkinter-based IDE has been written as a demo
 
 ## TODO
-- [ ] replace IF/TRY/EXCEPT/ELSE etc in exceptions handling by proper keywords
-      from the dialect.
 
 - [ ] Write a script to prepare a new release. This script should ensure that
       all the traceback pages are updated.
-
-- [ ] Remove redundant variable "info" in exception_handling.py
 
 - [ ] Add explanation about unusual spacing of translation files.
 
