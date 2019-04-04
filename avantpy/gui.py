@@ -29,7 +29,11 @@ class EditorWidget(tk.Frame):
         self.text_area = self.init_text_area()
         self.set_horizontal_scroll()
         self.set_vertical_scroll()
+        self.linenumbers = TextLineNumbers(self.frame, width=30)
+        self.linenumbers.attach(self.text_area)
+        self.linenumbers.pack(side="left", fill="y")
         self.text_area.pack(side="left", fill="both", expand=True)
+        self.text_area.bind("<Key>", self.colorize)
         self.frame.pack(fill="both", expand=True)
 
     def init_text_area(self):
@@ -45,7 +49,7 @@ class EditorWidget(tk.Frame):
         text_area.tag_config("Python", font="Monaco 12 bold", foreground="forest green")
         text_area.tag_config("source", font="Monaco 12 bold", foreground="blue")
         text_area.tag_config(
-            "converted", font="Monaco 14 bold", foreground="dark violet"
+            "converted", font="Monaco 12 bold", foreground="dark violet"
         )
         return text_area
 
@@ -68,16 +72,17 @@ class EditorWidget(tk.Frame):
         """Inserts the text in the editor, replacing any previously existing
            content.
         """
-        self.text_area.delete(1.0, tk.END)
-        self.text_area.insert(1.0, txt)
+        self.text_area.delete("1.0", tk.END)
+        self.text_area.insert("1.0", txt)
         self.parent.update_idletasks()
         self.colorize()
 
     def get_text(self):
         """Gets the current content and returns it as a string"""
-        return self.text_area.get("1.0", tk.END)
+        # For some reason, an extra "\n" is added, which we need to remove.
+        return self.text_area.get("1.0", tk.END)[:-1]
 
-    def colorize(self):
+    def colorize(self, event=None):
         """Colorizes the Python keywords and a few builtins, as well as the
            corresponding version in other dialects.
         """
@@ -109,6 +114,31 @@ class EditorWidget(tk.Frame):
                 f.write(data)
 
 
+class TextLineNumbers(tk.Canvas):
+    def __init__(self, *args, **kwargs):
+        tk.Canvas.__init__(self, *args, **kwargs)
+        self.textwidget = None
+
+    def attach(self, text_widget):
+        self.textwidget = text_widget
+        self.redraw()
+
+    def redraw(self, *args):
+        """redraw line numbers"""
+        self.delete("all")
+
+        i = self.textwidget.index("@0,0")
+        while True:
+            dline = self.textwidget.dlineinfo(i)
+            if dline is None:
+                break
+            y = dline[1]
+            linenum = str(i).split(".")[0]
+            self.create_text(2, y, anchor="nw", text=linenum, font="Monaco 12")
+            i = self.textwidget.index("%s+1line" % i)
+        self.after(30, self.redraw)
+
+
 class App(tk.Frame):
     def __init__(self, master=None):
         tk.Frame.__init__(self, master)
@@ -125,24 +155,27 @@ class App(tk.Frame):
     def add_ui(self):
         """Adds UI elements to the main window"""
 
-        for r in range(2):
+        for r in range(3):
             self.master.rowconfigure(r, weight=1, minsize=20)
         for c in [1, 5]:
             self.master.columnconfigure(c, weight=1, minsize=40)
 
-        self.source_editor = EditorWidget(self.master, self)
-        self.source_editor.grid(row=0, column=0, columnspan=3, sticky="news")
-        self.converted_editor = EditorWidget(self.master, self)
-        self.converted_editor.grid(row=0, column=3, columnspan=4, sticky="news")
+        tk.Label(self.master, text="Source").grid(row=0, column=1)
+        tk.Label(self.master, text="Converted").grid(row=0, column=4)
 
-        tk.Button(self.master, text="Open source", command=self.get_source).grid(
-            row=1, column=0, sticky="w"
+        self.source_editor = EditorWidget(self.master, self)
+        self.source_editor.grid(row=1, column=0, columnspan=3, sticky="news")
+        self.converted_editor = EditorWidget(self.master, self)
+        self.converted_editor.grid(row=1, column=3, columnspan=4, sticky="news")
+
+        tk.Button(self.master, text="Open", command=self.get_source).grid(
+            row=2, column=0, sticky="w"
         )
-        tk.Button(
-            self.master, text="Save source", command=self.source_editor.save_file
-        ).grid(row=1, column=1, sticky="w")
+        tk.Button(self.master, text="Save", command=self.source_editor.save_file).grid(
+            row=2, column=1, sticky="w"
+        )
         tk.Button(self.master, text="Convert source", command=self.convert_source).grid(
-            row=1, column=3, sticky="w"
+            row=2, column=3, sticky="w"
         )
         # if the following is assigned a local value, it will be garbage collected
         # and the combobox will show nothing initially.
@@ -150,13 +183,13 @@ class App(tk.Frame):
         self.dialects = ttk.Combobox(
             self.master, textvariable=self._choice, values=self.all_dialects
         )
-        self.dialects.grid(row=1, column=4, sticky="w")
+        self.dialects.grid(row=2, column=4, sticky="w")
         self.dialects.current(0)
         self.dialects.bind("<<ComboboxSelected>>", self.get_conversion_dialect)
         self.conversion_dialect = self.all_dialects[0]
         tk.Button(
-            self.master, text="Save converted", command=self.converted_editor.save_file
-        ).grid(row=1, column=5, sticky="w")
+            self.master, text="Save", command=self.converted_editor.save_file
+        ).grid(row=2, column=5, sticky="w")
 
     def get_conversion_dialect(self, event):
         """Gets the conversion dialect selected from the ComboBox."""
