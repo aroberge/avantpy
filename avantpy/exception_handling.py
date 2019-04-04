@@ -112,20 +112,10 @@ def handle_IfNobreakError(exc, source):
        replacement for ``else`` in an if/elif/else block.
     """
     params = exc.args[0]
-
     begin = params["if_linenumber"]
     end = params["linenumber"]
     marks = [end]
-
     partial_source = get_partial_source(source, begin, end, marks=marks)
-
-    info = {
-        "filename": params["source_name"],
-        "nobreak_kwd": params["nobreak keyword"],
-        "partial_source": partial_source,
-        "nobreak_linenumber": end,
-        "dialect": params["dialect"],
-    }
 
     return _(
         """
@@ -137,11 +127,22 @@ def handle_IfNobreakError(exc, source):
 
 {partial_source}
 
-    The AvantPy {nobreak_kwd} keyword cannot be used in
-    an IF/ELIF/ELSE clause (Python: if/elif/else).
+    The AvantPy '{nobreak_kwd}' keyword cannot be used in
+    an '{if_kwd}/{elif_kwd}/{else_kwd}' clause (Python: if/elif/else).
 
 """
-    ).format(**info)
+    ).format(
+        **{
+            "filename": params["source_name"],
+            "nobreak_kwd": params["nobreak keyword"],
+            "partial_source": partial_source,
+            "nobreak_linenumber": end,
+            "dialect": params["dialect"],
+            "if_kwd": params["if_kwd"],
+            "elif_kwd": params["elif_kwd"],
+            "else_kwd": params["else_kwd"],
+        }
+    )
 
 
 def handle_MismatchedBracketsError(exc, source):
@@ -152,18 +153,8 @@ def handle_MismatchedBracketsError(exc, source):
     begin = params["open_linenumber"]
     end = params["close_linenumber"]
     marks = [begin, end]
-
     partial_source = get_partial_source(source, begin, end, marks=marks)
 
-    info = {
-        "filename": params["source_name"],
-        "open_bracket": params["open_bracket"],
-        "close_bracket": params["close_bracket"],
-        "begin": begin,
-        "end": end,
-        "partial_source": partial_source,
-        "dialect": params["dialect"],
-    }
     return _(
         """
     AVANTPY EXCEPTION: MismatchedBracketsError
@@ -177,7 +168,17 @@ def handle_MismatchedBracketsError(exc, source):
     The opening {open_bracket} does not match the closing {close_bracket}.
 
 """
-    ).format(**info)
+    ).format(
+        **{
+            "filename": params["source_name"],
+            "open_bracket": params["open_bracket"],
+            "close_bracket": params["close_bracket"],
+            "begin": begin,
+            "end": end,
+            "partial_source": partial_source,
+            "dialect": params["dialect"],
+        }
+    )
 
 
 def handle_MissingLeftBracketError(exc, source):
@@ -189,16 +190,8 @@ def handle_MissingLeftBracketError(exc, source):
     begin = linenumber - 1
     end = linenumber + 1
     marks = [linenumber]
-
     partial_source = get_partial_source(source, begin, end, marks=marks)
 
-    info = {
-        "filename": params["source_name"],
-        "partial_source": partial_source,
-        "dialect": params["dialect"],
-        "linenumber": linenumber,
-        "bracket": params["bracket"],
-    }
     return _(
         """
     AVANTPY EXCEPTION: MissingLeftBracketError
@@ -212,7 +205,15 @@ def handle_MissingLeftBracketError(exc, source):
     The closing {bracket} does not match anything.
 
 """
-    ).format(**info)
+    ).format(
+        **{
+            "filename": params["source_name"],
+            "partial_source": partial_source,
+            "dialect": params["dialect"],
+            "linenumber": linenumber,
+            "bracket": params["bracket"],
+        }
+    )
 
 
 def handle_MissingRepeatColonError(exc, source):
@@ -224,16 +225,8 @@ def handle_MissingRepeatColonError(exc, source):
     begin = linenumber - 1
     end = linenumber + 1
     marks = [linenumber]
-
     partial_source = get_partial_source(source, begin, end, marks=marks)
 
-    info = {
-        "filename": params["source_name"],
-        "repeat_kwd": params["repeat_kwd"],
-        "partial_source": partial_source,
-        "linenumber": linenumber,
-        "dialect": params["dialect"],
-    }
     return _(
         """
     AVANTPY EXCEPTION: MissingRepeatColonError
@@ -249,7 +242,15 @@ def handle_MissingRepeatColonError(exc, source):
     block of code, with no other colon appearing on that line.
 
 """
-    ).format(**info)
+    ).format(
+        **{
+            "filename": params["source_name"],
+            "repeat_kwd": params["repeat_kwd"],
+            "partial_source": partial_source,
+            "linenumber": linenumber,
+            "dialect": params["dialect"],
+        }
+    )
 
 
 def handle_MissingRepeatError(exc, source):
@@ -261,17 +262,8 @@ def handle_MissingRepeatError(exc, source):
     begin = linenumber - 1
     end = linenumber + 1
     marks = [linenumber]
-
     partial_source = get_partial_source(source, begin, end, marks=marks)
 
-    info = {
-        "filename": params["source_name"],
-        "keyword": params["keyword"],
-        "partial_source": partial_source,
-        "linenumber": linenumber,
-        "dialect": params["dialect"],
-        "repeat_kwd": params["repeat_kwd"],
-    }
     return _(
         """
     AVANTPY EXCEPTION: MissingRepeatError
@@ -285,7 +277,16 @@ def handle_MissingRepeatError(exc, source):
     The AvantPy '{keyword}'' keyword can be used only when preceded by '{repeat_kwd}'.
 
 """
-    ).format(**info)
+    ).format(
+        **{
+            "filename": params["source_name"],
+            "keyword": params["keyword"],
+            "partial_source": partial_source,
+            "linenumber": linenumber,
+            "dialect": params["dialect"],
+            "repeat_kwd": params["repeat_kwd"],
+        }
+    )
 
 
 def handle_NameError(exc, source):
@@ -310,14 +311,6 @@ def handle_NameError(exc, source):
 
     partial_source = get_partial_source(source, begin, end, marks=marks)
 
-    info = {
-        "filename": filename,
-        "python_display": python_display,
-        "var_name": var_name,
-        "partial_source": partial_source,
-        "linenumber": linenumber,
-        "dialect": state.current_dialect,
-    }
     return _(
         """
     PYTHON EXCEPTION: {python_display}
@@ -335,7 +328,16 @@ def handle_NameError(exc, source):
     In your program, the unknown name is '{var_name}'.
 
 """
-    ).format(**info)
+    ).format(
+        **{
+            "filename": filename,
+            "python_display": python_display,
+            "var_name": var_name,
+            "partial_source": partial_source,
+            "linenumber": linenumber,
+            "dialect": state.current_dialect,
+        }
+    )
 
 
 def handle_NobreakFirstError(exc, source):
@@ -348,16 +350,8 @@ def handle_NobreakFirstError(exc, source):
     begin = linenumber - 1
     end = linenumber + 1
     marks = [linenumber]
-
     partial_source = get_partial_source(source, begin, end, marks=marks)
 
-    info = {
-        "filename": params["source_name"],
-        "nobreak_kwd": params["nobreak keyword"],
-        "partial_source": partial_source,
-        "linenumber": linenumber,
-        "dialect": params["dialect"],
-    }
     return _(
         """
     AVANTPY EXCEPTION: NobreakFirstError
@@ -368,11 +362,23 @@ def handle_NobreakFirstError(exc, source):
 
 {partial_source}
 
-    The AvantPy '{nobreak_kwd}' keyword can be used instead of ELSE
-    (Python: else) only when it begins a new statement in FOR/WHILE loops.
+    The AvantPy '{nobreak_kwd}' keyword can be used instead of '{else_kwd}'
+    (Python: else) only when it begins a new statement in
+    '{for_kwd}/{while_kwd}' loops (Python: for/while).
 
 """
-    ).format(**info)
+    ).format(
+        **{
+            "filename": params["source_name"],
+            "nobreak_kwd": params["nobreak keyword"],
+            "partial_source": partial_source,
+            "linenumber": linenumber,
+            "dialect": params["dialect"],
+            "for_kwd": params["for_kwd"],
+            "while_kwd": params["while_kwd"],
+            "else_kwd": params["else_kwd"],
+        }
+    )
 
 
 def handle_NobreakSyntaxError(exc, source):
@@ -380,21 +386,12 @@ def handle_NobreakSyntaxError(exc, source):
        ``for`` or ``while`` loop and not already raised.
     """
     params = exc.args[0]
-
     linenumber = params["linenumber"]
     begin = linenumber - 1
     end = linenumber + 1
     marks = [linenumber]
-
     partial_source = get_partial_source(source, begin, end, marks=marks)
 
-    info = {
-        "filename": params["source_name"],
-        "nobreak_kwd": params["nobreak keyword"],
-        "partial_source": partial_source,
-        "linenumber": linenumber,
-        "dialect": params["dialect"],
-    }
     return _(
         """
     AVANTPY EXCEPTION: NobreakSyntaxError
@@ -406,11 +403,22 @@ def handle_NobreakSyntaxError(exc, source):
 {partial_source}
 
     The AvantPy '{nobreak_kwd}' keyword can only be used as a replacement
-    of ELSE (Python: else) with a matching FOR or WHILE loop
-    (Python: for/while).
+    of '{else_kwd}' (Python: else) with a matching '{for_kwd}' or
+    '{while_kwd}' loop (Python: for/while).
 
 """
-    ).format(**info)
+    ).format(
+        **{
+            "filename": params["source_name"],
+            "nobreak_kwd": params["nobreak keyword"],
+            "partial_source": partial_source,
+            "linenumber": linenumber,
+            "dialect": params["dialect"],
+            "for_kwd": params["for_kwd"],
+            "while_kwd": params["while_kwd"],
+            "else_kwd": params["else_kwd"],
+        }
+    )
 
 
 def handle_RepeatFirstError(exc, source):
@@ -422,16 +430,8 @@ def handle_RepeatFirstError(exc, source):
     begin = linenumber - 1
     end = linenumber + 1
     marks = [linenumber]
-
     partial_source = get_partial_source(source, begin, end, marks=marks)
 
-    info = {
-        "filename": params["source_name"],
-        "repeat_kwd": params["repeat keyword"],
-        "partial_source": partial_source,
-        "linenumber": linenumber,
-        "dialect": params["dialect"],
-    }
     return _(
         """
     AVANTPY EXCEPTION: RepeatFirstError
@@ -446,7 +446,15 @@ def handle_RepeatFirstError(exc, source):
     a new loop (Python: equivalent to 'for' or 'while' loop).
 
 """
-    ).format(**info)
+    ).format(
+        **{
+            "filename": params["source_name"],
+            "repeat_kwd": params["repeat keyword"],
+            "partial_source": partial_source,
+            "linenumber": linenumber,
+            "dialect": params["dialect"],
+        }
+    )
 
 
 def handle_TryNobreakError(exc, source):
@@ -454,20 +462,11 @@ def handle_TryNobreakError(exc, source):
        replacement for ``else`` in an try/except/else/finally block.
     """
     params = exc.args[0]
-
     begin = params["try_linenumber"]
     end = params["linenumber"]
     marks = [end]
-
     partial_source = get_partial_source(source, begin, end, marks=marks)
 
-    info = {
-        "filename": params["source_name"],
-        "nobreak_kwd": params["nobreak keyword"],
-        "partial_source": partial_source,
-        "nobreak_linenumber": end,
-        "dialect": params["dialect"],
-    }
     return _(
         """
     AVANTPY EXCEPTION: TryNobreakError
@@ -479,10 +478,23 @@ def handle_TryNobreakError(exc, source):
 {partial_source}
 
     The AvantPy '{nobreak_kwd}' keyword cannot be used in
-    a TRY/EXCEPT/ELSE/FINALLY clause (Python: try/except/else/finally).
+    a '{try_kwd}/{except_kwd}/{else_kwd}/{finally_kwd}' clause
+    (Python: try/except/else/finally).
 
 """
-    ).format(**info)
+    ).format(
+        **{
+            "filename": params["source_name"],
+            "nobreak_kwd": params["nobreak keyword"],
+            "partial_source": partial_source,
+            "nobreak_linenumber": end,
+            "dialect": params["dialect"],
+            "try_kwd": params["try_kwd"],
+            "except_kwd": params["except_kwd"],
+            "else_kwd": params["else_kwd"],
+            "finally_kwd": params["finally_kwd"],
+        }
+    )
 
 
 def handle_UnknownDialectError(exc, *args):
@@ -490,8 +502,6 @@ def handle_UnknownDialectError(exc, *args):
     """
     dialect = exc.args[0]
     all_dialects = exc.args[1]
-
-    info = {"dialect": dialect, "all_dialects": all_dialects}
     return _(
         """
     AVANTPY EXCEPTION: UnknownDialectError
@@ -501,7 +511,7 @@ def handle_UnknownDialectError(exc, *args):
     The known dialects are: {all_dialects}.
 
 """
-    ).format(**info)
+    ).format(dialect=dialect, all_dialects=all_dialects)
 
 
 def handle_UnknownLanguageError(exc, *args):
@@ -509,8 +519,6 @@ def handle_UnknownLanguageError(exc, *args):
     """
     lang = exc.args[0]
     all_langs = exc.args[1]
-
-    info = {"lang": lang, "all_langs": all_langs}
 
     return _(
         """
@@ -521,7 +529,7 @@ def handle_UnknownLanguageError(exc, *args):
     The known languages are: {all_langs}.
 
 """
-    ).format(**info)
+    ).format(lang=lang, all_langs=all_langs)
 
 
 dispatch = {

@@ -269,21 +269,28 @@ class Converter:
         self.lang_to_py = state.get_to_python(self.dialect)
         py_to_lang = state.get_from_python(self.dialect)
 
+        self.if_kwd = py_to_lang["if"]
+        self.elif_kwd = py_to_lang["elif"]
+        self.else_kwd = py_to_lang["else"][0]
+        self.nobreak_kwd = py_to_lang["else"][1]
         self.repeat_kwd = py_to_lang["repeat"]
+        self.for_kwd = py_to_lang["for"]
         self.while_kwd = py_to_lang["while"]
         self.until_kwd = py_to_lang["until"]
         self.forever_kwd = py_to_lang["forever"]
         self.loops_with_else = [
             "for",
             "while",
-            py_to_lang["for"],
+            self.for_kwd,
             self.while_kwd,
             self.repeat_kwd,
         ]
-        self.if_blocks = ["if", py_to_lang["if"]]
-        self.try_blocks = ["try", py_to_lang["try"]]
+        self.if_blocks = ["if", self.if_kwd]
+        self.try_kwd = py_to_lang["try"]
+        self.except_kwd = py_to_lang["except"]
+        self.finally_kwd = py_to_lang["finally"]
+        self.try_blocks = ["try", self.try_kwd]
         self.blocks_with_else = self.if_blocks + self.try_blocks + self.loops_with_else
-        self.nobreak_kwd = py_to_lang["else"][1]
 
     def init_bookkeeping_vars(self):
         """Initialises variables that are used for bookkeeping"""
@@ -538,6 +545,9 @@ class Converter:
                         "source_name": self.source_name,
                         "source": self.source,
                         "dialect": self.dialect,
+                        "for_kwd": self.for_kwd,
+                        "while_kwd": self.while_kwd,
+                        "else_kwd": self.else_kwd,
                     },
                 ),
             )
@@ -555,6 +565,9 @@ class Converter:
                         "linenumber": token.start_line,
                         "source_name": self.source_name,
                         "dialect": self.dialect,
+                        "if_kwd": self.if_kwd,
+                        "elif_kwd": self.elif_kwd,
+                        "else_kwd": self.else_kwd,
                     },
                 ),
             )
@@ -572,6 +585,10 @@ class Converter:
                         "linenumber": token.start_line,
                         "source_name": self.source_name,
                         "dialect": self.dialect,
+                        "try_kwd": self.try_kwd,
+                        "except_kwd": self.except_kwd,
+                        "else_kwd": self.else_kwd,
+                        "finally_kwd": self.finally_kwd,
                     },
                 ),
             )
@@ -585,6 +602,9 @@ class Converter:
                         "source_name": self.source_name,
                         "source": self.source,
                         "dialect": self.dialect,
+                        "for_kwd": self.for_kwd,
+                        "while_kwd": self.while_kwd,
+                        "else_kwd": self.else_kwd,
                     },
                 ),
             )
