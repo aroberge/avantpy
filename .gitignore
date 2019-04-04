@@ -1,6 +1,3 @@
-# shortcut to using pygettext
-make_pot.bat
-
 .vscode/
 # Byte-compiled / optimized / DLL files
 __pycache__/
