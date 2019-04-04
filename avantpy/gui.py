@@ -16,22 +16,27 @@ from tkinter import filedialog, ttk
 from .converter import transcode
 from .session import state
 from .utils import Token
+from . import exception_handling
 
 
 class EditorWidget(tk.Frame):
     """A scrollable text editor, that can save files."""
 
-    def __init__(self, parent, parent_frame):
+    def __init__(self, parent, parent_frame, other=None):
         super().__init__()
         self.parent = parent
         self.parent_frame = parent_frame
+        self.other = other
         self.frame = tk.Frame(self, width=600, height=600)
         self.text_area = self.init_text_area()
         self.set_horizontal_scroll()
         self.set_vertical_scroll()
         self.linenumbers = TextLineNumbers(self.frame, width=30)
         self.linenumbers.attach(self.text_area)
-        self.linenumbers.pack(side="left", fill="y")
+        if self.other is None:
+            self.linenumbers.pack(side="right", fill="y")
+        else:
+            self.linenumbers.pack(side="left", fill="y")
         self.text_area.pack(side="left", fill="both", expand=True)
         self.text_area.bind("<Key>", self.colorize)
         self.frame.pack(fill="both", expand=True)
@@ -63,10 +68,16 @@ class EditorWidget(tk.Frame):
 
     def set_vertical_scroll(self):
         # Scroll Bar y For Height
-        scroll_y = tk.Scrollbar(self.frame)
-        scroll_y.config(command=self.text_area.yview)
-        self.text_area.configure(yscrollcommand=scroll_y.set)
-        scroll_y.pack(side="right", fill="y")
+        def scroll_vertical(*args):
+            self.text_area.yview(*args)
+            if self.other is not None:
+                self.other.text_area.yview(*args)
+
+        if self.other is not None:
+            scroll_y = tk.Scrollbar(self.frame)
+            scroll_y.config(command=scroll_vertical)
+            self.text_area.configure(yscrollcommand=scroll_y.set)
+            scroll_y.pack(side="right", fill="y")
 
     def insert_text(self, txt):
         """Inserts the text in the editor, replacing any previously existing
@@ -87,21 +98,24 @@ class EditorWidget(tk.Frame):
            corresponding version in other dialects.
         """
         content = self.text_area.get("1.0", tk.END)
-        tokens = tokenize.generate_tokens(StringIO(content).readline)
-        for tok in tokens:
-            token = Token(tok)
-            if token.string in self.parent_frame.python_words:
-                begin_index = "{0}.{1}".format(token.start_line, token.start_col)
-                end_index = "{0}.{1}".format(token.end_line, token.end_col)
-                self.text_area.tag_add("Python", begin_index, end_index)
-            elif token.string in self.parent_frame.source_words:
-                begin_index = "{0}.{1}".format(token.start_line, token.start_col)
-                end_index = "{0}.{1}".format(token.end_line, token.end_col)
-                self.text_area.tag_add("source", begin_index, end_index)
-            elif token.string in self.parent_frame.converted_words:
-                begin_index = "{0}.{1}".format(token.start_line, token.start_col)
-                end_index = "{0}.{1}".format(token.end_line, token.end_col)
-                self.text_area.tag_add("converted", begin_index, end_index)
+        try:
+            tokens = tokenize.generate_tokens(StringIO(content).readline)
+            for tok in tokens:
+                token = Token(tok)
+                if token.string in self.parent_frame.python_words:
+                    begin_index = "{0}.{1}".format(token.start_line, token.start_col)
+                    end_index = "{0}.{1}".format(token.end_line, token.end_col)
+                    self.text_area.tag_add("Python", begin_index, end_index)
+                elif token.string in self.parent_frame.source_words:
+                    begin_index = "{0}.{1}".format(token.start_line, token.start_col)
+                    end_index = "{0}.{1}".format(token.end_line, token.end_col)
+                    self.text_area.tag_add("source", begin_index, end_index)
+                elif token.string in self.parent_frame.converted_words:
+                    begin_index = "{0}.{1}".format(token.start_line, token.start_col)
+                    end_index = "{0}.{1}".format(token.end_line, token.end_col)
+                    self.text_area.tag_add("converted", begin_index, end_index)
+        except tokenize.TokenError:
+            pass
 
     def save_file(self, event=None):
         """Saves the file currently in the Texteditor"""
@@ -119,8 +133,8 @@ class TextLineNumbers(tk.Canvas):
         tk.Canvas.__init__(self, *args, **kwargs)
         self.textwidget = None
 
-    def attach(self, text_widget):
-        self.textwidget = text_widget
+    def attach(self, textwidget):
+        self.textwidget = textwidget
         self.redraw()
 
     def redraw(self, *args):
@@ -163,10 +177,12 @@ class App(tk.Frame):
         tk.Label(self.master, text="Source").grid(row=0, column=1)
         tk.Label(self.master, text="Converted").grid(row=0, column=4)
 
-        self.source_editor = EditorWidget(self.master, self)
-        self.source_editor.grid(row=1, column=0, columnspan=3, sticky="news")
         self.converted_editor = EditorWidget(self.master, self)
         self.converted_editor.grid(row=1, column=3, columnspan=4, sticky="news")
+        self.source_editor = EditorWidget(
+            self.master, self, other=self.converted_editor
+        )
+        self.source_editor.grid(row=1, column=0, columnspan=3, sticky="news")
 
         tk.Button(self.master, text="Open", command=self.get_source).grid(
             row=2, column=0, sticky="w"
@@ -219,13 +235,18 @@ class App(tk.Frame):
         else:
             self.converted_words = set(state.get_from_python("pyen").keys())
 
-        new_text = transcode(text, self.source_dialect, self.conversion_dialect)
-        self.converted_editor.insert_text(new_text)
+        try:
+            new_text = transcode(text, self.source_dialect, self.conversion_dialect)
+        except Exception as exc:
+            exception_handling.write_err = self.converted_editor.insert_text
+            exception_handling.write_exception_info(exc, text)
+        else:
+            self.converted_editor.insert_text(new_text)
 
 
 def main():
     root = tk.Tk()
-    root.geometry("700x600+200+200")
+    root.geometry("900x600+200+200")
     root.minsize(600, 600)
     app = App(master=root)
     app.mainloop()
