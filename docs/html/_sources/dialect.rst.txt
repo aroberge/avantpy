@@ -12,17 +12,6 @@ Dialects definitions for language ``xx`` are Python files
 named ``pyxx.py`` and are found in the AvantPy's repository:
 `avantpy/dialects/ directory <https://github.com/aroberge/avantpy/tree/master/avantpy/dialects>`_.
 
-
-.. warning::
-
-    In the console below, instead of Python's standard main prompt,
-    ``>>> ``, the main prompt shows the **dialect** being used
-    without including the prefix ``py``. This is to keep it to the
-    same length as the standard Python prompt,
-    except when the UPPERCASE dialect (pyupper) is used.
-
-    This could change.
-
 Perhaps an example is the best way to demonstrate, using two different
 "languages" in an unusual way.
 We we will generate an
@@ -31,56 +20,58 @@ error message by trying to assign the AvantPy keyword ``repeat``
 in the other language using the AvantPy console::
 
     $ python -m avantpy --lang fr --dialect pyen
-    AvantPy version 0.0.7. [Python version: 3.7.0]
+    AvantPy version 0.0.8. [Python version: 3.7.0]
 
-    en> repeat 3:
-    ...     print('Hello!')
+    pyen> repeat 3:
+    ...       print('Hello!')
     ...
     Hello!
     Hello!
     Hello!
-    en> # Let's do something forbidden; the explanation will be in French
-    en> a = repeat
+    pyen> # Let's do something forbidden; the explanation will be in French
+    pyen> a = repeat
 
-        Exception AvantPy: RepeatFirstError
+        Exception AvantPy : RepeatFirstError
 
-        Erreur trouvée dans le fichier REPL à la ligne 1.
+        Erreur trouvée dans le fichier '<AvantPy console>' à la ligne 1.
 
-        Dialecte utilisé: pyen
+        Dialecte utilisé : pyen
 
         -->1: a = repeat
 
-        Le mot-clé repeat spécifique à Avantpy peut seulement être utilisé
+        Le mot-clé 'repeat' spécifique à Avantpy peut seulement être utilisé
         pour débuter une nouvelle boucle 'pour' ou 'tantque'
         (équivalent Python: 'for' ou 'while').
 
-    en> # Ok, let's do things in opposite languages
-    en> set_lang('en')
-    en> set_dialect('pyfr')
-    'pyfr'
-    fr> répéter 3:
-    ...     afficher('Bonjour !')
-    ...     print('---')  # Normal Python always recognized.
+    pyen> # Ok, let's do things in opposite languages
+    pyen> set_lang('en')
+        ==> Language: en | AvantPy dialect: pyen
+    pyen> set_dialect('pyfr')
+        ==> Language: en | AvantPy dialect: pyfr
+    pyfr> répéter 3:
+    ...       afficher('Bonjour!')
+    ...       print('---')  # Normal Python always recognized
     ...
-    Bonjour !
+    Bonjour!
     ---
-    Bonjour !
+    Bonjour!
     ---
-    Bonjour !
+    Bonjour!
     ---
-    fr> b = répéter
+    pyfr> b = répéter
 
         AvantPy exception: RepeatFirstError
 
-        Error found in file REPL on line 1.
+        Error found in file '<AvantPy console>' on line 1.
 
         Dialect used: pyfr
 
         -->1: b = répéter
 
-        The AvantPy répéter keyword can only be used to begin
-        a new for or while loop.
+        The AvantPy 'répéter' keyword can only be used to begin
+        a new loop (Python: equivalent to 'for' or 'while' loop).
 
+    pyfr>
 
 Existing dialects
 ------------------

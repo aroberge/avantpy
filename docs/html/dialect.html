@@ -91,15 +91,6 @@ For example, <code class="docutils literal notranslate"><span class="pre">fr</sp
 <p>Dialects definitions for language <code class="docutils literal notranslate"><span class="pre">xx</span></code> are Python files
 named <code class="docutils literal notranslate"><span class="pre">pyxx.py</span></code> and are found in the AvantPy’s repository:
 <a class="reference external" href="https://github.com/aroberge/avantpy/tree/master/avantpy/dialects">avantpy/dialects/ directory</a>.</p>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p>In the console below, instead of Python’s standard main prompt,
-<code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;</span> <span class="pre">``,</span> <span class="pre">the</span> <span class="pre">main</span> <span class="pre">prompt</span> <span class="pre">shows</span> <span class="pre">the</span> <span class="pre">**dialect**</span> <span class="pre">being</span> <span class="pre">used</span>
-<span class="pre">without</span> <span class="pre">including</span> <span class="pre">the</span> <span class="pre">prefix</span> <span class="pre">``py</span></code>. This is to keep it to the
-same length as the standard Python prompt,
-except when the UPPERCASE dialect (pyupper) is used.</p>
-<p class="last">This could change.</p>
-</div>
 <p>Perhaps an example is the best way to demonstrate, using two different
 “languages” in an unusual way.
 We we will generate an
@@ -107,55 +98,58 @@ error message by trying to assign the AvantPy keyword <code class="docutils lite
 (<code class="docutils literal notranslate"><span class="pre">répéter</span></code> in the French <strong>dialect</strong>) and show the error message
 in the other language using the AvantPy console:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python -m avantpy --lang fr --dialect pyen
-AvantPy version 0.0.7. [Python version: 3.7.0]
+AvantPy version 0.0.8. [Python version: 3.7.0]
 
-en&gt; repeat 3:
-...     print(&#39;Hello!&#39;)
+pyen&gt; repeat 3:
+...       print(&#39;Hello!&#39;)
 ...
 Hello!
 Hello!
 Hello!
-en&gt; # Let&#39;s do something forbidden; the explanation will be in French
-en&gt; a = repeat
+pyen&gt; # Let&#39;s do something forbidden; the explanation will be in French
+pyen&gt; a = repeat
 
-    Exception AvantPy: RepeatFirstError
+    Exception AvantPy : RepeatFirstError
 
-    Erreur trouvée dans le fichier REPL à la ligne 1.
+    Erreur trouvée dans le fichier &#39;&lt;AvantPy console&gt;&#39; à la ligne 1.
 
-    Dialecte utilisé: pyen
+    Dialecte utilisé : pyen
 
     --&gt;1: a = repeat
 
-    Le mot-clé repeat spécifique à Avantpy peut seulement être utilisé
+    Le mot-clé &#39;repeat&#39; spécifique à Avantpy peut seulement être utilisé
     pour débuter une nouvelle boucle &#39;pour&#39; ou &#39;tantque&#39;
     (équivalent Python: &#39;for&#39; ou &#39;while&#39;).
 
-en&gt; # Ok, let&#39;s do things in opposite languages
-en&gt; set_lang(&#39;en&#39;)
-en&gt; set_dialect(&#39;pyfr&#39;)
-&#39;pyfr&#39;
-fr&gt; répéter 3:
-...     afficher(&#39;Bonjour !&#39;)
-...     print(&#39;---&#39;)  # Normal Python always recognized.
+pyen&gt; # Ok, let&#39;s do things in opposite languages
+pyen&gt; set_lang(&#39;en&#39;)
+    ==&gt; Language: en | AvantPy dialect: pyen
+pyen&gt; set_dialect(&#39;pyfr&#39;)
+    ==&gt; Language: en | AvantPy dialect: pyfr
+pyfr&gt; répéter 3:
+...       afficher(&#39;Bonjour!&#39;)
+...       print(&#39;---&#39;)  # Normal Python always recognized
 ...
-Bonjour !
+Bonjour!
 ---
-Bonjour !
+Bonjour!
 ---
-Bonjour !
+Bonjour!
 ---
-fr&gt; b = répéter
+pyfr&gt; b = répéter
 
     AvantPy exception: RepeatFirstError
 
-    Error found in file REPL on line 1.
+    Error found in file &#39;&lt;AvantPy console&gt;&#39; on line 1.
 
     Dialect used: pyfr
 
     --&gt;1: b = répéter
 
-    The AvantPy répéter keyword can only be used to begin
-    a new for or while loop.
+    The AvantPy &#39;répéter&#39; keyword can only be used to begin
+    a new loop (Python: equivalent to &#39;for&#39; or &#39;while&#39; loop).
+
+pyfr&gt;
 </pre></div>
 </div>
 <div class="section" id="existing-dialects">
