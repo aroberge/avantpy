@@ -28,7 +28,6 @@
     - [ ] Pass the name of the source as well, rather than storing it in
       a global state.
 
-- [ ] Use .format for string interpolation everywhere - to allow full translations
 - [ ] Review builtins and see if translations of other functions are needed.
 
 - [ ] thread about international turtle module https://mail.python.org/pipermail/python-ideas/2015-September/035672.html

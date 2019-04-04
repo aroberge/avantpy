@@ -18,35 +18,32 @@ from .session import state
 from .utils import Token
 
 
-class TextEditor:
+class EditorWidget(tk.Frame):
     """A scrollable text editor, that can save files."""
 
-    def __init__(self, parent, title="Window title", app=None):
-        self.text_to_write = ""
+    def __init__(self, parent, parent_frame):
+        super().__init__()
         self.parent = parent
-        self.app = app
-        self.parent.title(title)
-        self.parent.geometry("600x550")
-        self.frame = tk.Frame(self.parent, width=600, height=550)
+        self.parent_frame = parent_frame
+        self.frame = tk.Frame(self, width=600, height=600)
         self.text_area = self.init_text_area()
         self.set_horizontal_scroll()
         self.set_vertical_scroll()
         self.text_area.pack(side="left", fill="both", expand=True)
-        self.frame.pack()
-        self.make_menu()
+        self.frame.pack(fill="both", expand=True)
 
     def init_text_area(self):
         text_area = tk.Text(
             self.frame,
             wrap="none",
             width=600,
-            height=550,
+            height=600,
             padx=10,
             pady=10,
-            font="Monaco 14",
+            font="Monaco 12",
         )
-        text_area.tag_config("Python", font="Monaco 14 bold", foreground="forest green")
-        text_area.tag_config("source", font="Monaco 14 bold", foreground="blue")
+        text_area.tag_config("Python", font="Monaco 12 bold", foreground="forest green")
+        text_area.tag_config("source", font="Monaco 12 bold", foreground="blue")
         text_area.tag_config(
             "converted", font="Monaco 14 bold", foreground="dark violet"
         )
@@ -67,14 +64,6 @@ class TextEditor:
         self.text_area.configure(yscrollcommand=scroll_y.set)
         scroll_y.pack(side="right", fill="y")
 
-    def make_menu(self):
-        """Makes the main menu"""
-        menu = tk.Menu(self.parent)
-        file_menu = tk.Menu(menu, tearoff=0)
-        file_menu.add_command(label="Save", command=self.save_file)
-        menu.add_cascade(label="File", menu=file_menu)
-        self.parent.config(menu=menu)
-
     def insert_text(self, txt):
         """Inserts the text in the editor, replacing any previously existing
            content.
@@ -92,21 +81,19 @@ class TextEditor:
         """Colorizes the Python keywords and a few builtins, as well as the
            corresponding version in other dialects.
         """
-        if self.app is None:
-            return
         content = self.text_area.get("1.0", tk.END)
         tokens = tokenize.generate_tokens(StringIO(content).readline)
         for tok in tokens:
             token = Token(tok)
-            if token.string in self.app.python_words:
+            if token.string in self.parent_frame.python_words:
                 begin_index = "{0}.{1}".format(token.start_line, token.start_col)
                 end_index = "{0}.{1}".format(token.end_line, token.end_col)
                 self.text_area.tag_add("Python", begin_index, end_index)
-            elif token.string in self.app.source_words:
+            elif token.string in self.parent_frame.source_words:
                 begin_index = "{0}.{1}".format(token.start_line, token.start_col)
                 end_index = "{0}.{1}".format(token.end_line, token.end_col)
                 self.text_area.tag_add("source", begin_index, end_index)
-            elif token.string in self.app.converted_words:
+            elif token.string in self.parent_frame.converted_words:
                 begin_index = "{0}.{1}".format(token.start_line, token.start_col)
                 end_index = "{0}.{1}".format(token.end_line, token.end_col)
                 self.text_area.tag_add("converted", begin_index, end_index)
@@ -122,15 +109,11 @@ class TextEditor:
                 f.write(data)
 
 
-class App(tk.Tk):
-    def __init__(self, title="Converter"):
-        # self.geometry("200x100")
-        # self.title = "Main app"
-        super().__init__()
-        self.title(title)
-        self.geometry("300x100")
-        self.source_window = None
-        self.converted_window = None
+class App(tk.Frame):
+    def __init__(self, master=None):
+        tk.Frame.__init__(self, master)
+        self.grid()
+        self.master.title("Converter")
         self.all_dialects = ["py"] + state.all_dialects()
         ext = ["*.%s" % d for d in self.all_dialects]
         self.filetypes = " ".join(ext)
@@ -141,20 +124,39 @@ class App(tk.Tk):
 
     def add_ui(self):
         """Adds UI elements to the main window"""
-        button = tk.Button(self, text="Open Source File", command=self.get_source)
-        button.pack()
-        button = tk.Button(self, text="Convert Source", command=self.convert_source)
-        button.pack()
+
+        for r in range(2):
+            self.master.rowconfigure(r, weight=1, minsize=20)
+        for c in [1, 5]:
+            self.master.columnconfigure(c, weight=1, minsize=40)
+
+        self.source_editor = EditorWidget(self.master, self)
+        self.source_editor.grid(row=0, column=0, columnspan=3, sticky="news")
+        self.converted_editor = EditorWidget(self.master, self)
+        self.converted_editor.grid(row=0, column=3, columnspan=4, sticky="news")
+
+        tk.Button(self.master, text="Open source", command=self.get_source).grid(
+            row=1, column=0, sticky="w"
+        )
+        tk.Button(
+            self.master, text="Save source", command=self.source_editor.save_file
+        ).grid(row=1, column=1, sticky="w")
+        tk.Button(self.master, text="Convert source", command=self.convert_source).grid(
+            row=1, column=3, sticky="w"
+        )
         # if the following is assigned a local value, it will be garbage collected
         # and the combobox will show nothing initially.
         self._choice = tk.StringVar()
         self.dialects = ttk.Combobox(
-            self, textvariable=self._choice, values=self.all_dialects
+            self.master, textvariable=self._choice, values=self.all_dialects
         )
+        self.dialects.grid(row=1, column=4, sticky="w")
         self.dialects.current(0)
         self.dialects.bind("<<ComboboxSelected>>", self.get_conversion_dialect)
-        self.dialects.pack()
         self.conversion_dialect = self.all_dialects[0]
+        tk.Button(
+            self.master, text="Save converted", command=self.converted_editor.save_file
+        ).grid(row=1, column=5, sticky="w")
 
     def get_conversion_dialect(self, event):
         """Gets the conversion dialect selected from the ComboBox."""
@@ -171,41 +173,12 @@ class App(tk.Tk):
         self.python_words = set(state.get_from_python(self.source_dialect).keys())
         self.source_words = set(state.get_to_python(self.source_dialect).keys())
         if txt_file:
-            if self.source_window is None:
-                self.source_window = tk.Toplevel()
-                self.source_window.protocol(
-                    "WM_DELETE_WINDOW", self.close_source_window
-                )
-                self.source = TextEditor(
-                    self.source_window,
-                    title="Source: %s" % os.path.basename(txt_file),
-                    app=self,
-                )
             with open(txt_file, encoding="utf8") as new_file:
-                self.source.insert_text(new_file.read())
-
-    def close_source_window(self):
-        """Closes the source window"""
-        # When we get a notice that a request to close the window has been made,
-        # , we close it explicitly and set its
-        # reference to None, to avoid exceptions being raised if
-        # another request is made.
-        self.source_window.destroy()
-        self.source_window = None
+                self.source_editor.insert_text(new_file.read())
 
     def convert_source(self, event=None):
         """Converts the content of the source window into the requested dialect."""
-        if self.converted_window is None:
-            self.converted_window = tk.Toplevel()
-            self.converted_window.protocol(
-                "WM_DELETE_WINDOW", self.close_converted_window
-            )
-            self.converted = TextEditor(
-                self.converted_window,
-                title="Converted: dialect = %s" % self.conversion_dialect,
-                app=self,
-            )
-        text = self.source.get_text()
+        text = self.source_editor.get_text()
         if self.conversion_dialect != "py":
             self.converted_words = set(
                 state.get_to_python(self.conversion_dialect).keys()
@@ -214,17 +187,14 @@ class App(tk.Tk):
             self.converted_words = set(state.get_from_python("pyen").keys())
 
         new_text = transcode(text, self.source_dialect, self.conversion_dialect)
-        self.converted.insert_text(new_text)
-
-    def close_converted_window(self):
-        """Closes the converted window."""
-        # See close_source_window for an explanation
-        self.converted_window.destroy()
-        self.converted_window = None
+        self.converted_editor.insert_text(new_text)
 
 
 def main():
-    app = App()
+    root = tk.Tk()
+    root.geometry("700x600+200+200")
+    root.minsize(600, 600)
+    app = App(master=root)
     app.mainloop()
 
 
