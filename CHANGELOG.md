@@ -1,6 +1,10 @@
 # Changelog
 
+## version 0.08
+
+- GUI (converter) in a single window, with a single vertical scrollbar and linenenumbers
 - Simplified the work required to create documentation for simplified tracebacks in a given language
+- Improved tracebacks to make sure that they reflect better the dialect used.
 - Wrote a script to duplicate all tests for pyupper in the other dialects.
 - Added full test for pyupper (and other dialects)
 - Changed translations so that they are done with gettext

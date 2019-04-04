@@ -17,8 +17,8 @@
 
 - GUI
   - [ ] Add screen capture of GUI to docs
-  - [ ] Add error handling in GUI
-  - [ ] Improve appearance of main GUI window by using grid manager
+  - [x] Add error handling in GUI
+  - [x] Improve appearance of main GUI window by using grid manager
   - [ ] Look into creating GUI for REPL
   - [ ] Translate GUI
 
