@@ -83,8 +83,8 @@
   <div class="section" id="how-does-it-work">
 <h1>How does it work?<a class="headerlink" href="#how-does-it-work" title="Permalink to this headline">¶</a></h1>
 <p>AvantPy uses an <a class="reference external" href="https://docs.python.org/3/reference/import.html#import-hooks">import hook</a>
-to load program files written in a known dialect (<code class="docutils literal notranslate"><span class="pre">xx</span></code>), recognizing them based on their
-extension (<code class="docutils literal notranslate"><span class="pre">.pyxx</span></code>).
+to load program files written in a known dialect (<code class="docutils literal notranslate"><span class="pre">xx</span></code>),
+recognizing them based on their extension (<code class="docutils literal notranslate"><span class="pre">.pyxx</span></code>).
 It uses the information in the definition file (<code class="docutils literal notranslate"><span class="pre">xx.py</span></code>) to translate keywords found
 into that definition file into the corresponding Python keyword or idiom.
 During this process, some errors can be caught and custom exceptions raised.</p>
@@ -187,8 +187,9 @@ support four additional idioms:</p>
     <span class="k">pass</span>
 </pre></div>
 </div>
-<p>For this last case, <code class="docutils literal notranslate"><span class="pre">n</span></code> could be an expression, possibly
-spanning multiple lines.</p>
+<p>For this last case, <code class="docutils literal notranslate"><span class="pre">n</span></code> could be an expression that evaluates
+to an integer. However, the only colon that can appear must be
+the end of statement colon.</p>
 <p>When we encounter the equivalent to the “repeat” keyword in
 the selected dialect, we must make sure that it is the first
 keyword occurring on a logical line; if not, we raise a

@@ -33,8 +33,8 @@ Example::
        3:     pass
     -->4: NOBREAK:
 
-    The AvantPy NOBREAK keyword cannot be used in
-    an IF/ELIF/ELSE clause (Python: if/elif/else).
+    The AvantPy 'NOBREAK' keyword cannot be used in
+    an 'IF/ELIF/ELSE' clause (Python: if/elif/else).
 
 
 MismatchedBracketsError
@@ -96,7 +96,8 @@ Example::
        4:          1):
 
     A statement beginning with the 'REPEAT' keyword must be on a single
-    line ending with a colon (:).
+    line ending with a colon (:) that indicates the beginning of an indented
+    block of code, with no other colon appearing on that line.
 
 
 MissingRepeatError
@@ -116,25 +117,6 @@ Example::
        4:     x += 1
 
     The AvantPy 'UNTIL'' keyword can be used only when preceded by 'REPEAT'.
-
-
-MissingRepeatError - 2
-----------------------
-
-Example::
-
-
-    AVANTPY EXCEPTION: MissingRepeatError
-
-    Error found in file 'raise_missing_repeat2.pyupper' on line 3.
-
-    Dialect used: pyupper
-
-       2: x = 0
-    -->3: FOREVER:
-       4:     x += 1
-
-    The AvantPy 'FOREVER'' keyword can be used only when preceded by 'REPEAT'.
 
 
 NameError
@@ -176,8 +158,9 @@ Example::
     -->3: a = 1 if True NOBREAK 3
        4: 
 
-    The AvantPy 'NOBREAK' keyword can be used instead of ELSE
-    (Python: else) only when it begins a new statement in FOR/WHILE loops.
+    The AvantPy 'NOBREAK' keyword can be used instead of 'ELSE'
+    (Python: else) only when it begins a new statement in
+    'FOR/WHILE' loops (Python: for/while).
 
 
 NobreakSyntaxError
@@ -197,8 +180,8 @@ Example::
        5: 
 
     The AvantPy 'NOBREAK' keyword can only be used as a replacement
-    of ELSE (Python: else) with a matching FOR or WHILE loop
-    (Python: for/while).
+    of 'ELSE' (Python: else) with a matching 'FOR' or
+    'WHILE' loop (Python: for/while).
 
 
 RepeatFirstError
@@ -240,7 +223,8 @@ Example::
     -->7:     NOBREAK:
 
     The AvantPy 'NOBREAK' keyword cannot be used in
-    a TRY/EXCEPT/ELSE/FINALLY clause (Python: try/except/else/finally).
+    a 'TRY/EXCEPT/ELSE/FINALLY' clause
+    (Python: try/except/else/finally).
 
 
 UnknownDialectError
@@ -266,5 +250,5 @@ Example::
 
     The following unknown language was requested: xx.
 
-    The known languages are: {'en', 'fr'}.
+    The known languages are: {'fr', 'en'}.
 

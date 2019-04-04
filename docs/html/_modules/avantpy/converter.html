@@ -324,21 +324,28 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">lang_to_py</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get_to_python</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">)</span>
         <span class="n">py_to_lang</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get_from_python</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">)</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">if_kwd</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;if&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elif_kwd</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;elif&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">else_kwd</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;else&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nobreak_kwd</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;else&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">repeat_kwd</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;repeat&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">for_kwd</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;for&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">while_kwd</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;while&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">until_kwd</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;until&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">forever_kwd</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;forever&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">loops_with_else</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s2">&quot;for&quot;</span><span class="p">,</span>
             <span class="s2">&quot;while&quot;</span><span class="p">,</span>
-            <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;for&quot;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">for_kwd</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">while_kwd</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">repeat_kwd</span><span class="p">,</span>
         <span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">if_blocks</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;if&quot;</span><span class="p">,</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;if&quot;</span><span class="p">]]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">try_blocks</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;try&quot;</span><span class="p">,</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;try&quot;</span><span class="p">]]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">blocks_with_else</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">if_blocks</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">try_blocks</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">loops_with_else</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">nobreak_kwd</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;else&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">if_blocks</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;if&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">if_kwd</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">try_kwd</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;try&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">except_kwd</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;except&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">finally_kwd</span> <span class="o">=</span> <span class="n">py_to_lang</span><span class="p">[</span><span class="s2">&quot;finally&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">try_blocks</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;try&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">try_kwd</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocks_with_else</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">if_blocks</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">try_blocks</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">loops_with_else</span></div>
 
 <div class="viewcode-block" id="Converter.init_bookkeeping_vars"><a class="viewcode-back" href="../../modules.html#avantpy.converter.Converter.init_bookkeeping_vars">[docs]</a>    <span class="k">def</span> <span class="nf">init_bookkeeping_vars</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initialises variables that are used for bookkeeping&quot;&quot;&quot;</span>
@@ -378,25 +385,18 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">process_after_repeat</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
 
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">repeat_n</span> <span class="ow">and</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="s2">&quot;:&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">brackets</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">raise_missing_repeat_colon</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">start_line</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;):&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">repeat_line</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">repeat_n</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">begin_new_line</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">repeat_line</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">MissingRepeatColonError</span><span class="p">(</span>
-                <span class="s2">&quot;Missing colon on line beginning with repeat&quot;</span><span class="p">,</span>
-                <span class="p">(</span>
-                    <span class="p">{</span>
-                        <span class="s2">&quot;repeat_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">repeat_kwd</span><span class="p">,</span>
-                        <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">start_line</span><span class="p">,</span>
-                        <span class="s2">&quot;source_name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_name</span><span class="p">,</span>
-                        <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
-                        <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">,</span>
-                    <span class="p">},</span>
-                <span class="p">),</span>
-            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">raise_missing_repeat_colon</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">start_line</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
 
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">repeat_line</span> <span class="ow">and</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="s2">&quot;:&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">brackets</span><span class="p">:</span>  <span class="c1"># Inside a slice or other construct with colon</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">raise_missing_repeat_colon</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">start_line</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">repeat_line</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
 
@@ -431,6 +431,23 @@
 
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">string</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Converter.raise_missing_repeat_colon"><a class="viewcode-back" href="../../modules.html#avantpy.converter.Converter.raise_missing_repeat_colon">[docs]</a>    <span class="k">def</span> <span class="nf">raise_missing_repeat_colon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">linenumber</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Raised if a repeat statement does not end with a colon on the same</span>
+<span class="sd">           line with no other colon appearing on that line.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">MissingRepeatColonError</span><span class="p">(</span>
+            <span class="s2">&quot;Missing colon on line beginning with repeat&quot;</span><span class="p">,</span>
+            <span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;repeat_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">repeat_kwd</span><span class="p">,</span>
+                    <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">linenumber</span><span class="p">,</span>
+                    <span class="s2">&quot;source_name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_name</span><span class="p">,</span>
+                    <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
+                    <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">,</span>
+                <span class="p">},</span>
+            <span class="p">),</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Converter.do_close_bracket"><a class="viewcode-back" href="../../modules.html#avantpy.converter.Converter.do_close_bracket">[docs]</a>    <span class="k">def</span> <span class="nf">do_close_bracket</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Determines if a closing bracket ), ], or }, matches a previously</span>
@@ -583,6 +600,9 @@
                         <span class="s2">&quot;source_name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_name</span><span class="p">,</span>
                         <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
                         <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">,</span>
+                        <span class="s2">&quot;for_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">for_kwd</span><span class="p">,</span>
+                        <span class="s2">&quot;while_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">while_kwd</span><span class="p">,</span>
+                        <span class="s2">&quot;else_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">else_kwd</span><span class="p">,</span>
                     <span class="p">},</span>
                 <span class="p">),</span>
             <span class="p">)</span>
@@ -600,6 +620,9 @@
                         <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">start_line</span><span class="p">,</span>
                         <span class="s2">&quot;source_name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_name</span><span class="p">,</span>
                         <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">,</span>
+                        <span class="s2">&quot;if_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">if_kwd</span><span class="p">,</span>
+                        <span class="s2">&quot;elif_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">elif_kwd</span><span class="p">,</span>
+                        <span class="s2">&quot;else_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">else_kwd</span><span class="p">,</span>
                     <span class="p">},</span>
                 <span class="p">),</span>
             <span class="p">)</span>
@@ -617,6 +640,10 @@
                         <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">start_line</span><span class="p">,</span>
                         <span class="s2">&quot;source_name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_name</span><span class="p">,</span>
                         <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">,</span>
+                        <span class="s2">&quot;try_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">try_kwd</span><span class="p">,</span>
+                        <span class="s2">&quot;except_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">except_kwd</span><span class="p">,</span>
+                        <span class="s2">&quot;else_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">else_kwd</span><span class="p">,</span>
+                        <span class="s2">&quot;finally_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">finally_kwd</span><span class="p">,</span>
                     <span class="p">},</span>
                 <span class="p">),</span>
             <span class="p">)</span>
@@ -630,6 +657,9 @@
                         <span class="s2">&quot;source_name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_name</span><span class="p">,</span>
                         <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
                         <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">,</span>
+                        <span class="s2">&quot;for_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">for_kwd</span><span class="p">,</span>
+                        <span class="s2">&quot;while_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">while_kwd</span><span class="p">,</span>
+                        <span class="s2">&quot;else_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">else_kwd</span><span class="p">,</span>
                     <span class="p">},</span>
                 <span class="p">),</span>
             <span class="p">)</span></div></div>

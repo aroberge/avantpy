@@ -36,8 +36,8 @@ Example::
        3:     passer
     -->4: pasinterrompu:
 
-    Le mot-clé pasinterrompu spécifique à Avantpy ne peut pas être utilisé
-    dans un énoncé si/sinonsi/sinon (Python: if/elif/else).
+    Le mot-clé 'pasinterrompu' spécifique à Avantpy ne peut pas être utilisé
+    dans un énoncé 'si/sinonsi/sinon' (Python: if/elif/else).
 
 
 MismatchedBracketsError
@@ -185,7 +185,7 @@ Example::
        5: 
 
     Le mot-clé 'pasinterrompu' spécifique à Avantpy peut seulement être utilisé
-    au lieu de sinon (Python: else) lorsqu'il débute un nouvel énoncé
+    au lieu de 'sinon' (Python: else) lorsqu'il débute un nouvel énoncé
     dans des boucles 'pour' ou 'tantque' (Python: for/while).
 
 
@@ -229,7 +229,7 @@ Example::
     -->7:     pasinterrompu:
 
     Le mot-clé 'pasinterrompu' spécifique à Avantpy ne peut pas être utilisé dans
-    un énoncé essayer/siexception/sinon/finalement (Python: try/except/else/finally).
+    un énoncé 'essayer/siexception/sinon/finalement' (Python: try/except/else/finally).
 
 
 UnknownDialectError

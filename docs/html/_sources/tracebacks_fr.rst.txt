@@ -10,21 +10,20 @@ documenter ici tous les exemples possibles tels qu'interprétés par AvantPy.
 .. note::
 
      Le contenu de cette page a été généré par l'exécution de
-     tb_pyfr.py situé dans le répertoire ``tests/pyfr/``.
+     tb_pyfr.py situé dans le répertoire ``tests/``.
      Ceci a besoin d'être fait de manière explicite lorsqu'on veut
      faire des corrections ou des ajouts, avant de faire la mise
      à jour du reste de la documentation avec Sphinx.
 
-
-AvantPy, version 0.0.8;
-Python, version 3.7.0
+AvantPy version: 0.0.8
+Python version: 3.7.0
 
 
 
 IfNobreakError
 --------------
 
-Exemple::
+Example::
 
 
     Exception AvantPy : IfNobreakError
@@ -37,14 +36,14 @@ Exemple::
        3:     passer
     -->4: pasinterrompu:
 
-    Le mot-clé pasinterrompu spécifique à Avantpy ne peut pas être utilisé
-    dans un énoncé si/sinonsi/sinon (Python: if/elif/else).
+    Le mot-clé 'pasinterrompu' spécifique à Avantpy ne peut pas être utilisé
+    dans un énoncé 'si/sinonsi/sinon' (Python: if/elif/else).
 
 
 MismatchedBracketsError
 -----------------------
 
-Exemple::
+Example::
 
 
     Exception AvantPy : MismatchedBracketsError
@@ -65,7 +64,7 @@ Exemple::
 MissingLeftBracketError
 -----------------------
 
-Exemple::
+Example::
 
 
     Exception AvantPy : MissingLeftBracketError
@@ -81,10 +80,32 @@ Exemple::
     Le symbole droit ) n'a pas de symbole gauche correspondant.
 
 
+MissingRepeatColonError
+-----------------------
+
+Example::
+
+
+    Exception AvantPy : RepeatFirstError
+
+    Erreur trouvée dans le fichier 'raise_missing_repeat_colon.pyfr' à la ligne 3.
+
+    Dialecte utilisé : pyfr
+
+       2: x = 0
+    -->3: répéter jusquà (x ==
+       4:          1):
+
+    Un énoncé débutant avec le mot clé 'répéter' spécifique à Avantpy
+    doit être sur une seule ligne terminant avec deux points (:) qui indiquent
+    le début d'un bloc de code de code indenté, sans qu'il n'y ait
+    d'autre deux points qui apparaissent sur cette ligne.
+
+
 MissingRepeatError
 ------------------
 
-Exemple::
+Example::
 
 
     Exception AvantPy : MissingRepeatError
@@ -97,30 +118,14 @@ Exemple::
     -->3: jusquà x == 2:
        4:     x += 1
 
-    Le mot-clé jusquà spécifique à Avantpy peut seulement être utilisé
-    s'il est précédé de 'répéter'.
-
-
-Exemple 2::
-
-    Exception AvantPy : MissingRepeatError
-
-    Erreur trouvée dans le fichier 'raise_missing_repeat2.pyfr' à la ligne 3.
-
-    Dialecte utilisé: pyfr
-
-       2: x = 0
-    -->3: sansfin:
-       4:     x += 1
-
-    Le mot-clé sansfin spécifique à Avantpy peut seulement être utilisé
+    Le mot-clé 'jusquà' spécifique à Avantpy peut seulement être utilisé
     s'il est précédé de 'répéter'.
 
 
 NameError
 ---------
 
-Exemple::
+Example::
 
 
     Exception Python : NameError: name 'c' is not defined
@@ -145,7 +150,7 @@ Exemple::
 NobreakFirstError
 -----------------
 
-Exemple::
+Example::
 
 
     Exception AvantPy : NobreakFirstError
@@ -158,7 +163,7 @@ Exemple::
     -->3: a = 1 if True pasinterrompu 3
        4: 
 
-    Le mot-clé pasinterrompu spécifique à Avantpy peut seulement être utilisé
+    Le mot-clé 'pasinterrompu' spécifique à Avantpy peut seulement être utilisé
     au lieu de sinon (Python: else) lorsqu'il débute un nouvel énoncé
     dans des boucles 'pour' ou 'tantque' (Python: for/while).
 
@@ -166,7 +171,7 @@ Exemple::
 NobreakSyntaxError
 ------------------
 
-Exemple::
+Example::
 
 
     Exception AvantPy : IfNobreakError
@@ -179,15 +184,15 @@ Exemple::
     -->4: pasinterrompu: pass
        5: 
 
-    Le mot-clé pasinterrompu spécifique à Avantpy peut seulement être utilisé
-    au lieu de sinon (Python: else) lorsqu'il débute un nouvel énoncé
+    Le mot-clé 'pasinterrompu' spécifique à Avantpy peut seulement être utilisé
+    au lieu de 'sinon' (Python: else) lorsqu'il débute un nouvel énoncé
     dans des boucles 'pour' ou 'tantque' (Python: for/while).
 
 
 RepeatFirstError
 ----------------
 
-Exemple::
+Example::
 
 
     Exception AvantPy : RepeatFirstError
@@ -200,7 +205,7 @@ Exemple::
     -->3: a = répéter
        4: 
 
-    Le mot-clé répéter spécifique à Avantpy peut seulement être utilisé
+    Le mot-clé 'répéter' spécifique à Avantpy peut seulement être utilisé
     pour débuter une nouvelle boucle 'pour' ou 'tantque'
     (équivalent Python: 'for' ou 'while').
 
@@ -208,7 +213,7 @@ Exemple::
 TryNobreakError
 ---------------
 
-Exemple::
+Example::
 
 
     Exception AvantPy : TryNobreakError
@@ -223,27 +228,14 @@ Exemple::
        6:         A = 2
     -->7:     pasinterrompu:
 
-    Le mot-clé pasinterrompu spécifique à Avantpy ne peut pas être utilisé dans
-    un énoncé essayer/siexception/sinon/finalement (Python: try/except/else/finally).
-
-
-UnknownLanguageError
---------------------
-
-Exemple::
-
-
-    Exception AvantPy : UnknownLanguageError
-
-    Le langage inconnu suivant a été demandé : xx.
-
-    Les langages connus sont : {'en', 'fr'}.
+    Le mot-clé 'pasinterrompu' spécifique à Avantpy ne peut pas être utilisé dans
+    un énoncé 'essayer/siexception/sinon/finalement' (Python: try/except/else/finally).
 
 
 UnknownDialectError
 -------------------
 
-Exemple::
+Example::
 
 
     Exception AvantPy : UnknownDialectError
@@ -251,4 +243,17 @@ Exemple::
     Le dialecte inconnu suivant a été demandé : pyxx.
 
     Les dialectes connus sont : ['pyen', 'pyes', 'pyfr', 'pyupper'].
+
+
+UnknownLanguageError
+--------------------
+
+Example::
+
+
+    Exception AvantPy : UnknownLanguageError
+
+    Le langage inconnu suivant a été demandé : xx.
+
+    Les langages connus sont : {'fr', 'en'}.
 
