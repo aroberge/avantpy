@@ -100,13 +100,9 @@ for other dialects, and for testing.
 Existing languages
 ------------------
 
-Language translations files for language ``xx`` are Python files
-named ``xx.py`` and are found in the AvantPy's repository:
-`avantpy/translations/ directory <https://github.com/aroberge/avantpy/tree/master/avantpy/translations>`_.
+Language translations are implemented using gettext.
+Currently, in addition to the default English version, the only available
+language is French.
 
-Currently, a **DRAFT** implementation of the following translations exist:
-
-- `English translations <https://github.com/aroberge/avantpy/tree/master/avantpy/translations/en.py>`_
-- `French translations <https://github.com/aroberge/avantpy/tree/master/avantpy/translations/fr.py>`_
-- `English UPPERCASE version <https://github.com/aroberge/avantpy/tree/master/avantpy/translations/pyupper.py>`_ is primarily intended to be used as a template
-  for other languages, and for testing.
+Both the original text in English and the French version should be considered
+to be draft versions.

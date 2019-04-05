@@ -12,7 +12,7 @@ Such feedback will also be available in languages other than English.
      This needs to be done explicitly, independently of updating the
      documentation using Sphinx.
 
-AvantPy version: 0.0.8
+AvantPy version: 0.0.9
 Python version: 3.7.0
 
 
@@ -23,7 +23,7 @@ IfNobreakError
 Example::
 
 
-    AVANTPY EXCEPTION: IfNobreakError
+    AvantPy exception: IfNobreakError
 
     Error found in file 'raise_if_nobreak.pyupper' on line 4.
 
@@ -43,7 +43,7 @@ MismatchedBracketsError
 Example::
 
 
-    AVANTPY EXCEPTION: MismatchedBracketsError
+    AvantPy exception: MismatchedBracketsError
 
     Error found in file 'raise_mismatched_brackets.pyupper' on lines [2 - 10].
 
@@ -66,7 +66,7 @@ MissingLeftBracketError
 Example::
 
 
-    AVANTPY EXCEPTION: MissingLeftBracketError
+    AvantPy exception: MissingLeftBracketError
 
     Error found in file 'raise_missing_left_bracket.pyupper' on line 5.
 
@@ -85,7 +85,7 @@ MissingRepeatColonError
 Example::
 
 
-    AVANTPY EXCEPTION: MissingRepeatColonError
+    AvantPy exception: MissingRepeatColonError
 
     Error found in file 'raise_missing_repeat_colon.pyupper' on line 3.
 
@@ -106,7 +106,7 @@ MissingRepeatError
 Example::
 
 
-    AVANTPY EXCEPTION: MissingRepeatError
+    AvantPy exception: MissingRepeatError
 
     Error found in file 'raise_missing_repeat.pyupper' on line 3.
 
@@ -125,9 +125,9 @@ NameError
 Example::
 
 
-    PYTHON EXCEPTION: NameError: name 'c' is not defined
+    Python exception: NameError: name 'c' is not defined
 
-    Error found in file '' on line 4.
+    Error found in file 'raise_name_error.pyupper' on line 4.
 
     Dialect used: pyupper
 
@@ -148,7 +148,7 @@ NobreakFirstError
 Example::
 
 
-    AVANTPY EXCEPTION: NobreakFirstError
+    AvantPy exception: NobreakFirstError
 
     Error found in file 'raise_nobreak_first.pyupper' on line 3.
 
@@ -169,7 +169,7 @@ NobreakSyntaxError
 Example::
 
 
-    AVANTPY EXCEPTION: NobreakSyntaxError
+    AvantPy exception: NobreakSyntaxError
 
     Error found in file 'raise_nobreak_syntax.pyupper' on line 4.
 
@@ -190,7 +190,7 @@ RepeatFirstError
 Example::
 
 
-    AVANTPY EXCEPTION: RepeatFirstError
+    AvantPy exception: RepeatFirstError
 
     Error found in file 'raise_repeat_first.pyupper' on line 3.
 
@@ -210,7 +210,7 @@ TryNobreakError
 Example::
 
 
-    AVANTPY EXCEPTION: TryNobreakError
+    AvantPy exception: TryNobreakError
 
     Error found in file 'raise_try_nobreak.pyupper' on line 7.
 
@@ -233,7 +233,7 @@ UnknownDialectError
 Example::
 
 
-    AVANTPY EXCEPTION: UnknownDialectError
+    AvantPy exception: UnknownDialectError
 
     The following unknown dialect was requested: pyxx.
 
@@ -246,9 +246,9 @@ UnknownLanguageError
 Example::
 
 
-    AVANTPY EXCEPTION: UnknownLanguageError
+    AvantPy exception: UnknownLanguageError
 
     The following unknown language was requested: xx.
 
-    The known languages are: {'fr', 'en'}.
+    The known languages are: {'en', 'fr'}.
 

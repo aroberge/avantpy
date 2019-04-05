@@ -64,6 +64,21 @@ def get_partial_source(source, begin, end, marks=None, nb_digits=None):
     return "\n".join(result)
 
 
+def extract_filename_linenumber(exc):
+    """Extracting filename and linenumber where an error occurred based
+       on information from traceback."""
+
+    last_tb_line = traceback.format_tb(exc.__traceback__)[-1]
+    # For last_tb_line, we expect something like
+    # File "filename", line 1, in <module>
+    splitted_line = last_tb_line.split(",")
+    filename = splitted_line[0].replace("File ", "").replace('"', "").strip()
+    if filename == "<string>" and state.current_filename is not None:
+        filename = state.current_filename
+    linenumber = int(splitted_line[1].replace("line ", ""))
+    return filename, linenumber
+
+
 def write_err(msg):
     """Writes a string to sys.stderr."""
     sys.stderr.write(msg)
@@ -296,19 +311,11 @@ def handle_NameError(exc, source):
     exc_name = exc.__class__.__name__
     python_display = "{exc_name}: {msg}".format(exc_name=exc_name, msg=msg)
 
-    last_tb_line = traceback.format_tb(exc.__traceback__)[-1]
-    # For last_tb_line, we expect something like
-    # File "filename", line 1, in <module>
-    splitted_line = last_tb_line.split(",")
-    filename = last_tb_line[0].replace("File ", "").replace('"', "").strip()
-    if filename == "<string>" and state.current_filename is not None:
-        filename = state.current_filename
+    filename, linenumber = extract_filename_linenumber(exc)
 
-    linenumber = int(splitted_line[1].replace("line ", ""))
     begin = linenumber - 1
     end = linenumber + 1
     marks = [linenumber]
-
     partial_source = get_partial_source(source, begin, end, marks=marks)
 
     return _(

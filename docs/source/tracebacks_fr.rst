@@ -15,7 +15,7 @@ documenter ici tous les exemples possibles tels qu'interprétés par AvantPy.
      faire des corrections ou des ajouts, avant de faire la mise
      à jour du reste de la documentation avec Sphinx.
 
-AvantPy version: 0.0.8
+AvantPy version: 0.0.9
 Python version: 3.7.0
 
 
@@ -130,7 +130,7 @@ Example::
 
     Exception Python : NameError: name 'c' is not defined
 
-    Erreur trouvée dans le fichier '' à la ligne 4.
+    Erreur trouvée dans le fichier 'raise_name_error.pyfr' à la ligne 4.
 
     Dialecte utilisé : pyfr
 
