@@ -99,3 +99,9 @@ if commande == 'q':        # si commande == 'q':
 ```
 
 and feel ready to leave AvantPy and only write Python.
+
+
+## Code of Conduct
+
+We completely support the [Python Community Code of Conduct](https://www.python.org/psf/codeofconduct/)
+Contributors to this project are expected to do the same.

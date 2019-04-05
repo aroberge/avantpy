@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Index &#8212; AvantPy 0.0.8 documentation</title>
+    <title>Index &#8212; AvantPy 0.0.9 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -27,7 +27,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.8 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.9 documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -111,20 +111,16 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="modules.html#avantpy.gui.App.close_converted_window">close_converted_window() (avantpy.gui.App method)</a>
+      <li><a href="modules.html#avantpy.gui.EditorWidget.colorize">colorize() (avantpy.gui.EditorWidget method)</a>
 </li>
-      <li><a href="modules.html#avantpy.gui.App.close_source_window">close_source_window() (avantpy.gui.App method)</a>
-</li>
-      <li><a href="modules.html#avantpy.gui.TextEditor.colorize">colorize() (avantpy.gui.TextEditor method)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="modules.html#avantpy.converter.Converter.convert">convert() (avantpy.converter.Converter method)</a>
 
       <ul>
         <li><a href="modules.html#avantpy.converter.convert">(in module avantpy.converter)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="modules.html#avantpy.gui.App.convert_source">convert_source() (avantpy.gui.App method)</a>
 </li>
       <li><a href="modules.html#avantpy.converter.Converter">Converter (class in avantpy.converter)</a>
@@ -148,6 +144,10 @@
 
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#avantpy.gui.EditorWidget">EditorWidget (class in avantpy.gui)</a>
+</li>
+  </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="modules.html#avantpy.import_hook.AvantPyLoader.exec_module">exec_module() (avantpy.import_hook.AvantPyLoader method)</a>
 </li>
@@ -173,7 +173,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="modules.html#avantpy.gui.App.get_source">get_source() (avantpy.gui.App method)</a>
 </li>
-      <li><a href="modules.html#avantpy.gui.TextEditor.get_text">get_text() (avantpy.gui.TextEditor method)</a>
+      <li><a href="modules.html#avantpy.gui.EditorWidget.get_text">get_text() (avantpy.gui.EditorWidget method)</a>
 </li>
       <li><a href="modules.html#avantpy.converter.get_unique_variable_names">get_unique_variable_names() (in module avantpy.converter)</a>
 </li>
@@ -229,7 +229,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="modules.html#avantpy.converter.Converter.init_dialect_vars">init_dialect_vars() (avantpy.converter.Converter method)</a>
 </li>
-      <li><a href="modules.html#avantpy.gui.TextEditor.insert_text">insert_text() (avantpy.gui.TextEditor method)</a>
+      <li><a href="modules.html#avantpy.gui.EditorWidget.insert_text">insert_text() (avantpy.gui.EditorWidget method)</a>
 </li>
       <li><a href="modules.html#avantpy.console.AvantPyInteractiveConsole.interact">interact() (avantpy.console.AvantPyInteractiveConsole method)</a>
 </li>
@@ -239,8 +239,6 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="modules.html#avantpy.gui.TextEditor.make_menu">make_menu() (avantpy.gui.TextEditor method)</a>
-</li>
       <li><a href="modules.html#avantpy.exceptions.MismatchedBracketsError">MismatchedBracketsError</a>
 </li>
       <li><a href="modules.html#avantpy.exceptions.MissingLeftBracketError">MissingLeftBracketError</a>
@@ -293,6 +291,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="modules.html#avantpy.converter.Converter.raise_missing_repeat_colon">raise_missing_repeat_colon() (avantpy.converter.Converter method)</a>
 </li>
+      <li><a href="modules.html#avantpy.gui.TextLineNumbers.redraw">redraw() (avantpy.gui.TextLineNumbers method)</a>
+</li>
       <li><a href="modules.html#avantpy.exceptions.RepeatFirstError">RepeatFirstError</a>
 </li>
   </ul></td>
@@ -309,7 +309,7 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="modules.html#avantpy.gui.TextEditor.save_file">save_file() (avantpy.gui.TextEditor method)</a>
+      <li><a href="modules.html#avantpy.gui.EditorWidget.save_file">save_file() (avantpy.gui.EditorWidget method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -323,7 +323,7 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="modules.html#avantpy.gui.TextEditor">TextEditor (class in avantpy.gui)</a>
+      <li><a href="modules.html#avantpy.gui.TextLineNumbers">TextLineNumbers (class in avantpy.gui)</a>
 </li>
       <li><a href="modules.html#avantpy.converter.transcode">transcode() (in module avantpy.converter)</a>
 </li>
@@ -378,7 +378,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.8 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.9 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

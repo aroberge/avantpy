@@ -1,8 +1,9 @@
 Contributing
 ==================
 
-Contributions of all types are welcome, as long as they are made in a way that respect
-other community members.  Contributions can be small or large, address documentation
+Contributions of all types are welcome, as long as they are made in a way that follows
+the `Python Community Code of Conduct <https://www.python.org/psf/codeofconduct/>`_
+which we have adopted.  Contributions can be small or large, address documentation
 or code, etc.
 
 - Bug report and suggestions for improvements are always welcome and may be

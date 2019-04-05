@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Other modules &#8212; AvantPy 0.0.8 documentation</title>
+    <title>Other modules &#8212; AvantPy 0.0.9 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -34,7 +34,7 @@
         <li class="right" >
           <a href="testing.html" title="Testing"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.8 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.9 documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -730,23 +730,11 @@ with Python keyword, as well as their counterpart in various dialects,
 highlighted.</p>
 <dl class="class">
 <dt id="avantpy.gui.App">
-<em class="property">class </em><code class="descclassname">avantpy.gui.</code><code class="descname">App</code><span class="sig-paren">(</span><em>title='Converter'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#App"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.App" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">avantpy.gui.</code><code class="descname">App</code><span class="sig-paren">(</span><em>master=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#App"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.App" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="avantpy.gui.App.add_ui">
 <code class="descname">add_ui</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#App.add_ui"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.App.add_ui" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds UI elements to the main window</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="avantpy.gui.App.close_converted_window">
-<code class="descname">close_converted_window</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#App.close_converted_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.App.close_converted_window" title="Permalink to this definition">¶</a></dt>
-<dd><p>Closes the converted window.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="avantpy.gui.App.close_source_window">
-<code class="descname">close_source_window</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#App.close_source_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.App.close_source_window" title="Permalink to this definition">¶</a></dt>
-<dd><p>Closes the source window</p>
 </dd></dl>
 
 <dl class="method">
@@ -770,39 +758,44 @@ highlighted.</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="avantpy.gui.TextEditor">
-<em class="property">class </em><code class="descclassname">avantpy.gui.</code><code class="descname">TextEditor</code><span class="sig-paren">(</span><em>parent</em>, <em>title='Window title'</em>, <em>app=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#TextEditor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.TextEditor" title="Permalink to this definition">¶</a></dt>
+<dt id="avantpy.gui.EditorWidget">
+<em class="property">class </em><code class="descclassname">avantpy.gui.</code><code class="descname">EditorWidget</code><span class="sig-paren">(</span><em>parent</em>, <em>parent_frame</em>, <em>other=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#EditorWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.EditorWidget" title="Permalink to this definition">¶</a></dt>
 <dd><p>A scrollable text editor, that can save files.</p>
 <dl class="method">
-<dt id="avantpy.gui.TextEditor.colorize">
-<code class="descname">colorize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#TextEditor.colorize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.TextEditor.colorize" title="Permalink to this definition">¶</a></dt>
+<dt id="avantpy.gui.EditorWidget.colorize">
+<code class="descname">colorize</code><span class="sig-paren">(</span><em>event=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#EditorWidget.colorize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.EditorWidget.colorize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Colorizes the Python keywords and a few builtins, as well as the
 corresponding version in other dialects.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="avantpy.gui.TextEditor.get_text">
-<code class="descname">get_text</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#TextEditor.get_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.TextEditor.get_text" title="Permalink to this definition">¶</a></dt>
+<dt id="avantpy.gui.EditorWidget.get_text">
+<code class="descname">get_text</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#EditorWidget.get_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.EditorWidget.get_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the current content and returns it as a string</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="avantpy.gui.TextEditor.insert_text">
-<code class="descname">insert_text</code><span class="sig-paren">(</span><em>txt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#TextEditor.insert_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.TextEditor.insert_text" title="Permalink to this definition">¶</a></dt>
+<dt id="avantpy.gui.EditorWidget.insert_text">
+<code class="descname">insert_text</code><span class="sig-paren">(</span><em>txt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#EditorWidget.insert_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.EditorWidget.insert_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inserts the text in the editor, replacing any previously existing
 content.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="avantpy.gui.TextEditor.make_menu">
-<code class="descname">make_menu</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#TextEditor.make_menu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.TextEditor.make_menu" title="Permalink to this definition">¶</a></dt>
-<dd><p>Makes the main menu</p>
+<dt id="avantpy.gui.EditorWidget.save_file">
+<code class="descname">save_file</code><span class="sig-paren">(</span><em>event=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#EditorWidget.save_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.EditorWidget.save_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the file currently in the Texteditor</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="avantpy.gui.TextEditor.save_file">
-<code class="descname">save_file</code><span class="sig-paren">(</span><em>event=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#TextEditor.save_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.TextEditor.save_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Saves the file currently in the Texteditor</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="avantpy.gui.TextLineNumbers">
+<em class="property">class </em><code class="descclassname">avantpy.gui.</code><code class="descname">TextLineNumbers</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#TextLineNumbers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.TextLineNumbers" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="avantpy.gui.TextLineNumbers.redraw">
+<code class="descname">redraw</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#TextLineNumbers.redraw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.TextLineNumbers.redraw" title="Permalink to this definition">¶</a></dt>
+<dd><p>redraw line numbers</p>
 </dd></dl>
 
 </dd></dl>
@@ -875,7 +868,7 @@ as in:</p>
         <li class="right" >
           <a href="testing.html" title="Testing"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.8 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.9 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
