@@ -18,7 +18,7 @@ class _State:
     def __init__(self):
         self.dict_to_py = {}
         self.dict_from_py = {}
-        self.languages = set([])
+        self.languages = set(["en"])
         self.current_dialect = None
         self.current_lang = None
         self.current_filename = None
@@ -165,7 +165,7 @@ class _State:
            Intended to be used in the console.
         """
         print(
-            _("    ==> LANGUAGE: {lang} | AVANTPY DIALECT: {dialect}").format(
+            _("    ==> Language: {lang} | AvantPy dialect: {dialect}").format(
                 lang=self.current_lang, dialect=self.current_dialect
             )
         )

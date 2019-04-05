@@ -1,12 +1,12 @@
 # Roadmap
 
-- version 0.1: first public release (with announcement on blog)
+- version 0.1:
+  - all standard Python Errors can be caught and an explanation provided
+    - a simple tkinter-based IDE has been written as a demo
   - Consider having a simplified and translated turtle module included
     - perhaps do this via a special `magicturtle` keyword to be use on its own,
       which would set everything up and make a small subset of turtle
       functions available.
-  - all standard Python Errors can be caught and an explanation provided
-    - a simple tkinter-based IDE has been written as a demo
 
 ## TODO
 

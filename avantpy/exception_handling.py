@@ -119,7 +119,7 @@ def handle_IfNobreakError(exc, source):
 
     return _(
         """
-    AVANTPY EXCEPTION: IfNobreakError
+    AvantPy exception: IfNobreakError
 
     Error found in file '{filename}' on line {nobreak_linenumber}.
 
@@ -157,7 +157,7 @@ def handle_MismatchedBracketsError(exc, source):
 
     return _(
         """
-    AVANTPY EXCEPTION: MismatchedBracketsError
+    AvantPy exception: MismatchedBracketsError
 
     Error found in file '{filename}' on lines [{begin} - {end}].
 
@@ -194,7 +194,7 @@ def handle_MissingLeftBracketError(exc, source):
 
     return _(
         """
-    AVANTPY EXCEPTION: MissingLeftBracketError
+    AvantPy exception: MissingLeftBracketError
 
     Error found in file '{filename}' on line {linenumber}.
 
@@ -229,7 +229,7 @@ def handle_MissingRepeatColonError(exc, source):
 
     return _(
         """
-    AVANTPY EXCEPTION: MissingRepeatColonError
+    AvantPy exception: MissingRepeatColonError
 
     Error found in file '{filename}' on line {linenumber}.
 
@@ -266,7 +266,7 @@ def handle_MissingRepeatError(exc, source):
 
     return _(
         """
-    AVANTPY EXCEPTION: MissingRepeatError
+    AvantPy exception: MissingRepeatError
 
     Error found in file '{filename}' on line {linenumber}.
 
@@ -313,7 +313,7 @@ def handle_NameError(exc, source):
 
     return _(
         """
-    PYTHON EXCEPTION: {python_display}
+    Python exception: {python_display}
 
     Error found in file '{filename}' on line {linenumber}.
 
@@ -354,7 +354,7 @@ def handle_NobreakFirstError(exc, source):
 
     return _(
         """
-    AVANTPY EXCEPTION: NobreakFirstError
+    AvantPy exception: NobreakFirstError
 
     Error found in file '{filename}' on line {linenumber}.
 
@@ -394,7 +394,7 @@ def handle_NobreakSyntaxError(exc, source):
 
     return _(
         """
-    AVANTPY EXCEPTION: NobreakSyntaxError
+    AvantPy exception: NobreakSyntaxError
 
     Error found in file '{filename}' on line {linenumber}.
 
@@ -434,7 +434,7 @@ def handle_RepeatFirstError(exc, source):
 
     return _(
         """
-    AVANTPY EXCEPTION: RepeatFirstError
+    AvantPy exception: RepeatFirstError
 
     Error found in file '{filename}' on line {linenumber}.
 
@@ -469,7 +469,7 @@ def handle_TryNobreakError(exc, source):
 
     return _(
         """
-    AVANTPY EXCEPTION: TryNobreakError
+    AvantPy exception: TryNobreakError
 
     Error found in file '{filename}' on line {nobreak_linenumber}.
 
@@ -504,7 +504,7 @@ def handle_UnknownDialectError(exc, *args):
     all_dialects = exc.args[1]
     return _(
         """
-    AVANTPY EXCEPTION: UnknownDialectError
+    AvantPy exception: UnknownDialectError
 
     The following unknown dialect was requested: {dialect}.
 
@@ -522,7 +522,7 @@ def handle_UnknownLanguageError(exc, *args):
 
     return _(
         """
-    AVANTPY EXCEPTION: UnknownLanguageError
+    AvantPy exception: UnknownLanguageError
 
     The following unknown language was requested: {lang}.
 
