@@ -4,9 +4,8 @@ Python with **training wheels**: _executable pseudocode_ in any language.
 
 Please see https://aroberge.github.io/avantpy/docs/html/ for more information, including for those
 who wish to contribute or file issues.
-
-.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
-    :target: https://github.com/ambv/black
+AvantPy uses Black.
+![Black logo](https://img.shields.io/badge/code%20style-black-000000.svg)
 
 ## What is AvantPy
 
