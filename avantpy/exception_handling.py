@@ -69,6 +69,10 @@ def extract_filename_linenumber(exc):
        on information from traceback."""
 
     last_tb_line = traceback.format_tb(exc.__traceback__)[-1]
+
+    for line in traceback.format_tb(exc.__traceback__):
+        print(line)
+
     # For last_tb_line, we expect something like
     # File "filename", line 1, in <module>
     splitted_line = last_tb_line.split(",")
@@ -156,6 +160,65 @@ def handle_IfNobreakError(exc, source):
             "if_kwd": params["if_kwd"],
             "elif_kwd": params["elif_kwd"],
             "else_kwd": params["else_kwd"],
+        }
+    )
+
+
+def handle_IndentationError(exc, source):
+    """Handles IndentationError.
+    """
+    msg = exc.args[0]
+    if "unexpected indent" in msg:
+        this_case = _(
+            "In this case, the line indicated by an arrow\n"
+            "    is more indented than expected and does not match\n"
+            "    the indentation of the previous line."
+        )
+    elif "expected an indented block" in msg:
+        this_case = _(
+            "In this case, the line indicated by an arrow\n"
+            "    was expected to begin a new indented block."
+        )
+    else:
+        this_case = _(
+            "In this case, the line indicated by an arrow\n"
+            "    which is less indented the preceding one,\n"
+            "    and is not aligned vertically with another block of code."
+        )
+
+    exc_name = exc.__class__.__name__
+    python_display = "{exc_name}: {msg}".format(exc_name=exc_name, msg=msg)
+    filename, linenumber, _ignore, _ignore = exc.args[1]
+
+    begin = linenumber - 4
+    end = linenumber + 1
+    marks = [linenumber]
+    partial_source = get_partial_source(source, begin, end, marks=marks)
+
+    return _(
+        """
+    Python exception:
+        {python_display}
+
+    Error found in file '{filename}' on line {linenumber}.
+
+    Dialect used: {dialect}
+
+{partial_source}
+
+    An indentation error occurs when a given line is
+    not indented (aligned vertically) as expected.
+    {this_case}
+
+"""
+    ).format(
+        **{
+            "filename": filename,
+            "python_display": python_display,
+            "partial_source": partial_source,
+            "linenumber": linenumber,
+            "dialect": state.current_dialect,
+            "this_case": this_case,
         }
     )
 
@@ -320,7 +383,8 @@ def handle_NameError(exc, source):
 
     return _(
         """
-    Python exception: {python_display}
+    Python exception:
+        {python_display}
 
     Error found in file '{filename}' on line {linenumber}.
 
@@ -541,6 +605,7 @@ def handle_UnknownLanguageError(exc, *args):
 
 dispatch = {
     "IfNobreakError": handle_IfNobreakError,
+    "IndentationError": handle_IndentationError,
     "NameError": handle_NameError,
     "MismatchedBracketsError": handle_MismatchedBracketsError,
     "MissingLeftBracketError": handle_MissingLeftBracketError,
