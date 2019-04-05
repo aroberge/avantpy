@@ -37,6 +37,18 @@ here's how you can do it::
                             into Python.
 
 
+Currently, the ``--gui`` option only includes a tool to convert from one
+dialect (including Python) into another dialect (or Python) as illustrated
+below.
+
+.. image:: images/converter.png
+   :scale: 50 %
+   :alt: Repeat 10 block
+
+The code on the left is in the "UPPERCASE" (pyupper) dialect; the
+code on the right has been converted to Python.
+
+
 .. sidebar:: Straight from the source
 
     The content of the rest of this page comes from the
