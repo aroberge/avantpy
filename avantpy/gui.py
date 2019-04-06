@@ -5,6 +5,11 @@ and convert it into another dialect or into Python, showing both the
 original source and the converted one in two different editor frames,
 with Python keyword, as well as their counterpart in various dialects,
 highlighted.
+
+.. todo::
+
+   This module needs to be documented properly
+
 """
 import os
 import tkinter as tk

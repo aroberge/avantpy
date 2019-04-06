@@ -10,6 +10,37 @@ from .session import state
 
 ENABLED = True
 
+# Many strings are common to the information provided by  exceptions handlers below.
+# To avoid code duplication, we define them here.
+# Furthermore, note that two versions are provided: one where we assume that
+# the code is standard Python, and that no dialect-based keywords are used,
+# and a second version specific to dialects.
+
+avantpy_exception_with_dialect = _(
+    "    AvantPy exception: {exception_name}\n\n"
+    "    Error found in file '{filename}' on line {linenumber}.\n\n"
+    "    Dialect used: {dialect}\n\n"
+    "{partial_source}\n\n"
+)
+avantpy_exception_no_dialect = _(
+    "    AvantPy exception: {exception_name}\n\n"
+    "    Error found in file '{filename}' on line {linenumber}.\n\n"
+    "{partial_source}\n\n"
+)
+python_exception_with_dialect = _(
+    "    Python exception: \n"
+    "        {python_display}\n\n"
+    "    Error found in file '{filename}' on line {linenumber}.\n\n"
+    "    Dialect used: {dialect}\n\n"
+    "{partial_source}\n\n"
+)
+python_exception_no_dialect = _(
+    "    Python exception: \n"
+    "        {python_display}\n\n"
+    "    Error found in file '{filename}' on line {linenumber}.\n\n"
+    "{partial_source}\n\n"
+)
+
 
 def disable():
     """Disables custom exception handling"""
@@ -70,9 +101,6 @@ def extract_filename_linenumber(exc):
 
     last_tb_line = traceback.format_tb(exc.__traceback__)[-1]
 
-    for line in traceback.format_tb(exc.__traceback__):
-        print(line)
-
     # For last_tb_line, we expect something like
     # File "filename", line 1, in <module>
     splitted_line = last_tb_line.split(",")
@@ -98,7 +126,7 @@ def write_exception_info(exc, source):
             _("An exception was raised for which we have no simplified traceback:\n")
         )
         write_err("name: %s\n" % exc.__class__.__name__)
-        write_err("args: " + str(exc.args) + "\n")
+        write_err("args: " + str(exc.args) + "\n\n")
         write_err("Python traceback follows:\n\n")
         for item in traceback.format_tb(exc.__traceback__):
             write_err(item)
@@ -135,32 +163,29 @@ def handle_IfNobreakError(exc, source):
     end = params["linenumber"]
     marks = [end]
     partial_source = get_partial_source(source, begin, end, marks=marks)
+    dialect = params["dialect"]
 
-    return _(
-        """
-    AvantPy exception: IfNobreakError
+    if dialect in [None, "pyen"]:
+        message = avantpy_exception_no_dialect + _(
+            "    The AvantPy '{nobreak_kwd}' keyword cannot be used in\n"
+            "    an if/elif/else clause.\n\n"
+        )
+    else:
+        message = avantpy_exception_with_dialect + _(
+            "    The AvantPy '{nobreak_kwd}' keyword cannot be used in\n"
+            "    an '{if_kwd}/{elif_kwd}/{else_kwd}' clause (Python: if/elif/else).\n\n"
+        )
 
-    Error found in file '{filename}' on line {nobreak_linenumber}.
-
-    Dialect used: {dialect}
-
-{partial_source}
-
-    The AvantPy '{nobreak_kwd}' keyword cannot be used in
-    an '{if_kwd}/{elif_kwd}/{else_kwd}' clause (Python: if/elif/else).
-
-"""
-    ).format(
-        **{
-            "filename": params["source_name"],
-            "nobreak_kwd": params["nobreak keyword"],
-            "partial_source": partial_source,
-            "nobreak_linenumber": end,
-            "dialect": params["dialect"],
-            "if_kwd": params["if_kwd"],
-            "elif_kwd": params["elif_kwd"],
-            "else_kwd": params["else_kwd"],
-        }
+    return message.format(
+        exception_name=exc.__class__.__name__,
+        filename=params["source_name"],
+        nobreak_kwd=params["nobreak keyword"],
+        partial_source=partial_source,
+        linenumber=end,
+        dialect=dialect,
+        if_kwd=params["if_kwd"],
+        elif_kwd=params["elif_kwd"],
+        else_kwd=params["else_kwd"],
     )
 
 
@@ -195,31 +220,27 @@ def handle_IndentationError(exc, source):
     marks = [linenumber]
     partial_source = get_partial_source(source, begin, end, marks=marks)
 
-    return _(
-        """
-    Python exception:
-        {python_display}
+    dialect = state.current_dialect
 
-    Error found in file '{filename}' on line {linenumber}.
+    message_end = _(
+        "An indentation error occurs when a given line is\n"
+        "not indented (aligned vertically) as expected.\n"
+        "{this_case}\n\n"
+    )
 
-    Dialect used: {dialect}
+    if dialect in [None, "pyen"]:
+        message = python_exception_no_dialect + message_end
+    else:
+        message = python_exception_with_dialect + message_end
 
-{partial_source}
-
-    An indentation error occurs when a given line is
-    not indented (aligned vertically) as expected.
-    {this_case}
-
-"""
-    ).format(
-        **{
-            "filename": filename,
-            "python_display": python_display,
-            "partial_source": partial_source,
-            "linenumber": linenumber,
-            "dialect": state.current_dialect,
-            "this_case": this_case,
-        }
+    return message.format(
+        exception_name=exc_name,
+        filename=filename,
+        python_display=python_display,
+        partial_source=partial_source,
+        dialect=dialect,
+        linenumber=linenumber,
+        this_case=this_case,
     )
 
 
@@ -233,29 +254,25 @@ def handle_MismatchedBracketsError(exc, source):
     marks = [begin, end]
     partial_source = get_partial_source(source, begin, end, marks=marks)
 
-    return _(
-        """
-    AvantPy exception: MismatchedBracketsError
+    dialect = params["dialect"]
 
-    Error found in file '{filename}' on lines [{begin} - {end}].
+    message_end = _(
+        "    The opening {open_bracket} does not match the closing {close_bracket}.\n\n"
+    )
 
-    Dialect used: {dialect}
+    if dialect in [None, "pyen"]:
+        message = avantpy_exception_no_dialect + message_end
+    else:
+        message = avantpy_exception_with_dialect + message_end
 
-{partial_source}
-
-    The opening {open_bracket} does not match the closing {close_bracket}.
-
-"""
-    ).format(
-        **{
-            "filename": params["source_name"],
-            "open_bracket": params["open_bracket"],
-            "close_bracket": params["close_bracket"],
-            "begin": begin,
-            "end": end,
-            "partial_source": partial_source,
-            "dialect": params["dialect"],
-        }
+    return message.format(
+        exception_name=exc.__class__.__name__,
+        filename=params["source_name"],
+        linenumber=end,
+        open_bracket=params["open_bracket"],
+        close_bracket=params["close_bracket"],
+        partial_source=partial_source,
+        dialect=dialect,
     )
 
 
@@ -270,27 +287,22 @@ def handle_MissingLeftBracketError(exc, source):
     marks = [linenumber]
     partial_source = get_partial_source(source, begin, end, marks=marks)
 
-    return _(
-        """
-    AvantPy exception: MissingLeftBracketError
+    dialect = params["dialect"]
 
-    Error found in file '{filename}' on line {linenumber}.
+    message_end = _("    The closing {bracket} does not match anything.\n\n")
 
-    Dialect used: {dialect}
+    if dialect in [None, "pyen"]:
+        message = avantpy_exception_no_dialect + message_end
+    else:
+        message = avantpy_exception_with_dialect + message_end
 
-{partial_source}
-
-    The closing {bracket} does not match anything.
-
-"""
-    ).format(
-        **{
-            "filename": params["source_name"],
-            "partial_source": partial_source,
-            "dialect": params["dialect"],
-            "linenumber": linenumber,
-            "bracket": params["bracket"],
-        }
+    return message.format(
+        exception_name=exc.__class__.__name__,
+        filename=params["source_name"],
+        partial_source=partial_source,
+        dialect=dialect,
+        linenumber=linenumber,
+        bracket=params["bracket"],
     )
 
 
@@ -305,29 +317,20 @@ def handle_MissingRepeatColonError(exc, source):
     marks = [linenumber]
     partial_source = get_partial_source(source, begin, end, marks=marks)
 
-    return _(
-        """
-    AvantPy exception: MissingRepeatColonError
+    message_end = _(
+        "    A statement beginning with the '{repeat_kwd}' keyword must be on\n"
+        "    a single line ending with a colon (:) that indicates the beginning of\n"
+        "    an indented block of code, with no other colon appearing on that line.\n\n"
+    )
+    message = avantpy_exception_with_dialect + message_end
 
-    Error found in file '{filename}' on line {linenumber}.
-
-    Dialect used: {dialect}
-
-{partial_source}
-
-    A statement beginning with the '{repeat_kwd}' keyword must be on a single
-    line ending with a colon (:) that indicates the beginning of an indented
-    block of code, with no other colon appearing on that line.
-
-"""
-    ).format(
-        **{
-            "filename": params["source_name"],
-            "repeat_kwd": params["repeat_kwd"],
-            "partial_source": partial_source,
-            "linenumber": linenumber,
-            "dialect": params["dialect"],
-        }
+    return message.format(
+        exception_name=exc.__class__.__name__,
+        filename=params["source_name"],
+        repeat_kwd=params["repeat_kwd"],
+        partial_source=partial_source,
+        linenumber=linenumber,
+        dialect=params["dialect"],
     )
 
 
@@ -342,28 +345,20 @@ def handle_MissingRepeatError(exc, source):
     marks = [linenumber]
     partial_source = get_partial_source(source, begin, end, marks=marks)
 
-    return _(
-        """
-    AvantPy exception: MissingRepeatError
+    message_end = _(
+        "    The AvantPy '{keyword}'' keyword can be used only when"
+        " preceded by '{repeat_kwd}'.\n\n"
+    )
 
-    Error found in file '{filename}' on line {linenumber}.
-
-    Dialect used: {dialect}
-
-{partial_source}
-
-    The AvantPy '{keyword}'' keyword can be used only when preceded by '{repeat_kwd}'.
-
-"""
-    ).format(
-        **{
-            "filename": params["source_name"],
-            "keyword": params["keyword"],
-            "partial_source": partial_source,
-            "linenumber": linenumber,
-            "dialect": params["dialect"],
-            "repeat_kwd": params["repeat_kwd"],
-        }
+    message = avantpy_exception_with_dialect + message_end
+    return message.format(
+        exception_name=exc.__class__.__name__,
+        filename=params["source_name"],
+        keyword=params["keyword"],
+        partial_source=partial_source,
+        linenumber=linenumber,
+        dialect=params["dialect"],
+        repeat_kwd=params["repeat_kwd"],
     )
 
 
@@ -381,33 +376,27 @@ def handle_NameError(exc, source):
     marks = [linenumber]
     partial_source = get_partial_source(source, begin, end, marks=marks)
 
-    return _(
-        """
-    Python exception:
-        {python_display}
+    message_end = _(
+        "    A NameError exception indicates that a variable or\n"
+        "    function name is not known to Python.\n"
+        "    Most often, this is because there is a spelling mistake; however,\n"
+        "    sometimes it is because it is used before being defined\n"
+        "    or given a value. In your program, the unknown name is '{var_name}'.\n\n"
+    )
+    dialect = state.current_dialect
+    if dialect in [None, "pyen"]:
+        message = python_exception_no_dialect + message_end
+    else:
+        message = python_exception_with_dialect + message_end
 
-    Error found in file '{filename}' on line {linenumber}.
-
-    Dialect used: {dialect}
-
-{partial_source}
-
-    A NameError exception indicates that a variable or
-    function name is not known to Python.
-    Most often, this is because there is a spelling mistake; however,
-    sometimes it is because it is used before being defined or given a value.
-    In your program, the unknown name is '{var_name}'.
-
-"""
-    ).format(
-        **{
-            "filename": filename,
-            "python_display": python_display,
-            "var_name": var_name,
-            "partial_source": partial_source,
-            "linenumber": linenumber,
-            "dialect": state.current_dialect,
-        }
+    return message.format(
+        exception_name=exc.__class__.__name__,
+        filename=filename,
+        python_display=python_display,
+        var_name=var_name,
+        partial_source=partial_source,
+        linenumber=linenumber,
+        dialect=state.current_dialect,
     )
 
 
@@ -423,32 +412,23 @@ def handle_NobreakFirstError(exc, source):
     marks = [linenumber]
     partial_source = get_partial_source(source, begin, end, marks=marks)
 
-    return _(
-        """
-    AvantPy exception: NobreakFirstError
+    message_end = _(
+        "    The AvantPy '{nobreak_kwd}' keyword can be used instead of '{else_kwd}'\n"
+        "    (Python: else) only when it begins a new statement in\n"
+        "    '{for_kwd}/{while_kwd}' loops (Python: for/while).\n\n"
+    )
+    message = avantpy_exception_with_dialect + message_end
 
-    Error found in file '{filename}' on line {linenumber}.
-
-    Dialect used: {dialect}
-
-{partial_source}
-
-    The AvantPy '{nobreak_kwd}' keyword can be used instead of '{else_kwd}'
-    (Python: else) only when it begins a new statement in
-    '{for_kwd}/{while_kwd}' loops (Python: for/while).
-
-"""
-    ).format(
-        **{
-            "filename": params["source_name"],
-            "nobreak_kwd": params["nobreak keyword"],
-            "partial_source": partial_source,
-            "linenumber": linenumber,
-            "dialect": params["dialect"],
-            "for_kwd": params["for_kwd"],
-            "while_kwd": params["while_kwd"],
-            "else_kwd": params["else_kwd"],
-        }
+    return message.format(
+        exception_name=exc.__class__.__name__,
+        filename=params["source_name"],
+        nobreak_kwd=params["nobreak keyword"],
+        partial_source=partial_source,
+        linenumber=linenumber,
+        dialect=params["dialect"],
+        for_kwd=params["for_kwd"],
+        while_kwd=params["while_kwd"],
+        else_kwd=params["else_kwd"],
     )
 
 
@@ -463,32 +443,23 @@ def handle_NobreakSyntaxError(exc, source):
     marks = [linenumber]
     partial_source = get_partial_source(source, begin, end, marks=marks)
 
-    return _(
-        """
-    AvantPy exception: NobreakSyntaxError
+    message_end = _(
+        "    The AvantPy '{nobreak_kwd}' keyword can only be used as a replacement\n"
+        "    of '{else_kwd}' (Python: else) with a matching '{for_kwd}' or\n"
+        "    '{while_kwd}' loop (Python: for/while).\n\n"
+    )
+    message = avantpy_exception_with_dialect + message_end
 
-    Error found in file '{filename}' on line {linenumber}.
-
-    Dialect used: {dialect}
-
-{partial_source}
-
-    The AvantPy '{nobreak_kwd}' keyword can only be used as a replacement
-    of '{else_kwd}' (Python: else) with a matching '{for_kwd}' or
-    '{while_kwd}' loop (Python: for/while).
-
-"""
-    ).format(
-        **{
-            "filename": params["source_name"],
-            "nobreak_kwd": params["nobreak keyword"],
-            "partial_source": partial_source,
-            "linenumber": linenumber,
-            "dialect": params["dialect"],
-            "for_kwd": params["for_kwd"],
-            "while_kwd": params["while_kwd"],
-            "else_kwd": params["else_kwd"],
-        }
+    return message.format(
+        exception_name=exc.__class__.__name__,
+        filename=params["source_name"],
+        nobreak_kwd=params["nobreak keyword"],
+        partial_source=partial_source,
+        linenumber=linenumber,
+        dialect=params["dialect"],
+        for_kwd=params["for_kwd"],
+        while_kwd=params["while_kwd"],
+        else_kwd=params["else_kwd"],
     )
 
 
@@ -503,28 +474,19 @@ def handle_RepeatFirstError(exc, source):
     marks = [linenumber]
     partial_source = get_partial_source(source, begin, end, marks=marks)
 
-    return _(
-        """
-    AvantPy exception: RepeatFirstError
+    message_end = _(
+        "    The AvantPy '{repeat_kwd}' keyword can only be used to begin\n"
+        "    a new loop (Python: equivalent to 'for' or 'while' loop).\n\n"
+    )
+    message = avantpy_exception_with_dialect + message_end
 
-    Error found in file '{filename}' on line {linenumber}.
-
-    Dialect used: {dialect}
-
-{partial_source}
-
-    The AvantPy '{repeat_kwd}' keyword can only be used to begin
-    a new loop (Python: equivalent to 'for' or 'while' loop).
-
-"""
-    ).format(
-        **{
-            "filename": params["source_name"],
-            "repeat_kwd": params["repeat keyword"],
-            "partial_source": partial_source,
-            "linenumber": linenumber,
-            "dialect": params["dialect"],
-        }
+    return message.format(
+        exception_name=exc.__class__.__name__,
+        filename=params["source_name"],
+        repeat_kwd=params["repeat keyword"],
+        partial_source=partial_source,
+        linenumber=linenumber,
+        dialect=params["dialect"],
     )
 
 
@@ -538,33 +500,24 @@ def handle_TryNobreakError(exc, source):
     marks = [end]
     partial_source = get_partial_source(source, begin, end, marks=marks)
 
-    return _(
-        """
-    AvantPy exception: TryNobreakError
+    message_end = _(
+        "    The AvantPy '{nobreak_kwd}' keyword cannot be used in\n"
+        "    a '{try_kwd}/{except_kwd}/{else_kwd}/{finally_kwd}' clause\n"
+        "    (Python: try/except/else/finally).\n\n"
+    )
+    message = avantpy_exception_with_dialect + message_end
 
-    Error found in file '{filename}' on line {nobreak_linenumber}.
-
-    Dialect used: {dialect}
-
-{partial_source}
-
-    The AvantPy '{nobreak_kwd}' keyword cannot be used in
-    a '{try_kwd}/{except_kwd}/{else_kwd}/{finally_kwd}' clause
-    (Python: try/except/else/finally).
-
-"""
-    ).format(
-        **{
-            "filename": params["source_name"],
-            "nobreak_kwd": params["nobreak keyword"],
-            "partial_source": partial_source,
-            "nobreak_linenumber": end,
-            "dialect": params["dialect"],
-            "try_kwd": params["try_kwd"],
-            "except_kwd": params["except_kwd"],
-            "else_kwd": params["else_kwd"],
-            "finally_kwd": params["finally_kwd"],
-        }
+    return message.format(
+        exception_name=exc.__class__.__name__,
+        filename=params["source_name"],
+        nobreak_kwd=params["nobreak keyword"],
+        partial_source=partial_source,
+        linenumber=end,
+        dialect=params["dialect"],
+        try_kwd=params["try_kwd"],
+        except_kwd=params["except_kwd"],
+        else_kwd=params["else_kwd"],
+        finally_kwd=params["finally_kwd"],
     )
 
 
@@ -573,16 +526,17 @@ def handle_UnknownDialectError(exc, *args):
     """
     dialect = exc.args[0]
     all_dialects = exc.args[1]
-    return _(
-        """
-    AvantPy exception: UnknownDialectError
 
-    The following unknown dialect was requested: {dialect}.
-
-    The known dialects are: {all_dialects}.
-
-"""
-    ).format(dialect=dialect, all_dialects=all_dialects)
+    message = _(
+        "    AvantPy exception: UnknownDialectError\n\n"
+        "    The following unknown dialect was requested: {dialect}.\n\n"
+        "    The known dialects are: {all_dialects}.\n\n"
+    )
+    return message.format(
+        exception_name=exc.__class__.__name__,
+        dialect=dialect,
+        all_dialects=all_dialects,
+    )
 
 
 def handle_UnknownLanguageError(exc, *args):
@@ -591,16 +545,15 @@ def handle_UnknownLanguageError(exc, *args):
     lang = exc.args[0]
     all_langs = exc.args[1]
 
-    return _(
-        """
-    AvantPy exception: UnknownLanguageError
+    message = _(
+        "    AvantPy exception: UnknownLanguageError\n\n"
+        "    The following unknown language was requested: {lang}.\n\n"
+        "    The known languages are: {all_langs}.\n\n"
+    )
 
-    The following unknown language was requested: {lang}.
-
-    The known languages are: {all_langs}.
-
-"""
-    ).format(lang=lang, all_langs=all_langs)
+    return message.format(
+        exception_name=exc.__class__.__name__, lang=lang, all_langs=all_langs
+    )
 
 
 dispatch = {
