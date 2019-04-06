@@ -16,25 +16,25 @@ ENABLED = True
 # the code is standard Python, and that no dialect-based keywords are used,
 # and a second version specific to dialects.
 
-avantpy_exception_with_dialect = _(
+avantpy_exception_with_dialect = (
     "    AvantPy exception: {exception_name}\n\n"
     "    Error found in file '{filename}' on line {linenumber}.\n\n"
     "    Dialect used: {dialect}\n\n"
     "{partial_source}\n\n"
 )
-avantpy_exception_no_dialect = _(
+avantpy_exception_no_dialect = (
     "    AvantPy exception: {exception_name}\n\n"
     "    Error found in file '{filename}' on line {linenumber}.\n\n"
     "{partial_source}\n\n"
 )
-python_exception_with_dialect = _(
+python_exception_with_dialect = (
     "    Python exception: \n"
     "        {python_display}\n\n"
     "    Error found in file '{filename}' on line {linenumber}.\n\n"
     "    Dialect used: {dialect}\n\n"
     "{partial_source}\n\n"
 )
-python_exception_no_dialect = _(
+python_exception_no_dialect = (
     "    Python exception: \n"
     "        {python_display}\n\n"
     "    Error found in file '{filename}' on line {linenumber}.\n\n"
@@ -166,12 +166,12 @@ def handle_IfNobreakError(exc, source):
     dialect = params["dialect"]
 
     if dialect in [None, "pyen"]:
-        message = avantpy_exception_no_dialect + _(
+        message = _(avantpy_exception_no_dialect) + _(
             "    The AvantPy '{nobreak_kwd}' keyword cannot be used in\n"
             "    an if/elif/else clause.\n\n"
         )
     else:
-        message = avantpy_exception_with_dialect + _(
+        message = _(avantpy_exception_with_dialect) + _(
             "    The AvantPy '{nobreak_kwd}' keyword cannot be used in\n"
             "    an '{if_kwd}/{elif_kwd}/{else_kwd}' clause (Python: if/elif/else).\n\n"
         )
@@ -195,20 +195,20 @@ def handle_IndentationError(exc, source):
     msg = exc.args[0]
     if "unexpected indent" in msg:
         this_case = _(
-            "In this case, the line indicated by an arrow\n"
+            "    In this case, the line indicated by an arrow\n"
             "    is more indented than expected and does not match\n"
-            "    the indentation of the previous line."
+            "    the indentation of the previous line.\n\n"
         )
     elif "expected an indented block" in msg:
         this_case = _(
-            "In this case, the line indicated by an arrow\n"
-            "    was expected to begin a new indented block."
+            "    In this case, the line indicated by an arrow\n"
+            "    was expected to begin a new indented block.\n\n"
         )
     else:
         this_case = _(
-            "In this case, the line indicated by an arrow\n"
-            "    which is less indented the preceding one,\n"
-            "    and is not aligned vertically with another block of code."
+            "    In this case, the line indicated by an arrow\n"
+            "    is less indented the preceding one,\n"
+            "    and is not aligned vertically with another block of code.\n\n"
         )
 
     exc_name = exc.__class__.__name__
@@ -223,15 +223,15 @@ def handle_IndentationError(exc, source):
     dialect = state.current_dialect
 
     message_end = _(
-        "An indentation error occurs when a given line is\n"
-        "not indented (aligned vertically) as expected.\n"
+        "    An indentation error occurs when a given line is\n"
+        "    not indented (aligned vertically) as expected.\n"
         "{this_case}\n\n"
     )
 
     if dialect in [None, "pyen"]:
-        message = python_exception_no_dialect + message_end
+        message = _(python_exception_no_dialect) + message_end
     else:
-        message = python_exception_with_dialect + message_end
+        message = _(python_exception_with_dialect) + message_end
 
     return message.format(
         exception_name=exc_name,
@@ -261,9 +261,9 @@ def handle_MismatchedBracketsError(exc, source):
     )
 
     if dialect in [None, "pyen"]:
-        message = avantpy_exception_no_dialect + message_end
+        message = _(avantpy_exception_no_dialect) + message_end
     else:
-        message = avantpy_exception_with_dialect + message_end
+        message = _(avantpy_exception_with_dialect) + message_end
 
     return message.format(
         exception_name=exc.__class__.__name__,
@@ -292,9 +292,9 @@ def handle_MissingLeftBracketError(exc, source):
     message_end = _("    The closing {bracket} does not match anything.\n\n")
 
     if dialect in [None, "pyen"]:
-        message = avantpy_exception_no_dialect + message_end
+        message = _(avantpy_exception_no_dialect) + message_end
     else:
-        message = avantpy_exception_with_dialect + message_end
+        message = _(avantpy_exception_with_dialect) + message_end
 
     return message.format(
         exception_name=exc.__class__.__name__,
@@ -322,7 +322,7 @@ def handle_MissingRepeatColonError(exc, source):
         "    a single line ending with a colon (:) that indicates the beginning of\n"
         "    an indented block of code, with no other colon appearing on that line.\n\n"
     )
-    message = avantpy_exception_with_dialect + message_end
+    message = _(avantpy_exception_with_dialect) + message_end
 
     return message.format(
         exception_name=exc.__class__.__name__,
@@ -350,7 +350,7 @@ def handle_MissingRepeatError(exc, source):
         " preceded by '{repeat_kwd}'.\n\n"
     )
 
-    message = avantpy_exception_with_dialect + message_end
+    message = _(avantpy_exception_with_dialect) + message_end
     return message.format(
         exception_name=exc.__class__.__name__,
         filename=params["source_name"],
@@ -385,9 +385,9 @@ def handle_NameError(exc, source):
     )
     dialect = state.current_dialect
     if dialect in [None, "pyen"]:
-        message = python_exception_no_dialect + message_end
+        message = _(python_exception_no_dialect) + message_end
     else:
-        message = python_exception_with_dialect + message_end
+        message = _(python_exception_with_dialect) + message_end
 
     return message.format(
         exception_name=exc.__class__.__name__,
@@ -417,7 +417,7 @@ def handle_NobreakFirstError(exc, source):
         "    (Python: else) only when it begins a new statement in\n"
         "    '{for_kwd}/{while_kwd}' loops (Python: for/while).\n\n"
     )
-    message = avantpy_exception_with_dialect + message_end
+    message = _(avantpy_exception_with_dialect) + message_end
 
     return message.format(
         exception_name=exc.__class__.__name__,
@@ -448,7 +448,7 @@ def handle_NobreakSyntaxError(exc, source):
         "    of '{else_kwd}' (Python: else) with a matching '{for_kwd}' or\n"
         "    '{while_kwd}' loop (Python: for/while).\n\n"
     )
-    message = avantpy_exception_with_dialect + message_end
+    message = _(avantpy_exception_with_dialect) + message_end
 
     return message.format(
         exception_name=exc.__class__.__name__,
@@ -478,7 +478,7 @@ def handle_RepeatFirstError(exc, source):
         "    The AvantPy '{repeat_kwd}' keyword can only be used to begin\n"
         "    a new loop (Python: equivalent to 'for' or 'while' loop).\n\n"
     )
-    message = avantpy_exception_with_dialect + message_end
+    message = _(avantpy_exception_with_dialect) + message_end
 
     return message.format(
         exception_name=exc.__class__.__name__,
@@ -505,7 +505,7 @@ def handle_TryNobreakError(exc, source):
         "    a '{try_kwd}/{except_kwd}/{else_kwd}/{finally_kwd}' clause\n"
         "    (Python: try/except/else/finally).\n\n"
     )
-    message = avantpy_exception_with_dialect + message_end
+    message = _(avantpy_exception_with_dialect) + message_end
 
     return message.format(
         exception_name=exc.__class__.__name__,

@@ -133,8 +133,8 @@ Example::
     A NameError exception indicates that a variable or
     function name is not known to Python.
     Most often, this is because there is a spelling mistake; however,
-    sometimes it is because it is used before being defined or given a value.
-    In your program, the unknown name is 'c'.
+    sometimes it is because it is used before being defined
+    or given a value. In your program, the unknown name is 'c'.
 
 
 NobreakFirstError
@@ -239,5 +239,5 @@ Example::
 
     The following unknown language was requested: xx.
 
-    The known languages are: {'en', 'fr'}.
+    The known languages are: {'fr', 'en'}.
 

@@ -25,7 +25,6 @@ IfNobreakError
 
 Example::
 
-
     Exception AvantPy : IfNobreakError
 
     Erreur trouvée dans le fichier 'raise_if_nobreak.pyfr' à la ligne 4.
@@ -45,10 +44,9 @@ MismatchedBracketsError
 
 Example::
 
-
     Exception AvantPy : MismatchedBracketsError
 
-    Erreur trouvée dans le fichier 'raise_mismatched_brackets.pyfr' aux lignes [2 - 6].
+    Erreur trouvée dans le fichier 'raise_mismatched_brackets.pyfr' à la ligne 6.
 
     Dialecte utilisé : pyfr
 
@@ -65,7 +63,6 @@ MissingLeftBracketError
 -----------------------
 
 Example::
-
 
     Exception AvantPy : MissingLeftBracketError
 
@@ -85,8 +82,7 @@ MissingRepeatColonError
 
 Example::
 
-
-    Exception AvantPy : RepeatFirstError
+    Exception AvantPy : MissingRepeatColonError
 
     Erreur trouvée dans le fichier 'raise_missing_repeat_colon.pyfr' à la ligne 3.
 
@@ -107,12 +103,11 @@ MissingRepeatError
 
 Example::
 
-
     Exception AvantPy : MissingRepeatError
 
     Erreur trouvée dans le fichier 'raise_missing_repeat.pyfr' à la ligne 3.
 
-    Dialecte utilisé: pyfr
+    Dialecte utilisé : pyfr
 
        2: x = 0
     -->3: jusquà x == 2:
@@ -127,30 +122,30 @@ NameError
 
 Example::
 
-
-    Python exception:
+    Exception Python: 
         NameError: name 'c' is not defined
 
-    Error found in file 'raise_name_error.pyfr' on line 4.
+    Erreur trouvée dans le fichier 'raise_name_error.pyfr' à la ligne 4.
 
-    Dialect used: pyfr
+    Dialecte utilisé : pyfr
 
        3: a = 1
     -->4: b = c
        5: d = 3
 
-    A NameError exception indicates that a variable or
-    function name is not known to Python.
-    Most often, this is because there is a spelling mistake; however,
-    sometimes it is because it is used before being defined or given a value.
-    In your program, the unknown name is 'c'.
+    Une exception de type NameError indique que le nom d'une variable
+    ou d'une fonction utilisée dans votre programme est inconnu par Python.
+    Le plus souvent, ceci se produit parce que vous faites une faute
+    d'orthographe dans l'écriture de votre variable ou de votre fonction;
+    ceci peut également se produire si vous invoquez cette fonction ou utilisez
+    cette variable sans l'avoir définie auparavant.
+    Dans votre programme, le nom inconnu est 'c'.
 
 
 NobreakFirstError
 -----------------
 
 Example::
-
 
     Exception AvantPy : NobreakFirstError
 
@@ -172,8 +167,7 @@ NobreakSyntaxError
 
 Example::
 
-
-    Exception AvantPy : IfNobreakError
+    Exception AvantPy : NobreakSyntaxError
 
     Erreur trouvée dans le fichier 'raise_nobreak_syntax.pyfr' à la ligne 4.
 
@@ -193,7 +187,6 @@ RepeatFirstError
 
 Example::
 
-
     Exception AvantPy : RepeatFirstError
 
     Erreur trouvée dans le fichier 'raise_repeat_first.pyfr' à la ligne 3.
@@ -205,7 +198,7 @@ Example::
        4: 
 
     Le mot-clé 'répéter' spécifique à Avantpy peut seulement être utilisé
-    pour débuter une nouvelle boucle 'pour' ou 'tantque'
+    pour débuter une nouvelle boucle
     (équivalent Python: 'for' ou 'while').
 
 
@@ -213,7 +206,6 @@ TryNobreakError
 ---------------
 
 Example::
-
 
     Exception AvantPy : TryNobreakError
 
@@ -236,7 +228,6 @@ UnknownDialectError
 
 Example::
 
-
     Exception AvantPy : UnknownDialectError
 
     Le dialecte inconnu suivant a été demandé : pyxx.
@@ -249,10 +240,9 @@ UnknownLanguageError
 
 Example::
 
-
     Exception AvantPy : UnknownLanguageError
 
     Le langage inconnu suivant a été demandé : xx.
 
-    Les langages connus sont : {'fr', 'en'}.
+    Les langages connus sont : {'en', 'fr'}.
 
