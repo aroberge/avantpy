@@ -39,6 +39,79 @@ Example::
     dans un énoncé 'si/sinonsi/sinon' (Python: if/elif/else).
 
 
+IndentationError: expected an indented block
+--------------------------------------------
+
+Example::
+
+    Exception Python: 
+        IndentationError: expected an indented block
+
+    Erreur trouvée dans le fichier 'raise_indentation_error1.pyfr' à la ligne 3.
+
+    Dialecte utilisé : pyfr
+
+       1: '''Should raise IndentationError'''
+       2: si Vrai:
+    -->3: passer
+       4: 
+
+    Une erreur d'indentation a lieu lorsqu'une ligne de code
+    n'est pas indentée (alignée verticalement) tel qu'attendu.
+    Dans ce cas-ci, la ligne indiquée par une flèche devrait
+    normalement commencer un nouveau bloc de code indenté.
+
+
+IndentationError: unexpected indent
+-----------------------------------
+
+Example::
+
+    Exception Python: 
+        IndentationError: unexpected indent
+
+    Erreur trouvée dans le fichier 'raise_indentation_error2.pyfr' à la ligne 4.
+
+    Dialecte utilisé : pyfr
+
+       1: '''Should raise IndentationError'''
+       2: si Vrai:
+       3:     passer
+    -->4:       passer
+       5: 
+
+    Une erreur d'indentation a lieu lorsqu'une ligne de code
+    n'est pas indentée (alignée verticalement) tel qu'attendu.
+    Dans ce cas-ci, la ligne indiquée par une flèche
+    est plus indentée que ce qui était attendu et ne
+    correspond pas à l'indentation de la ligne précédente.
+
+
+IndentationError - no match
+---------------------------
+
+Example::
+
+    Exception Python: 
+        IndentationError: unindent does not match any outer indentation level
+
+    Erreur trouvée dans le fichier 'raise_indentation_error3.pyfr' à la ligne 4.
+
+    Dialecte utilisé : pyfr
+
+       1: '''Should raise IndentationError'''
+       2: si Vrai:
+       3:       passer
+    -->4:     passer
+       5: 
+
+    Une erreur d'indentation a lieu lorsqu'une ligne de code
+    n'est pas indentée (alignée verticalement) tel qu'attendu.
+    Dans ce cas-ci, la ligne indiquée par une flèche
+    est moins indentée que la ligne précédente,
+    et n'est pas alignée verticalement avec un autre bloc de code.
+
+
 MismatchedBracketsError
 -----------------------
 

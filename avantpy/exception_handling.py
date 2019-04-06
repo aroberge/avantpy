@@ -18,7 +18,7 @@ ENABLED = True
 
 
 def avantpy_exception_with_dialect():
-    return (
+    return _(
         "    AvantPy exception: {exception_name}\n\n"
         "    Error found in file '{filename}' on line {linenumber}.\n\n"
         "    Dialect used: {dialect}\n\n"
@@ -27,7 +27,7 @@ def avantpy_exception_with_dialect():
 
 
 def avantpy_exception_no_dialect():
-    return (
+    return _(
         "    AvantPy exception: {exception_name}\n\n"
         "    Error found in file '{filename}' on line {linenumber}.\n\n"
         "{partial_source}\n\n"
@@ -35,7 +35,7 @@ def avantpy_exception_no_dialect():
 
 
 def python_exception_with_dialect():
-    return (
+    return _(
         "    Python exception: \n"
         "        {python_display}\n\n"
         "    Error found in file '{filename}' on line {linenumber}.\n\n"
@@ -45,7 +45,7 @@ def python_exception_with_dialect():
 
 
 def python_exception_no_dialect():
-    return (
+    return _(
         "    Python exception: \n"
         "        {python_display}\n\n"
         "    Error found in file '{filename}' on line {linenumber}.\n\n"

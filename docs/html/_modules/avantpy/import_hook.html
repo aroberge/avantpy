@@ -151,6 +151,7 @@
             <span class="n">session</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">set_dialect</span><span class="p">(</span><span class="n">dialect</span><span class="p">)</span>
             <span class="n">source</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">dialect</span><span class="p">,</span> <span class="n">source_name</span><span class="o">=</span><span class="n">fullname</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">current_filename</span> <span class="o">=</span> <span class="n">fullname</span>
             <span class="n">write_exception_info</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">original</span><span class="p">)</span>
             <span class="k">return</span>
 

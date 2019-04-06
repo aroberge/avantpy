@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-04-06 17:15-0300\n"
+"POT-Creation-Date: 2019-04-06 17:21-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,52 @@ msgstr ""
 
 #: console.py:95
 msgid "UNHANDLED EXCEPTION in console.py. This should not happen."
+msgstr ""
+
+#: exception_handling.py:21
+msgid ""
+"    AvantPy exception: {exception_name}\n"
+"\n"
+"    Error found in file '{filename}' on line {linenumber}.\n"
+"\n"
+"    Dialect used: {dialect}\n"
+"\n"
+"{partial_source}\n"
+"\n"
+msgstr ""
+
+#: exception_handling.py:30
+msgid ""
+"    AvantPy exception: {exception_name}\n"
+"\n"
+"    Error found in file '{filename}' on line {linenumber}.\n"
+"\n"
+"{partial_source}\n"
+"\n"
+msgstr ""
+
+#: exception_handling.py:38
+msgid ""
+"    Python exception: \n"
+"        {python_display}\n"
+"\n"
+"    Error found in file '{filename}' on line {linenumber}.\n"
+"\n"
+"    Dialect used: {dialect}\n"
+"\n"
+"{partial_source}\n"
+"\n"
+msgstr ""
+
+#: exception_handling.py:48
+msgid ""
+"    Python exception: \n"
+"        {python_display}\n"
+"\n"
+"    Error found in file '{filename}' on line {linenumber}.\n"
+"\n"
+"{partial_source}\n"
+"\n"
 msgstr ""
 
 #: exception_handling.py:137

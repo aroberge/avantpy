@@ -25,11 +25,11 @@ IfNobreakError
 
 Example::
 
-    AvantPy exception: IfNobreakError
+    Exception AvantPy : IfNobreakError
 
-    Error found in file 'raise_if_nobreak.pyfr' on line 4.
+    Erreur trouvée dans le fichier 'raise_if_nobreak.pyfr' à la ligne 4.
 
-    Dialect used: pyfr
+    Dialecte utilisé : pyfr
 
        2: si Vrai:
        3:     passer
@@ -44,12 +44,12 @@ IndentationError: expected an indented block
 
 Example::
 
-    Python exception: 
+    Exception Python: 
         IndentationError: expected an indented block
 
-    Error found in file 'raise_indentation_error1.pyfr' on line 3.
+    Erreur trouvée dans le fichier 'raise_indentation_error1.pyfr' à la ligne 3.
 
-    Dialect used: pyfr
+    Dialecte utilisé : pyfr
 
        1: '''Should raise IndentationError'''
        2: si Vrai:
@@ -67,12 +67,12 @@ IndentationError: unexpected indent
 
 Example::
 
-    Python exception: 
+    Exception Python: 
         IndentationError: unexpected indent
 
-    Error found in file 'raise_indentation_error2.pyfr' on line 4.
+    Erreur trouvée dans le fichier 'raise_indentation_error2.pyfr' à la ligne 4.
 
-    Dialect used: pyfr
+    Dialecte utilisé : pyfr
 
        1: '''Should raise IndentationError'''
        2: si Vrai:
@@ -92,12 +92,12 @@ IndentationError - no match
 
 Example::
 
-    Python exception: 
+    Exception Python: 
         IndentationError: unindent does not match any outer indentation level
 
-    Error found in file 'raise_indentation_error3.pyfr' on line 4.
+    Erreur trouvée dans le fichier 'raise_indentation_error3.pyfr' à la ligne 4.
 
-    Dialect used: pyfr
+    Dialecte utilisé : pyfr
 
        1: '''Should raise IndentationError'''
        2: si Vrai:
@@ -117,11 +117,11 @@ MismatchedBracketsError
 
 Example::
 
-    AvantPy exception: MismatchedBracketsError
+    Exception AvantPy : MismatchedBracketsError
 
-    Error found in file 'raise_mismatched_brackets.pyfr' on line 6.
+    Erreur trouvée dans le fichier 'raise_mismatched_brackets.pyfr' à la ligne 6.
 
-    Dialect used: pyfr
+    Dialecte utilisé : pyfr
 
     -->2: a = (1,
        3:     2,
@@ -137,11 +137,11 @@ MissingLeftBracketError
 
 Example::
 
-    AvantPy exception: MissingLeftBracketError
+    Exception AvantPy : MissingLeftBracketError
 
-    Error found in file 'raise_missing_left_bracket.pyfr' on line 5.
+    Erreur trouvée dans le fichier 'raise_missing_left_bracket.pyfr' à la ligne 5.
 
-    Dialect used: pyfr
+    Dialecte utilisé : pyfr
 
        4:     3, 4,)
     -->5:     )
@@ -155,11 +155,11 @@ MissingRepeatColonError
 
 Example::
 
-    AvantPy exception: MissingRepeatColonError
+    Exception AvantPy : MissingRepeatColonError
 
-    Error found in file 'raise_missing_repeat_colon.pyfr' on line 3.
+    Erreur trouvée dans le fichier 'raise_missing_repeat_colon.pyfr' à la ligne 3.
 
-    Dialect used: pyfr
+    Dialecte utilisé : pyfr
 
        2: x = 0
     -->3: répéter jusquà (x ==
@@ -176,11 +176,11 @@ MissingRepeatError
 
 Example::
 
-    AvantPy exception: MissingRepeatError
+    Exception AvantPy : MissingRepeatError
 
-    Error found in file 'raise_missing_repeat.pyfr' on line 3.
+    Erreur trouvée dans le fichier 'raise_missing_repeat.pyfr' à la ligne 3.
 
-    Dialect used: pyfr
+    Dialecte utilisé : pyfr
 
        2: x = 0
     -->3: jusquà x == 2:
@@ -195,12 +195,12 @@ NameError
 
 Example::
 
-    Python exception: 
+    Exception Python: 
         NameError: name 'c' is not defined
 
-    Error found in file 'raise_name_error.pyfr' on line 4.
+    Erreur trouvée dans le fichier 'raise_name_error.pyfr' à la ligne 4.
 
-    Dialect used: pyfr
+    Dialecte utilisé : pyfr
 
        3: a = 1
     -->4: b = c
@@ -220,11 +220,11 @@ NobreakFirstError
 
 Example::
 
-    AvantPy exception: NobreakFirstError
+    Exception AvantPy : NobreakFirstError
 
-    Error found in file 'raise_nobreak_first.pyfr' on line 3.
+    Erreur trouvée dans le fichier 'raise_nobreak_first.pyfr' à la ligne 3.
 
-    Dialect used: pyfr
+    Dialecte utilisé : pyfr
 
        2: # Need to prevent pasinterrompu being replaced by 'else' in this situation.
     -->3: a = 1 if True pasinterrompu 3
@@ -240,11 +240,11 @@ NobreakSyntaxError
 
 Example::
 
-    AvantPy exception: NobreakSyntaxError
+    Exception AvantPy : NobreakSyntaxError
 
-    Error found in file 'raise_nobreak_syntax.pyfr' on line 4.
+    Erreur trouvée dans le fichier 'raise_nobreak_syntax.pyfr' à la ligne 4.
 
-    Dialect used: pyfr
+    Dialecte utilisé : pyfr
 
        3: a = 1
     -->4: pasinterrompu: pass
@@ -260,11 +260,11 @@ RepeatFirstError
 
 Example::
 
-    AvantPy exception: RepeatFirstError
+    Exception AvantPy : RepeatFirstError
 
-    Error found in file 'raise_repeat_first.pyfr' on line 3.
+    Erreur trouvée dans le fichier 'raise_repeat_first.pyfr' à la ligne 3.
 
-    Dialect used: pyfr
+    Dialecte utilisé : pyfr
 
        2: # Catch an early case of using répéter not to begin a loop
     -->3: a = répéter
@@ -280,11 +280,11 @@ TryNobreakError
 
 Example::
 
-    AvantPy exception: TryNobreakError
+    Exception AvantPy : TryNobreakError
 
-    Error found in file 'raise_try_nobreak.pyfr' on line 7.
+    Erreur trouvée dans le fichier 'raise_try_nobreak.pyfr' à la ligne 7.
 
-    Dialect used: pyfr
+    Dialecte utilisé : pyfr
 
        3:     essayer:
        4:         A = 1
@@ -317,5 +317,5 @@ Example::
 
     Le langage inconnu suivant a été demandé : xx.
 
-    Les langages connus sont : {'fr', 'en'}.
+    Les langages connus sont : {'en', 'fr'}.
 
