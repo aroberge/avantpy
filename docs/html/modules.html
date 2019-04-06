@@ -509,6 +509,13 @@ are written so that they can easily be translated into any human language.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="avantpy.exception_handling.extract_filename_linenumber">
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">extract_filename_linenumber</code><span class="sig-paren">(</span><em>exc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#extract_filename_linenumber"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.extract_filename_linenumber" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracting filename and linenumber where an error occurred based
+on information from traceback.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="avantpy.exception_handling.get_partial_source">
 <code class="descclassname">avantpy.exception_handling.</code><code class="descname">get_partial_source</code><span class="sig-paren">(</span><em>source</em>, <em>begin</em>, <em>end</em>, <em>marks=None</em>, <em>nb_digits=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#get_partial_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.get_partial_source" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extracts a few relevant lines from a source file.</p>
@@ -522,6 +529,12 @@ at the beginning and at the end.</p>
 <code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_IfNobreakError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_IfNobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_IfNobreakError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles situation where <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> was wrongly use as a
 replacement for <code class="docutils literal notranslate"><span class="pre">else</span></code> in an if/elif/else block.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="avantpy.exception_handling.handle_IndentationError">
+<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_IndentationError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_IndentationError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_IndentationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles IndentationError.</p>
 </dd></dl>
 
 <dl class="function">
@@ -728,6 +741,10 @@ and convert it into another dialect or into Python, showing both the
 original source and the converted one in two different editor frames,
 with Python keyword, as well as their counterpart in various dialects,
 highlighted.</p>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">This module needs to be documented properly</p>
+</div>
 <dl class="class">
 <dt id="avantpy.gui.App">
 <em class="property">class </em><code class="descclassname">avantpy.gui.</code><code class="descname">App</code><span class="sig-paren">(</span><em>master=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#App"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.App" title="Permalink to this definition">¶</a></dt>

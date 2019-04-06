@@ -128,23 +128,22 @@ NameError
 Example::
 
 
-    Exception Python : NameError: name 'c' is not defined
+    Python exception:
+        NameError: name 'c' is not defined
 
-    Erreur trouvée dans le fichier 'raise_name_error.pyfr' à la ligne 4.
+    Error found in file 'raise_name_error.pyfr' on line 4.
 
-    Dialecte utilisé : pyfr
+    Dialect used: pyfr
 
        3: a = 1
     -->4: b = c
        5: d = 3
 
-    Une exception de type NameError indique que le nom d'une variable
-    ou d'une fonction utilisée dans votre programme est inconnu par Python.
-    Le plus souvent, ceci se produit parce que vous faites une faute
-    d'orthographe dans l'écriture de votre variable ou de votre fonction;
-    ceci peut également se produire si vous invoquez cette fonction ou utilisez
-    cette variable sans l'avoir définie auparavant.
-    Dans votre programme, le nom inconnu est 'c'.
+    A NameError exception indicates that a variable or
+    function name is not known to Python.
+    Most often, this is because there is a spelling mistake; however,
+    sometimes it is because it is used before being defined or given a value.
+    In your program, the unknown name is 'c'.
 
 
 NobreakFirstError

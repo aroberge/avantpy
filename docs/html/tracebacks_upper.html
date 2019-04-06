@@ -103,12 +103,12 @@ tb_pyupper.py located in the <code class="docutils literal notranslate"><span cl
 This needs to be done explicitly, independently of updating the
 documentation using Sphinx.</p>
 </div>
-<p>AvantPy version: 0.0.8
+<p>AvantPy version: 0.0.9
 Python version: 3.7.0</p>
 <div class="section" id="ifnobreakerror">
 <h2>IfNobreakError<a class="headerlink" href="#ifnobreakerror" title="Permalink to this headline">¶</a></h2>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">IfNobreakError</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AvantPy</span> <span class="n">exception</span><span class="p">:</span> <span class="n">IfNobreakError</span>
 
 <span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;raise_if_nobreak.pyupper&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">4.</span>
 
@@ -126,9 +126,9 @@ Python version: 3.7.0</p>
 <div class="section" id="mismatchedbracketserror">
 <h2>MismatchedBracketsError<a class="headerlink" href="#mismatchedbracketserror" title="Permalink to this headline">¶</a></h2>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">MismatchedBracketsError</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AvantPy</span> <span class="n">exception</span><span class="p">:</span> <span class="n">MismatchedBracketsError</span>
 
-<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;raise_mismatched_brackets.pyupper&#39;</span> <span class="n">on</span> <span class="n">lines</span> <span class="p">[</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">10</span><span class="p">]</span><span class="o">.</span>
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;raise_mismatched_brackets.pyupper&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">10.</span>
 
 <span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
 
@@ -147,7 +147,7 @@ Python version: 3.7.0</p>
 <div class="section" id="missingleftbracketerror">
 <h2>MissingLeftBracketError<a class="headerlink" href="#missingleftbracketerror" title="Permalink to this headline">¶</a></h2>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">MissingLeftBracketError</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AvantPy</span> <span class="n">exception</span><span class="p">:</span> <span class="n">MissingLeftBracketError</span>
 
 <span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;raise_missing_left_bracket.pyupper&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">5.</span>
 
@@ -164,7 +164,7 @@ Python version: 3.7.0</p>
 <div class="section" id="missingrepeatcolonerror">
 <h2>MissingRepeatColonError<a class="headerlink" href="#missingrepeatcolonerror" title="Permalink to this headline">¶</a></h2>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">MissingRepeatColonError</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AvantPy</span> <span class="n">exception</span><span class="p">:</span> <span class="n">MissingRepeatColonError</span>
 
 <span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;raise_missing_repeat_colon.pyupper&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">3.</span>
 
@@ -174,16 +174,16 @@ Python version: 3.7.0</p>
 <span class="o">--&gt;</span><span class="mi">3</span><span class="p">:</span> <span class="n">REPEAT</span> <span class="n">UNTIL</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span>
    <span class="mi">4</span><span class="p">:</span>          <span class="mi">1</span><span class="p">):</span>
 
-<span class="n">A</span> <span class="n">statement</span> <span class="n">beginning</span> <span class="k">with</span> <span class="n">the</span> <span class="s1">&#39;REPEAT&#39;</span> <span class="n">keyword</span> <span class="n">must</span> <span class="n">be</span> <span class="n">on</span> <span class="n">a</span> <span class="n">single</span>
-<span class="n">line</span> <span class="n">ending</span> <span class="k">with</span> <span class="n">a</span> <span class="n">colon</span> <span class="p">(:)</span> <span class="n">that</span> <span class="n">indicates</span> <span class="n">the</span> <span class="n">beginning</span> <span class="n">of</span> <span class="n">an</span> <span class="n">indented</span>
-<span class="n">block</span> <span class="n">of</span> <span class="n">code</span><span class="p">,</span> <span class="k">with</span> <span class="n">no</span> <span class="n">other</span> <span class="n">colon</span> <span class="n">appearing</span> <span class="n">on</span> <span class="n">that</span> <span class="n">line</span><span class="o">.</span>
+<span class="n">A</span> <span class="n">statement</span> <span class="n">beginning</span> <span class="k">with</span> <span class="n">the</span> <span class="s1">&#39;REPEAT&#39;</span> <span class="n">keyword</span> <span class="n">must</span> <span class="n">be</span> <span class="n">on</span>
+<span class="n">a</span> <span class="n">single</span> <span class="n">line</span> <span class="n">ending</span> <span class="k">with</span> <span class="n">a</span> <span class="n">colon</span> <span class="p">(:)</span> <span class="n">that</span> <span class="n">indicates</span> <span class="n">the</span> <span class="n">beginning</span> <span class="n">of</span>
+<span class="n">an</span> <span class="n">indented</span> <span class="n">block</span> <span class="n">of</span> <span class="n">code</span><span class="p">,</span> <span class="k">with</span> <span class="n">no</span> <span class="n">other</span> <span class="n">colon</span> <span class="n">appearing</span> <span class="n">on</span> <span class="n">that</span> <span class="n">line</span><span class="o">.</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="missingrepeaterror">
 <h2>MissingRepeatError<a class="headerlink" href="#missingrepeaterror" title="Permalink to this headline">¶</a></h2>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">MissingRepeatError</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AvantPy</span> <span class="n">exception</span><span class="p">:</span> <span class="n">MissingRepeatError</span>
 
 <span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;raise_missing_repeat.pyupper&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">3.</span>
 
@@ -200,9 +200,10 @@ Python version: 3.7.0</p>
 <div class="section" id="nameerror">
 <h2>NameError<a class="headerlink" href="#nameerror" title="Permalink to this headline">¶</a></h2>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PYTHON</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="ne">NameError</span><span class="p">:</span> <span class="n">name</span> <span class="s1">&#39;c&#39;</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">defined</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Python</span> <span class="n">exception</span><span class="p">:</span>
+    <span class="ne">NameError</span><span class="p">:</span> <span class="n">name</span> <span class="s1">&#39;c&#39;</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">defined</span>
 
-<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">4.</span>
+<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;raise_name_error.pyupper&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">4.</span>
 
 <span class="n">Dialect</span> <span class="n">used</span><span class="p">:</span> <span class="n">pyupper</span>
 
@@ -221,7 +222,7 @@ Python version: 3.7.0</p>
 <div class="section" id="nobreakfirsterror">
 <h2>NobreakFirstError<a class="headerlink" href="#nobreakfirsterror" title="Permalink to this headline">¶</a></h2>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">NobreakFirstError</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AvantPy</span> <span class="n">exception</span><span class="p">:</span> <span class="n">NobreakFirstError</span>
 
 <span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;raise_nobreak_first.pyupper&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">3.</span>
 
@@ -240,7 +241,7 @@ Python version: 3.7.0</p>
 <div class="section" id="nobreaksyntaxerror">
 <h2>NobreakSyntaxError<a class="headerlink" href="#nobreaksyntaxerror" title="Permalink to this headline">¶</a></h2>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">NobreakSyntaxError</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AvantPy</span> <span class="n">exception</span><span class="p">:</span> <span class="n">NobreakSyntaxError</span>
 
 <span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;raise_nobreak_syntax.pyupper&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">4.</span>
 
@@ -259,7 +260,7 @@ Python version: 3.7.0</p>
 <div class="section" id="repeatfirsterror">
 <h2>RepeatFirstError<a class="headerlink" href="#repeatfirsterror" title="Permalink to this headline">¶</a></h2>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">RepeatFirstError</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AvantPy</span> <span class="n">exception</span><span class="p">:</span> <span class="n">RepeatFirstError</span>
 
 <span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;raise_repeat_first.pyupper&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">3.</span>
 
@@ -277,7 +278,7 @@ Python version: 3.7.0</p>
 <div class="section" id="trynobreakerror">
 <h2>TryNobreakError<a class="headerlink" href="#trynobreakerror" title="Permalink to this headline">¶</a></h2>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">TryNobreakError</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AvantPy</span> <span class="n">exception</span><span class="p">:</span> <span class="n">TryNobreakError</span>
 
 <span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;raise_try_nobreak.pyupper&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">7.</span>
 
@@ -298,7 +299,7 @@ Python version: 3.7.0</p>
 <div class="section" id="unknowndialecterror">
 <h2>UnknownDialectError<a class="headerlink" href="#unknowndialecterror" title="Permalink to this headline">¶</a></h2>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">UnknownDialectError</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AvantPy</span> <span class="n">exception</span><span class="p">:</span> <span class="n">UnknownDialectError</span>
 
 <span class="n">The</span> <span class="n">following</span> <span class="n">unknown</span> <span class="n">dialect</span> <span class="n">was</span> <span class="n">requested</span><span class="p">:</span> <span class="n">pyxx</span><span class="o">.</span>
 
@@ -309,11 +310,11 @@ Python version: 3.7.0</p>
 <div class="section" id="unknownlanguageerror">
 <h2>UnknownLanguageError<a class="headerlink" href="#unknownlanguageerror" title="Permalink to this headline">¶</a></h2>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AVANTPY</span> <span class="n">EXCEPTION</span><span class="p">:</span> <span class="n">UnknownLanguageError</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AvantPy</span> <span class="n">exception</span><span class="p">:</span> <span class="n">UnknownLanguageError</span>
 
 <span class="n">The</span> <span class="n">following</span> <span class="n">unknown</span> <span class="n">language</span> <span class="n">was</span> <span class="n">requested</span><span class="p">:</span> <span class="n">xx</span><span class="o">.</span>
 
-<span class="n">The</span> <span class="n">known</span> <span class="n">languages</span> <span class="n">are</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;fr&#39;</span><span class="p">,</span> <span class="s1">&#39;en&#39;</span><span class="p">}</span><span class="o">.</span>
+<span class="n">The</span> <span class="n">known</span> <span class="n">languages</span> <span class="n">are</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s1">&#39;fr&#39;</span><span class="p">}</span><span class="o">.</span>
 </pre></div>
 </div>
 </div>

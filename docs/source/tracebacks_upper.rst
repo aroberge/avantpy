@@ -22,7 +22,6 @@ IfNobreakError
 
 Example::
 
-
     AvantPy exception: IfNobreakError
 
     Error found in file 'raise_if_nobreak.pyupper' on line 4.
@@ -42,10 +41,9 @@ MismatchedBracketsError
 
 Example::
 
-
     AvantPy exception: MismatchedBracketsError
 
-    Error found in file 'raise_mismatched_brackets.pyupper' on lines [2 - 10].
+    Error found in file 'raise_mismatched_brackets.pyupper' on line 10.
 
     Dialect used: pyupper
 
@@ -65,7 +63,6 @@ MissingLeftBracketError
 
 Example::
 
-
     AvantPy exception: MissingLeftBracketError
 
     Error found in file 'raise_missing_left_bracket.pyupper' on line 5.
@@ -84,7 +81,6 @@ MissingRepeatColonError
 
 Example::
 
-
     AvantPy exception: MissingRepeatColonError
 
     Error found in file 'raise_missing_repeat_colon.pyupper' on line 3.
@@ -95,16 +91,15 @@ Example::
     -->3: REPEAT UNTIL (x ==
        4:          1):
 
-    A statement beginning with the 'REPEAT' keyword must be on a single
-    line ending with a colon (:) that indicates the beginning of an indented
-    block of code, with no other colon appearing on that line.
+    A statement beginning with the 'REPEAT' keyword must be on
+    a single line ending with a colon (:) that indicates the beginning of
+    an indented block of code, with no other colon appearing on that line.
 
 
 MissingRepeatError
 ------------------
 
 Example::
-
 
     AvantPy exception: MissingRepeatError
 
@@ -124,8 +119,8 @@ NameError
 
 Example::
 
-
-    Python exception: NameError: name 'c' is not defined
+    Python exception: 
+        NameError: name 'c' is not defined
 
     Error found in file 'raise_name_error.pyupper' on line 4.
 
@@ -147,7 +142,6 @@ NobreakFirstError
 
 Example::
 
-
     AvantPy exception: NobreakFirstError
 
     Error found in file 'raise_nobreak_first.pyupper' on line 3.
@@ -167,7 +161,6 @@ NobreakSyntaxError
 ------------------
 
 Example::
-
 
     AvantPy exception: NobreakSyntaxError
 
@@ -189,7 +182,6 @@ RepeatFirstError
 
 Example::
 
-
     AvantPy exception: RepeatFirstError
 
     Error found in file 'raise_repeat_first.pyupper' on line 3.
@@ -208,7 +200,6 @@ TryNobreakError
 ---------------
 
 Example::
-
 
     AvantPy exception: TryNobreakError
 
@@ -232,7 +223,6 @@ UnknownDialectError
 
 Example::
 
-
     AvantPy exception: UnknownDialectError
 
     The following unknown dialect was requested: pyxx.
@@ -244,7 +234,6 @@ UnknownLanguageError
 --------------------
 
 Example::
-
 
     AvantPy exception: UnknownLanguageError
 
