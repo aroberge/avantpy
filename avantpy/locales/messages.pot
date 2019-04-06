@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-04-06 17:21-0300\n"
+"POT-Creation-Date: 2019-04-06 18:03-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -170,7 +170,16 @@ msgid ""
 "\n"
 msgstr ""
 
-#: exception_handling.py:517
+#: exception_handling.py:526
+msgid ""
+"    A TabError indicates that you have used both spaces\n"
+"    and tab characters to indent your code.\n"
+"    This is not allowed in Python.\n"
+"    Python's recommendation is to always use spaces to indent your code.\n"
+"\n"
+msgstr ""
+
+#: exception_handling.py:558
 msgid ""
 "    The AvantPy '{nobreak_kwd}' keyword cannot be used in\n"
 "    a '{try_kwd}/{except_kwd}/{else_kwd}/{finally_kwd}' clause\n"
@@ -178,7 +187,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: exception_handling.py:544
+#: exception_handling.py:585
 msgid ""
 "    AvantPy exception: UnknownDialectError\n"
 "\n"
@@ -188,7 +197,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: exception_handling.py:562
+#: exception_handling.py:603
 msgid ""
 "    AvantPy exception: UnknownLanguageError\n"
 "\n"

@@ -269,6 +269,29 @@ Example::
     a new loop (Python: equivalent to 'for' or 'while' loop).
 
 
+TabError
+--------
+
+Example::
+
+    Python exception: 
+        TabError: inconsistent use of tabs and spaces in indentation
+
+    Error found in file 'raise_tab_error.pyupper' on line 3.
+
+    Dialect used: pyupper
+
+       1: """Should raise TabError"""
+       2: 
+    -->3: exec("""if True:\n        pass\n\tpass""")
+       4: 
+
+    A TabError indicates that you have used both spaces
+    and tab characters to indent your code.
+    This is not allowed in Python.
+    Python's recommendation is to always use spaces to indent your code.
+
+
 TryNobreakError
 ---------------
 
@@ -312,5 +335,5 @@ Example::
 
     The following unknown language was requested: xx.
 
-    The known languages are: {'fr', 'en'}.
+    The known languages are: {'en', 'fr'}.
 

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-06 17:21-0300\n"
-"PO-Revision-Date: 2019-04-06 17:23-0300\n"
+"POT-Creation-Date: 2019-04-06 18:03-0300\n"
+"PO-Revision-Date: 2019-04-06 18:05-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -260,7 +260,22 @@ msgstr ""
 "    (équivalent Python: 'for' ou 'while').\n"
 "\n"
 
-#: exception_handling.py:517
+#: exception_handling.py:526
+msgid ""
+"    A TabError indicates that you have used both spaces\n"
+"    and tab characters to indent your code.\n"
+"    This is not allowed in Python.\n"
+"    Python's recommendation is to always use spaces to indent your code.\n"
+"\n"
+msgstr ""
+"    L'exception TabError indique que vous avez utilisé des espaces ainsi\n"
+"    que des caractères de tabulation pour indenter votre code.\n"
+"    Ceci n'est pas permis en Python.\n"
+"    Il est recommandé de n'utiliser que des espaces pour indenter votre "
+"code.\n"
+"\n"
+
+#: exception_handling.py:558
 msgid ""
 "    The AvantPy '{nobreak_kwd}' keyword cannot be used in\n"
 "    a '{try_kwd}/{except_kwd}/{else_kwd}/{finally_kwd}' clause\n"
@@ -273,7 +288,7 @@ msgstr ""
 "except/else/finally).\n"
 "\n"
 
-#: exception_handling.py:544
+#: exception_handling.py:585
 msgid ""
 "    AvantPy exception: UnknownDialectError\n"
 "\n"
@@ -289,7 +304,7 @@ msgstr ""
 "    Les dialectes connus sont : {all_dialects}.\n"
 "\n"
 
-#: exception_handling.py:562
+#: exception_handling.py:603
 msgid ""
 "    AvantPy exception: UnknownLanguageError\n"
 "\n"

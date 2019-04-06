@@ -504,6 +504,47 @@ def handle_RepeatFirstError(exc, source):
     )
 
 
+def handle_TabError(exc, source):
+    """Handles TabError.
+    """
+    msg = exc.args[0]
+
+    exc_name = exc.__class__.__name__
+    python_display = "{exc_name}: {msg}".format(exc_name=exc_name, msg=msg)
+    filename, linenumber, _ignore, _ignore = exc.args[1]
+
+    if filename in ["<string>", "<tokenize>"] and state.current_filename is not None:
+        filename = state.current_filename
+
+    begin = linenumber - 4
+    end = linenumber + 1
+    marks = [linenumber]
+    partial_source = get_partial_source(source, begin, end, marks=marks)
+
+    dialect = state.current_dialect
+
+    message_end = _(
+        "    A TabError indicates that you have used both spaces\n"
+        "    and tab characters to indent your code.\n"
+        "    This is not allowed in Python.\n"
+        "    Python's recommendation is to always use spaces to indent your code.\n\n"
+    )
+
+    if dialect in [None, "pyen"]:
+        message = python_exception_no_dialect() + message_end
+    else:
+        message = python_exception_with_dialect() + message_end
+
+    return message.format(
+        exception_name=exc_name,
+        filename=filename,
+        python_display=python_display,
+        partial_source=partial_source,
+        dialect=dialect,
+        linenumber=linenumber,
+    )
+
+
 def handle_TryNobreakError(exc, source):
     """Handles situation where ``nobreak`` was wrongly use as a
        replacement for ``else`` in an try/except/else/finally block.
@@ -581,6 +622,7 @@ dispatch = {
     "NobreakFirstError": handle_NobreakFirstError,
     "NobreakSyntaxError": handle_NobreakSyntaxError,
     "RepeatFirstError": handle_RepeatFirstError,
+    "TabError": handle_TabError,
     "TryNobreakError": handle_TryNobreakError,
     "UnknownLanguageError": handle_UnknownLanguageError,
     "UnknownDialectError": handle_UnknownDialectError,

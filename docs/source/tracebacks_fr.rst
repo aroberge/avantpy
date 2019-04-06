@@ -275,6 +275,29 @@ Example::
     (équivalent Python: 'for' ou 'while').
 
 
+TabError
+--------
+
+Example::
+
+    Exception Python: 
+        TabError: inconsistent use of tabs and spaces in indentation
+
+    Erreur trouvée dans le fichier 'raise_tab_error.pyfr' à la ligne 3.
+
+    Dialecte utilisé : pyfr
+
+       1: """Should raise TabError"""
+       2: 
+    -->3: exec("""if True:\n        pass\n\tpass""")
+       4: 
+
+    L'exception TabError indique que vous avez utilisé des espaces ainsi
+    que des caractères de tabulation pour indenter votre code.
+    Ceci n'est pas permis en Python
+    Il est recommandé de n'utiliser que des espaces pour indenter votre code.
+
+
 TryNobreakError
 ---------------
 
