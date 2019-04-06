@@ -2,12 +2,14 @@
 
 Converts all the tests found in tests/pyupper into each dialect
 and adds them to the apprpriate folder.
+
+IMPORTANT: Some files cannot be replicated as they raise exceptions.
+In these cases, the copies need to be edited "by hand".
 """
 
 import glob
 import os
 import sys
-import tokenize
 
 
 this_dir = os.path.dirname(__file__)
@@ -57,6 +59,7 @@ for filename in pyupper_files:
             if error_msg is not None:
                 print(error_msg)
                 print("   Created: ", other_file)
+                print("     IMPORTANT: You will likely need to edit this file.")
             with open(other_file, "w", encoding="utf8") as new_file:
                 new_file.write(content)
 

@@ -1,0 +1,3 @@
+"""Should raise TabError"""
+
+exec("""if True:\n        pass\n\tpass""")

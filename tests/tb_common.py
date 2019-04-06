@@ -33,6 +33,7 @@ all_imports = {
     "NobreakFirstError": "raise_nobreak_first",
     "NobreakSyntaxError": "raise_nobreak_syntax",
     "RepeatFirstError": "raise_repeat_first",
+    "TabError": "raise_tab_error",
     "TryNobreakError": "raise_try_nobreak",
     "UnknownDialectError": "raise_unknown_dialect",
     "UnknownLanguageError": "raise_unknown_language",

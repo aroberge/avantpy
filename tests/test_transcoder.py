@@ -3,9 +3,9 @@ from avantpy import converter
 
 
 def test_transcoding():
-    cwd = os.getcwd()
+    cwd = os.path.dirname(__file__)
     source_path = os.path.normpath(
-        os.path.abspath(os.path.join(cwd, "tests/pyfr/test_french.pyfr"))
+        os.path.abspath(os.path.join(cwd, "pyfr/test_french.pyfr"))
     )
     assert os.path.isfile(source_path)
 
