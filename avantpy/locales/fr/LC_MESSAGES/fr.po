@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-06 15:26-0300\n"
-"PO-Revision-Date: 2019-04-06 15:27-0300\n"
+"POT-Creation-Date: 2019-04-06 17:15-0300\n"
+"PO-Revision-Date: 2019-04-06 17:17-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -20,89 +20,13 @@ msgstr ""
 msgid "UNHANDLED EXCEPTION in console.py. This should not happen."
 msgstr "Exception imprévue dans console.py. Ceci ne devrait pas arriver."
 
-#: exception_handling.py:19
-msgid ""
-"    AvantPy exception: {exception_name}\n"
-"\n"
-"    Error found in file '{filename}' on line {linenumber}.\n"
-"\n"
-"    Dialect used: {dialect}\n"
-"\n"
-"{partial_source}\n"
-"\n"
-msgstr ""
-"    Exception AvantPy : {exception_name}\n"
-"\n"
-"    Erreur trouvée dans le fichier '{filename}' à la ligne {linenumber}.\n"
-"\n"
-"    Dialecte utilisé : {dialect}\n"
-"\n"
-"{partial_source}\n"
-"\n"
-
-#: exception_handling.py:25
-msgid ""
-"    AvantPy exception: {exception_name}\n"
-"\n"
-"    Error found in file '{filename}' on line {linenumber}.\n"
-"\n"
-"{partial_source}\n"
-"\n"
-msgstr ""
-"    Exception AvantPy : {exception_name}\n"
-"\n"
-"    Erreur trouvée dans le fichier '{filename}' à la ligne {linenumber}.\n"
-"\n"
-"{partial_source}\n"
-"\n"
-
-#: exception_handling.py:30
-msgid ""
-"    Python exception: \n"
-"        {python_display}\n"
-"\n"
-"    Error found in file '{filename}' on line {linenumber}.\n"
-"\n"
-"    Dialect used: {dialect}\n"
-"\n"
-"{partial_source}\n"
-"\n"
-msgstr ""
-"    Exception Python: \n"
-"        {python_display}\n"
-"\n"
-"    Erreur trouvée dans le fichier '{filename}' à la ligne {linenumber}.\n"
-"\n"
-"    Dialecte utilisé : {dialect}\n"
-"\n"
-"{partial_source}\n"
-"\n"
-
-#: exception_handling.py:37
-msgid ""
-"    Python exception: \n"
-"        {python_display}\n"
-"\n"
-"    Error found in file '{filename}' on line {linenumber}.\n"
-"\n"
-"{partial_source}\n"
-"\n"
-msgstr ""
-"    Exception Python  \n"
-"        {python_display}\n"
-"\n"
-"    Erreur trouvée dans le fichier '{filename}' à la ligne {linenumber}.\n"
-"\n"
-"{partial_source}\n"
-"\n"
-
-#: exception_handling.py:126
+#: exception_handling.py:137
 msgid "An exception was raised for which we have no simplified traceback:\n"
 msgstr ""
 "Une exception pour laquelle nous n'avons pas de traceback simplifiée a été "
 "soulevée :\n"
 
-#: exception_handling.py:169
+#: exception_handling.py:180
 msgid ""
 "    The AvantPy '{nobreak_kwd}' keyword cannot be used in\n"
 "    an if/elif/else clause.\n"
@@ -112,7 +36,7 @@ msgstr ""
 "    dans une clause if/elif/else\n"
 "\n"
 
-#: exception_handling.py:174
+#: exception_handling.py:185
 msgid ""
 "    The AvantPy '{nobreak_kwd}' keyword cannot be used in\n"
 "    an '{if_kwd}/{elif_kwd}/{else_kwd}' clause (Python: if/elif/else).\n"
@@ -123,55 +47,45 @@ msgstr ""
 "    dans un énoncé '{if_kwd}/{elif_kwd}/{else_kwd}' (Python: if/elif/else).\n"
 "\n"
 
-#: exception_handling.py:197
+#: exception_handling.py:208
 msgid ""
 "    In this case, the line indicated by an arrow\n"
 "    is more indented than expected and does not match\n"
 "    the indentation of the previous line.\n"
-"\n"
 msgstr ""
 "    Dans ce cas-ci, la ligne indiquée par une flèche\n"
 "    est plus indentée que ce qui était attendu et ne\n"
 "    correspond pas à l'indentation de la ligne précédente.\n"
-"\n"
-"\n"
 
-#: exception_handling.py:203
+#: exception_handling.py:214
 msgid ""
 "    In this case, the line indicated by an arrow\n"
 "    was expected to begin a new indented block.\n"
-"\n"
 msgstr ""
 "    Dans ce cas-ci, la ligne indiquée par une flèche devrait\n"
 "    normalement commencer un nouveau bloc de code indenté.\n"
-"\n"
-"\n"
 
-#: exception_handling.py:208
+#: exception_handling.py:219
 msgid ""
 "    In this case, the line indicated by an arrow\n"
 "    is less indented the preceding one,\n"
 "    and is not aligned vertically with another block of code.\n"
-"\n"
 msgstr ""
 "    Dans ce cas-ci, la ligne indiquée par une flèche\n"
 "    est moins indentée que la ligne précédente,\n"
 "    et n'est pas alignée verticalement avec un autre bloc de code.\n"
-"\n"
 
-#: exception_handling.py:225
+#: exception_handling.py:239
 msgid ""
 "    An indentation error occurs when a given line is\n"
 "    not indented (aligned vertically) as expected.\n"
 "{this_case}\n"
-"\n"
 msgstr ""
 "    Une erreur d'indentation a lieu lorsqu'une ligne de code\n"
 "    n'est pas indentée (alignée verticalement) tel qu'attendu.\n"
 "{this_case}\n"
-"\n"
 
-#: exception_handling.py:259
+#: exception_handling.py:273
 msgid ""
 "    The opening {open_bracket} does not match the closing {close_bracket}.\n"
 "\n"
@@ -180,7 +94,7 @@ msgstr ""
 "{close_bracket}.\n"
 "\n"
 
-#: exception_handling.py:292
+#: exception_handling.py:306
 msgid ""
 "    The closing {bracket} does not match anything.\n"
 "\n"
@@ -188,7 +102,7 @@ msgstr ""
 "    Le symbole droit {bracket} n'a pas de symbole gauche correspondant.\n"
 "\n"
 
-#: exception_handling.py:320
+#: exception_handling.py:334
 msgid ""
 "    A statement beginning with the '{repeat_kwd}' keyword must be on\n"
 "    a single line ending with a colon (:) that indicates the beginning of\n"
@@ -202,7 +116,7 @@ msgstr ""
 "    d'autre deux points qui apparaissent sur cette ligne.\n"
 "\n"
 
-#: exception_handling.py:348
+#: exception_handling.py:362
 msgid ""
 "    The AvantPy '{keyword}'' keyword can be used only when preceded by "
 "'{repeat_kwd}'.\n"
@@ -212,7 +126,7 @@ msgstr ""
 "    s'il est précédé de '{repeat_kwd}'.\n"
 "\n"
 
-#: exception_handling.py:379
+#: exception_handling.py:393
 msgid ""
 "    A NameError exception indicates that a variable or\n"
 "    function name is not known to Python.\n"
@@ -231,7 +145,7 @@ msgstr ""
 "    Dans votre programme, le nom inconnu est '{var_name}'.\n"
 "\n"
 
-#: exception_handling.py:415
+#: exception_handling.py:429
 msgid ""
 "    The AvantPy '{nobreak_kwd}' keyword can be used instead of '{else_kwd}'\n"
 "    (Python: else) only when it begins a new statement in\n"
@@ -244,7 +158,7 @@ msgstr ""
 "    dans des boucles '{for_kwd}' ou '{while_kwd}' (Python: for/while).\n"
 "\n"
 
-#: exception_handling.py:446
+#: exception_handling.py:460
 msgid ""
 "    The AvantPy '{nobreak_kwd}' keyword can only be used as a replacement\n"
 "    of '{else_kwd}' (Python: else) with a matching '{for_kwd}' or\n"
@@ -258,7 +172,7 @@ msgstr ""
 "    dans des boucles '{for_kwd}' ou '{while_kwd}' (Python: for/while).\n"
 "\n"
 
-#: exception_handling.py:477
+#: exception_handling.py:491
 msgid ""
 "    The AvantPy '{repeat_kwd}' keyword can only be used to begin\n"
 "    a new loop (Python: equivalent to 'for' or 'while' loop).\n"
@@ -270,7 +184,7 @@ msgstr ""
 "    (équivalent Python: 'for' ou 'while').\n"
 "\n"
 
-#: exception_handling.py:503
+#: exception_handling.py:517
 msgid ""
 "    The AvantPy '{nobreak_kwd}' keyword cannot be used in\n"
 "    a '{try_kwd}/{except_kwd}/{else_kwd}/{finally_kwd}' clause\n"
@@ -283,7 +197,7 @@ msgstr ""
 "except/else/finally).\n"
 "\n"
 
-#: exception_handling.py:530
+#: exception_handling.py:544
 msgid ""
 "    AvantPy exception: UnknownDialectError\n"
 "\n"
@@ -299,7 +213,7 @@ msgstr ""
 "    Les dialectes connus sont : {all_dialects}.\n"
 "\n"
 
-#: exception_handling.py:548
+#: exception_handling.py:562
 msgid ""
 "    AvantPy exception: UnknownLanguageError\n"
 "\n"
@@ -322,6 +236,78 @@ msgstr "Le module principal ('main') ne peut pas être trouvé : "
 #: session.py:168
 msgid "    ==> Language: {lang} | AvantPy dialect: {dialect}"
 msgstr "    ==> Langue : {lang} | dialecte AvantPy : {dialect}"
+
+#~ msgid ""
+#~ "    AvantPy exception: {exception_name}\n"
+#~ "\n"
+#~ "    Error found in file '{filename}' on line {linenumber}.\n"
+#~ "\n"
+#~ "    Dialect used: {dialect}\n"
+#~ "\n"
+#~ "{partial_source}\n"
+#~ "\n"
+#~ msgstr ""
+#~ "    Exception AvantPy : {exception_name}\n"
+#~ "\n"
+#~ "    Erreur trouvée dans le fichier '{filename}' à la ligne {linenumber}.\n"
+#~ "\n"
+#~ "    Dialecte utilisé : {dialect}\n"
+#~ "\n"
+#~ "{partial_source}\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "    AvantPy exception: {exception_name}\n"
+#~ "\n"
+#~ "    Error found in file '{filename}' on line {linenumber}.\n"
+#~ "\n"
+#~ "{partial_source}\n"
+#~ "\n"
+#~ msgstr ""
+#~ "    Exception AvantPy : {exception_name}\n"
+#~ "\n"
+#~ "    Erreur trouvée dans le fichier '{filename}' à la ligne {linenumber}.\n"
+#~ "\n"
+#~ "{partial_source}\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "    Python exception: \n"
+#~ "        {python_display}\n"
+#~ "\n"
+#~ "    Error found in file '{filename}' on line {linenumber}.\n"
+#~ "\n"
+#~ "    Dialect used: {dialect}\n"
+#~ "\n"
+#~ "{partial_source}\n"
+#~ "\n"
+#~ msgstr ""
+#~ "    Exception Python: \n"
+#~ "        {python_display}\n"
+#~ "\n"
+#~ "    Erreur trouvée dans le fichier '{filename}' à la ligne {linenumber}.\n"
+#~ "\n"
+#~ "    Dialecte utilisé : {dialect}\n"
+#~ "\n"
+#~ "{partial_source}\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "    Python exception: \n"
+#~ "        {python_display}\n"
+#~ "\n"
+#~ "    Error found in file '{filename}' on line {linenumber}.\n"
+#~ "\n"
+#~ "{partial_source}\n"
+#~ "\n"
+#~ msgstr ""
+#~ "    Exception Python  \n"
+#~ "        {python_display}\n"
+#~ "\n"
+#~ "    Erreur trouvée dans le fichier '{filename}' à la ligne {linenumber}.\n"
+#~ "\n"
+#~ "{partial_source}\n"
+#~ "\n"
 
 #~ msgid ""
 #~ "\n"

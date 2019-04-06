@@ -36,6 +36,79 @@ Example::
     an 'IF/ELIF/ELSE' clause (Python: if/elif/else).
 
 
+IndentationError: expected an indented block
+--------------------------------------------
+
+Example::
+
+    Python exception: 
+        IndentationError: expected an indented block
+
+    Error found in file 'raise_indentation_error1.pyupper' on line 3.
+
+    Dialect used: pyupper
+
+       1: '''Should raise IndentationError'''
+       2: IF TRUE:
+    -->3: PASS
+       4: 
+
+    An indentation error occurs when a given line is
+    not indented (aligned vertically) as expected.
+    In this case, the line indicated by an arrow
+    was expected to begin a new indented block.
+
+
+IndentationError: unexpected indent
+-----------------------------------
+
+Example::
+
+    Python exception: 
+        IndentationError: unexpected indent
+
+    Error found in file 'raise_indentation_error2.pyupper' on line 4.
+
+    Dialect used: pyupper
+
+       1: '''Should raise IndentationError'''
+       2: IF TRUE:
+       3:     PASS
+    -->4:       PASS
+       5: 
+
+    An indentation error occurs when a given line is
+    not indented (aligned vertically) as expected.
+    In this case, the line indicated by an arrow
+    is more indented than expected and does not match
+    the indentation of the previous line.
+
+
+IndentationError - no match
+---------------------------
+
+Example::
+
+    Python exception: 
+        IndentationError: unindent does not match any outer indentation level
+
+    Error found in file 'raise_indentation_error3.pyupper' on line 4.
+
+    Dialect used: pyupper
+
+       1: '''Should raise IndentationError'''
+       2: IF TRUE:
+       3:       PASS
+    -->4:     PASS
+       5: 
+
+    An indentation error occurs when a given line is
+    not indented (aligned vertically) as expected.
+    In this case, the line indicated by an arrow
+    is less indented the preceding one,
+    and is not aligned vertically with another block of code.
+
+
 MismatchedBracketsError
 -----------------------
 

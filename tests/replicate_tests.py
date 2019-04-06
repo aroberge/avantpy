@@ -34,14 +34,16 @@ for filename in pyupper_files:
     with open(filename, encoding="utf8") as f:
         source = f.read()
     for dialect in dialects:
+        error_msg = None
         other_file = filename.replace("pyupper", dialect)
         if ext == ".py":
             content = source
         else:
             try:
                 content = avantpy.converter.transcode(source, "pyupper", dialect)
-            except tokenize.TokenError:
-                print("couldn't convert", filename)
+            except Exception as exc:
+                error_msg = repr(exc) + "\ncouldn't convert " + filename
+                error_msg += "\n   Simply copied the content of the original file."
                 content = source
         if os.path.isfile(other_file):
             target_creation_time = os.path.getmtime(other_file)
@@ -52,6 +54,9 @@ for filename in pyupper_files:
                     new_file.write(content)
         else:
             nb_new += 1
+            if error_msg is not None:
+                print(error_msg)
+                print("   Created: ", other_file)
             with open(other_file, "w", encoding="utf8") as new_file:
                 new_file.write(content)
 

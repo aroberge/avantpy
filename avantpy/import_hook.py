@@ -96,6 +96,7 @@ class AvantPyLoader(Loader):
             session.state.set_dialect(dialect)
             source = converter.convert(source, dialect, source_name=fullname)
         except Exception as exc:
+            state.current_filename = fullname
             write_exception_info(exc, original)
             return
 

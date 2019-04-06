@@ -25,11 +25,11 @@ IfNobreakError
 
 Example::
 
-    Exception AvantPy : IfNobreakError
+    AvantPy exception: IfNobreakError
 
-    Erreur trouvée dans le fichier 'raise_if_nobreak.pyfr' à la ligne 4.
+    Error found in file 'raise_if_nobreak.pyfr' on line 4.
 
-    Dialecte utilisé : pyfr
+    Dialect used: pyfr
 
        2: si Vrai:
        3:     passer
@@ -39,16 +39,89 @@ Example::
     dans un énoncé 'si/sinonsi/sinon' (Python: if/elif/else).
 
 
+IndentationError: expected an indented block
+--------------------------------------------
+
+Example::
+
+    Python exception: 
+        IndentationError: expected an indented block
+
+    Error found in file 'raise_indentation_error1.pyfr' on line 3.
+
+    Dialect used: pyfr
+
+       1: '''Should raise IndentationError'''
+       2: si Vrai:
+    -->3: passer
+       4: 
+
+    Une erreur d'indentation a lieu lorsqu'une ligne de code
+    n'est pas indentée (alignée verticalement) tel qu'attendu.
+    Dans ce cas-ci, la ligne indiquée par une flèche devrait
+    normalement commencer un nouveau bloc de code indenté.
+
+
+IndentationError: unexpected indent
+-----------------------------------
+
+Example::
+
+    Python exception: 
+        IndentationError: unexpected indent
+
+    Error found in file 'raise_indentation_error2.pyfr' on line 4.
+
+    Dialect used: pyfr
+
+       1: '''Should raise IndentationError'''
+       2: si Vrai:
+       3:     passer
+    -->4:       passer
+       5: 
+
+    Une erreur d'indentation a lieu lorsqu'une ligne de code
+    n'est pas indentée (alignée verticalement) tel qu'attendu.
+    Dans ce cas-ci, la ligne indiquée par une flèche
+    est plus indentée que ce qui était attendu et ne
+    correspond pas à l'indentation de la ligne précédente.
+
+
+IndentationError - no match
+---------------------------
+
+Example::
+
+    Python exception: 
+        IndentationError: unindent does not match any outer indentation level
+
+    Error found in file 'raise_indentation_error3.pyfr' on line 4.
+
+    Dialect used: pyfr
+
+       1: '''Should raise IndentationError'''
+       2: si Vrai:
+       3:       passer
+    -->4:     passer
+       5: 
+
+    Une erreur d'indentation a lieu lorsqu'une ligne de code
+    n'est pas indentée (alignée verticalement) tel qu'attendu.
+    Dans ce cas-ci, la ligne indiquée par une flèche
+    est moins indentée que la ligne précédente,
+    et n'est pas alignée verticalement avec un autre bloc de code.
+
+
 MismatchedBracketsError
 -----------------------
 
 Example::
 
-    Exception AvantPy : MismatchedBracketsError
+    AvantPy exception: MismatchedBracketsError
 
-    Erreur trouvée dans le fichier 'raise_mismatched_brackets.pyfr' à la ligne 6.
+    Error found in file 'raise_mismatched_brackets.pyfr' on line 6.
 
-    Dialecte utilisé : pyfr
+    Dialect used: pyfr
 
     -->2: a = (1,
        3:     2,
@@ -64,11 +137,11 @@ MissingLeftBracketError
 
 Example::
 
-    Exception AvantPy : MissingLeftBracketError
+    AvantPy exception: MissingLeftBracketError
 
-    Erreur trouvée dans le fichier 'raise_missing_left_bracket.pyfr' à la ligne 5.
+    Error found in file 'raise_missing_left_bracket.pyfr' on line 5.
 
-    Dialecte utilisé : pyfr
+    Dialect used: pyfr
 
        4:     3, 4,)
     -->5:     )
@@ -82,11 +155,11 @@ MissingRepeatColonError
 
 Example::
 
-    Exception AvantPy : MissingRepeatColonError
+    AvantPy exception: MissingRepeatColonError
 
-    Erreur trouvée dans le fichier 'raise_missing_repeat_colon.pyfr' à la ligne 3.
+    Error found in file 'raise_missing_repeat_colon.pyfr' on line 3.
 
-    Dialecte utilisé : pyfr
+    Dialect used: pyfr
 
        2: x = 0
     -->3: répéter jusquà (x ==
@@ -103,11 +176,11 @@ MissingRepeatError
 
 Example::
 
-    Exception AvantPy : MissingRepeatError
+    AvantPy exception: MissingRepeatError
 
-    Erreur trouvée dans le fichier 'raise_missing_repeat.pyfr' à la ligne 3.
+    Error found in file 'raise_missing_repeat.pyfr' on line 3.
 
-    Dialecte utilisé : pyfr
+    Dialect used: pyfr
 
        2: x = 0
     -->3: jusquà x == 2:
@@ -122,12 +195,12 @@ NameError
 
 Example::
 
-    Exception Python: 
+    Python exception: 
         NameError: name 'c' is not defined
 
-    Erreur trouvée dans le fichier 'raise_name_error.pyfr' à la ligne 4.
+    Error found in file 'raise_name_error.pyfr' on line 4.
 
-    Dialecte utilisé : pyfr
+    Dialect used: pyfr
 
        3: a = 1
     -->4: b = c
@@ -147,11 +220,11 @@ NobreakFirstError
 
 Example::
 
-    Exception AvantPy : NobreakFirstError
+    AvantPy exception: NobreakFirstError
 
-    Erreur trouvée dans le fichier 'raise_nobreak_first.pyfr' à la ligne 3.
+    Error found in file 'raise_nobreak_first.pyfr' on line 3.
 
-    Dialecte utilisé : pyfr
+    Dialect used: pyfr
 
        2: # Need to prevent pasinterrompu being replaced by 'else' in this situation.
     -->3: a = 1 if True pasinterrompu 3
@@ -167,11 +240,11 @@ NobreakSyntaxError
 
 Example::
 
-    Exception AvantPy : NobreakSyntaxError
+    AvantPy exception: NobreakSyntaxError
 
-    Erreur trouvée dans le fichier 'raise_nobreak_syntax.pyfr' à la ligne 4.
+    Error found in file 'raise_nobreak_syntax.pyfr' on line 4.
 
-    Dialecte utilisé : pyfr
+    Dialect used: pyfr
 
        3: a = 1
     -->4: pasinterrompu: pass
@@ -187,11 +260,11 @@ RepeatFirstError
 
 Example::
 
-    Exception AvantPy : RepeatFirstError
+    AvantPy exception: RepeatFirstError
 
-    Erreur trouvée dans le fichier 'raise_repeat_first.pyfr' à la ligne 3.
+    Error found in file 'raise_repeat_first.pyfr' on line 3.
 
-    Dialecte utilisé : pyfr
+    Dialect used: pyfr
 
        2: # Catch an early case of using répéter not to begin a loop
     -->3: a = répéter
@@ -207,11 +280,11 @@ TryNobreakError
 
 Example::
 
-    Exception AvantPy : TryNobreakError
+    AvantPy exception: TryNobreakError
 
-    Erreur trouvée dans le fichier 'raise_try_nobreak.pyfr' à la ligne 7.
+    Error found in file 'raise_try_nobreak.pyfr' on line 7.
 
-    Dialecte utilisé : pyfr
+    Dialect used: pyfr
 
        3:     essayer:
        4:         A = 1
@@ -244,5 +317,5 @@ Example::
 
     Le langage inconnu suivant a été demandé : xx.
 
-    Les langages connus sont : {'en', 'fr'}.
+    Les langages connus sont : {'fr', 'en'}.
 
