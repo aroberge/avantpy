@@ -126,8 +126,8 @@ BaseException
       |    +-- NotImplementedError
       |    +-- RecursionError
       +-- SyntaxError
-      |    +-- IndentationError
-      |         +-- TabError
+      |    +-- IndentationError *
+      |         +-- TabError *
       +-- SystemError
       +-- TypeError
       +-- ValueError

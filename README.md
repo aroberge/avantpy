@@ -2,6 +2,12 @@
 
 Python with **training wheels**: _executable pseudocode_ in any language.
 
+:warning: On April 7th, I decided decided to carve out the part of this project dealing with
+simplified tracebacks into a project of its own. For the next few weeks, I will temporarily
+stop working on AvantPy.
+
+Those interested should go to https://aroberge.github.io/friendly-traceback/docs/html/index.html  (Code at: https://github.com/aroberge/friendly-traceback)
+
 Please see https://aroberge.github.io/avantpy/docs/html/ for more information, including for those
 who wish to contribute or file issues.
 AvantPy uses Black.
