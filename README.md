@@ -15,9 +15,6 @@ AvantPy uses Black.
 
 ## What is AvantPy
 
-:warning: The following describes what the final version of AvantPy should look
-like; currently, much remains to be implemented.
-
 - AvantPy is a collection of dialects, each dialect being a superset of Python, designed to make it easier to learn programming concepts in a given human language.
   - Each dialect consists of a translations of most Python keywords in a given human language, supplemented by a few additional constructs intended to make some programming concepts easier to learn.
   - The current version includes three dialects: English, French and Spanish.
