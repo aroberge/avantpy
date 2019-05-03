@@ -3,10 +3,10 @@
 Python with **training wheels**: _executable pseudocode_ in any language.
 
 :warning: On April 7th, I decided decided to carve out the part of this project dealing with
-simplified tracebacks into a project of its own. For the next few weeks, I will temporarily
-stop working on AvantPy.
+simplified tracebacks into a project of its own. **For the next few weeks, I will temporarily
+stop working on AvantPy.** Work will resume when "friendly-traceback" is substantially complete.
 
-Those interested should go to https://aroberge.github.io/friendly-traceback/docs/html/index.html  (Code at: https://github.com/aroberge/friendly-traceback)
+Those interested should go to https://aroberge.github.io/friendly-traceback-docs/docs/html/index.html  (Code at: https://github.com/aroberge/friendly-traceback)
 
 Please see https://aroberge.github.io/avantpy/docs/html/ for more information, including for those
 who wish to contribute or file issues.
