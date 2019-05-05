@@ -28,11 +28,11 @@ As I worked on AvantPy, I realized that the tool I had planned to analyze
 Python tracebacks and translate them into something easier to understand
 by beginners was something of more general applicability, and would benefit
 to be turned into a separate project, which could eventually be used by
-AvantPy as well as other projects.  As an example, from some early discussions,
+AvantPy itself as well as other projects.
+As an example, from some early discussions,
 the main developpers for both
 [Mu](https://codewith.mu/) and [Thonny](https://thonny.org/)
-have expressed an interest into
-this new project.
+have expressed an interest into this new project.
 This new project is named **Friendly-traceback** and is currently
 [documented here](https://aroberge.github.io/friendly-traceback-docs/docs/html/index.html).
 
@@ -75,7 +75,7 @@ The first commit to the code repository was made on April 7, 2019.
 In a very brief period, significant progress has already been accomplished, as
 [documented here](https://aroberge.github.io/friendly-traceback-docs/docs/html/index.html)
 
-As of this writing, excluding `SyntaxError`, 15 different causes of
+As of this writing, excluding `SyntaxError`, more than 20 different causes of
 Python exceptions can be analyzed and explanations provided in
 either [English](https://aroberge.github.io/friendly-traceback-docs/docs/html/tracebacks_en.html) or
 [French](https://aroberge.github.io/friendly-traceback-docs/docs/html/tracebacks_fr.html)
@@ -90,10 +90,10 @@ include exceptions from specific modules of the Python standard library,
 such as [Decimal](https://docs.python.org/3/library/decimal.html)
 or [Turtle](https://docs.python.org/3/library/turtle.html).
 
-While the above describes the capability of the author to start and make
+While the above describes my capability to start and make
 progress on a project, it does not address the issue of capability of
 bringing a project to a satisfactory state of completion.
-To address this point, I offer two examples:
+To address this point, I offer two examples of my projects:
 
 - My first Python related project was rur-ple,
   [first hosted on sourceforge](http://rur-ple.sourceforge.net/) and which
@@ -119,7 +119,7 @@ most people participating in this discussion list.
 
 In October 2012, another user [filed a bug](https://bugs.python.org/issue16344)
 on this issue, hoping to gets support, but got nowhere.
-From the discussion, it is clear that many core developers did not see this
+From the discussion, it is clear (to me) that many core developers did not see this
 as an opportunity to make the Python community more inclusive and diverse.
 On the contrary, some opinions expressed could be summarized/paraphrased
 as "If you want to program in Python, learn English like the rest of us."
@@ -183,9 +183,9 @@ other languages and get them interested enough to contribute.
 
 At this stage, Friendly-traceback needs more visibility:
 
-1. to attract contributors who could increase the number of Exceptions
-   covered [following the process described here](https://aroberge.github.io/friendly-traceback-docs/docs/html/adding_exception.html)
-2. to attract contributors who could provide translations
+1. To attract contributors who could increase the number of Exceptions
+   covered;
+2. to attract contributors who could provide translations;
 3. to attract instructors working with students and who would be willing
    to give feedback leading to improvements.
 
@@ -195,6 +195,13 @@ international audience. This could be as simple as a blog post, or go as
 far as making a point of mentioning it and the need for increasing the number
 of languages covered whenever a request for funding comes
 from organizers of Python-related conferences.
+
+Helping to increase the number of Exception cases covered can be done either
+[simply by suggesting a new example](https://aroberge.github.io/friendly-traceback-docs/docs/html/suggest.html) or
+[writing code to deal with a new case](https://aroberge.github.io/friendly-traceback-docs/docs/html/adding_exception.html).
+**The greater the number of potential contributors can be reached and
+encouraged to either suggest an example or
+contribute code, the faster the project will be completed.**
 
 However, financial support for groups could be helpful in possibly two specific cases:
 
