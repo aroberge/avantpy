@@ -107,10 +107,6 @@ To address this point, I offer two examples of my projects:
 
 ### Diversity and inclusivity
 
-Trying to put words on issues dealing with diversity and inclusivity can be
-difficult to do as the risk of misrepresenting opinions written by others
-is always present.
-
 The first mention of providing translations for Python tracebacks that
 I have been able to find is a suggestion I made in May 2010
 [on the Python-ideas list](https://mail.python.org/pipermail/python-ideas/2010-May/007211.html).
@@ -123,6 +119,11 @@ From the discussion, it is clear (to me) that many core developers did not see t
 as an opportunity to make the Python community more inclusive and diverse.
 On the contrary, some opinions expressed could be summarized/paraphrased
 as "If you want to program in Python, learn English like the rest of us."
+While there has certainly been significant improvements in support for
+international learners since that time, including the possibility to have
+Python identifiers written in different languages due to native support of utf-8,
+as well as the work done to translate the documentation into various languages,
+more could be done to make Python more welcoming to a larger international audience.
 
 One of the goals of Friendly-traceback is to make it easier for people
 who may feel inadequate as they do not understand English sufficiently well
@@ -162,11 +163,8 @@ The type of questions that need to be answered include:
   problem they face.
 
 - What does a beginner programmer think *they* ought to do when presented
-  with an exception message?
-
-- Are the beginners' perceptions the same that we
-  (as experienced developers and/or educators) think they should
-  have when they encounter an exception message?
+  with an exception message? Does the information given by Friendly-traceback
+  helps them to find and understand the source of the error?
 
 - How well does Friendly-traceback contribute to helping beginners in
   understanding how to use the information provided by a standard Python
@@ -183,15 +181,15 @@ other languages and get them interested enough to contribute.
 
 At this stage, Friendly-traceback needs more visibility:
 
-1. To attract contributors who could increase the number of Exceptions
-   covered;
+1. To attract contributors who could increase the number of Exceptions covered;
 2. to attract contributors who could provide translations;
 3. to attract instructors working with students and who would be willing
-   to give feedback leading to improvements.
+   to give feedback leading to improvements of the information provided
+   by Friendly-traceback.
 
 Friendly-traceback does not require direct financial support for the PSF.
 What is mostly needed is help in publicizing this project to a larger
-international audience. This could be as simple as a blog post, or go as
+international audience. This could be as simple as a blog post or a tweet, or go as
 far as making a point of mentioning it and the need for increasing the number
 of languages covered whenever a request for funding comes
 from organizers of Python-related conferences.
@@ -203,7 +201,8 @@ Helping to increase the number of Exception cases covered can be done either
 encouraged to either suggest an example or
 contribute code, the faster the project will be completed.**
 
-However, financial support for groups could be helpful in possibly two specific cases:
+While direct financial support is not requested,
+financial support could be helpful in possibly two specific cases:
 
 1. For groups that want to organize coding sprints to increase the number
    of exceptions being included in Friendly-traceback. If this project receives
@@ -217,7 +216,8 @@ However, financial support for groups could be helpful in possibly two specific 
    food for participants.)  We note that we have received private
    correspondance from the creator of [Mu](https://codewith.mu/) who plans
    to include Friendly-traceback in an alpha version for Mu.
-   As you likely know, Mu has been designed specifically with beginners in mind.
+   As you likely know, Mu has been designed specifically with beginners in mind,
+   which is the exact audience primarily targeted by Friendly-traceback.
 
 
 ## Final comment
