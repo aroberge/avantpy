@@ -12,6 +12,7 @@ from . import session
 from . import converter
 from .exception_handling import write_exception_info
 from .session import state
+from .my_gettext import gettext_lang
 
 MAIN_MODULE_NAME = None
 
@@ -28,6 +29,7 @@ def import_main(name):
        Python identifies avantpy as the main script, which is not what we want.
     """
     global MAIN_MODULE_NAME
+    _ = gettext_lang.lang
     MAIN_MODULE_NAME = name
     try:
         main = importlib.import_module(name)

@@ -16,7 +16,7 @@ documenter ici tous les exemples possibles tels qu'interprétés par AvantPy.
      à jour du reste de la documentation avec Sphinx.
 
 AvantPy version: 0.0.9
-Python version: 3.7.0
+Python version: 3.7.3
 
 
 
@@ -340,5 +340,5 @@ Example::
 
     Le langage inconnu suivant a été demandé : xx.
 
-    Les langages connus sont : {'en', 'fr'}.
+    Les langages connus sont : {'fr', 'en'}.
 

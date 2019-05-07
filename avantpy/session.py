@@ -2,12 +2,12 @@
 
 Keeps track of and updates the state of the session: language and dialect used.
 """
-import gettext
 import glob
 import os.path
 import runpy
 
 from . import exceptions
+from .my_gettext import gettext_lang
 
 
 class _State:
@@ -27,7 +27,7 @@ class _State:
         self.console_active = False
         self.collect_dialects()
         self.collect_languages()
-        self.install_gettext("xx")  # Simply adds _() to builtins
+        self.install_gettext("xx")
 
     def collect_dialects(self):
         """Find known dialects and create corresponding dictionaries."""
@@ -149,21 +149,14 @@ class _State:
 
     def install_gettext(self, lang):
         """Sets the current language for gettext."""
-        gettext_lang = gettext.translation(
-            lang,
-            localedir=os.path.normpath(
-                os.path.join(os.path.dirname(__file__), "locales")
-            ),
-            languages=[lang],
-            fallback=True,
-        )
-        gettext_lang.install()
+        gettext_lang.install(lang)
 
     def print_lang_info(self):
         """Prints language and dialect selected.
 
            Intended to be used in the console.
         """
+        _ = gettext_lang.lang
         print(
             _("    ==> Language: {lang} | AvantPy dialect: {dialect}").format(
                 lang=self.current_lang, dialect=self.current_dialect

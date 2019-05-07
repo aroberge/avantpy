@@ -7,6 +7,7 @@ import sys
 import traceback
 
 from .session import state
+from .my_gettext import gettext_lang
 
 ENABLED = True
 
@@ -18,6 +19,7 @@ ENABLED = True
 
 
 def avantpy_exception_with_dialect():
+    _ = gettext_lang.lang
     return _(
         "    AvantPy exception: {exception_name}\n\n"
         "    Error found in file '{filename}' on line {linenumber}.\n\n"
@@ -27,6 +29,7 @@ def avantpy_exception_with_dialect():
 
 
 def avantpy_exception_no_dialect():
+    _ = gettext_lang.lang
     return _(
         "    AvantPy exception: {exception_name}\n\n"
         "    Error found in file '{filename}' on line {linenumber}.\n\n"
@@ -35,6 +38,7 @@ def avantpy_exception_no_dialect():
 
 
 def python_exception_with_dialect():
+    _ = gettext_lang.lang
     return _(
         "    Python exception: \n"
         "        {python_display}\n\n"
@@ -45,6 +49,7 @@ def python_exception_with_dialect():
 
 
 def python_exception_no_dialect():
+    _ = gettext_lang.lang
     return _(
         "    Python exception: \n"
         "        {python_display}\n\n"
@@ -129,6 +134,7 @@ def write_err(msg):
 
 def write_exception_info(exc, source):
     """Writes the information we have after processing the exception."""
+    _ = gettext_lang.lang
     msg = handle_exception(exc, source)
     if msg is not None:
         write_err(msg)
@@ -169,6 +175,7 @@ def handle_IfNobreakError(exc, source):
     """Handles situation where ``nobreak`` was wrongly use as a
        replacement for ``else`` in an if/elif/else block.
     """
+    _ = gettext_lang.lang
     params = exc.args[0]
     begin = params["if_linenumber"]
     end = params["linenumber"]
@@ -203,6 +210,7 @@ def handle_IfNobreakError(exc, source):
 def handle_IndentationError(exc, source):
     """Handles IndentationError.
     """
+    _ = gettext_lang.lang
     msg = exc.args[0]
     if "unexpected indent" in msg:
         this_case = _(
@@ -262,6 +270,7 @@ def handle_MismatchedBracketsError(exc, source):
     """Handles situation where a bracket of one kind '([{'
        is closed with a bracket of a different kind.
     """
+    _ = gettext_lang.lang
     params = exc.args[0]
     begin = params["open_linenumber"]
     end = params["close_linenumber"]
@@ -294,6 +303,7 @@ def handle_MissingLeftBracketError(exc, source):
     """Handles situation where at bracket of one kind ),],}
        is closed without a corresponding open bracket.
     """
+    _ = gettext_lang.lang
     params = exc.args[0]
     linenumber = params["linenumber"]
     begin = linenumber - 1
@@ -324,6 +334,7 @@ def handle_MissingRepeatColonError(exc, source):
     """Handles situation where a statement beginning with repeat
        does not end with a colon.
     """
+    _ = gettext_lang.lang
     params = exc.args[0]
     linenumber = params["linenumber"]
     begin = linenumber - 1
@@ -352,6 +363,7 @@ def handle_MissingRepeatError(exc, source):
     """Handles situation where either ``until`` or ``forever`` was
        used without being preceeded by ``repeat``.
     """
+    _ = gettext_lang.lang
     params = exc.args[0]
     linenumber = params["linenumber"]
     begin = linenumber - 1
@@ -378,6 +390,7 @@ def handle_MissingRepeatError(exc, source):
 
 def handle_NameError(exc, source):
     """Handles situation where a NameError is raise."""
+    _ = gettext_lang.lang
     msg = exc.args[0]
     var_name = msg.split("'")[1]
     exc_name = exc.__class__.__name__
@@ -419,6 +432,7 @@ def handle_NobreakFirstError(exc, source):
        replacement for ``else`` in statements like
        var = x if condition else y.
     """
+    _ = gettext_lang.lang
     params = exc.args[0]
     linenumber = params["linenumber"]
     begin = linenumber - 1
@@ -450,6 +464,7 @@ def handle_NobreakSyntaxError(exc, source):
     """Handles situation where ``nobreak`` is used without a matching
        ``for`` or ``while`` loop and not already raised.
     """
+    _ = gettext_lang.lang
     params = exc.args[0]
     linenumber = params["linenumber"]
     begin = linenumber - 1
@@ -481,6 +496,7 @@ def handle_RepeatFirstError(exc, source):
     """Handles situation where ``repeat`` was uses wrongly as
        it did not appear as the first keyword of a given statement.
     """
+    _ = gettext_lang.lang
     params = exc.args[0]
     linenumber = params["linenumber"]
     begin = linenumber - 1
@@ -507,6 +523,7 @@ def handle_RepeatFirstError(exc, source):
 def handle_TabError(exc, source):
     """Handles TabError.
     """
+    _ = gettext_lang.lang
     msg = exc.args[0]
 
     exc_name = exc.__class__.__name__
@@ -549,6 +566,7 @@ def handle_TryNobreakError(exc, source):
     """Handles situation where ``nobreak`` was wrongly use as a
        replacement for ``else`` in an try/except/else/finally block.
     """
+    _ = gettext_lang.lang
     params = exc.args[0]
     begin = params["try_linenumber"]
     end = params["linenumber"]
@@ -579,6 +597,7 @@ def handle_TryNobreakError(exc, source):
 def handle_UnknownDialectError(exc, *args):
     """Handles error raised when an unknown dialect is requested
     """
+    _ = gettext_lang.lang
     dialect = exc.args[0]
     all_dialects = exc.args[1]
 
@@ -597,6 +616,7 @@ def handle_UnknownDialectError(exc, *args):
 def handle_UnknownLanguageError(exc, *args):
     """Handles error raised when an unknown language is requested
     """
+    _ = gettext_lang.lang
     lang = exc.args[0]
     all_langs = exc.args[1]
 

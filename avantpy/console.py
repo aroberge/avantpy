@@ -18,6 +18,7 @@ from .converter import convert
 from .session import state
 from .exception_handling import write_exception_info
 from .exceptions import AvantPyException
+from .my_gettext import gettext_lang
 
 
 class AvantPyInteractiveConsole:
@@ -75,6 +76,7 @@ class AvantPyInteractiveConsole:
         with in some way (this is the same as run_source()).
         """
         assert not line.endswith("\n"), "Forbidden trailing newline in push()."
+        _ = gettext_lang.lang
 
         self.buffer.append(line)
         self.source = "\n".join(self.buffer)
