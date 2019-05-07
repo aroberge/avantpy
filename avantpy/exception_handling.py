@@ -18,17 +18,7 @@ ENABLED = True
 # and a second version specific to dialects.
 
 
-def avantpy_exception_with_dialect():
-    _ = gettext_lang.lang
-    return _(
-        "    AvantPy exception: {exception_name}\n\n"
-        "    Error found in file '{filename}' on line {linenumber}.\n\n"
-        "    Dialect used: {dialect}\n\n"
-        "{partial_source}\n\n"
-    )
-
-
-def avantpy_exception_no_dialect():
+def avantpy_exception_message():
     _ = gettext_lang.lang
     return _(
         "    AvantPy exception: {exception_name}\n\n"
@@ -37,18 +27,7 @@ def avantpy_exception_no_dialect():
     )
 
 
-def python_exception_with_dialect():
-    _ = gettext_lang.lang
-    return _(
-        "    Python exception: \n"
-        "        {python_display}\n\n"
-        "    Error found in file '{filename}' on line {linenumber}.\n\n"
-        "    Dialect used: {dialect}\n\n"
-        "{partial_source}\n\n"
-    )
-
-
-def python_exception_no_dialect():
+def python_exception_message():
     _ = gettext_lang.lang
     return _(
         "    Python exception: \n"
@@ -183,16 +162,10 @@ def handle_IfNobreakError(exc, source):
     partial_source = get_partial_source(source, begin, end, marks=marks)
     dialect = params["dialect"]
 
-    if dialect in [None, "pyen"]:
-        message = avantpy_exception_no_dialect() + _(
-            "    The AvantPy '{nobreak_kwd}' keyword cannot be used in\n"
-            "    an if/elif/else clause.\n\n"
-        )
-    else:
-        message = avantpy_exception_with_dialect() + _(
-            "    The AvantPy '{nobreak_kwd}' keyword cannot be used in\n"
-            "    an '{if_kwd}/{elif_kwd}/{else_kwd}' clause (Python: if/elif/else).\n\n"
-        )
+    message = avantpy_exception_message() + _(
+        "    The AvantPy '{nobreak_kwd}' keyword cannot be used in\n"
+        "    an '{if_kwd}/{elif_kwd}/{else_kwd}' clause (Python: if/elif/else).\n\n"
+    )
 
     return message.format(
         exception_name=exc.__class__.__name__,
@@ -250,10 +223,7 @@ def handle_IndentationError(exc, source):
         "{this_case}\n"
     )
 
-    if dialect in [None, "pyen"]:
-        message = python_exception_no_dialect() + message_end
-    else:
-        message = python_exception_with_dialect() + message_end
+    message = python_exception_message() + message_end
 
     return message.format(
         exception_name=exc_name,
@@ -283,10 +253,7 @@ def handle_MismatchedBracketsError(exc, source):
         "    The opening {open_bracket} does not match the closing {close_bracket}.\n\n"
     )
 
-    if dialect in [None, "pyen"]:
-        message = avantpy_exception_no_dialect() + message_end
-    else:
-        message = avantpy_exception_with_dialect() + message_end
+    message = avantpy_exception_message() + message_end
 
     return message.format(
         exception_name=exc.__class__.__name__,
@@ -315,10 +282,7 @@ def handle_MissingLeftBracketError(exc, source):
 
     message_end = _("    The closing {bracket} does not match anything.\n\n")
 
-    if dialect in [None, "pyen"]:
-        message = avantpy_exception_no_dialect() + message_end
-    else:
-        message = avantpy_exception_with_dialect() + message_end
+    message = avantpy_exception_message() + message_end
 
     return message.format(
         exception_name=exc.__class__.__name__,
@@ -347,7 +311,7 @@ def handle_MissingRepeatColonError(exc, source):
         "    a single line ending with a colon (:) that indicates the beginning of\n"
         "    an indented block of code, with no other colon appearing on that line.\n\n"
     )
-    message = avantpy_exception_with_dialect() + message_end
+    message = avantpy_exception_message() + message_end
 
     return message.format(
         exception_name=exc.__class__.__name__,
@@ -376,7 +340,7 @@ def handle_MissingRepeatError(exc, source):
         " preceded by '{repeat_kwd}'.\n\n"
     )
 
-    message = avantpy_exception_with_dialect() + message_end
+    message = avantpy_exception_message() + message_end
     return message.format(
         exception_name=exc.__class__.__name__,
         filename=params["source_name"],
@@ -410,11 +374,7 @@ def handle_NameError(exc, source):
         "    sometimes it is because it is used before being defined\n"
         "    or given a value. In your program, the unknown name is '{var_name}'.\n\n"
     )
-    dialect = state.current_dialect
-    if dialect in [None, "pyen"]:
-        message = python_exception_no_dialect() + message_end
-    else:
-        message = python_exception_with_dialect() + message_end
+    message = python_exception_message() + message_end
 
     return message.format(
         exception_name=exc.__class__.__name__,
@@ -445,7 +405,7 @@ def handle_NobreakFirstError(exc, source):
         "    (Python: else) only when it begins a new statement in\n"
         "    '{for_kwd}/{while_kwd}' loops (Python: for/while).\n\n"
     )
-    message = avantpy_exception_with_dialect() + message_end
+    message = avantpy_exception_message() + message_end
 
     return message.format(
         exception_name=exc.__class__.__name__,
@@ -453,7 +413,6 @@ def handle_NobreakFirstError(exc, source):
         nobreak_kwd=params["nobreak keyword"],
         partial_source=partial_source,
         linenumber=linenumber,
-        dialect=params["dialect"],
         for_kwd=params["for_kwd"],
         while_kwd=params["while_kwd"],
         else_kwd=params["else_kwd"],
@@ -477,7 +436,7 @@ def handle_NobreakSyntaxError(exc, source):
         "    of '{else_kwd}' (Python: else) with a matching '{for_kwd}' or\n"
         "    '{while_kwd}' loop (Python: for/while).\n\n"
     )
-    message = avantpy_exception_with_dialect() + message_end
+    message = avantpy_exception_message() + message_end
 
     return message.format(
         exception_name=exc.__class__.__name__,
@@ -485,7 +444,6 @@ def handle_NobreakSyntaxError(exc, source):
         nobreak_kwd=params["nobreak keyword"],
         partial_source=partial_source,
         linenumber=linenumber,
-        dialect=params["dialect"],
         for_kwd=params["for_kwd"],
         while_kwd=params["while_kwd"],
         else_kwd=params["else_kwd"],
@@ -508,7 +466,7 @@ def handle_RepeatFirstError(exc, source):
         "    The AvantPy '{repeat_kwd}' keyword can only be used to begin\n"
         "    a new loop (Python: equivalent to 'for' or 'while' loop).\n\n"
     )
-    message = avantpy_exception_with_dialect() + message_end
+    message = avantpy_exception_message() + message_end
 
     return message.format(
         exception_name=exc.__class__.__name__,
@@ -516,7 +474,6 @@ def handle_RepeatFirstError(exc, source):
         repeat_kwd=params["repeat keyword"],
         partial_source=partial_source,
         linenumber=linenumber,
-        dialect=params["dialect"],
     )
 
 
@@ -538,8 +495,6 @@ def handle_TabError(exc, source):
     marks = [linenumber]
     partial_source = get_partial_source(source, begin, end, marks=marks)
 
-    dialect = state.current_dialect
-
     message_end = _(
         "    A TabError indicates that you have used both spaces\n"
         "    and tab characters to indent your code.\n"
@@ -547,17 +502,13 @@ def handle_TabError(exc, source):
         "    Python's recommendation is to always use spaces to indent your code.\n\n"
     )
 
-    if dialect in [None, "pyen"]:
-        message = python_exception_no_dialect() + message_end
-    else:
-        message = python_exception_with_dialect() + message_end
+    message = python_exception_message() + message_end
 
     return message.format(
         exception_name=exc_name,
         filename=filename,
         python_display=python_display,
         partial_source=partial_source,
-        dialect=dialect,
         linenumber=linenumber,
     )
 
@@ -578,7 +529,7 @@ def handle_TryNobreakError(exc, source):
         "    a '{try_kwd}/{except_kwd}/{else_kwd}/{finally_kwd}' clause\n"
         "    (Python: try/except/else/finally).\n\n"
     )
-    message = avantpy_exception_with_dialect() + message_end
+    message = avantpy_exception_message() + message_end
 
     return message.format(
         exception_name=exc.__class__.__name__,
@@ -586,7 +537,6 @@ def handle_TryNobreakError(exc, source):
         nobreak_kwd=params["nobreak keyword"],
         partial_source=partial_source,
         linenumber=end,
-        dialect=params["dialect"],
         try_kwd=params["try_kwd"],
         except_kwd=params["except_kwd"],
         else_kwd=params["else_kwd"],

@@ -29,8 +29,6 @@ Example::
 
     Erreur trouvée dans le fichier 'raise_if_nobreak.pyfr' à la ligne 4.
 
-    Dialecte utilisé : pyfr
-
        2: si Vrai:
        3:     passer
     -->4: pasinterrompu:
@@ -44,12 +42,10 @@ IndentationError: expected an indented block
 
 Example::
 
-    Exception Python: 
+    Exception Python  
         IndentationError: expected an indented block
 
     Erreur trouvée dans le fichier 'raise_indentation_error1.pyfr' à la ligne 3.
-
-    Dialecte utilisé : pyfr
 
        1: '''Should raise IndentationError'''
        2: si Vrai:
@@ -67,12 +63,10 @@ IndentationError: unexpected indent
 
 Example::
 
-    Exception Python: 
+    Exception Python  
         IndentationError: unexpected indent
 
     Erreur trouvée dans le fichier 'raise_indentation_error2.pyfr' à la ligne 4.
-
-    Dialecte utilisé : pyfr
 
        1: '''Should raise IndentationError'''
        2: si Vrai:
@@ -92,12 +86,10 @@ IndentationError - no match
 
 Example::
 
-    Exception Python: 
+    Exception Python  
         IndentationError: unindent does not match any outer indentation level
 
     Erreur trouvée dans le fichier 'raise_indentation_error3.pyfr' à la ligne 4.
-
-    Dialecte utilisé : pyfr
 
        1: '''Should raise IndentationError'''
        2: si Vrai:
@@ -121,8 +113,6 @@ Example::
 
     Erreur trouvée dans le fichier 'raise_mismatched_brackets.pyfr' à la ligne 6.
 
-    Dialecte utilisé : pyfr
-
     -->2: a = (1,
        3:     2,
        4:     3, 4,
@@ -141,8 +131,6 @@ Example::
 
     Erreur trouvée dans le fichier 'raise_missing_left_bracket.pyfr' à la ligne 5.
 
-    Dialecte utilisé : pyfr
-
        4:     3, 4,)
     -->5:     )
        6: b = 3
@@ -158,8 +146,6 @@ Example::
     Exception AvantPy : MissingRepeatColonError
 
     Erreur trouvée dans le fichier 'raise_missing_repeat_colon.pyfr' à la ligne 3.
-
-    Dialecte utilisé : pyfr
 
        2: x = 0
     -->3: répéter jusquà (x ==
@@ -180,8 +166,6 @@ Example::
 
     Erreur trouvée dans le fichier 'raise_missing_repeat.pyfr' à la ligne 3.
 
-    Dialecte utilisé : pyfr
-
        2: x = 0
     -->3: jusquà x == 2:
        4:     x += 1
@@ -195,12 +179,10 @@ NameError
 
 Example::
 
-    Exception Python: 
+    Exception Python  
         NameError: name 'c' is not defined
 
     Erreur trouvée dans le fichier 'raise_name_error.pyfr' à la ligne 4.
-
-    Dialecte utilisé : pyfr
 
        3: a = 1
     -->4: b = c
@@ -224,8 +206,6 @@ Example::
 
     Erreur trouvée dans le fichier 'raise_nobreak_first.pyfr' à la ligne 3.
 
-    Dialecte utilisé : pyfr
-
        2: # Need to prevent pasinterrompu being replaced by 'else' in this situation.
     -->3: a = 1 if True pasinterrompu 3
        4: 
@@ -243,8 +223,6 @@ Example::
     Exception AvantPy : NobreakSyntaxError
 
     Erreur trouvée dans le fichier 'raise_nobreak_syntax.pyfr' à la ligne 4.
-
-    Dialecte utilisé : pyfr
 
        3: a = 1
     -->4: pasinterrompu: pass
@@ -264,8 +242,6 @@ Example::
 
     Erreur trouvée dans le fichier 'raise_repeat_first.pyfr' à la ligne 3.
 
-    Dialecte utilisé : pyfr
-
        2: # Catch an early case of using répéter not to begin a loop
     -->3: a = répéter
        4: 
@@ -280,12 +256,10 @@ TabError
 
 Example::
 
-    Exception Python: 
+    Exception Python  
         TabError: inconsistent use of tabs and spaces in indentation
 
     Erreur trouvée dans le fichier 'raise_tab_error.pyfr' à la ligne 3.
-
-    Dialecte utilisé : pyfr
 
        1: """Should raise TabError"""
        2: 
@@ -306,8 +280,6 @@ Example::
     Exception AvantPy : TryNobreakError
 
     Erreur trouvée dans le fichier 'raise_try_nobreak.pyfr' à la ligne 7.
-
-    Dialecte utilisé : pyfr
 
        3:     essayer:
        4:         A = 1
@@ -340,5 +312,5 @@ Example::
 
     Le langage inconnu suivant a été demandé : xx.
 
-    Les langages connus sont : {'fr', 'en'}.
+    Les langages connus sont : {'en', 'fr'}.
 

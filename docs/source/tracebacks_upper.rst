@@ -26,8 +26,6 @@ Example::
 
     Error found in file 'raise_if_nobreak.pyupper' on line 4.
 
-    Dialect used: pyupper
-
        2: if True:
        3:     pass
     -->4: NOBREAK:
@@ -45,8 +43,6 @@ Example::
         IndentationError: expected an indented block
 
     Error found in file 'raise_indentation_error1.pyupper' on line 3.
-
-    Dialect used: pyupper
 
        1: '''Should raise IndentationError'''
        2: IF TRUE:
@@ -68,8 +64,6 @@ Example::
         IndentationError: unexpected indent
 
     Error found in file 'raise_indentation_error2.pyupper' on line 4.
-
-    Dialect used: pyupper
 
        1: '''Should raise IndentationError'''
        2: IF TRUE:
@@ -94,8 +88,6 @@ Example::
 
     Error found in file 'raise_indentation_error3.pyupper' on line 4.
 
-    Dialect used: pyupper
-
        1: '''Should raise IndentationError'''
        2: IF TRUE:
        3:       PASS
@@ -118,8 +110,6 @@ Example::
 
     Error found in file 'raise_mismatched_brackets.pyupper' on line 10.
 
-    Dialect used: pyupper
-
     --> 2: a = (1,   # Large number of lines between ( and ]
         3:     2,
         4:     3, 4,
@@ -140,8 +130,6 @@ Example::
 
     Error found in file 'raise_missing_left_bracket.pyupper' on line 5.
 
-    Dialect used: pyupper
-
        4:     3, 4,)
     -->5:     )
        6: b = 3
@@ -157,8 +145,6 @@ Example::
     AvantPy exception: MissingRepeatColonError
 
     Error found in file 'raise_missing_repeat_colon.pyupper' on line 3.
-
-    Dialect used: pyupper
 
        2: x = 0
     -->3: REPEAT UNTIL (x ==
@@ -178,8 +164,6 @@ Example::
 
     Error found in file 'raise_missing_repeat.pyupper' on line 3.
 
-    Dialect used: pyupper
-
        2: x = 0
     -->3: UNTIL x == 2:
        4:     x += 1
@@ -196,8 +180,6 @@ Example::
         NameError: name 'c' is not defined
 
     Error found in file 'raise_name_error.pyupper' on line 4.
-
-    Dialect used: pyupper
 
        3: a = 1
     -->4: b = c
@@ -219,8 +201,6 @@ Example::
 
     Error found in file 'raise_nobreak_first.pyupper' on line 3.
 
-    Dialect used: pyupper
-
        2: # Need to prevent NOBREAK being replaced by 'else' in this situation.
     -->3: a = 1 if True NOBREAK 3
        4: 
@@ -238,8 +218,6 @@ Example::
     AvantPy exception: NobreakSyntaxError
 
     Error found in file 'raise_nobreak_syntax.pyupper' on line 4.
-
-    Dialect used: pyupper
 
        3: a = 1
     -->4: NOBREAK: pass
@@ -259,8 +237,6 @@ Example::
 
     Error found in file 'raise_repeat_first.pyupper' on line 3.
 
-    Dialect used: pyupper
-
        2: # Catch an early case of using REPEAT not to begin a loop
     -->3: a = REPEAT
        4: 
@@ -278,8 +254,6 @@ Example::
         TabError: inconsistent use of tabs and spaces in indentation
 
     Error found in file 'raise_tab_error.pyupper' on line 3.
-
-    Dialect used: pyupper
 
        1: """Should raise TabError"""
        2: 
@@ -300,8 +274,6 @@ Example::
     AvantPy exception: TryNobreakError
 
     Error found in file 'raise_try_nobreak.pyupper' on line 7.
-
-    Dialect used: pyupper
 
        3:     TRY:
        4:         A = 1
@@ -335,5 +307,5 @@ Example::
 
     The following unknown language was requested: xx.
 
-    The known languages are: {'en', 'fr'}.
+    The known languages are: {'fr', 'en'}.
 
