@@ -8,20 +8,19 @@ this single module.
 """
 import os
 import platform
-import sys
 
-from codeop import CommandCompiler
 from tokenize import TokenError
+
+import friendly_traceback
 
 from . import version
 from .converter import convert
 from .session import state
-from .exception_handling import write_exception_info
 from .exceptions import AvantPyException
 from .my_gettext import gettext_lang
 
 
-class AvantPyInteractiveConsole:
+class AvantPyInteractiveConsole(friendly_traceback.FriendlyConsole):
     """A Python console that tries to emulate the normal Python interpreter
        except that it support experimental code transformations.
        It is adapted from cPython's ``code.InteractiveConsole`` and its
@@ -31,36 +30,12 @@ class AvantPyInteractiveConsole:
        code entered one line at a time by a user.
     """
 
-    def __init__(self, locals=None, show_python=False):
-        self.show_python = show_python
+    def __init__(self, locals=None):
         self.locals = locals if locals is not None else {}
-        self.compile = CommandCompiler()
+        super().__init__(locals=locals)
         self.name = "<AvantPy console>"
-        self.reset_buffer()
+        self.resetbuffer()
         state.console_active = True
-
-    def interact(self, banner=None):
-        """Emulates the interactive Python console.
-        """
-        self.write("%s\n" % str(banner))
-        more = False
-        while True:
-            try:
-                if more:
-                    prompt = state.prompt2
-                else:
-                    prompt = state.prompt1
-                try:
-                    line = input(prompt)
-                except EOFError:
-                    self.write("\n")
-                    break
-                else:
-                    more = self.push(line)
-            except KeyboardInterrupt:
-                self.write("\nKeyboardInterrupt\n")
-                self.reset_buffer()
-                more = False
 
     def push(self, line):
         """Pushes a transformed line to the interpreter.
@@ -83,40 +58,33 @@ class AvantPyInteractiveConsole:
 
         try:
             self.converted = convert(self.source, filename=self.name)
-            self.identical = self.converted == self.source
+            self.converted == self.source
         except SystemExit:
             os._exit(1)
-        except AvantPyException as exc:
-            write_exception_info(exc, self.source)
-            self.reset_buffer()
+        except AvantPyException:
+            self.showtraceback()
             return False
         except TokenError as exc:
-            exc.args[0].startswith("EOF")
-            return True
+            if exc.args[0].startswith("EOF"):
+                return True
         except Exception as exc:
             print(_("UNHANDLED EXCEPTION in console.py. This should not happen."))
             raise exc
 
         try:
-            more = self.run_source(self.converted)
+            more = self.runsource(self.converted)
         except SystemExit:
             os._exit(1)
-        except Exception as exc:
-            write_exception_info(exc, self.source)
+        except Exception:
+            self.showtraceback()
             self.reset_buffer()
             return False
 
         if not more:
-            self.reset_buffer()
-            if self.show_python and not self.identical:
-                self.show_converted()
+            self.resetbuffer()
         return more
 
-    def reset_buffer(self):
-        """Reset the input buffer."""
-        self.buffer = []
-
-    def run_source(self, source, symbol="single"):
+    def runsource(self, source, filename="<input>", symbol="single"):
         """Compile and run some source in the interpreter.
 
         Arguments are as for compile_command().
@@ -124,7 +92,8 @@ class AvantPyInteractiveConsole:
         One several things can happen:
 
         1) The input is incorrect; compile_command() raised an
-        exception (SyntaxError or OverflowError).
+        exception (SyntaxError or OverflowError).  A syntax traceback
+        will be printed by calling the showsyntaxerror() method.
 
         2) The input is incomplete, and more input is required;
         compile_command() returned None.  Nothing happens.
@@ -135,60 +104,33 @@ class AvantPyInteractiveConsole:
 
         The return value is True in case 2, False in the other cases (unless
         an exception is raised).  The return value can be used to
-        decide which prompt to use next line.
-        """
+        decide whether to use sys.ps1 or sys.ps2 to prompt the next
+        line.
 
+        """
+        self.true_filename_plus_source = ("<console>", self.source)
+        self.filename = self.fake_filename = filename = "<console:%d>" % self.counter
+        friendly_traceback.utils.add_console_source(
+            self.fake_filename, self.true_filename_plus_source
+        )
+        self.counter += 1
         try:
-            code = self.compile(source, self.name, symbol)
-        except (OverflowError, SyntaxError, ValueError) as exc:
+            code = self.compile(source, filename, symbol)
+        except (OverflowError, SyntaxError, ValueError):
             # Case 1
-            if self.show_python and not self.identical:
-                self.show_converted(self.converted)
-            write_exception_info(exc, source)
+            self.showsyntaxerror(filename)
             return False
 
-        if code is None:  # Case 2
+        if code is None:
+            # Case 2
             return True
 
         # Case 3
         self.runcode(code)
         return False
 
-    def runcode(self, code):
-        """Execute a code object.
 
-        All exceptions are caught except SystemExit, which is reraised.
-
-        A note about KeyboardInterrupt: this exception may occur
-        elsewhere in this code, and may not always be caught.  The
-        caller should be prepared to deal with it.
-        """
-        try:
-            exec(code, self.locals)
-        except SystemExit:
-            raise
-        except Exception as exc:
-            write_exception_info(exc, self.source)
-
-    def show_converted(self):
-        """Prints the converted source"""
-        print()
-        for line in self.converted.split("\n"):
-            print("|", line)
-        print()
-        self.identical = True  # prevent from showing again
-
-    def write(self, data):
-        """Write a string.
-
-        The base implementation writes to sys.stderr; a subclass may
-        replace this with a different implementation.
-
-        """
-        sys.stderr.write(data)
-
-
-def start_console(local_vars=None, show_python=False):
+def start_console(local_vars=None):
     """Starts a console; modified from code.interact"""
     console_defaults = {"set_lang": state.set_lang, "set_dialect": state.set_dialect}
 
@@ -197,9 +139,11 @@ def start_console(local_vars=None, show_python=False):
     else:
         local_vars.update(console_defaults)
 
-    console = AvantPyInteractiveConsole(locals=local_vars, show_python=show_python)
+    console = AvantPyInteractiveConsole(locals=local_vars)
 
-    banner = "AvantPy version {}. [Python version: {}]\n".format(
-        version.__version__, platform.python_version()
+    banner = "AvantPy version {} [Python: {}; Friendly-traceback: {}]\n".format(
+        version.__version__,
+        platform.python_version(),
+        friendly_traceback.version.__version__,
     )
     console.interact(banner=banner)
