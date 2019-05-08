@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Special keyword: repeat &#8212; AvantPy 0.0.9 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -68,8 +66,6 @@
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -85,7 +81,7 @@
   <div class="section" id="special-keyword-repeat">
 <h1>Special keyword: <code class="docutils literal notranslate"><span class="pre">repeat</span></code><a class="headerlink" href="#special-keyword-repeat" title="Permalink to this headline">¶</a></h1>
 <div class="admonition important">
-<p class="first admonition-title">Important</p>
+<p class="admonition-title">Important</p>
 <p>AvantPy includes a restriction that all statements that begin with
 <code class="docutils literal notranslate"><span class="pre">repeat</span></code> must be on a single physical line ending with a colon that
 introduces an indented block, with no other colon appearing on that line.
@@ -94,7 +90,7 @@ in fact, it does add some small complexity to AvantPy’s code.
 However, by the time conditions on a <code class="docutils literal notranslate"><span class="pre">repeat</span></code> statement become long enough
 to warrant the use of additional lines, it is likely that students are ready
 to use the appropriate Python construct.</p>
-<p class="last">However, this single-line limitation could be removed based on feedback from
+<p>However, this single-line limitation could be removed based on feedback from
 instructors. Nonetheless, the requirement that no other colon is allowed
 on that line would remain: it might not be flagged as an error but
 could give rise to incorrectly converted code.</p>
@@ -150,12 +146,12 @@ in a natural way:</p>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p><strong>Learning from experts</strong></p>
 <p>The Quorum computing language has been designed based on evidence gathered
 from <a class="reference external" href="https://quorumlanguage.com/evidence.html">how human learn programming languages</a>.</p>
 <p>It includes <a class="reference external" href="https://quorumlanguage.com/tutorials/language/repeat.html">three of the four repeat</a> choices mentioned above, with a slightly different syntax:</p>
-<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repeat</span> <span class="mi">10</span> <span class="n">times</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repeat</span> <span class="mi">10</span> <span class="n">times</span>
     <span class="o">//</span> <span class="n">code</span>
 <span class="n">end</span>
 
@@ -205,10 +201,10 @@ Using Python, here’s the natural way to do this:</p>
 <p>In doing so, I need to introduce all at once many new concepts and additional terms:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>the concept of an indented code block preceded by a colon;</li>
-<li>two keywords, <code class="docutils literal notranslate"><span class="pre">for</span></code> and <code class="docutils literal notranslate"><span class="pre">in</span></code>;</li>
-<li>the use of a <em>variable</em>, which is some quantity with a completely irrelevant name in this example, except that it cannot be a keyword;</li>
-<li>the introduction of a built-in function, <code class="docutils literal notranslate"><span class="pre">range()</span></code>, which, unlike <code class="docutils literal notranslate"><span class="pre">forward()</span></code> or <code class="docutils literal notranslate"><span class="pre">left()</span></code>, does not have a visual representation.</li>
+<li><p>the concept of an indented code block preceded by a colon;</p></li>
+<li><p>two keywords, <code class="docutils literal notranslate"><span class="pre">for</span></code> and <code class="docutils literal notranslate"><span class="pre">in</span></code>;</p></li>
+<li><p>the use of a <em>variable</em>, which is some quantity with a completely irrelevant name in this example, except that it cannot be a keyword;</p></li>
+<li><p>the introduction of a built-in function, <code class="docutils literal notranslate"><span class="pre">range()</span></code>, which, unlike <code class="docutils literal notranslate"><span class="pre">forward()</span></code> or <code class="docutils literal notranslate"><span class="pre">left()</span></code>, does not have a visual representation.</p></li>
 </ol>
 </div></blockquote>
 <p>By contrast, using the <code class="docutils literal notranslate"><span class="pre">repeat</span></code> keyword, the above can be written as:</p>
@@ -224,8 +220,8 @@ Using Python, here’s the natural way to do this:</p>
 <p>and we only need to introduce fewer new topics:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>the concept of an indented code block preceded by a colon;</li>
-<li>one new keyword: <code class="docutils literal notranslate"><span class="pre">repeat</span></code>.</li>
+<li><p>the concept of an indented code block preceded by a colon;</p></li>
+<li><p>one new keyword: <code class="docutils literal notranslate"><span class="pre">repeat</span></code>.</p></li>
 </ol>
 </div></blockquote>
 </div>
@@ -282,7 +278,7 @@ ACM Transactions on Computing Education, 13(4), Nov. 2013.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, André Roberge.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
     </div>
   </body>
 </html>

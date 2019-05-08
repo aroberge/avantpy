@@ -8,10 +8,10 @@ import sys
 from importlib.abc import Loader, MetaPathFinder
 from importlib.util import spec_from_file_location
 
+import friendly_traceback
+
 from . import session
 from . import converter
-from .exception_handling import write_exception_info
-from .session import state
 from .my_gettext import gettext_lang
 
 MAIN_MODULE_NAME = None
@@ -87,19 +87,18 @@ class AvantPyLoader(Loader):
 
         with open(self.filename, encoding="utf8") as f:
             source = f.read()
-        original = source
+        # original = source
 
         _path, extension = os.path.splitext(self.filename)
-        name = os.path.basename(_path)
-        fullname = name + extension
+        # name = os.path.basename(_path)
+        # fullname = name + extension
         dialect = extension[1:]
 
         try:
             session.state.set_dialect(dialect)
-            source = converter.convert(source, dialect, source_name=fullname)
-        except Exception as exc:
-            state.current_filename = fullname
-            write_exception_info(exc, original)
+            source = converter.convert(source, dialect, filename=self.filename)
+        except Exception:
+            friendly_traceback.explain(*sys.exc_info())
             return
 
         # ------------------------
@@ -112,6 +111,6 @@ class AvantPyLoader(Loader):
 
         try:
             exec(source, vars(module))
-        except Exception as exc:
-            state.current_filename = fullname
-            write_exception_info(exc, original)
+        except Exception:
+            friendly_traceback.explain(*sys.exc_info())
+            return

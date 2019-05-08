@@ -82,7 +82,7 @@ class AvantPyInteractiveConsole:
         self.source = "\n".join(self.buffer)
 
         try:
-            self.converted = convert(self.source, source_name=self.name)
+            self.converted = convert(self.source, filename=self.name)
             self.identical = self.converted == self.source
         except SystemExit:
             os._exit(1)

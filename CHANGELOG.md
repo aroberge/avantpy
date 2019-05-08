@@ -1,5 +1,8 @@
 # Changelog
 
+
+- Modified gettext to use class-based version
+
 ## version 0.08
 
 - GUI (converter) in a single window, with a single vertical scrollbar and linenenumbers

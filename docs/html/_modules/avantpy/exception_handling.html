@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>avantpy.exception_handling &#8212; AvantPy 0.0.9 documentation</title>
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -38,8 +36,6 @@
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -62,6 +58,7 @@
 <span class="kn">import</span> <span class="nn">traceback</span>
 
 <span class="kn">from</span> <span class="nn">.session</span> <span class="k">import</span> <span class="n">state</span>
+<span class="kn">from</span> <span class="nn">.my_gettext</span> <span class="k">import</span> <span class="n">gettext_lang</span>
 
 <span class="n">ENABLED</span> <span class="o">=</span> <span class="kc">True</span>
 
@@ -72,16 +69,8 @@
 <span class="c1"># and a second version specific to dialects.</span>
 
 
-<span class="k">def</span> <span class="nf">avantpy_exception_with_dialect</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">_</span><span class="p">(</span>
-        <span class="s2">&quot;    AvantPy exception: </span><span class="si">{exception_name}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;    Error found in file &#39;</span><span class="si">{filename}</span><span class="s2">&#39; on line </span><span class="si">{linenumber}</span><span class="s2">.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;    Dialect used: </span><span class="si">{dialect}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;</span><span class="si">{partial_source}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-    <span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">avantpy_exception_no_dialect</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">avantpy_exception_message</span><span class="p">():</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">gettext_lang</span><span class="o">.</span><span class="n">lang</span>
     <span class="k">return</span> <span class="n">_</span><span class="p">(</span>
         <span class="s2">&quot;    AvantPy exception: </span><span class="si">{exception_name}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
         <span class="s2">&quot;    Error found in file &#39;</span><span class="si">{filename}</span><span class="s2">&#39; on line </span><span class="si">{linenumber}</span><span class="s2">.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
@@ -89,17 +78,8 @@
     <span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">python_exception_with_dialect</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">_</span><span class="p">(</span>
-        <span class="s2">&quot;    Python exception: </span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;        </span><span class="si">{python_display}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;    Error found in file &#39;</span><span class="si">{filename}</span><span class="s2">&#39; on line </span><span class="si">{linenumber}</span><span class="s2">.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;    Dialect used: </span><span class="si">{dialect}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;</span><span class="si">{partial_source}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-    <span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">python_exception_no_dialect</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">python_exception_message</span><span class="p">():</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">gettext_lang</span><span class="o">.</span><span class="n">lang</span>
     <span class="k">return</span> <span class="n">_</span><span class="p">(</span>
         <span class="s2">&quot;    Python exception: </span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="s2">&quot;        </span><span class="si">{python_display}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
@@ -184,6 +164,7 @@
 
 <div class="viewcode-block" id="write_exception_info"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.write_exception_info">[docs]</a><span class="k">def</span> <span class="nf">write_exception_info</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Writes the information we have after processing the exception.&quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">gettext_lang</span><span class="o">.</span><span class="n">lang</span>
     <span class="n">msg</span> <span class="o">=</span> <span class="n">handle_exception</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">msg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">write_err</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
@@ -224,6 +205,7 @@
     <span class="sd">&quot;&quot;&quot;Handles situation where ``nobreak`` was wrongly use as a</span>
 <span class="sd">       replacement for ``else`` in an if/elif/else block.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">gettext_lang</span><span class="o">.</span><span class="n">lang</span>
     <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">begin</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;if_linenumber&quot;</span><span class="p">]</span>
     <span class="n">end</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">]</span>
@@ -231,20 +213,14 @@
     <span class="n">partial_source</span> <span class="o">=</span> <span class="n">get_partial_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">marks</span><span class="o">=</span><span class="n">marks</span><span class="p">)</span>
     <span class="n">dialect</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;dialect&quot;</span><span class="p">]</span>
 
-    <span class="k">if</span> <span class="n">dialect</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;pyen&quot;</span><span class="p">]:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="n">avantpy_exception_no_dialect</span><span class="p">()</span> <span class="o">+</span> <span class="n">_</span><span class="p">(</span>
-            <span class="s2">&quot;    The AvantPy &#39;</span><span class="si">{nobreak_kwd}</span><span class="s2">&#39; keyword cannot be used in</span><span class="se">\n</span><span class="s2">&quot;</span>
-            <span class="s2">&quot;    an if/elif/else clause.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-        <span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="n">avantpy_exception_with_dialect</span><span class="p">()</span> <span class="o">+</span> <span class="n">_</span><span class="p">(</span>
-            <span class="s2">&quot;    The AvantPy &#39;</span><span class="si">{nobreak_kwd}</span><span class="s2">&#39; keyword cannot be used in</span><span class="se">\n</span><span class="s2">&quot;</span>
-            <span class="s2">&quot;    an &#39;</span><span class="si">{if_kwd}</span><span class="s2">/</span><span class="si">{elif_kwd}</span><span class="s2">/</span><span class="si">{else_kwd}</span><span class="s2">&#39; clause (Python: if/elif/else).</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-        <span class="p">)</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">avantpy_exception_message</span><span class="p">()</span> <span class="o">+</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;    The AvantPy &#39;</span><span class="si">{nobreak_kwd}</span><span class="s2">&#39; keyword cannot be used in</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="s2">&quot;    an &#39;</span><span class="si">{if_kwd}</span><span class="s2">/</span><span class="si">{elif_kwd}</span><span class="s2">/</span><span class="si">{else_kwd}</span><span class="s2">&#39; clause (Python: if/elif/else).</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">message</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
         <span class="n">exception_name</span><span class="o">=</span><span class="n">exc</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
-        <span class="n">filename</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;source_name&quot;</span><span class="p">],</span>
+        <span class="n">filename</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;filename&quot;</span><span class="p">],</span>
         <span class="n">nobreak_kwd</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;nobreak keyword&quot;</span><span class="p">],</span>
         <span class="n">partial_source</span><span class="o">=</span><span class="n">partial_source</span><span class="p">,</span>
         <span class="n">linenumber</span><span class="o">=</span><span class="n">end</span><span class="p">,</span>
@@ -258,6 +234,7 @@
 <div class="viewcode-block" id="handle_IndentationError"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.handle_IndentationError">[docs]</a><span class="k">def</span> <span class="nf">handle_IndentationError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Handles IndentationError.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">gettext_lang</span><span class="o">.</span><span class="n">lang</span>
     <span class="n">msg</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">if</span> <span class="s2">&quot;unexpected indent&quot;</span> <span class="ow">in</span> <span class="n">msg</span><span class="p">:</span>
         <span class="n">this_case</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
@@ -297,10 +274,7 @@
         <span class="s2">&quot;</span><span class="si">{this_case}</span><span class="se">\n</span><span class="s2">&quot;</span>
     <span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">dialect</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;pyen&quot;</span><span class="p">]:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="n">python_exception_no_dialect</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="n">python_exception_with_dialect</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">python_exception_message</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
 
     <span class="k">return</span> <span class="n">message</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
         <span class="n">exception_name</span><span class="o">=</span><span class="n">exc_name</span><span class="p">,</span>
@@ -317,9 +291,10 @@
     <span class="sd">&quot;&quot;&quot;Handles situation where a bracket of one kind &#39;([{&#39;</span>
 <span class="sd">       is closed with a bracket of a different kind.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">gettext_lang</span><span class="o">.</span><span class="n">lang</span>
     <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">begin</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;open_linenumber&quot;</span><span class="p">]</span>
-    <span class="n">end</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;close_linenumber&quot;</span><span class="p">]</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">]</span>
     <span class="n">marks</span> <span class="o">=</span> <span class="p">[</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">]</span>
     <span class="n">partial_source</span> <span class="o">=</span> <span class="n">get_partial_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">marks</span><span class="o">=</span><span class="n">marks</span><span class="p">)</span>
 
@@ -329,14 +304,11 @@
         <span class="s2">&quot;    The opening </span><span class="si">{open_bracket}</span><span class="s2"> does not match the closing </span><span class="si">{close_bracket}</span><span class="s2">.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
     <span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">dialect</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;pyen&quot;</span><span class="p">]:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="n">avantpy_exception_no_dialect</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="n">avantpy_exception_with_dialect</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">avantpy_exception_message</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
 
     <span class="k">return</span> <span class="n">message</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
         <span class="n">exception_name</span><span class="o">=</span><span class="n">exc</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
-        <span class="n">filename</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;source_name&quot;</span><span class="p">],</span>
+        <span class="n">filename</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;filename&quot;</span><span class="p">],</span>
         <span class="n">linenumber</span><span class="o">=</span><span class="n">end</span><span class="p">,</span>
         <span class="n">open_bracket</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;open_bracket&quot;</span><span class="p">],</span>
         <span class="n">close_bracket</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;close_bracket&quot;</span><span class="p">],</span>
@@ -349,6 +321,7 @@
     <span class="sd">&quot;&quot;&quot;Handles situation where at bracket of one kind ),],}</span>
 <span class="sd">       is closed without a corresponding open bracket.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">gettext_lang</span><span class="o">.</span><span class="n">lang</span>
     <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">linenumber</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">]</span>
     <span class="n">begin</span> <span class="o">=</span> <span class="n">linenumber</span> <span class="o">-</span> <span class="mi">1</span>
@@ -360,14 +333,11 @@
 
     <span class="n">message_end</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;    The closing </span><span class="si">{bracket}</span><span class="s2"> does not match anything.</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">dialect</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;pyen&quot;</span><span class="p">]:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="n">avantpy_exception_no_dialect</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="n">avantpy_exception_with_dialect</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">avantpy_exception_message</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
 
     <span class="k">return</span> <span class="n">message</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
         <span class="n">exception_name</span><span class="o">=</span><span class="n">exc</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
-        <span class="n">filename</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;source_name&quot;</span><span class="p">],</span>
+        <span class="n">filename</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;filename&quot;</span><span class="p">],</span>
         <span class="n">partial_source</span><span class="o">=</span><span class="n">partial_source</span><span class="p">,</span>
         <span class="n">dialect</span><span class="o">=</span><span class="n">dialect</span><span class="p">,</span>
         <span class="n">linenumber</span><span class="o">=</span><span class="n">linenumber</span><span class="p">,</span>
@@ -379,6 +349,7 @@
     <span class="sd">&quot;&quot;&quot;Handles situation where a statement beginning with repeat</span>
 <span class="sd">       does not end with a colon.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">gettext_lang</span><span class="o">.</span><span class="n">lang</span>
     <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">linenumber</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">]</span>
     <span class="n">begin</span> <span class="o">=</span> <span class="n">linenumber</span> <span class="o">-</span> <span class="mi">1</span>
@@ -391,11 +362,11 @@
         <span class="s2">&quot;    a single line ending with a colon (:) that indicates the beginning of</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="s2">&quot;    an indented block of code, with no other colon appearing on that line.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
     <span class="p">)</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="n">avantpy_exception_with_dialect</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">avantpy_exception_message</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
 
     <span class="k">return</span> <span class="n">message</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
         <span class="n">exception_name</span><span class="o">=</span><span class="n">exc</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
-        <span class="n">filename</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;source_name&quot;</span><span class="p">],</span>
+        <span class="n">filename</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;filename&quot;</span><span class="p">],</span>
         <span class="n">repeat_kwd</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;repeat_kwd&quot;</span><span class="p">],</span>
         <span class="n">partial_source</span><span class="o">=</span><span class="n">partial_source</span><span class="p">,</span>
         <span class="n">linenumber</span><span class="o">=</span><span class="n">linenumber</span><span class="p">,</span>
@@ -407,6 +378,7 @@
     <span class="sd">&quot;&quot;&quot;Handles situation where either ``until`` or ``forever`` was</span>
 <span class="sd">       used without being preceeded by ``repeat``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">gettext_lang</span><span class="o">.</span><span class="n">lang</span>
     <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">linenumber</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">]</span>
     <span class="n">begin</span> <span class="o">=</span> <span class="n">linenumber</span> <span class="o">-</span> <span class="mi">1</span>
@@ -419,10 +391,10 @@
         <span class="s2">&quot; preceded by &#39;</span><span class="si">{repeat_kwd}</span><span class="s2">&#39;.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
     <span class="p">)</span>
 
-    <span class="n">message</span> <span class="o">=</span> <span class="n">avantpy_exception_with_dialect</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">avantpy_exception_message</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
     <span class="k">return</span> <span class="n">message</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
         <span class="n">exception_name</span><span class="o">=</span><span class="n">exc</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
-        <span class="n">filename</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;source_name&quot;</span><span class="p">],</span>
+        <span class="n">filename</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;filename&quot;</span><span class="p">],</span>
         <span class="n">keyword</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;keyword&quot;</span><span class="p">],</span>
         <span class="n">partial_source</span><span class="o">=</span><span class="n">partial_source</span><span class="p">,</span>
         <span class="n">linenumber</span><span class="o">=</span><span class="n">linenumber</span><span class="p">,</span>
@@ -433,6 +405,7 @@
 
 <div class="viewcode-block" id="handle_NameError"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.handle_NameError">[docs]</a><span class="k">def</span> <span class="nf">handle_NameError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Handles situation where a NameError is raise.&quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">gettext_lang</span><span class="o">.</span><span class="n">lang</span>
     <span class="n">msg</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">var_name</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">exc_name</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
@@ -452,11 +425,7 @@
         <span class="s2">&quot;    sometimes it is because it is used before being defined</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="s2">&quot;    or given a value. In your program, the unknown name is &#39;</span><span class="si">{var_name}</span><span class="s2">&#39;.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
     <span class="p">)</span>
-    <span class="n">dialect</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">current_dialect</span>
-    <span class="k">if</span> <span class="n">dialect</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;pyen&quot;</span><span class="p">]:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="n">python_exception_no_dialect</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="n">python_exception_with_dialect</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">python_exception_message</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
 
     <span class="k">return</span> <span class="n">message</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
         <span class="n">exception_name</span><span class="o">=</span><span class="n">exc</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
@@ -474,6 +443,7 @@
 <span class="sd">       replacement for ``else`` in statements like</span>
 <span class="sd">       var = x if condition else y.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">gettext_lang</span><span class="o">.</span><span class="n">lang</span>
     <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">linenumber</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">]</span>
     <span class="n">begin</span> <span class="o">=</span> <span class="n">linenumber</span> <span class="o">-</span> <span class="mi">1</span>
@@ -486,15 +456,14 @@
         <span class="s2">&quot;    (Python: else) only when it begins a new statement in</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="s2">&quot;    &#39;</span><span class="si">{for_kwd}</span><span class="s2">/</span><span class="si">{while_kwd}</span><span class="s2">&#39; loops (Python: for/while).</span><span class="se">\n\n</span><span class="s2">&quot;</span>
     <span class="p">)</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="n">avantpy_exception_with_dialect</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">avantpy_exception_message</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
 
     <span class="k">return</span> <span class="n">message</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
         <span class="n">exception_name</span><span class="o">=</span><span class="n">exc</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
-        <span class="n">filename</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;source_name&quot;</span><span class="p">],</span>
+        <span class="n">filename</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;filename&quot;</span><span class="p">],</span>
         <span class="n">nobreak_kwd</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;nobreak keyword&quot;</span><span class="p">],</span>
         <span class="n">partial_source</span><span class="o">=</span><span class="n">partial_source</span><span class="p">,</span>
         <span class="n">linenumber</span><span class="o">=</span><span class="n">linenumber</span><span class="p">,</span>
-        <span class="n">dialect</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;dialect&quot;</span><span class="p">],</span>
         <span class="n">for_kwd</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;for_kwd&quot;</span><span class="p">],</span>
         <span class="n">while_kwd</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;while_kwd&quot;</span><span class="p">],</span>
         <span class="n">else_kwd</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;else_kwd&quot;</span><span class="p">],</span>
@@ -505,6 +474,7 @@
     <span class="sd">&quot;&quot;&quot;Handles situation where ``nobreak`` is used without a matching</span>
 <span class="sd">       ``for`` or ``while`` loop and not already raised.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">gettext_lang</span><span class="o">.</span><span class="n">lang</span>
     <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">linenumber</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">]</span>
     <span class="n">begin</span> <span class="o">=</span> <span class="n">linenumber</span> <span class="o">-</span> <span class="mi">1</span>
@@ -517,15 +487,14 @@
         <span class="s2">&quot;    of &#39;</span><span class="si">{else_kwd}</span><span class="s2">&#39; (Python: else) with a matching &#39;</span><span class="si">{for_kwd}</span><span class="s2">&#39; or</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="s2">&quot;    &#39;</span><span class="si">{while_kwd}</span><span class="s2">&#39; loop (Python: for/while).</span><span class="se">\n\n</span><span class="s2">&quot;</span>
     <span class="p">)</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="n">avantpy_exception_with_dialect</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">avantpy_exception_message</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
 
     <span class="k">return</span> <span class="n">message</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
         <span class="n">exception_name</span><span class="o">=</span><span class="n">exc</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
-        <span class="n">filename</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;source_name&quot;</span><span class="p">],</span>
+        <span class="n">filename</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;filename&quot;</span><span class="p">],</span>
         <span class="n">nobreak_kwd</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;nobreak keyword&quot;</span><span class="p">],</span>
         <span class="n">partial_source</span><span class="o">=</span><span class="n">partial_source</span><span class="p">,</span>
         <span class="n">linenumber</span><span class="o">=</span><span class="n">linenumber</span><span class="p">,</span>
-        <span class="n">dialect</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;dialect&quot;</span><span class="p">],</span>
         <span class="n">for_kwd</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;for_kwd&quot;</span><span class="p">],</span>
         <span class="n">while_kwd</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;while_kwd&quot;</span><span class="p">],</span>
         <span class="n">else_kwd</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;else_kwd&quot;</span><span class="p">],</span>
@@ -536,6 +505,7 @@
     <span class="sd">&quot;&quot;&quot;Handles situation where ``repeat`` was uses wrongly as</span>
 <span class="sd">       it did not appear as the first keyword of a given statement.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">gettext_lang</span><span class="o">.</span><span class="n">lang</span>
     <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">linenumber</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">]</span>
     <span class="n">begin</span> <span class="o">=</span> <span class="n">linenumber</span> <span class="o">-</span> <span class="mi">1</span>
@@ -547,15 +517,50 @@
         <span class="s2">&quot;    The AvantPy &#39;</span><span class="si">{repeat_kwd}</span><span class="s2">&#39; keyword can only be used to begin</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="s2">&quot;    a new loop (Python: equivalent to &#39;for&#39; or &#39;while&#39; loop).</span><span class="se">\n\n</span><span class="s2">&quot;</span>
     <span class="p">)</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="n">avantpy_exception_with_dialect</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">avantpy_exception_message</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
 
     <span class="k">return</span> <span class="n">message</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
         <span class="n">exception_name</span><span class="o">=</span><span class="n">exc</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
-        <span class="n">filename</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;source_name&quot;</span><span class="p">],</span>
+        <span class="n">filename</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;filename&quot;</span><span class="p">],</span>
         <span class="n">repeat_kwd</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;repeat keyword&quot;</span><span class="p">],</span>
         <span class="n">partial_source</span><span class="o">=</span><span class="n">partial_source</span><span class="p">,</span>
         <span class="n">linenumber</span><span class="o">=</span><span class="n">linenumber</span><span class="p">,</span>
-        <span class="n">dialect</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;dialect&quot;</span><span class="p">],</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="handle_TabError"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.handle_TabError">[docs]</a><span class="k">def</span> <span class="nf">handle_TabError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Handles TabError.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">gettext_lang</span><span class="o">.</span><span class="n">lang</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">exc_name</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+    <span class="n">python_display</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{exc_name}</span><span class="s2">: </span><span class="si">{msg}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exc_name</span><span class="o">=</span><span class="n">exc_name</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span>
+    <span class="n">filename</span><span class="p">,</span> <span class="n">linenumber</span><span class="p">,</span> <span class="n">_ignore</span><span class="p">,</span> <span class="n">_ignore</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">filename</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;&lt;string&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;tokenize&gt;&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">state</span><span class="o">.</span><span class="n">current_filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">current_filename</span>
+
+    <span class="n">begin</span> <span class="o">=</span> <span class="n">linenumber</span> <span class="o">-</span> <span class="mi">4</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">linenumber</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">marks</span> <span class="o">=</span> <span class="p">[</span><span class="n">linenumber</span><span class="p">]</span>
+    <span class="n">partial_source</span> <span class="o">=</span> <span class="n">get_partial_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">marks</span><span class="o">=</span><span class="n">marks</span><span class="p">)</span>
+
+    <span class="n">message_end</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s2">&quot;    A TabError indicates that you have used both spaces</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="s2">&quot;    and tab characters to indent your code.</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="s2">&quot;    This is not allowed in Python.</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="s2">&quot;    Python&#39;s recommendation is to always use spaces to indent your code.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">message</span> <span class="o">=</span> <span class="n">python_exception_message</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
+
+    <span class="k">return</span> <span class="n">message</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">exception_name</span><span class="o">=</span><span class="n">exc_name</span><span class="p">,</span>
+        <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span>
+        <span class="n">python_display</span><span class="o">=</span><span class="n">python_display</span><span class="p">,</span>
+        <span class="n">partial_source</span><span class="o">=</span><span class="n">partial_source</span><span class="p">,</span>
+        <span class="n">linenumber</span><span class="o">=</span><span class="n">linenumber</span><span class="p">,</span>
     <span class="p">)</span></div>
 
 
@@ -563,6 +568,7 @@
     <span class="sd">&quot;&quot;&quot;Handles situation where ``nobreak`` was wrongly use as a</span>
 <span class="sd">       replacement for ``else`` in an try/except/else/finally block.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">gettext_lang</span><span class="o">.</span><span class="n">lang</span>
     <span class="n">params</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">begin</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;try_linenumber&quot;</span><span class="p">]</span>
     <span class="n">end</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;linenumber&quot;</span><span class="p">]</span>
@@ -574,15 +580,14 @@
         <span class="s2">&quot;    a &#39;</span><span class="si">{try_kwd}</span><span class="s2">/</span><span class="si">{except_kwd}</span><span class="s2">/</span><span class="si">{else_kwd}</span><span class="s2">/</span><span class="si">{finally_kwd}</span><span class="s2">&#39; clause</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="s2">&quot;    (Python: try/except/else/finally).</span><span class="se">\n\n</span><span class="s2">&quot;</span>
     <span class="p">)</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="n">avantpy_exception_with_dialect</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">avantpy_exception_message</span><span class="p">()</span> <span class="o">+</span> <span class="n">message_end</span>
 
     <span class="k">return</span> <span class="n">message</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
         <span class="n">exception_name</span><span class="o">=</span><span class="n">exc</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
-        <span class="n">filename</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;source_name&quot;</span><span class="p">],</span>
+        <span class="n">filename</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;filename&quot;</span><span class="p">],</span>
         <span class="n">nobreak_kwd</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;nobreak keyword&quot;</span><span class="p">],</span>
         <span class="n">partial_source</span><span class="o">=</span><span class="n">partial_source</span><span class="p">,</span>
         <span class="n">linenumber</span><span class="o">=</span><span class="n">end</span><span class="p">,</span>
-        <span class="n">dialect</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;dialect&quot;</span><span class="p">],</span>
         <span class="n">try_kwd</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;try_kwd&quot;</span><span class="p">],</span>
         <span class="n">except_kwd</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;except_kwd&quot;</span><span class="p">],</span>
         <span class="n">else_kwd</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;else_kwd&quot;</span><span class="p">],</span>
@@ -593,6 +598,7 @@
 <div class="viewcode-block" id="handle_UnknownDialectError"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.handle_UnknownDialectError">[docs]</a><span class="k">def</span> <span class="nf">handle_UnknownDialectError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Handles error raised when an unknown dialect is requested</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">gettext_lang</span><span class="o">.</span><span class="n">lang</span>
     <span class="n">dialect</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">all_dialects</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -611,6 +617,7 @@
 <div class="viewcode-block" id="handle_UnknownLanguageError"><a class="viewcode-back" href="../../modules.html#avantpy.exception_handling.handle_UnknownLanguageError">[docs]</a><span class="k">def</span> <span class="nf">handle_UnknownLanguageError</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Handles error raised when an unknown language is requested</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">gettext_lang</span><span class="o">.</span><span class="n">lang</span>
     <span class="n">lang</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">all_langs</span> <span class="o">=</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -636,6 +643,7 @@
     <span class="s2">&quot;NobreakFirstError&quot;</span><span class="p">:</span> <span class="n">handle_NobreakFirstError</span><span class="p">,</span>
     <span class="s2">&quot;NobreakSyntaxError&quot;</span><span class="p">:</span> <span class="n">handle_NobreakSyntaxError</span><span class="p">,</span>
     <span class="s2">&quot;RepeatFirstError&quot;</span><span class="p">:</span> <span class="n">handle_RepeatFirstError</span><span class="p">,</span>
+    <span class="s2">&quot;TabError&quot;</span><span class="p">:</span> <span class="n">handle_TabError</span><span class="p">,</span>
     <span class="s2">&quot;TryNobreakError&quot;</span><span class="p">:</span> <span class="n">handle_TryNobreakError</span><span class="p">,</span>
     <span class="s2">&quot;UnknownLanguageError&quot;</span><span class="p">:</span> <span class="n">handle_UnknownLanguageError</span><span class="p">,</span>
     <span class="s2">&quot;UnknownDialectError&quot;</span><span class="p">:</span> <span class="n">handle_UnknownDialectError</span><span class="p">,</span>
@@ -662,7 +670,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, André Roberge.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
     </div>
   </body>
 </html>

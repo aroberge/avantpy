@@ -32,10 +32,6 @@ directory structure of this project, showing some relevant files::
     avantpy/
         avantpy/
             locales/
-                en/
-                    LC_MESSAGES/
-                        en.mo
-                        en.po
                 fr/
                     LC_MESSAGES/
                         fr.mo
@@ -66,10 +62,11 @@ while in French, we might have::
     print("Bonjour {name}".format(name=username))
 
 The first thing to do would normally be to choose one of these forms as
-our standard to be used as the reference for translation. I actually
-prefer to use a slight variation where some words are written in uppercase
+our standard to be used as the reference for translation.
+This is what I eventually chose to do for this project.
+However, in the past, I have often
+used a variation where words are written in the source file in uppercase
 letter to make it more obvious to see if a translation is missing.
-(More on this below.)
 
 To indicate that a string needs to be translated, the common way is to
 surround it by a function call, using ``_`` as the function name::

@@ -234,7 +234,7 @@ class Converter:
     untokenize function, and explicitly keep track of spacing
     between tokens."""
 
-    def __init__(self, source, dialect=None, source_name=None):
+    def __init__(self, source, dialect=None, filename=None):
         """Initializes variables that are used to convert a program
            written in a given dialect into Standard Python.
         """
@@ -244,7 +244,7 @@ class Converter:
         self.source = source
 
         if self.dialect is not None:
-            self.source_name = source_name
+            self.filename = filename
             self.init_dialect_vars()
             self.init_bookkeeping_vars()
 
@@ -387,7 +387,7 @@ class Converter:
                 {
                     "repeat_kwd": self.repeat_kwd,
                     "linenumber": linenumber,
-                    "source_name": self.source_name,
+                    "filename": self.filename,
                     "source": self.source,
                     "dialect": self.dialect,
                 },
@@ -407,7 +407,7 @@ class Converter:
                     {
                         "bracket": token.string,
                         "linenumber": token.start_line,
-                        "source_name": self.source_name,
+                        "filename": self.filename,
                         "source": self.source,
                         "dialect": self.dialect,
                     },
@@ -426,9 +426,9 @@ class Converter:
                     {
                         "close_bracket": token.string,
                         "open_bracket": open_bracket,
-                        "close_linenumber": token.start_line,
                         "open_linenumber": previous_bracket[1],
-                        "source_name": self.source_name,
+                        "linenumber": token.start_line,
+                        "filename": self.filename,
                         "source": self.source,
                         "dialect": self.dialect,
                     },
@@ -464,7 +464,7 @@ class Converter:
                 {
                     "keyword": token.string,
                     "linenumber": token.start_line,
-                    "source_name": self.source_name,
+                    "filename": self.filename,
                     "source": self.source,
                     "dialect": self.dialect,
                     "repeat_kwd": self.repeat_kwd,
@@ -524,7 +524,7 @@ class Converter:
                     {
                         "repeat keyword": token.string,
                         "linenumber": token.start_line,
-                        "source_name": self.source_name,
+                        "filename": self.filename,
                         "source": self.source,
                         "dialect": self.dialect,
                     },
@@ -542,7 +542,7 @@ class Converter:
                     {
                         "nobreak keyword": token.string,
                         "linenumber": token.start_line,
-                        "source_name": self.source_name,
+                        "filename": self.filename,
                         "source": self.source,
                         "dialect": self.dialect,
                         "for_kwd": self.for_kwd,
@@ -563,7 +563,7 @@ class Converter:
                         "if_linenumber": self.indentations[token.start_col][1],
                         "nobreak keyword": token.string,
                         "linenumber": token.start_line,
-                        "source_name": self.source_name,
+                        "filename": self.filename,
                         "dialect": self.dialect,
                         "if_kwd": self.if_kwd,
                         "elif_kwd": self.elif_kwd,
@@ -583,7 +583,7 @@ class Converter:
                         "try_linenumber": self.indentations[token.start_col][1],
                         "nobreak keyword": token.string,
                         "linenumber": token.start_line,
-                        "source_name": self.source_name,
+                        "filename": self.filename,
                         "dialect": self.dialect,
                         "try_kwd": self.try_kwd,
                         "except_kwd": self.except_kwd,
@@ -599,7 +599,7 @@ class Converter:
                     {
                         "nobreak keyword": token.string,
                         "linenumber": token.start_line,
-                        "source_name": self.source_name,
+                        "filename": self.filename,
                         "source": self.source,
                         "dialect": self.dialect,
                         "for_kwd": self.for_kwd,
@@ -610,11 +610,11 @@ class Converter:
             )
 
 
-def convert(source, dialect=None, source_name=None):
+def convert(source, dialect=None, filename=None):
     """Normally used from other functions to call for a conversion
        of a Python source from a given dialect into Python.
     """
-    converter = Converter(source, dialect=dialect, source_name=source_name)
+    converter = Converter(source, dialect=dialect, filename=filename)
     return converter.convert()
 
 
@@ -635,7 +635,7 @@ def transcode(source, from_dialect, to_dialect):
         return source
 
     if to_dialect == "py":
-        return convert(source, dialect=from_dialect, source_name="<transcode>")
+        return convert(source, dialect=from_dialect, filename="<transcode>")
 
     if from_dialect == "py":
         from_python = True

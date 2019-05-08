@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-06 18:03-0300\n"
-"PO-Revision-Date: 2019-04-06 18:05-0300\n"
+"POT-Creation-Date: 2019-05-08 16:46-0300\n"
+"PO-Revision-Date: 2019-05-08 17:07-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -16,31 +16,11 @@ msgstr ""
 "X-Generator: Poedit 2.2.1\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: console.py:95
+#: console.py:97
 msgid "UNHANDLED EXCEPTION in console.py. This should not happen."
 msgstr "Exception imprévue dans console.py. Ceci ne devrait pas arriver."
 
-#: exception_handling.py:21
-msgid ""
-"    AvantPy exception: {exception_name}\n"
-"\n"
-"    Error found in file '{filename}' on line {linenumber}.\n"
-"\n"
-"    Dialect used: {dialect}\n"
-"\n"
-"{partial_source}\n"
-"\n"
-msgstr ""
-"    Exception AvantPy : {exception_name}\n"
-"\n"
-"    Erreur trouvée dans le fichier '{filename}' à la ligne {linenumber}.\n"
-"\n"
-"    Dialecte utilisé : {dialect}\n"
-"\n"
-"{partial_source}\n"
-"\n"
-
-#: exception_handling.py:30
+#: exception_handling.py:23
 msgid ""
 "    AvantPy exception: {exception_name}\n"
 "\n"
@@ -56,29 +36,7 @@ msgstr ""
 "{partial_source}\n"
 "\n"
 
-#: exception_handling.py:38
-msgid ""
-"    Python exception: \n"
-"        {python_display}\n"
-"\n"
-"    Error found in file '{filename}' on line {linenumber}.\n"
-"\n"
-"    Dialect used: {dialect}\n"
-"\n"
-"{partial_source}\n"
-"\n"
-msgstr ""
-"    Exception Python: \n"
-"        {python_display}\n"
-"\n"
-"    Erreur trouvée dans le fichier '{filename}' à la ligne {linenumber}.\n"
-"\n"
-"    Dialecte utilisé : {dialect}\n"
-"\n"
-"{partial_source}\n"
-"\n"
-
-#: exception_handling.py:48
+#: exception_handling.py:32
 msgid ""
 "    Python exception: \n"
 "        {python_display}\n"
@@ -96,23 +54,13 @@ msgstr ""
 "{partial_source}\n"
 "\n"
 
-#: exception_handling.py:137
+#: exception_handling.py:122
 msgid "An exception was raised for which we have no simplified traceback:\n"
 msgstr ""
 "Une exception pour laquelle nous n'avons pas de traceback simplifiée a été "
 "soulevée :\n"
 
-#: exception_handling.py:180
-msgid ""
-"    The AvantPy '{nobreak_kwd}' keyword cannot be used in\n"
-"    an if/elif/else clause.\n"
-"\n"
-msgstr ""
-"    Le mot-clé AvantPy '{nobreak_kwd}' ne peut pas être utilisé\n"
-"    dans une clause if/elif/else\n"
-"\n"
-
-#: exception_handling.py:185
+#: exception_handling.py:165
 msgid ""
 "    The AvantPy '{nobreak_kwd}' keyword cannot be used in\n"
 "    an '{if_kwd}/{elif_kwd}/{else_kwd}' clause (Python: if/elif/else).\n"
@@ -123,7 +71,7 @@ msgstr ""
 "    dans un énoncé '{if_kwd}/{elif_kwd}/{else_kwd}' (Python: if/elif/else).\n"
 "\n"
 
-#: exception_handling.py:208
+#: exception_handling.py:189
 msgid ""
 "    In this case, the line indicated by an arrow\n"
 "    is more indented than expected and does not match\n"
@@ -133,7 +81,7 @@ msgstr ""
 "    est plus indentée que ce qui était attendu et ne\n"
 "    correspond pas à l'indentation de la ligne précédente.\n"
 
-#: exception_handling.py:214
+#: exception_handling.py:195
 msgid ""
 "    In this case, the line indicated by an arrow\n"
 "    was expected to begin a new indented block.\n"
@@ -141,7 +89,7 @@ msgstr ""
 "    Dans ce cas-ci, la ligne indiquée par une flèche devrait\n"
 "    normalement commencer un nouveau bloc de code indenté.\n"
 
-#: exception_handling.py:219
+#: exception_handling.py:200
 msgid ""
 "    In this case, the line indicated by an arrow\n"
 "    is less indented the preceding one,\n"
@@ -151,7 +99,7 @@ msgstr ""
 "    est moins indentée que la ligne précédente,\n"
 "    et n'est pas alignée verticalement avec un autre bloc de code.\n"
 
-#: exception_handling.py:239
+#: exception_handling.py:220
 msgid ""
 "    An indentation error occurs when a given line is\n"
 "    not indented (aligned vertically) as expected.\n"
@@ -161,7 +109,7 @@ msgstr ""
 "    n'est pas indentée (alignée verticalement) tel qu'attendu.\n"
 "{this_case}\n"
 
-#: exception_handling.py:273
+#: exception_handling.py:252
 msgid ""
 "    The opening {open_bracket} does not match the closing {close_bracket}.\n"
 "\n"
@@ -170,7 +118,7 @@ msgstr ""
 "{close_bracket}.\n"
 "\n"
 
-#: exception_handling.py:306
+#: exception_handling.py:283
 msgid ""
 "    The closing {bracket} does not match anything.\n"
 "\n"
@@ -178,7 +126,7 @@ msgstr ""
 "    Le symbole droit {bracket} n'a pas de symbole gauche correspondant.\n"
 "\n"
 
-#: exception_handling.py:334
+#: exception_handling.py:309
 msgid ""
 "    A statement beginning with the '{repeat_kwd}' keyword must be on\n"
 "    a single line ending with a colon (:) that indicates the beginning of\n"
@@ -192,7 +140,7 @@ msgstr ""
 "    d'autre deux points qui apparaissent sur cette ligne.\n"
 "\n"
 
-#: exception_handling.py:362
+#: exception_handling.py:338
 msgid ""
 "    The AvantPy '{keyword}'' keyword can be used only when preceded by "
 "'{repeat_kwd}'.\n"
@@ -202,7 +150,7 @@ msgstr ""
 "    s'il est précédé de '{repeat_kwd}'.\n"
 "\n"
 
-#: exception_handling.py:393
+#: exception_handling.py:370
 msgid ""
 "    A NameError exception indicates that a variable or\n"
 "    function name is not known to Python.\n"
@@ -221,7 +169,7 @@ msgstr ""
 "    Dans votre programme, le nom inconnu est '{var_name}'.\n"
 "\n"
 
-#: exception_handling.py:429
+#: exception_handling.py:403
 msgid ""
 "    The AvantPy '{nobreak_kwd}' keyword can be used instead of '{else_kwd}'\n"
 "    (Python: else) only when it begins a new statement in\n"
@@ -234,7 +182,7 @@ msgstr ""
 "    dans des boucles '{for_kwd}' ou '{while_kwd}' (Python: for/while).\n"
 "\n"
 
-#: exception_handling.py:460
+#: exception_handling.py:434
 msgid ""
 "    The AvantPy '{nobreak_kwd}' keyword can only be used as a replacement\n"
 "    of '{else_kwd}' (Python: else) with a matching '{for_kwd}' or\n"
@@ -248,7 +196,7 @@ msgstr ""
 "    dans des boucles '{for_kwd}' ou '{while_kwd}' (Python: for/while).\n"
 "\n"
 
-#: exception_handling.py:491
+#: exception_handling.py:465
 msgid ""
 "    The AvantPy '{repeat_kwd}' keyword can only be used to begin\n"
 "    a new loop (Python: equivalent to 'for' or 'while' loop).\n"
@@ -260,7 +208,7 @@ msgstr ""
 "    (équivalent Python: 'for' ou 'while').\n"
 "\n"
 
-#: exception_handling.py:526
+#: exception_handling.py:498
 msgid ""
 "    A TabError indicates that you have used both spaces\n"
 "    and tab characters to indent your code.\n"
@@ -275,7 +223,7 @@ msgstr ""
 "code.\n"
 "\n"
 
-#: exception_handling.py:558
+#: exception_handling.py:527
 msgid ""
 "    The AvantPy '{nobreak_kwd}' keyword cannot be used in\n"
 "    a '{try_kwd}/{except_kwd}/{else_kwd}/{finally_kwd}' clause\n"
@@ -288,7 +236,7 @@ msgstr ""
 "except/else/finally).\n"
 "\n"
 
-#: exception_handling.py:585
+#: exception_handling.py:554
 msgid ""
 "    AvantPy exception: UnknownDialectError\n"
 "\n"
@@ -304,7 +252,7 @@ msgstr ""
 "    Les dialectes connus sont : {all_dialects}.\n"
 "\n"
 
-#: exception_handling.py:603
+#: exception_handling.py:573
 msgid ""
 "    AvantPy exception: UnknownLanguageError\n"
 "\n"
@@ -320,13 +268,177 @@ msgstr ""
 "    Les langages connus sont : {all_langs}.\n"
 "\n"
 
-#: import_hook.py:36
+#: exceptions.py:14
+msgid "AvantPy exception:"
+msgstr "Exception AvantPy:"
+
+#: exceptions.py:30
+msgid "AvantPy syntax error:"
+msgstr "Erreur de syntaxe AvantPy :"
+
+#: exceptions.py:44
+msgid ""
+"The AvantPy '{nobreak_kwd}' keyword cannot be used in\n"
+"an '{if_kwd}/{elif_kwd}/{else_kwd}' clause (Python: if/elif/else).\n"
+msgstr ""
+"Le mot-clé '{nobreak_kwd}' spécifique à Avantpy ne peut pas être utilisé\n"
+"dans un énoncé '{if_kwd}/{elif_kwd}/{else_kwd}' (Python: if/elif/else).\n"
+"\n"
+
+#: exceptions.py:66
+msgid ""
+"The opening {open_bracket} does not match the closing {close_bracket}.\n"
+msgstr ""
+"Le symbole gauche {open_bracket} ne correspond pas au symbole droit "
+"{close_bracket}.\n"
+"\n"
+
+#: exceptions.py:86
+msgid "The closing {bracket} does not match anything.\n"
+msgstr "Le symbole droit {bracket} n'a pas de symbole gauche correspondant.\n"
+
+#: exceptions.py:97
+msgid ""
+"A statement beginning with the '{repeat_kwd}' keyword must be on\n"
+"a single line ending with a colon (:) that indicates the beginning of\n"
+"an indented block of code, with no other colon appearing on that line.\n"
+msgstr ""
+"Un énoncé débutant avec le mot clé '{repeat_kwd}' spécifique à Avantpy\n"
+"doit être sur une seule ligne terminant avec deux points (:) qui indiquent\n"
+"le début d'un bloc de code de code indenté, sans qu'il n'y ait\n"
+"d'autre deux points qui apparaissent sur cette ligne.\n"
+
+#: exceptions.py:111
+msgid ""
+"The AvantPy '{keyword}'' keyword can be used only whenpreceded by "
+"'{repeat_kwd}'.\n"
+msgstr ""
+"Le mot-clé '{keyword}' spécifique à Avantpy peut seulement être utilisé\n"
+"s'il est précédé de '{repeat_kwd}'.\n"
+"\n"
+
+#: exceptions.py:122
+msgid ""
+"The AvantPy '{nobreak_kwd}' keyword can be used instead of '{else_kwd}'\n"
+"(Python: else) only when it begins a new statement in\n"
+"'{for_kwd}/{while_kwd}' loops (Python: for/while).\n"
+"\n"
+msgstr ""
+"Le mot-clé '{nobreak_kwd}' spécifique à Avantpy peut seulement être utilisé\n"
+"au lieu de sinon (Python: else) lorsqu'il débute un nouvel énoncé\n"
+"dans des boucles '{for_kwd}' ou '{while_kwd}' (Python: for/while).\n"
+"\n"
+
+#: exceptions.py:139
+msgid ""
+"The AvantPy '{nobreak_kwd}' keyword can only be used as a replacement\n"
+"of '{else_kwd}' (Python: else) with a matching '{for_kwd}' or\n"
+"'{while_kwd}' loop (Python: for/while).\n"
+msgstr ""
+"Le mot-clé '{nobreak_kwd}' spécifique à Avantpy peut seulement être utilisé\n"
+"au lieu de '{else_kwd}' (Python: else) lorsqu'il débute un nouvel énoncé\n"
+"dans des boucles '{for_kwd}' ou '{while_kwd}' (Python: for/while).\n"
+"\n"
+
+#: exceptions.py:156
+msgid ""
+"The AvantPy '{repeat_kwd}' keyword can only be used to begin\n"
+"a new loop (Python: equivalent to 'for' or 'while' loop).\n"
+msgstr ""
+"Le mot-clé '{repeat_kwd}' spécifique à Avantpy peut seulement être utilisé\n"
+"pour débuter une nouvelle boucle\n"
+"(équivalent Python: 'for' ou 'while').\n"
+"\n"
+
+#: exceptions.py:167
+msgid ""
+"The AvantPy '{nobreak_kwd}' keyword cannot be used in\n"
+"a '{try_kwd}/{except_kwd}/{else_kwd}/{finally_kwd}' clause\n"
+"(Python: try/except/else/finally).\n"
+msgstr ""
+"Le mot-clé '{nobreak_kwd}' spécifique à Avantpy ne peut pas être utilisé "
+"dans\n"
+"un énoncé '{try_kwd}/{except_kwd}/{else_kwd}/{finally_kwd}' (Python: try/"
+"except/else/finally).\n"
+
+#: exceptions.py:188
+msgid ""
+"The following unknown dialect was requested: {dialect}.\n"
+"\n"
+"The known dialects are: {all_dialects}.\n"
+msgstr ""
+"Le dialecte inconnu suivant a été demandé : {dialect}.\n"
+"\n"
+"Les dialectes connus sont : {all_dialects}.\n"
+"\n"
+
+#: exceptions.py:205
+msgid ""
+"The following unknown languages was requested: {lang}.\n"
+"\n"
+"The known dialects are: {all_langs}.\n"
+msgstr ""
+"Le langage inconnu suivant a été demandé : {lang}.\n"
+"\n"
+"Les langages connus sont : {all_langs}.\n"
+"\n"
+
+#: import_hook.py:40
 msgid "Cannot find main module: "
 msgstr "Le module principal ('main') ne peut pas être trouvé : "
 
-#: session.py:168
+#: session.py:158
 msgid "    ==> Language: {lang} | AvantPy dialect: {dialect}"
 msgstr "    ==> Langue : {lang} | dialecte AvantPy : {dialect}"
+
+#~ msgid ""
+#~ "    AvantPy exception: {exception_name}\n"
+#~ "\n"
+#~ "    Error found in file '{filename}' on line {linenumber}.\n"
+#~ "\n"
+#~ "    Dialect used: {dialect}\n"
+#~ "\n"
+#~ "{partial_source}\n"
+#~ "\n"
+#~ msgstr ""
+#~ "    Exception AvantPy : {exception_name}\n"
+#~ "\n"
+#~ "    Erreur trouvée dans le fichier '{filename}' à la ligne {linenumber}.\n"
+#~ "\n"
+#~ "    Dialecte utilisé : {dialect}\n"
+#~ "\n"
+#~ "{partial_source}\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "    Python exception: \n"
+#~ "        {python_display}\n"
+#~ "\n"
+#~ "    Error found in file '{filename}' on line {linenumber}.\n"
+#~ "\n"
+#~ "    Dialect used: {dialect}\n"
+#~ "\n"
+#~ "{partial_source}\n"
+#~ "\n"
+#~ msgstr ""
+#~ "    Exception Python: \n"
+#~ "        {python_display}\n"
+#~ "\n"
+#~ "    Erreur trouvée dans le fichier '{filename}' à la ligne {linenumber}.\n"
+#~ "\n"
+#~ "    Dialecte utilisé : {dialect}\n"
+#~ "\n"
+#~ "{partial_source}\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "    The AvantPy '{nobreak_kwd}' keyword cannot be used in\n"
+#~ "    an if/elif/else clause.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "    Le mot-clé AvantPy '{nobreak_kwd}' ne peut pas être utilisé\n"
+#~ "    dans une clause if/elif/else\n"
+#~ "\n"
 
 #~ msgid ""
 #~ "\n"

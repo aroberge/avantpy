@@ -1,4 +1,0 @@
-'''Should raise IndentationError'''
-si Vrai:
-      passer
-    passer

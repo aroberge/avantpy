@@ -169,7 +169,7 @@ def handle_IfNobreakError(exc, source):
 
     return message.format(
         exception_name=exc.__class__.__name__,
-        filename=params["source_name"],
+        filename=params["filename"],
         nobreak_kwd=params["nobreak keyword"],
         partial_source=partial_source,
         linenumber=end,
@@ -243,7 +243,7 @@ def handle_MismatchedBracketsError(exc, source):
     _ = gettext_lang.lang
     params = exc.args[0]
     begin = params["open_linenumber"]
-    end = params["close_linenumber"]
+    end = params["linenumber"]
     marks = [begin, end]
     partial_source = get_partial_source(source, begin, end, marks=marks)
 
@@ -257,7 +257,7 @@ def handle_MismatchedBracketsError(exc, source):
 
     return message.format(
         exception_name=exc.__class__.__name__,
-        filename=params["source_name"],
+        filename=params["filename"],
         linenumber=end,
         open_bracket=params["open_bracket"],
         close_bracket=params["close_bracket"],
@@ -286,7 +286,7 @@ def handle_MissingLeftBracketError(exc, source):
 
     return message.format(
         exception_name=exc.__class__.__name__,
-        filename=params["source_name"],
+        filename=params["filename"],
         partial_source=partial_source,
         dialect=dialect,
         linenumber=linenumber,
@@ -315,7 +315,7 @@ def handle_MissingRepeatColonError(exc, source):
 
     return message.format(
         exception_name=exc.__class__.__name__,
-        filename=params["source_name"],
+        filename=params["filename"],
         repeat_kwd=params["repeat_kwd"],
         partial_source=partial_source,
         linenumber=linenumber,
@@ -343,7 +343,7 @@ def handle_MissingRepeatError(exc, source):
     message = avantpy_exception_message() + message_end
     return message.format(
         exception_name=exc.__class__.__name__,
-        filename=params["source_name"],
+        filename=params["filename"],
         keyword=params["keyword"],
         partial_source=partial_source,
         linenumber=linenumber,
@@ -409,7 +409,7 @@ def handle_NobreakFirstError(exc, source):
 
     return message.format(
         exception_name=exc.__class__.__name__,
-        filename=params["source_name"],
+        filename=params["filename"],
         nobreak_kwd=params["nobreak keyword"],
         partial_source=partial_source,
         linenumber=linenumber,
@@ -440,7 +440,7 @@ def handle_NobreakSyntaxError(exc, source):
 
     return message.format(
         exception_name=exc.__class__.__name__,
-        filename=params["source_name"],
+        filename=params["filename"],
         nobreak_kwd=params["nobreak keyword"],
         partial_source=partial_source,
         linenumber=linenumber,
@@ -470,7 +470,7 @@ def handle_RepeatFirstError(exc, source):
 
     return message.format(
         exception_name=exc.__class__.__name__,
-        filename=params["source_name"],
+        filename=params["filename"],
         repeat_kwd=params["repeat keyword"],
         partial_source=partial_source,
         linenumber=linenumber,
@@ -533,7 +533,7 @@ def handle_TryNobreakError(exc, source):
 
     return message.format(
         exception_name=exc.__class__.__name__,
-        filename=params["source_name"],
+        filename=params["filename"],
         nobreak_kwd=params["nobreak keyword"],
         partial_source=partial_source,
         linenumber=end,

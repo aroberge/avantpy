@@ -23,294 +23,296 @@ Python version: 3.7.3
 IfNobreakError
 --------------
 
-Example::
+.. code-block:: none
 
-    Exception AvantPy : IfNobreakError
 
-    Erreur trouvée dans le fichier 'raise_if_nobreak.pyfr' à la ligne 4.
-
+    Erreur de syntaxe AvantPy :
+        IfNobreakError: Keyword nobreak found matching if/elif
+        
+    Le mot-clé 'pasinterrompu' spécifique à Avantpy ne peut pas être utilisé
+    dans un énoncé 'si/sinonsi/sinon' (Python: if/elif/else).
+    
+    
+    Python peut seulement analyser le fichier '~\github\avantpy\tests\pyfr\raise_if_nobreak.pyfr'
+    jusqu'à l'endroit indiqué par --> et ^.
+    
+       1: '''Should raise IfNobreakError'''
        2: si Vrai:
        3:     passer
     -->4: pasinterrompu:
-
-    Le mot-clé 'pasinterrompu' spécifique à Avantpy ne peut pas être utilisé
-    dans un énoncé 'si/sinonsi/sinon' (Python: if/elif/else).
-
-
-IndentationError: expected an indented block
---------------------------------------------
-
-Example::
-
-    Exception Python  
-        IndentationError: expected an indented block
-
-    Erreur trouvée dans le fichier 'raise_indentation_error1.pyfr' à la ligne 3.
-
-       1: '''Should raise IndentationError'''
-       2: si Vrai:
-    -->3: passer
-       4: 
-
-    Une erreur d'indentation a lieu lorsqu'une ligne de code
-    n'est pas indentée (alignée verticalement) tel qu'attendu.
-    Dans ce cas-ci, la ligne indiquée par une flèche devrait
-    normalement commencer un nouveau bloc de code indenté.
-
-
-IndentationError: unexpected indent
------------------------------------
-
-Example::
-
-    Exception Python  
-        IndentationError: unexpected indent
-
-    Erreur trouvée dans le fichier 'raise_indentation_error2.pyfr' à la ligne 4.
-
-       1: '''Should raise IndentationError'''
-       2: si Vrai:
-       3:     passer
-    -->4:       passer
-       5: 
-
-    Une erreur d'indentation a lieu lorsqu'une ligne de code
-    n'est pas indentée (alignée verticalement) tel qu'attendu.
-    Dans ce cas-ci, la ligne indiquée par une flèche
-    est plus indentée que ce qui était attendu et ne
-    correspond pas à l'indentation de la ligne précédente.
-
-
-IndentationError - no match
----------------------------
-
-Example::
-
-    Exception Python  
-        IndentationError: unindent does not match any outer indentation level
-
-    Erreur trouvée dans le fichier 'raise_indentation_error3.pyfr' à la ligne 4.
-
-       1: '''Should raise IndentationError'''
-       2: si Vrai:
-       3:       passer
-    -->4:     passer
-       5: 
-
-    Une erreur d'indentation a lieu lorsqu'une ligne de code
-    n'est pas indentée (alignée verticalement) tel qu'attendu.
-    Dans ce cas-ci, la ligne indiquée par une flèche
-    est moins indentée que la ligne précédente,
-    et n'est pas alignée verticalement avec un autre bloc de code.
-
+          ^
 
 MismatchedBracketsError
 -----------------------
 
-Example::
+.. code-block:: none
 
-    Exception AvantPy : MismatchedBracketsError
 
-    Erreur trouvée dans le fichier 'raise_mismatched_brackets.pyfr' à la ligne 6.
-
-    -->2: a = (1,
+    Erreur de syntaxe AvantPy :
+        MismatchedBracketsError: Closing bracket found matching a different opening one.
+        
+    Le symbole gauche ( ne correspond pas au symbole droit ].
+    
+    
+    Python peut seulement analyser le fichier '~\github\avantpy\tests\pyfr\raise_mismatched_brackets.pyfr'
+    jusqu'à l'endroit indiqué par --> et ^.
+    
        3:     2,
        4:     3, 4,
        5:     5
     -->6: ]
-
-    Le symbole gauche ( ne correspond pas au symbole droit ].
-
+          ^
 
 MissingLeftBracketError
 -----------------------
 
-Example::
+.. code-block:: none
 
-    Exception AvantPy : MissingLeftBracketError
 
-    Erreur trouvée dans le fichier 'raise_missing_left_bracket.pyfr' à la ligne 5.
-
+    Erreur de syntaxe AvantPy :
+        MissingLeftBracketError: Closing bracket found with no matching opening one
+        
+    Le symbole droit ) n'a pas de symbole gauche correspondant.
+    
+    Python peut seulement analyser le fichier '~\github\avantpy\tests\pyfr\raise_missing_left_bracket.pyfr'
+    jusqu'à l'endroit indiqué par --> et ^.
+    
+       2: a = (1,
+       3:     2,
        4:     3, 4,)
     -->5:     )
-       6: b = 3
-
-    Le symbole droit ) n'a pas de symbole gauche correspondant.
-
+          ^
 
 MissingRepeatColonError
 -----------------------
 
-Example::
+.. code-block:: none
 
-    Exception AvantPy : MissingRepeatColonError
 
-    Erreur trouvée dans le fichier 'raise_missing_repeat_colon.pyfr' à la ligne 3.
-
-       2: x = 0
-    -->3: répéter jusquà (x ==
-       4:          1):
-
+    Erreur de syntaxe AvantPy :
+        MissingRepeatColonError: Missing colon on line beginning with repeat
+        
     Un énoncé débutant avec le mot clé 'répéter' spécifique à Avantpy
     doit être sur une seule ligne terminant avec deux points (:) qui indiquent
     le début d'un bloc de code de code indenté, sans qu'il n'y ait
     d'autre deux points qui apparaissent sur cette ligne.
-
+    
+    Python peut seulement analyser le fichier '~\github\avantpy\tests\pyfr\raise_missing_repeat_colon.pyfr'
+    jusqu'à l'endroit indiqué par --> et ^.
+    
+       1: '''Should raise MissingRepeatColonError'''
+       2: x = 0
+    -->3: répéter jusquà (x ==
+          ^
 
 MissingRepeatError
 ------------------
 
-Example::
+.. code-block:: none
 
-    Exception AvantPy : MissingRepeatError
 
-    Erreur trouvée dans le fichier 'raise_missing_repeat.pyfr' à la ligne 3.
-
-       2: x = 0
-    -->3: jusquà x == 2:
-       4:     x += 1
-
+    Erreur de syntaxe AvantPy :
+        MissingRepeatError: until and forever must be preceeded by repeat
+        
     Le mot-clé 'jusquà' spécifique à Avantpy peut seulement être utilisé
     s'il est précédé de 'répéter'.
-
+    
+    
+    Python peut seulement analyser le fichier '~\github\avantpy\tests\pyfr\raise_missing_repeat.pyfr'
+    jusqu'à l'endroit indiqué par --> et ^.
+    
+       1: '''Should raise MissingRepeatError'''
+       2: x = 0
+    -->3: jusquà x == 2:
+          ^
 
 NameError
 ---------
 
-Example::
+.. code-block:: none
 
-    Exception Python  
+
+    Exception Python:
         NameError: name 'c' is not defined
+        
+    Une exception NameError indique que le nom d'une variable
+    ou d'une fonction n'est pas connue par Python.
+    Habituellement, ceci indique une simple faute d'orthographe.
+    Cependant, cela peut également indiquer que le nom a été
+    utilisé avant qu'on ne lui ait associé une valeur.
+    
+    Cause probable :
+        Dans votre programme, le nom inconnu est 'c'.
+        
+    L'exécution s'est arrêtée à la ligne 115 du fichier '~\github\avantpy\avantpy\import_hook.py'
+    
+       113: 
+       114:         try:
+    -->115:             exec(source, vars(module))
+       116:         except Exception:
 
-    Erreur trouvée dans le fichier 'raise_name_error.pyfr' à la ligne 4.
+    source: '"""Should raise NameError"""\n\na = 1\nb = c...'  | len(source): 48
+    module: <module 'raise_name_error' from 'C:\\Users\\a...>
 
-       3: a = 1
-    -->4: b = c
-       5: d = 3
-
-    Une exception de type NameError indique que le nom d'une variable
-    ou d'une fonction utilisée dans votre programme est inconnu par Python.
-    Le plus souvent, ceci se produit parce que vous faites une faute
-    d'orthographe dans l'écriture de votre variable ou de votre fonction;
-    ceci peut également se produire si vous invoquez cette fonction ou utilisez
-    cette variable sans l'avoir définie auparavant.
-    Dans votre programme, le nom inconnu est 'c'.
-
+    Exception levée à la ligne du fichier '<string>'.
+    
+Malheureusement, aucune information supplémentaire n’est disponible:
+le contenu du fichier '<string>' n’est pas accessible.
 
 NobreakFirstError
 -----------------
 
-Example::
+.. code-block:: none
 
-    Exception AvantPy : NobreakFirstError
 
-    Erreur trouvée dans le fichier 'raise_nobreak_first.pyfr' à la ligne 3.
-
-       2: # Need to prevent pasinterrompu being replaced by 'else' in this situation.
-    -->3: a = 1 if True pasinterrompu 3
-       4: 
-
+    Erreur de syntaxe AvantPy :
+        NobreakFirstError: nobreak must be first statement on a line
+        
     Le mot-clé 'pasinterrompu' spécifique à Avantpy peut seulement être utilisé
     au lieu de sinon (Python: else) lorsqu'il débute un nouvel énoncé
     dans des boucles 'pour' ou 'tantque' (Python: for/while).
-
+    
+    
+    Python peut seulement analyser le fichier '~\github\avantpy\tests\pyfr\raise_nobreak_first.pyfr'
+    jusqu'à l'endroit indiqué par --> et ^.
+    
+       1: '''Should raise NobreakFirstError'''
+       2: # Need to prevent pasinterrompu being replaced by 'else' in this situation.
+    -->3: a = 1 if True pasinterrompu 3
+          ^
 
 NobreakSyntaxError
 ------------------
 
-Example::
+.. code-block:: none
 
-    Exception AvantPy : NobreakSyntaxError
 
-    Erreur trouvée dans le fichier 'raise_nobreak_syntax.pyfr' à la ligne 4.
-
-       3: a = 1
-    -->4: pasinterrompu: pass
-       5: 
-
+    Erreur de syntaxe AvantPy :
+        NobreakSyntaxError: Keyword nobreak not matching a valid block
+        
     Le mot-clé 'pasinterrompu' spécifique à Avantpy peut seulement être utilisé
     au lieu de 'sinon' (Python: else) lorsqu'il débute un nouvel énoncé
     dans des boucles 'pour' ou 'tantque' (Python: for/while).
-
+    
+    
+    Python peut seulement analyser le fichier '~\github\avantpy\tests\pyfr\raise_nobreak_syntax.pyfr'
+    jusqu'à l'endroit indiqué par --> et ^.
+    
+       1: '''Should raise NobreakSyntaxError'''
+       2: # Need to prevent pasinterrompu being replaced by 'else' in this situation.
+       3: a = 1
+    -->4: pasinterrompu: pass
+          ^
 
 RepeatFirstError
 ----------------
 
-Example::
+.. code-block:: none
 
-    Exception AvantPy : RepeatFirstError
 
-    Erreur trouvée dans le fichier 'raise_repeat_first.pyfr' à la ligne 3.
-
-       2: # Catch an early case of using répéter not to begin a loop
-    -->3: a = répéter
-       4: 
-
+    Erreur de syntaxe AvantPy :
+        RepeatFirstError: repeat must be first statement on a line
+        
     Le mot-clé 'répéter' spécifique à Avantpy peut seulement être utilisé
     pour débuter une nouvelle boucle
     (équivalent Python: 'for' ou 'while').
-
-
-TabError
---------
-
-Example::
-
-    Exception Python  
-        TabError: inconsistent use of tabs and spaces in indentation
-
-    Erreur trouvée dans le fichier 'raise_tab_error.pyfr' à la ligne 3.
-
-       1: """Should raise TabError"""
-       2: 
-    -->3: exec("""if True:\n        pass\n\tpass""")
-       4: 
-
-    L'exception TabError indique que vous avez utilisé des espaces ainsi
-    que des caractères de tabulation pour indenter votre code.
-    Ceci n'est pas permis en Python
-    Il est recommandé de n'utiliser que des espaces pour indenter votre code.
-
+    
+    
+    Python peut seulement analyser le fichier '~\github\avantpy\tests\pyfr\raise_repeat_first.pyfr'
+    jusqu'à l'endroit indiqué par --> et ^.
+    
+       1: '''Should raise RepeatFirstError'''
+       2: # Catch an early case of using répéter not to begin a loop
+    -->3: a = répéter
+          ^
 
 TryNobreakError
 ---------------
 
-Example::
+.. code-block:: none
 
-    Exception AvantPy : TryNobreakError
 
-    Erreur trouvée dans le fichier 'raise_try_nobreak.pyfr' à la ligne 7.
-
-       3:     essayer:
-       4:         A = 1
-       5:     siexception:
-       6:         A = 2
-    -->7:     pasinterrompu:
-
+    Erreur de syntaxe AvantPy :
+        TryNobreakError: Keyword nobreak found matching try/except
+        
     Le mot-clé 'pasinterrompu' spécifique à Avantpy ne peut pas être utilisé dans
     un énoncé 'essayer/siexception/sinon/finalement' (Python: try/except/else/finally).
-
+    
+    Python peut seulement analyser le fichier '~\github\avantpy\tests\pyfr\raise_try_nobreak.pyfr'
+    jusqu'à l'endroit indiqué par --> et ^.
+    
+        4:         A = 1
+        5:     siexception:
+        6:         A = 2
+    --> 7:     pasinterrompu:
+           ^
 
 UnknownDialectError
 -------------------
 
-Example::
+.. code-block:: none
 
-    Exception AvantPy : UnknownDialectError
 
+    Exception AvantPy:
+        UnknownDialectError: Unknown dialect pyxx
+        
     Le dialecte inconnu suivant a été demandé : pyxx.
-
+    
     Les dialectes connus sont : ['pyen', 'pyes', 'pyfr', 'pyupper'].
+    
+    
+    L'exécution s'est arrêtée à la ligne 115 du fichier '~\github\avantpy\avantpy\import_hook.py'
+    
+       113: 
+       114:         try:
+    -->115:             exec(source, vars(module))
+       116:         except Exception:
 
+    source: '\'\'\'Raises UnknownDialectError\'\'\'\nimpo...'  | len(source): 282
+    module: <module 'raise_unknown_dialect' from 'C:\\Use...>
+
+    Exception levée à la ligne du fichier '~\github\avantpy\avantpy\session.py'.
+    
+       110:         if not self.is_dialect(dialect):
+       111:             raise exceptions.UnknownDialectError(
+    -->112:                 "Unknown dialect %s" % dialect, (dialect, self.all_dialects())
+       113:             )
+
+    dialect: 'pyxx'
+    dialect: 'pyxx'
+    self: <avantpy.session._State object at 0x032D6030>
 
 UnknownLanguageError
 --------------------
 
-Example::
+.. code-block:: none
 
-    Exception AvantPy : UnknownLanguageError
 
+    Exception AvantPy:
+        UnknownLanguageError: Unknown language xx
+        
     Le langage inconnu suivant a été demandé : xx.
+    
+    Les langages connus sont : {'fr', 'en'}.
+    
+    
+    L'exécution s'est arrêtée à la ligne 115 du fichier '~\github\avantpy\avantpy\import_hook.py'
+    
+       113: 
+       114:         try:
+    -->115:             exec(source, vars(module))
+       116:         except Exception:
 
-    Les langages connus sont : {'en', 'fr'}.
+    source: '\'\'\'Raises UnknownLanguageError\'\'\'\nimp...'  | len(source): 278
+    module: <module 'raise_unknown_language' from 'C:\\Us...>
 
+    Exception levée à la ligne du fichier '~\github\avantpy\avantpy\session.py'.
+    
+       135:         if not self.is_lang(lang):
+       136:             raise exceptions.UnknownLanguageError(
+    -->137:                 "Unknown language %s" % lang, (lang, self.languages)
+       138:             )
+
+    lang: 'xx'
+    lang: 'xx'
+    self: <avantpy.session._State object at 0x032D6030>

@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Bienvenue 환영합니다 Bienvenido - ようこそ Welcome 歡迎光臨 &#8212; AvantPy 0.0.9 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -62,8 +60,6 @@
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -80,8 +76,8 @@
 <h1>Bienvenue 환영합니다 Bienvenido - ようこそ Welcome  歡迎光臨<a class="headerlink" href="#bienvenue-bienvenido-welcome" title="Permalink to this headline">¶</a></h1>
 <p><strong>AvantPy</strong> - Python with training wheels: executable pseudocode in any language.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">This is pre-alpha software, currently in development.
+<p class="admonition-title">Warning</p>
+<p>This is pre-alpha software, currently in development.
 <strong>Currently</strong>, it is only tested from a local repository, and while it is
 available from pypi.org using pip, we do not test with such
 an installed version.</p>
@@ -89,26 +85,29 @@ an installed version.</p>
 <div class="section" id="what-is-avantpy">
 <h2>What is AvantPy?<a class="headerlink" href="#what-is-avantpy" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>AvantPy is a collection of dialects, each dialect being a superset of Python, designed to make it easier to learn programming concepts in a given human language.<ul>
-<li>Each dialect consists of a translations of most Python keywords in a given human language, supplemented by a few additional constructs intended to make some programming concepts easier to learn.</li>
-<li>The current version includes four dialects: English, French and Spanish, as
+<li><p>AvantPy is a collection of dialects, each dialect being a superset of Python, designed to make it easier to learn programming concepts in a given human language.</p>
+<ul>
+<li><p>Each dialect consists of a translations of most Python keywords in a given human language, supplemented by a few additional constructs intended to make some programming concepts easier to learn.</p></li>
+<li><p>The current version includes four dialects: English, French and Spanish, as
 well as an UPPERCASE version of the English dialect.
-The translation currently done in these three dialects is subject to change; feel free to make suggestions for alternative to use, or contribute a new dialect.</li>
+The translation currently done in these three dialects is subject to change; feel free to make suggestions for alternative to use, or contribute a new dialect.</p></li>
 </ul>
 </li>
-<li>AvantPy is a preprocessor, that takes a program written either totally or
-in parts in a given dialect, and converts it to standard Python prior to execution.<ul>
-<li>A syntactically valid program can include a mix of code written in normal Python and in a specific dialect. This is to ease the transition to learning Python.</li>
+<li><p>AvantPy is a preprocessor, that takes a program written either totally or
+in parts in a given dialect, and converts it to standard Python prior to execution.</p>
+<ul>
+<li><p>A syntactically valid program can include a mix of code written in normal Python and in a specific dialect. This is to ease the transition to learning Python.</p></li>
 </ul>
 </li>
-<li>AvantPy is written as a standard Python module/package meant to be usable with any “normal” Python environment. Thus, it could be included as a plugin for a given
-editor, or run with a standard Python interpreter from the command line.</li>
-<li>AvantPy also includes a tool to convert programs written in a given dialect into standard Python, showing the differences between the two, thus helping motivated users to make the transition to using only standard Python.<ul>
-<li>It is also possible to translate valid programs from one dialect into another.</li>
+<li><p>AvantPy is written as a standard Python module/package meant to be usable with any “normal” Python environment. Thus, it could be included as a plugin for a given
+editor, or run with a standard Python interpreter from the command line.</p></li>
+<li><p>AvantPy also includes a tool to convert programs written in a given dialect into standard Python, showing the differences between the two, thus helping motivated users to make the transition to using only standard Python.</p>
+<ul>
+<li><p>It is also possible to translate valid programs from one dialect into another.</p></li>
 </ul>
 </li>
-<li>AvantPy also includes a custom REPL that can use any of the existing dialects.</li>
-<li>More importantly, AvantPy will also includes tools to analyze Python tracebacks and translate them into easier to understand feedback for beginners.</li>
+<li><p>AvantPy also includes a custom REPL that can use any of the existing dialects.</p></li>
+<li><p>More importantly, AvantPy will also includes tools to analyze Python tracebacks and translate them into easier to understand feedback for beginners.</p></li>
 </ul>
 </div>
 <div class="section" id="who-is-it-for">
@@ -133,11 +132,13 @@ to help students learn programming concepts.</strong></p>
 <p>Realistically, many students who learn computer programming as part of a formal course might never use programming again or, if so, it might not be for many years.
 As <a class="reference external" href="https://computinged.wordpress.com/2019/01/07/a-little-bit-of-computing-goes-a-long-way-the-sigcse-50th-anniversary-issue-of-acm-inroads/">Mark Guzdial wrote:</a></p>
 <blockquote>
-<div><em>People code for different purposes, with different ways of appropriating code. … Not everybody is going to be a professional software developer, and they don’t need to be.</em></div></blockquote>
+<div><p><em>People code for different purposes, with different ways of appropriating code. … Not everybody is going to be a professional software developer, and they don’t need to be.</em></p>
+</div></blockquote>
 <p>And, he also <a class="reference external" href="https://computinged.wordpress.com/2019/03/25/task-specific-programming-languages-past-guzdial-is-smarter-than-present-guzdial/">wrote in a later blog post:</a> something
 I very much agree with:</p>
 <blockquote>
-<div><em>If we want people to program, make it easy. Remove the barriers. That’s what we’re about.</em> [Note: I am using this quote in a different context than that of the blog post.]</div></blockquote>
+<div><p><em>If we want people to program, make it easy. Remove the barriers. That’s what we’re about.</em> [Note: I am using this quote in a different context than that of the blog post.]</p>
+</div></blockquote>
 <p>Given enough time, beginners who have just learned programming and stop using it
 would likely forget most of the programming syntax they had learned.
 However I claim that they likely would understand and remember programming <strong>concepts</strong> better if they are first learning them in their native language.  This is what AvantPy aims to do for them.</p>
@@ -180,9 +181,6 @@ However I claim that they likely would understand and remember programming <stro
 <li class="toctree-l1"><a class="reference internal" href="builtins.html"> More than keywords</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tracebacks_upper.html"> Friendly error messages</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tracebacks_upper.html#ifnobreakerror">IfNobreakError</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tracebacks_upper.html#indentationerror-expected-an-indented-block">IndentationError: expected an indented block</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tracebacks_upper.html#indentationerror-unexpected-indent">IndentationError: unexpected indent</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tracebacks_upper.html#indentationerror-no-match">IndentationError - no match</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tracebacks_upper.html#mismatchedbracketserror">MismatchedBracketsError</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tracebacks_upper.html#missingleftbracketerror">MissingLeftBracketError</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tracebacks_upper.html#missingrepeatcolonerror">MissingRepeatColonError</a></li>
@@ -231,9 +229,6 @@ However I claim that they likely would understand and remember programming <stro
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tracebacks_fr.html"> Friendly error messages - en Français</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tracebacks_fr.html#ifnobreakerror">IfNobreakError</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tracebacks_fr.html#indentationerror-expected-an-indented-block">IndentationError: expected an indented block</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tracebacks_fr.html#indentationerror-unexpected-indent">IndentationError: unexpected indent</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tracebacks_fr.html#indentationerror-no-match">IndentationError - no match</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tracebacks_fr.html#mismatchedbracketserror">MismatchedBracketsError</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tracebacks_fr.html#missingleftbracketerror">MissingLeftBracketError</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tracebacks_fr.html#missingrepeatcolonerror">MissingRepeatColonError</a></li>
@@ -250,13 +245,13 @@ However I claim that they likely would understand and remember programming <stro
 </ul>
 </div>
 <div class="admonition-todo admonition">
-<p class="first admonition-title">Todo</p>
-<p class="last">Give an example of how to do so.</p>
+<p class="admonition-title">Todo</p>
+<p>Give an example of how to do so.</p>
 </div>
 <p class="todo-source">(The <a class="reference internal" href="contribute.html#index-0"><em>original entry</em></a> is located in C:\Users\andre\github\avantpy\docs\source\contribute.rst, line 69.)</p>
 <div class="admonition-todo admonition">
-<p class="first admonition-title">Todo</p>
-<p class="last">This module needs to be documented properly</p>
+<p class="admonition-title">Todo</p>
+<p>This module needs to be documented properly</p>
 </div>
 <p class="todo-source">(The <a class="reference internal" href="modules.html#index-0"><em>original entry</em></a> is located in C:\Users\andre\github\avantpy\avantpy\gui.py:docstring of avantpy.gui, line 9.)</p>
 </div>
@@ -285,7 +280,7 @@ However I claim that they likely would understand and remember programming <stro
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, André Roberge.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
     </div>
   </body>
 </html>

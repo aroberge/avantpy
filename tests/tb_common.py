@@ -17,14 +17,11 @@ def write(text):
 def make_title(text):
     write("\n" + text)
     write("-" * len(text) + "\n")
-    write("Example::\n")
+    write(".. code-block:: none\n")
 
 
 all_imports = {
     "IfNobreakError": "raise_if_nobreak",
-    "IndentationError: expected an indented block": "raise_indentation_error1",
-    "IndentationError: unexpected indent": "raise_indentation_error2",
-    "IndentationError - no match": "raise_indentation_error3",
     "MismatchedBracketsError": "raise_mismatched_brackets",
     "MissingLeftBracketError": "raise_missing_left_bracket",
     "MissingRepeatColonError": "raise_missing_repeat_colon",
@@ -33,7 +30,6 @@ all_imports = {
     "NobreakFirstError": "raise_nobreak_first",
     "NobreakSyntaxError": "raise_nobreak_syntax",
     "RepeatFirstError": "raise_repeat_first",
-    "TabError": "raise_tab_error",
     "TryNobreakError": "raise_try_nobreak",
     "UnknownDialectError": "raise_unknown_dialect",
     "UnknownLanguageError": "raise_unknown_language",

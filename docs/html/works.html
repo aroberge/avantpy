@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>How does it work? &#8212; AvantPy 0.0.9 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -66,8 +64,6 @@
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -94,8 +90,8 @@ These are caught and an attempt is made to provide information in a
 more user-friendly way, possibly also with more details than Python’s
 standard tracebacks.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">The error analysis is far from being fully implemented.</p>
+<p class="admonition-title">Warning</p>
+<p>The error analysis is far from being fully implemented.</p>
 </div>
 <p>Note that normal Python keywords are allowed into a file written
 in another dialect.</p>
@@ -141,7 +137,7 @@ between tokens.</p>
 all possible cases, from some of the most complex, ending
 with the simplest ones.</p>
 <ol class="upperalpha simple">
-<li><code class="docutils literal notranslate"><span class="pre">nobreak</span></code></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nobreak</span></code></p></li>
 </ol>
 <p>AvantPy has an additional keyword, named <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> in the
 English dialect, which can be used in <code class="docutils literal notranslate"><span class="pre">for</span></code> or <code class="docutils literal notranslate"><span class="pre">while</span></code>
@@ -173,7 +169,7 @@ it made sense to use <code class="docutils literal notranslate"><span class="pre
 loop, we simply replace <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> by <code class="docutils literal notranslate"><span class="pre">else</span></code>. If not,
 we raise a custom exception which is handled elsewhere.</p>
 <ol class="upperalpha simple" start="2">
-<li><code class="docutils literal notranslate"><span class="pre">repeat</span></code></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">repeat</span></code></p></li>
 </ol>
 <p>In addition to the standard Python loops constructs, AvantPy
 support four additional idioms:</p>
@@ -209,7 +205,7 @@ it does not occur anywhere else in the source code.
 This is accomplished using a method called
 <code class="docutils literal notranslate"><span class="pre">get_unique_variable_names</span></code>.</p>
 <ol class="upperalpha simple" start="3">
-<li><code class="docutils literal notranslate"><span class="pre">nobreak</span></code> and <code class="docutils literal notranslate"><span class="pre">repeat</span></code></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nobreak</span></code> and <code class="docutils literal notranslate"><span class="pre">repeat</span></code></p></li>
 </ol>
 <p>A <code class="docutils literal notranslate"><span class="pre">repeat</span></code> loop is essentially a <code class="docutils literal notranslate"><span class="pre">for</span></code> or a <code class="docutils literal notranslate"><span class="pre">while</span></code>
 loop. As such, it could have an <code class="docutils literal notranslate"><span class="pre">else</span></code> clause which
@@ -217,20 +213,20 @@ has a clearer meaning if the keyword <code class="docutils literal notranslate">
 instead.  Thus, just like we mentioned before, we also
 keep track of where a leading <code class="docutils literal notranslate"><span class="pre">repeat</span></code> is used.</p>
 <ol class="upperalpha simple" start="4">
-<li>Direct translation</li>
+<li><p>Direct translation</p></li>
 </ol>
 <p>If a token does not match one of the cases described above,
 we need to see if it is a term used in the dialect; if
 so, we simply translate it into standard Python.</p>
 <ol class="upperalpha simple" start="5">
-<li>Brackets</li>
+<li><p>Brackets</p></li>
 </ol>
 <p>In Python, brackets must always come in pairs: (…), […],
 {…}. In the course of processing the file, if we identify
 brackets which are not paired correctly, an exception
 is raised.</p>
 <ol class="upperalpha simple" start="6">
-<li>Remaining tokens</li>
+<li><p>Remaining tokens</p></li>
 </ol>
 <p>Any remaining token is left as is; it is assumed to be valid
 Python.</p>
@@ -263,7 +259,7 @@ Python.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, André Roberge.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
     </div>
   </body>
 </html>

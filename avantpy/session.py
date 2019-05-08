@@ -6,6 +6,9 @@ import glob
 import os.path
 import runpy
 
+
+import friendly_traceback
+
 from . import exceptions
 from .my_gettext import gettext_lang
 
@@ -106,9 +109,7 @@ class _State:
         """
         if not self.is_dialect(dialect):
             raise exceptions.UnknownDialectError(
-                "Unknown dialect %s; known dialects = %s"
-                % (dialect, self.all_dialects()),
-                (dialect, self.all_dialects()),
+                "Unknown dialect %s" % dialect, (dialect, self.all_dialects())
             )
         else:
             lang = dialect[2:]
@@ -133,8 +134,7 @@ class _State:
         """
         if not self.is_lang(lang):
             raise exceptions.UnknownLanguageError(
-                "Unknown language %s; known languages = %s" % (lang, self.languages),
-                (lang, self.languages),
+                "Unknown language %s" % lang, (lang, self.languages)
             )
         else:
             self.current_lang = lang
@@ -146,6 +146,7 @@ class _State:
                     pass
             elif self.console_active:
                 self.print_lang_info()
+            friendly_traceback.set_lang(lang)
 
     def install_gettext(self, lang):
         """Sets the current language for gettext."""

@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Friendly error messages - en Français &#8212; AvantPy 0.0.9 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -39,9 +37,6 @@
   <ul>
 <li><a class="reference internal" href="#">Friendly error messages - en Français</a><ul>
 <li><a class="reference internal" href="#ifnobreakerror">IfNobreakError</a></li>
-<li><a class="reference internal" href="#indentationerror-expected-an-indented-block">IndentationError: expected an indented block</a></li>
-<li><a class="reference internal" href="#indentationerror-unexpected-indent">IndentationError: unexpected indent</a></li>
-<li><a class="reference internal" href="#indentationerror-no-match">IndentationError - no match</a></li>
 <li><a class="reference internal" href="#mismatchedbracketserror">MismatchedBracketsError</a></li>
 <li><a class="reference internal" href="#missingleftbracketerror">MissingLeftBracketError</a></li>
 <li><a class="reference internal" href="#missingrepeatcolonerror">MissingRepeatColonError</a></li>
@@ -73,8 +68,6 @@
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -94,297 +87,284 @@ que les fameux <em>tracebacks</em> de Python lorsqu’une exception survient.
 Ci-dessous, on peut voir quelques exemples. Le but éventuel est de
 documenter ici tous les exemples possibles tels qu’interprétés par AvantPy.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Le contenu de cette page a été généré par l’exécution de
+<p class="admonition-title">Note</p>
+<p>Le contenu de cette page a été généré par l’exécution de
 tb_pyfr.py situé dans le répertoire <code class="docutils literal notranslate"><span class="pre">tests/</span></code>.
 Ceci a besoin d’être fait de manière explicite lorsqu’on veut
 faire des corrections ou des ajouts, avant de faire la mise
 à jour du reste de la documentation avec Sphinx.</p>
 </div>
 <p>AvantPy version: 0.0.9
-Python version: 3.7.0</p>
+Python version: 3.7.3</p>
 <div class="section" id="ifnobreakerror">
 <h2>IfNobreakError<a class="headerlink" href="#ifnobreakerror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span> <span class="p">:</span> <span class="n">IfNobreakError</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Erreur de syntaxe AvantPy :
+    IfNobreakError: Keyword nobreak found matching if/elif
 
-<span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;raise_if_nobreak.pyfr&#39;</span> <span class="n">à</span> <span class="n">la</span> <span class="n">ligne</span> <span class="mf">4.</span>
+Le mot-clé &#39;pasinterrompu&#39; spécifique à Avantpy ne peut pas être utilisé
+dans un énoncé &#39;si/sinonsi/sinon&#39; (Python: if/elif/else).
 
-<span class="n">Dialecte</span> <span class="n">utilisé</span> <span class="p">:</span> <span class="n">pyfr</span>
 
-   <span class="mi">2</span><span class="p">:</span> <span class="n">si</span> <span class="n">Vrai</span><span class="p">:</span>
-   <span class="mi">3</span><span class="p">:</span>     <span class="n">passer</span>
-<span class="o">--&gt;</span><span class="mi">4</span><span class="p">:</span> <span class="n">pasinterrompu</span><span class="p">:</span>
+Python peut seulement analyser le fichier &#39;~\github\avantpy\tests\pyfr\raise_if_nobreak.pyfr&#39;
+jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
 
-<span class="n">Le</span> <span class="n">mot</span><span class="o">-</span><span class="n">clé</span> <span class="s1">&#39;pasinterrompu&#39;</span> <span class="n">spécifique</span> <span class="n">à</span> <span class="n">Avantpy</span> <span class="n">ne</span> <span class="n">peut</span> <span class="n">pas</span> <span class="n">être</span> <span class="n">utilisé</span>
-<span class="n">dans</span> <span class="n">un</span> <span class="n">énoncé</span> <span class="s1">&#39;si/sinonsi/sinon&#39;</span> <span class="p">(</span><span class="n">Python</span><span class="p">:</span> <span class="k">if</span><span class="o">/</span><span class="k">elif</span><span class="o">/</span><span class="k">else</span><span class="p">)</span><span class="o">.</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="indentationerror-expected-an-indented-block">
-<h2>IndentationError: expected an indented block<a class="headerlink" href="#indentationerror-expected-an-indented-block" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">Python</span><span class="p">:</span>
-    <span class="ne">IndentationError</span><span class="p">:</span> <span class="n">expected</span> <span class="n">an</span> <span class="n">indented</span> <span class="n">block</span>
-
-<span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;raise_indentation_error1.pyfr&#39;</span> <span class="n">à</span> <span class="n">la</span> <span class="n">ligne</span> <span class="mf">3.</span>
-
-<span class="n">Dialecte</span> <span class="n">utilisé</span> <span class="p">:</span> <span class="n">pyfr</span>
-
-   <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;&#39;&#39;Should raise IndentationError&#39;&#39;&#39;</span>
-   <span class="mi">2</span><span class="p">:</span> <span class="n">si</span> <span class="n">Vrai</span><span class="p">:</span>
-<span class="o">--&gt;</span><span class="mi">3</span><span class="p">:</span> <span class="n">passer</span>
-   <span class="mi">4</span><span class="p">:</span>
-
-<span class="n">Une</span> <span class="n">erreur</span> <span class="n">d</span><span class="s1">&#39;indentation a lieu lorsqu&#39;</span><span class="n">une</span> <span class="n">ligne</span> <span class="n">de</span> <span class="n">code</span>
-<span class="n">n</span><span class="s1">&#39;est pas indentée (alignée verticalement) tel qu&#39;</span><span class="n">attendu</span><span class="o">.</span>
-<span class="n">Dans</span> <span class="n">ce</span> <span class="n">cas</span><span class="o">-</span><span class="n">ci</span><span class="p">,</span> <span class="n">la</span> <span class="n">ligne</span> <span class="n">indiquée</span> <span class="n">par</span> <span class="n">une</span> <span class="n">flèche</span> <span class="n">devrait</span>
-<span class="n">normalement</span> <span class="n">commencer</span> <span class="n">un</span> <span class="n">nouveau</span> <span class="n">bloc</span> <span class="n">de</span> <span class="n">code</span> <span class="n">indenté</span><span class="o">.</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="indentationerror-unexpected-indent">
-<h2>IndentationError: unexpected indent<a class="headerlink" href="#indentationerror-unexpected-indent" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">Python</span><span class="p">:</span>
-    <span class="ne">IndentationError</span><span class="p">:</span> <span class="n">unexpected</span> <span class="n">indent</span>
-
-<span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;raise_indentation_error2.pyfr&#39;</span> <span class="n">à</span> <span class="n">la</span> <span class="n">ligne</span> <span class="mf">4.</span>
-
-<span class="n">Dialecte</span> <span class="n">utilisé</span> <span class="p">:</span> <span class="n">pyfr</span>
-
-   <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;&#39;&#39;Should raise IndentationError&#39;&#39;&#39;</span>
-   <span class="mi">2</span><span class="p">:</span> <span class="n">si</span> <span class="n">Vrai</span><span class="p">:</span>
-   <span class="mi">3</span><span class="p">:</span>     <span class="n">passer</span>
-<span class="o">--&gt;</span><span class="mi">4</span><span class="p">:</span>       <span class="n">passer</span>
-   <span class="mi">5</span><span class="p">:</span>
-
-<span class="n">Une</span> <span class="n">erreur</span> <span class="n">d</span><span class="s1">&#39;indentation a lieu lorsqu&#39;</span><span class="n">une</span> <span class="n">ligne</span> <span class="n">de</span> <span class="n">code</span>
-<span class="n">n</span><span class="s1">&#39;est pas indentée (alignée verticalement) tel qu&#39;</span><span class="n">attendu</span><span class="o">.</span>
-<span class="n">Dans</span> <span class="n">ce</span> <span class="n">cas</span><span class="o">-</span><span class="n">ci</span><span class="p">,</span> <span class="n">la</span> <span class="n">ligne</span> <span class="n">indiquée</span> <span class="n">par</span> <span class="n">une</span> <span class="n">flèche</span>
-<span class="n">est</span> <span class="n">plus</span> <span class="n">indentée</span> <span class="n">que</span> <span class="n">ce</span> <span class="n">qui</span> <span class="n">était</span> <span class="n">attendu</span> <span class="n">et</span> <span class="n">ne</span>
-<span class="n">correspond</span> <span class="n">pas</span> <span class="n">à</span> <span class="n">l</span><span class="s1">&#39;indentation de la ligne précédente.</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="indentationerror-no-match">
-<h2>IndentationError - no match<a class="headerlink" href="#indentationerror-no-match" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">Python</span><span class="p">:</span>
-    <span class="ne">IndentationError</span><span class="p">:</span> <span class="n">unindent</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">match</span> <span class="nb">any</span> <span class="n">outer</span> <span class="n">indentation</span> <span class="n">level</span>
-
-<span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;raise_indentation_error3.pyfr&#39;</span> <span class="n">à</span> <span class="n">la</span> <span class="n">ligne</span> <span class="mf">4.</span>
-
-<span class="n">Dialecte</span> <span class="n">utilisé</span> <span class="p">:</span> <span class="n">pyfr</span>
-
-   <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;&#39;&#39;Should raise IndentationError&#39;&#39;&#39;</span>
-   <span class="mi">2</span><span class="p">:</span> <span class="n">si</span> <span class="n">Vrai</span><span class="p">:</span>
-   <span class="mi">3</span><span class="p">:</span>       <span class="n">passer</span>
-<span class="o">--&gt;</span><span class="mi">4</span><span class="p">:</span>     <span class="n">passer</span>
-   <span class="mi">5</span><span class="p">:</span>
-
-<span class="n">Une</span> <span class="n">erreur</span> <span class="n">d</span><span class="s1">&#39;indentation a lieu lorsqu&#39;</span><span class="n">une</span> <span class="n">ligne</span> <span class="n">de</span> <span class="n">code</span>
-<span class="n">n</span><span class="s1">&#39;est pas indentée (alignée verticalement) tel qu&#39;</span><span class="n">attendu</span><span class="o">.</span>
-<span class="n">Dans</span> <span class="n">ce</span> <span class="n">cas</span><span class="o">-</span><span class="n">ci</span><span class="p">,</span> <span class="n">la</span> <span class="n">ligne</span> <span class="n">indiquée</span> <span class="n">par</span> <span class="n">une</span> <span class="n">flèche</span>
-<span class="n">est</span> <span class="n">moins</span> <span class="n">indentée</span> <span class="n">que</span> <span class="n">la</span> <span class="n">ligne</span> <span class="n">précédente</span><span class="p">,</span>
-<span class="n">et</span> <span class="n">n</span><span class="s1">&#39;est pas alignée verticalement avec un autre bloc de code.</span>
+   1: &#39;&#39;&#39;Should raise IfNobreakError&#39;&#39;&#39;
+   2: si Vrai:
+   3:     passer
+--&gt;4: pasinterrompu:
+      ^
 </pre></div>
 </div>
 </div>
 <div class="section" id="mismatchedbracketserror">
 <h2>MismatchedBracketsError<a class="headerlink" href="#mismatchedbracketserror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span> <span class="p">:</span> <span class="n">MismatchedBracketsError</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Erreur de syntaxe AvantPy :
+    MismatchedBracketsError: Closing bracket found matching a different opening one.
 
-<span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;raise_mismatched_brackets.pyfr&#39;</span> <span class="n">à</span> <span class="n">la</span> <span class="n">ligne</span> <span class="mf">6.</span>
+Le symbole gauche ( ne correspond pas au symbole droit ].
 
-<span class="n">Dialecte</span> <span class="n">utilisé</span> <span class="p">:</span> <span class="n">pyfr</span>
 
-<span class="o">--&gt;</span><span class="mi">2</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span>
-   <span class="mi">3</span><span class="p">:</span>     <span class="mi">2</span><span class="p">,</span>
-   <span class="mi">4</span><span class="p">:</span>     <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span>
-   <span class="mi">5</span><span class="p">:</span>     <span class="mi">5</span>
-<span class="o">--&gt;</span><span class="mi">6</span><span class="p">:</span> <span class="p">]</span>
+Python peut seulement analyser le fichier &#39;~\github\avantpy\tests\pyfr\raise_mismatched_brackets.pyfr&#39;
+jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
 
-<span class="n">Le</span> <span class="n">symbole</span> <span class="n">gauche</span> <span class="p">(</span> <span class="n">ne</span> <span class="n">correspond</span> <span class="n">pas</span> <span class="n">au</span> <span class="n">symbole</span> <span class="n">droit</span> <span class="p">]</span><span class="o">.</span>
+   3:     2,
+   4:     3, 4,
+   5:     5
+--&gt;6: ]
+      ^
 </pre></div>
 </div>
 </div>
 <div class="section" id="missingleftbracketerror">
 <h2>MissingLeftBracketError<a class="headerlink" href="#missingleftbracketerror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span> <span class="p">:</span> <span class="n">MissingLeftBracketError</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Erreur de syntaxe AvantPy :
+    MissingLeftBracketError: Closing bracket found with no matching opening one
 
-<span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;raise_missing_left_bracket.pyfr&#39;</span> <span class="n">à</span> <span class="n">la</span> <span class="n">ligne</span> <span class="mf">5.</span>
+Le symbole droit ) n&#39;a pas de symbole gauche correspondant.
 
-<span class="n">Dialecte</span> <span class="n">utilisé</span> <span class="p">:</span> <span class="n">pyfr</span>
+Python peut seulement analyser le fichier &#39;~\github\avantpy\tests\pyfr\raise_missing_left_bracket.pyfr&#39;
+jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
 
-   <span class="mi">4</span><span class="p">:</span>     <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,)</span>
-<span class="o">--&gt;</span><span class="mi">5</span><span class="p">:</span>     <span class="p">)</span>
-   <span class="mi">6</span><span class="p">:</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">3</span>
-
-<span class="n">Le</span> <span class="n">symbole</span> <span class="n">droit</span> <span class="p">)</span> <span class="n">n</span><span class="s1">&#39;a pas de symbole gauche correspondant.</span>
+   2: a = (1,
+   3:     2,
+   4:     3, 4,)
+--&gt;5:     )
+      ^
 </pre></div>
 </div>
 </div>
 <div class="section" id="missingrepeatcolonerror">
 <h2>MissingRepeatColonError<a class="headerlink" href="#missingrepeatcolonerror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span> <span class="p">:</span> <span class="n">MissingRepeatColonError</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Erreur de syntaxe AvantPy :
+    MissingRepeatColonError: Missing colon on line beginning with repeat
 
-<span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;raise_missing_repeat_colon.pyfr&#39;</span> <span class="n">à</span> <span class="n">la</span> <span class="n">ligne</span> <span class="mf">3.</span>
+Un énoncé débutant avec le mot clé &#39;répéter&#39; spécifique à Avantpy
+doit être sur une seule ligne terminant avec deux points (:) qui indiquent
+le début d&#39;un bloc de code de code indenté, sans qu&#39;il n&#39;y ait
+d&#39;autre deux points qui apparaissent sur cette ligne.
 
-<span class="n">Dialecte</span> <span class="n">utilisé</span> <span class="p">:</span> <span class="n">pyfr</span>
+Python peut seulement analyser le fichier &#39;~\github\avantpy\tests\pyfr\raise_missing_repeat_colon.pyfr&#39;
+jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
 
-   <span class="mi">2</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="o">--&gt;</span><span class="mi">3</span><span class="p">:</span> <span class="n">répéter</span> <span class="n">jusquà</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span>
-   <span class="mi">4</span><span class="p">:</span>          <span class="mi">1</span><span class="p">):</span>
-
-<span class="n">Un</span> <span class="n">énoncé</span> <span class="n">débutant</span> <span class="n">avec</span> <span class="n">le</span> <span class="n">mot</span> <span class="n">clé</span> <span class="s1">&#39;répéter&#39;</span> <span class="n">spécifique</span> <span class="n">à</span> <span class="n">Avantpy</span>
-<span class="n">doit</span> <span class="n">être</span> <span class="n">sur</span> <span class="n">une</span> <span class="n">seule</span> <span class="n">ligne</span> <span class="n">terminant</span> <span class="n">avec</span> <span class="n">deux</span> <span class="n">points</span> <span class="p">(:)</span> <span class="n">qui</span> <span class="n">indiquent</span>
-<span class="n">le</span> <span class="n">début</span> <span class="n">d</span><span class="s1">&#39;un bloc de code de code indenté, sans qu&#39;</span><span class="n">il</span> <span class="n">n</span><span class="s1">&#39;y ait</span>
-<span class="n">d</span><span class="s1">&#39;autre deux points qui apparaissent sur cette ligne.</span>
+   1: &#39;&#39;&#39;Should raise MissingRepeatColonError&#39;&#39;&#39;
+   2: x = 0
+--&gt;3: répéter jusquà (x ==
+      ^
 </pre></div>
 </div>
 </div>
 <div class="section" id="missingrepeaterror">
 <h2>MissingRepeatError<a class="headerlink" href="#missingrepeaterror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span> <span class="p">:</span> <span class="n">MissingRepeatError</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Erreur de syntaxe AvantPy :
+    MissingRepeatError: until and forever must be preceeded by repeat
 
-<span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;raise_missing_repeat.pyfr&#39;</span> <span class="n">à</span> <span class="n">la</span> <span class="n">ligne</span> <span class="mf">3.</span>
+Le mot-clé &#39;jusquà&#39; spécifique à Avantpy peut seulement être utilisé
+s&#39;il est précédé de &#39;répéter&#39;.
 
-<span class="n">Dialecte</span> <span class="n">utilisé</span> <span class="p">:</span> <span class="n">pyfr</span>
 
-   <span class="mi">2</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="o">--&gt;</span><span class="mi">3</span><span class="p">:</span> <span class="n">jusquà</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-   <span class="mi">4</span><span class="p">:</span>     <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+Python peut seulement analyser le fichier &#39;~\github\avantpy\tests\pyfr\raise_missing_repeat.pyfr&#39;
+jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
 
-<span class="n">Le</span> <span class="n">mot</span><span class="o">-</span><span class="n">clé</span> <span class="s1">&#39;jusquà&#39;</span> <span class="n">spécifique</span> <span class="n">à</span> <span class="n">Avantpy</span> <span class="n">peut</span> <span class="n">seulement</span> <span class="n">être</span> <span class="n">utilisé</span>
-<span class="n">s</span><span class="s1">&#39;il est précédé de &#39;</span><span class="n">répéter</span><span class="s1">&#39;.</span>
+   1: &#39;&#39;&#39;Should raise MissingRepeatError&#39;&#39;&#39;
+   2: x = 0
+--&gt;3: jusquà x == 2:
+      ^
 </pre></div>
 </div>
 </div>
 <div class="section" id="nameerror">
 <h2>NameError<a class="headerlink" href="#nameerror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">Python</span><span class="p">:</span>
-    <span class="ne">NameError</span><span class="p">:</span> <span class="n">name</span> <span class="s1">&#39;c&#39;</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">defined</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
+    NameError: name &#39;c&#39; is not defined
 
-<span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;raise_name_error.pyfr&#39;</span> <span class="n">à</span> <span class="n">la</span> <span class="n">ligne</span> <span class="mf">4.</span>
+Une exception NameError indique que le nom d&#39;une variable
+ou d&#39;une fonction n&#39;est pas connue par Python.
+Habituellement, ceci indique une simple faute d&#39;orthographe.
+Cependant, cela peut également indiquer que le nom a été
+utilisé avant qu&#39;on ne lui ait associé une valeur.
 
-<span class="n">Dialecte</span> <span class="n">utilisé</span> <span class="p">:</span> <span class="n">pyfr</span>
+Cause probable :
+    Dans votre programme, le nom inconnu est &#39;c&#39;.
 
-   <span class="mi">3</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="o">--&gt;</span><span class="mi">4</span><span class="p">:</span> <span class="n">b</span> <span class="o">=</span> <span class="n">c</span>
-   <span class="mi">5</span><span class="p">:</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">3</span>
+L&#39;exécution s&#39;est arrêtée à la ligne 115 du fichier &#39;~\github\avantpy\avantpy\import_hook.py&#39;
 
-<span class="n">Une</span> <span class="n">exception</span> <span class="n">de</span> <span class="nb">type</span> <span class="ne">NameError</span> <span class="n">indique</span> <span class="n">que</span> <span class="n">le</span> <span class="n">nom</span> <span class="n">d</span><span class="s1">&#39;une variable</span>
-<span class="n">ou</span> <span class="n">d</span><span class="s1">&#39;une fonction utilisée dans votre programme est inconnu par Python.</span>
-<span class="n">Le</span> <span class="n">plus</span> <span class="n">souvent</span><span class="p">,</span> <span class="n">ceci</span> <span class="n">se</span> <span class="n">produit</span> <span class="n">parce</span> <span class="n">que</span> <span class="n">vous</span> <span class="n">faites</span> <span class="n">une</span> <span class="n">faute</span>
-<span class="n">d</span><span class="s1">&#39;orthographe dans l&#39;</span><span class="n">écriture</span> <span class="n">de</span> <span class="n">votre</span> <span class="n">variable</span> <span class="n">ou</span> <span class="n">de</span> <span class="n">votre</span> <span class="n">fonction</span><span class="p">;</span>
-<span class="n">ceci</span> <span class="n">peut</span> <span class="n">également</span> <span class="n">se</span> <span class="n">produire</span> <span class="n">si</span> <span class="n">vous</span> <span class="n">invoquez</span> <span class="n">cette</span> <span class="n">fonction</span> <span class="n">ou</span> <span class="n">utilisez</span>
-<span class="n">cette</span> <span class="n">variable</span> <span class="n">sans</span> <span class="n">l</span><span class="s1">&#39;avoir définie auparavant.</span>
-<span class="n">Dans</span> <span class="n">votre</span> <span class="n">programme</span><span class="p">,</span> <span class="n">le</span> <span class="n">nom</span> <span class="n">inconnu</span> <span class="n">est</span> <span class="s1">&#39;c&#39;</span><span class="o">.</span>
+   113:
+   114:         try:
+--&gt;115:             exec(source, vars(module))
+   116:         except Exception:
+
+source: &#39;&quot;&quot;&quot;Should raise NameError&quot;&quot;&quot;\n\na = 1\nb = c...&#39;  | len(source): 48
+module: &lt;module &#39;raise_name_error&#39; from &#39;C:\\Users\\a...&gt;
+
+Exception levée à la ligne du fichier &#39;&lt;string&gt;&#39;.
 </pre></div>
 </div>
+<p>Malheureusement, aucune information supplémentaire n’est disponible:
+le contenu du fichier ‘&lt;string&gt;’ n’est pas accessible.</p>
 </div>
 <div class="section" id="nobreakfirsterror">
 <h2>NobreakFirstError<a class="headerlink" href="#nobreakfirsterror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span> <span class="p">:</span> <span class="n">NobreakFirstError</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Erreur de syntaxe AvantPy :
+    NobreakFirstError: nobreak must be first statement on a line
 
-<span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;raise_nobreak_first.pyfr&#39;</span> <span class="n">à</span> <span class="n">la</span> <span class="n">ligne</span> <span class="mf">3.</span>
+Le mot-clé &#39;pasinterrompu&#39; spécifique à Avantpy peut seulement être utilisé
+au lieu de sinon (Python: else) lorsqu&#39;il débute un nouvel énoncé
+dans des boucles &#39;pour&#39; ou &#39;tantque&#39; (Python: for/while).
 
-<span class="n">Dialecte</span> <span class="n">utilisé</span> <span class="p">:</span> <span class="n">pyfr</span>
 
-   <span class="mi">2</span><span class="p">:</span> <span class="c1"># Need to prevent pasinterrompu being replaced by &#39;else&#39; in this situation.</span>
-<span class="o">--&gt;</span><span class="mi">3</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="kc">True</span> <span class="n">pasinterrompu</span> <span class="mi">3</span>
-   <span class="mi">4</span><span class="p">:</span>
+Python peut seulement analyser le fichier &#39;~\github\avantpy\tests\pyfr\raise_nobreak_first.pyfr&#39;
+jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
 
-<span class="n">Le</span> <span class="n">mot</span><span class="o">-</span><span class="n">clé</span> <span class="s1">&#39;pasinterrompu&#39;</span> <span class="n">spécifique</span> <span class="n">à</span> <span class="n">Avantpy</span> <span class="n">peut</span> <span class="n">seulement</span> <span class="n">être</span> <span class="n">utilisé</span>
-<span class="n">au</span> <span class="n">lieu</span> <span class="n">de</span> <span class="n">sinon</span> <span class="p">(</span><span class="n">Python</span><span class="p">:</span> <span class="k">else</span><span class="p">)</span> <span class="n">lorsqu</span><span class="s1">&#39;il débute un nouvel énoncé</span>
-<span class="n">dans</span> <span class="n">des</span> <span class="n">boucles</span> <span class="s1">&#39;pour&#39;</span> <span class="n">ou</span> <span class="s1">&#39;tantque&#39;</span> <span class="p">(</span><span class="n">Python</span><span class="p">:</span> <span class="k">for</span><span class="o">/</span><span class="k">while</span><span class="p">)</span><span class="o">.</span>
+   1: &#39;&#39;&#39;Should raise NobreakFirstError&#39;&#39;&#39;
+   2: # Need to prevent pasinterrompu being replaced by &#39;else&#39; in this situation.
+--&gt;3: a = 1 if True pasinterrompu 3
+      ^
 </pre></div>
 </div>
 </div>
 <div class="section" id="nobreaksyntaxerror">
 <h2>NobreakSyntaxError<a class="headerlink" href="#nobreaksyntaxerror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span> <span class="p">:</span> <span class="n">NobreakSyntaxError</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Erreur de syntaxe AvantPy :
+    NobreakSyntaxError: Keyword nobreak not matching a valid block
 
-<span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;raise_nobreak_syntax.pyfr&#39;</span> <span class="n">à</span> <span class="n">la</span> <span class="n">ligne</span> <span class="mf">4.</span>
+Le mot-clé &#39;pasinterrompu&#39; spécifique à Avantpy peut seulement être utilisé
+au lieu de &#39;sinon&#39; (Python: else) lorsqu&#39;il débute un nouvel énoncé
+dans des boucles &#39;pour&#39; ou &#39;tantque&#39; (Python: for/while).
 
-<span class="n">Dialecte</span> <span class="n">utilisé</span> <span class="p">:</span> <span class="n">pyfr</span>
 
-   <span class="mi">3</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="o">--&gt;</span><span class="mi">4</span><span class="p">:</span> <span class="n">pasinterrompu</span><span class="p">:</span> <span class="k">pass</span>
-   <span class="mi">5</span><span class="p">:</span>
+Python peut seulement analyser le fichier &#39;~\github\avantpy\tests\pyfr\raise_nobreak_syntax.pyfr&#39;
+jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
 
-<span class="n">Le</span> <span class="n">mot</span><span class="o">-</span><span class="n">clé</span> <span class="s1">&#39;pasinterrompu&#39;</span> <span class="n">spécifique</span> <span class="n">à</span> <span class="n">Avantpy</span> <span class="n">peut</span> <span class="n">seulement</span> <span class="n">être</span> <span class="n">utilisé</span>
-<span class="n">au</span> <span class="n">lieu</span> <span class="n">de</span> <span class="s1">&#39;sinon&#39;</span> <span class="p">(</span><span class="n">Python</span><span class="p">:</span> <span class="k">else</span><span class="p">)</span> <span class="n">lorsqu</span><span class="s1">&#39;il débute un nouvel énoncé</span>
-<span class="n">dans</span> <span class="n">des</span> <span class="n">boucles</span> <span class="s1">&#39;pour&#39;</span> <span class="n">ou</span> <span class="s1">&#39;tantque&#39;</span> <span class="p">(</span><span class="n">Python</span><span class="p">:</span> <span class="k">for</span><span class="o">/</span><span class="k">while</span><span class="p">)</span><span class="o">.</span>
+   1: &#39;&#39;&#39;Should raise NobreakSyntaxError&#39;&#39;&#39;
+   2: # Need to prevent pasinterrompu being replaced by &#39;else&#39; in this situation.
+   3: a = 1
+--&gt;4: pasinterrompu: pass
+      ^
 </pre></div>
 </div>
 </div>
 <div class="section" id="repeatfirsterror">
 <h2>RepeatFirstError<a class="headerlink" href="#repeatfirsterror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span> <span class="p">:</span> <span class="n">RepeatFirstError</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Erreur de syntaxe AvantPy :
+    RepeatFirstError: repeat must be first statement on a line
 
-<span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;raise_repeat_first.pyfr&#39;</span> <span class="n">à</span> <span class="n">la</span> <span class="n">ligne</span> <span class="mf">3.</span>
+Le mot-clé &#39;répéter&#39; spécifique à Avantpy peut seulement être utilisé
+pour débuter une nouvelle boucle
+(équivalent Python: &#39;for&#39; ou &#39;while&#39;).
 
-<span class="n">Dialecte</span> <span class="n">utilisé</span> <span class="p">:</span> <span class="n">pyfr</span>
 
-   <span class="mi">2</span><span class="p">:</span> <span class="c1"># Catch an early case of using répéter not to begin a loop</span>
-<span class="o">--&gt;</span><span class="mi">3</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="n">répéter</span>
-   <span class="mi">4</span><span class="p">:</span>
+Python peut seulement analyser le fichier &#39;~\github\avantpy\tests\pyfr\raise_repeat_first.pyfr&#39;
+jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
 
-<span class="n">Le</span> <span class="n">mot</span><span class="o">-</span><span class="n">clé</span> <span class="s1">&#39;répéter&#39;</span> <span class="n">spécifique</span> <span class="n">à</span> <span class="n">Avantpy</span> <span class="n">peut</span> <span class="n">seulement</span> <span class="n">être</span> <span class="n">utilisé</span>
-<span class="n">pour</span> <span class="n">débuter</span> <span class="n">une</span> <span class="n">nouvelle</span> <span class="n">boucle</span>
-<span class="p">(</span><span class="n">équivalent</span> <span class="n">Python</span><span class="p">:</span> <span class="s1">&#39;for&#39;</span> <span class="n">ou</span> <span class="s1">&#39;while&#39;</span><span class="p">)</span><span class="o">.</span>
+   1: &#39;&#39;&#39;Should raise RepeatFirstError&#39;&#39;&#39;
+   2: # Catch an early case of using répéter not to begin a loop
+--&gt;3: a = répéter
+      ^
 </pre></div>
 </div>
 </div>
 <div class="section" id="trynobreakerror">
 <h2>TryNobreakError<a class="headerlink" href="#trynobreakerror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span> <span class="p">:</span> <span class="n">TryNobreakError</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Erreur de syntaxe AvantPy :
+    TryNobreakError: Keyword nobreak found matching try/except
 
-<span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;raise_try_nobreak.pyfr&#39;</span> <span class="n">à</span> <span class="n">la</span> <span class="n">ligne</span> <span class="mf">7.</span>
+Le mot-clé &#39;pasinterrompu&#39; spécifique à Avantpy ne peut pas être utilisé dans
+un énoncé &#39;essayer/siexception/sinon/finalement&#39; (Python: try/except/else/finally).
 
-<span class="n">Dialecte</span> <span class="n">utilisé</span> <span class="p">:</span> <span class="n">pyfr</span>
+Python peut seulement analyser le fichier &#39;~\github\avantpy\tests\pyfr\raise_try_nobreak.pyfr&#39;
+jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
 
-   <span class="mi">3</span><span class="p">:</span>     <span class="n">essayer</span><span class="p">:</span>
-   <span class="mi">4</span><span class="p">:</span>         <span class="n">A</span> <span class="o">=</span> <span class="mi">1</span>
-   <span class="mi">5</span><span class="p">:</span>     <span class="n">siexception</span><span class="p">:</span>
-   <span class="mi">6</span><span class="p">:</span>         <span class="n">A</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="o">--&gt;</span><span class="mi">7</span><span class="p">:</span>     <span class="n">pasinterrompu</span><span class="p">:</span>
-
-<span class="n">Le</span> <span class="n">mot</span><span class="o">-</span><span class="n">clé</span> <span class="s1">&#39;pasinterrompu&#39;</span> <span class="n">spécifique</span> <span class="n">à</span> <span class="n">Avantpy</span> <span class="n">ne</span> <span class="n">peut</span> <span class="n">pas</span> <span class="n">être</span> <span class="n">utilisé</span> <span class="n">dans</span>
-<span class="n">un</span> <span class="n">énoncé</span> <span class="s1">&#39;essayer/siexception/sinon/finalement&#39;</span> <span class="p">(</span><span class="n">Python</span><span class="p">:</span> <span class="k">try</span><span class="o">/</span><span class="k">except</span><span class="o">/</span><span class="k">else</span><span class="o">/</span><span class="k">finally</span><span class="p">)</span><span class="o">.</span>
+    4:         A = 1
+    5:     siexception:
+    6:         A = 2
+--&gt; 7:     pasinterrompu:
+       ^
 </pre></div>
 </div>
 </div>
 <div class="section" id="unknowndialecterror">
 <h2>UnknownDialectError<a class="headerlink" href="#unknowndialecterror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span> <span class="p">:</span> <span class="n">UnknownDialectError</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception AvantPy:
+    UnknownDialectError: Unknown dialect pyxx
 
-<span class="n">Le</span> <span class="n">dialecte</span> <span class="n">inconnu</span> <span class="n">suivant</span> <span class="n">a</span> <span class="n">été</span> <span class="n">demandé</span> <span class="p">:</span> <span class="n">pyxx</span><span class="o">.</span>
+Le dialecte inconnu suivant a été demandé : pyxx.
 
-<span class="n">Les</span> <span class="n">dialectes</span> <span class="n">connus</span> <span class="n">sont</span> <span class="p">:</span> <span class="p">[</span><span class="s1">&#39;pyen&#39;</span><span class="p">,</span> <span class="s1">&#39;pyes&#39;</span><span class="p">,</span> <span class="s1">&#39;pyfr&#39;</span><span class="p">,</span> <span class="s1">&#39;pyupper&#39;</span><span class="p">]</span><span class="o">.</span>
+Les dialectes connus sont : [&#39;pyen&#39;, &#39;pyes&#39;, &#39;pyfr&#39;, &#39;pyupper&#39;].
+
+
+L&#39;exécution s&#39;est arrêtée à la ligne 115 du fichier &#39;~\github\avantpy\avantpy\import_hook.py&#39;
+
+   113:
+   114:         try:
+--&gt;115:             exec(source, vars(module))
+   116:         except Exception:
+
+source: &#39;\&#39;\&#39;\&#39;Raises UnknownDialectError\&#39;\&#39;\&#39;\nimpo...&#39;  | len(source): 282
+module: &lt;module &#39;raise_unknown_dialect&#39; from &#39;C:\\Use...&gt;
+
+Exception levée à la ligne du fichier &#39;~\github\avantpy\avantpy\session.py&#39;.
+
+   110:         if not self.is_dialect(dialect):
+   111:             raise exceptions.UnknownDialectError(
+--&gt;112:                 &quot;Unknown dialect %s&quot; % dialect, (dialect, self.all_dialects())
+   113:             )
+
+dialect: &#39;pyxx&#39;
+dialect: &#39;pyxx&#39;
+self: &lt;avantpy.session._State object at 0x032D6030&gt;
 </pre></div>
 </div>
 </div>
 <div class="section" id="unknownlanguageerror">
 <h2>UnknownLanguageError<a class="headerlink" href="#unknownlanguageerror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">AvantPy</span> <span class="p">:</span> <span class="n">UnknownLanguageError</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception AvantPy:
+    UnknownLanguageError: Unknown language xx
 
-<span class="n">Le</span> <span class="n">langage</span> <span class="n">inconnu</span> <span class="n">suivant</span> <span class="n">a</span> <span class="n">été</span> <span class="n">demandé</span> <span class="p">:</span> <span class="n">xx</span><span class="o">.</span>
+Le langage inconnu suivant a été demandé : xx.
 
-<span class="n">Les</span> <span class="n">langages</span> <span class="n">connus</span> <span class="n">sont</span> <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s1">&#39;fr&#39;</span><span class="p">}</span><span class="o">.</span>
+Les langages connus sont : {&#39;fr&#39;, &#39;en&#39;}.
+
+
+L&#39;exécution s&#39;est arrêtée à la ligne 115 du fichier &#39;~\github\avantpy\avantpy\import_hook.py&#39;
+
+   113:
+   114:         try:
+--&gt;115:             exec(source, vars(module))
+   116:         except Exception:
+
+source: &#39;\&#39;\&#39;\&#39;Raises UnknownLanguageError\&#39;\&#39;\&#39;\nimp...&#39;  | len(source): 278
+module: &lt;module &#39;raise_unknown_language&#39; from &#39;C:\\Us...&gt;
+
+Exception levée à la ligne du fichier &#39;~\github\avantpy\avantpy\session.py&#39;.
+
+   135:         if not self.is_lang(lang):
+   136:             raise exceptions.UnknownLanguageError(
+--&gt;137:                 &quot;Unknown language %s&quot; % lang, (lang, self.languages)
+   138:             )
+
+lang: &#39;xx&#39;
+lang: &#39;xx&#39;
+self: &lt;avantpy.session._State object at 0x032D6030&gt;
 </pre></div>
 </div>
 </div>
@@ -413,7 +393,7 @@ Python version: 3.7.0</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, André Roberge.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
     </div>
   </body>
 </html>
