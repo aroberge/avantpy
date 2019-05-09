@@ -35,7 +35,7 @@ What is AvantPy?
 
 - AvantPy also includes a custom REPL that can use any of the existing dialects.
 
-- More importantly, AvantPy will also includes tools to analyze Python tracebacks and translate them into easier to understand feedback for beginners.
+- Finally, AvantPy uses `friendly-traceback <https://aroberge.github.io/friendly-traceback-docs/docs/html/>`_ to analyze Python tracebacks and translate them into easier to understand feedback for beginners.
 
 
 Who is it for?

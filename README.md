@@ -25,10 +25,9 @@ in parts in a given dialect, and converts it to standard Python prior to executi
 - AvantPy is written as a standard Python module/package meant to be usable with any "normal" Python environment. Thus, it could be included as a plugin for a given
 editor, or run with a standard Python interpreter from the command line.
 - AvantPy also includes a tool to convert programs written in a given dialect into standard Python, showing the differences between the two, thus helping motivated users to make the transition to using only standard Python.
-  - A rough implementation of this idea exists as a **debug** mode.
 - AvantPy also includes a custom REPL that can use any of the existing dialects.
 
-AvantPy will also includes tools to analyze Python tracebacks and translate them into easier to understand feedback for beginners.
+AvantPy uses [Friendly-traceback](https://aroberge.github.io/friendly-traceback-docs/docs/html/) to process Python tracebacks and translate them into easier to understand feedback for beginners.
 
 ## Who is it for
 
