@@ -358,7 +358,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">just_processed_repeat_kwd</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">repeat_n</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">repeat_line</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">begin_new_line</span> <span class="o">=</span> <span class="kc">True</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">begin_new_line</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_col</span> <span class="o">=</span> <span class="mi">0</span></div>
 
 <div class="viewcode-block" id="Converter.process_token"><a class="viewcode-back" href="../../modules.html#avantpy.converter.Converter.process_token">[docs]</a>    <span class="k">def</span> <span class="nf">process_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Determines what to do for each individual token.&quot;&quot;&quot;</span>
@@ -382,17 +383,17 @@
 
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">repeat_n</span> <span class="ow">and</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="s2">&quot;:&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">brackets</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">raise_missing_repeat_colon</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">start_line</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">raise_missing_repeat_colon</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">start_line</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">last_col</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;):&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">repeat_line</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">repeat_n</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">begin_new_line</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">repeat_line</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">raise_missing_repeat_colon</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">start_line</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">raise_missing_repeat_colon</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">start_line</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_col</span><span class="p">)</span>
 
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">repeat_line</span> <span class="ow">and</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="s2">&quot;:&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">brackets</span><span class="p">:</span>  <span class="c1"># Inside a slice or other construct with colon</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">raise_missing_repeat_colon</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">start_line</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">raise_missing_repeat_colon</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">start_line</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_col</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">repeat_line</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
 
@@ -428,7 +429,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">string</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Converter.raise_missing_repeat_colon"><a class="viewcode-back" href="../../modules.html#avantpy.converter.Converter.raise_missing_repeat_colon">[docs]</a>    <span class="k">def</span> <span class="nf">raise_missing_repeat_colon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">linenumber</span><span class="p">):</span>
+<div class="viewcode-block" id="Converter.raise_missing_repeat_colon"><a class="viewcode-back" href="../../modules.html#avantpy.converter.Converter.raise_missing_repeat_colon">[docs]</a>    <span class="k">def</span> <span class="nf">raise_missing_repeat_colon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">linenumber</span><span class="p">,</span> <span class="n">last_col</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Raised if a repeat statement does not end with a colon on the same</span>
 <span class="sd">           line with no other colon appearing on that line.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -440,7 +441,7 @@
                     <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">linenumber</span><span class="p">,</span>
                     <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
                     <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
-                    <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">,</span>
+                    <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="n">last_col</span><span class="p">,</span>
                 <span class="p">},</span>
             <span class="p">),</span>
         <span class="p">)</span></div>
@@ -458,9 +459,9 @@
                     <span class="p">{</span>
                         <span class="s2">&quot;bracket&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span><span class="p">,</span>
                         <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">start_line</span><span class="p">,</span>
+                        <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">end_col</span><span class="p">,</span>
                         <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
                         <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
-                        <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">,</span>
                     <span class="p">},</span>
                 <span class="p">),</span>
             <span class="p">)</span>
@@ -476,12 +477,12 @@
                 <span class="p">(</span>
                     <span class="p">{</span>
                         <span class="s2">&quot;close_bracket&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span><span class="p">,</span>
+                        <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">end_col</span><span class="p">,</span>
                         <span class="s2">&quot;open_bracket&quot;</span><span class="p">:</span> <span class="n">open_bracket</span><span class="p">,</span>
                         <span class="s2">&quot;open_linenumber&quot;</span><span class="p">:</span> <span class="n">previous_bracket</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
                         <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">start_line</span><span class="p">,</span>
                         <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
                         <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
-                        <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">,</span>
                     <span class="p">},</span>
                 <span class="p">),</span>
             <span class="p">)</span>
@@ -497,6 +498,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">just_processed_repeat_kwd</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">start_line</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">prev_lineno</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">last_col</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prev_col</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">prev_col</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">start_col</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">prev_col</span> <span class="ow">and</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span> <span class="o">!=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">start_col</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">prev_col</span><span class="p">))</span>
@@ -515,9 +517,9 @@
                 <span class="p">{</span>
                     <span class="s2">&quot;keyword&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span><span class="p">,</span>
                     <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">start_line</span><span class="p">,</span>
+                    <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">end_col</span><span class="p">,</span>
                     <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
                     <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
-                    <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">,</span>
                     <span class="s2">&quot;repeat_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">repeat_kwd</span><span class="p">,</span>
                 <span class="p">},</span>
             <span class="p">),</span>
@@ -574,10 +576,10 @@
                 <span class="p">(</span>
                     <span class="p">{</span>
                         <span class="s2">&quot;repeat keyword&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span><span class="p">,</span>
+                        <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">end_col</span><span class="p">,</span>
                         <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">start_line</span><span class="p">,</span>
                         <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
                         <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
-                        <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">,</span>
                     <span class="p">},</span>
                 <span class="p">),</span>
             <span class="p">)</span>
@@ -592,6 +594,7 @@
                 <span class="p">(</span>
                     <span class="p">{</span>
                         <span class="s2">&quot;nobreak keyword&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span><span class="p">,</span>
+                        <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">end_col</span><span class="p">,</span>
                         <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">start_line</span><span class="p">,</span>
                         <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
                         <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
@@ -613,9 +616,9 @@
                         <span class="s2">&quot;if_string&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">indentations</span><span class="p">[</span><span class="n">token</span><span class="o">.</span><span class="n">start_col</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
                         <span class="s2">&quot;if_linenumber&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">indentations</span><span class="p">[</span><span class="n">token</span><span class="o">.</span><span class="n">start_col</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
                         <span class="s2">&quot;nobreak keyword&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span><span class="p">,</span>
+                        <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">end_col</span><span class="p">,</span>
                         <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">start_line</span><span class="p">,</span>
                         <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
-                        <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">,</span>
                         <span class="s2">&quot;if_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">if_kwd</span><span class="p">,</span>
                         <span class="s2">&quot;elif_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">elif_kwd</span><span class="p">,</span>
                         <span class="s2">&quot;else_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">else_kwd</span><span class="p">,</span>
@@ -633,9 +636,9 @@
                         <span class="s2">&quot;try_string&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">indentations</span><span class="p">[</span><span class="n">token</span><span class="o">.</span><span class="n">start_col</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
                         <span class="s2">&quot;try_linenumber&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">indentations</span><span class="p">[</span><span class="n">token</span><span class="o">.</span><span class="n">start_col</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
                         <span class="s2">&quot;nobreak keyword&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span><span class="p">,</span>
+                        <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">end_col</span><span class="p">,</span>
                         <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">start_line</span><span class="p">,</span>
                         <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
-                        <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">,</span>
                         <span class="s2">&quot;try_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">try_kwd</span><span class="p">,</span>
                         <span class="s2">&quot;except_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">except_kwd</span><span class="p">,</span>
                         <span class="s2">&quot;else_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">else_kwd</span><span class="p">,</span>
@@ -649,10 +652,10 @@
                 <span class="p">(</span>
                     <span class="p">{</span>
                         <span class="s2">&quot;nobreak keyword&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">string</span><span class="p">,</span>
+                        <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">end_col</span><span class="p">,</span>
                         <span class="s2">&quot;linenumber&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">start_line</span><span class="p">,</span>
                         <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
                         <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
-                        <span class="s2">&quot;dialect&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialect</span><span class="p">,</span>
                         <span class="s2">&quot;for_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">for_kwd</span><span class="p">,</span>
                         <span class="s2">&quot;while_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">while_kwd</span><span class="p">,</span>
                         <span class="s2">&quot;else_kwd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">else_kwd</span><span class="p">,</span>

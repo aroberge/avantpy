@@ -36,7 +36,7 @@ IfNobreakError
        2: if True:
        3:     pass
     -->4: NOBREAK:
-          ^
+                ^
 
 MismatchedBracketsError
 -----------------------
@@ -76,7 +76,7 @@ MissingLeftBracketError
        3:     2,
        4:     3, 4,)
     -->5:     )
-          ^
+              ^
 
 MissingRepeatColonError
 -----------------------
@@ -97,7 +97,7 @@ MissingRepeatColonError
        1: '''Should raise MissingRepeatColonError'''
        2: x = 0
     -->3: REPEAT UNTIL (x ==
-          ^
+                            ^
 
 MissingRepeatError
 ------------------
@@ -116,7 +116,7 @@ MissingRepeatError
        1: '''Should raise MissingRepeatError'''
        2: x = 0
     -->3: UNTIL x == 2:
-          ^
+              ^
 
 NameError
 ---------
@@ -164,7 +164,7 @@ NobreakFirstError
        1: '''Should raise NobreakFirstError'''
        2: # Need to prevent NOBREAK being replaced by 'else' in this situation.
     -->3: a = 1 if True NOBREAK 3
-          ^
+                              ^
 
 NobreakSyntaxError
 ------------------
@@ -186,7 +186,7 @@ NobreakSyntaxError
        2: # Need to prevent NOBREAK being replaced by 'else' in this situation.
        3: a = 1
     -->4: NOBREAK: pass
-          ^
+                ^
 
 RepeatFirstError
 ----------------
@@ -206,7 +206,7 @@ RepeatFirstError
        1: '''Should raise RepeatFirstError'''
        2: # Catch an early case of using REPEAT not to begin a loop
     -->3: a = REPEAT
-          ^
+                   ^
 
 TryNobreakError
 ---------------
@@ -228,7 +228,7 @@ TryNobreakError
         5:     EXCEPT:
         6:         A = 2
     --> 7:     NOBREAK:
-           ^
+                     ^
 
 UnknownDialectError
 -------------------
@@ -262,7 +262,7 @@ UnknownDialectError
 
     dialect: 'pyxx'
     dialect: 'pyxx'
-    self: <avantpy.session._State object at 0x02EFF2B0>
+    self: <avantpy.session._State object at 0x03AB0310>
 
 UnknownLanguageError
 --------------------
@@ -275,7 +275,7 @@ UnknownLanguageError
         
     The following unknown languages was requested: xx.
     
-    The known dialects are: {'fr', 'en'}.
+    The known dialects are: {'en', 'fr'}.
     
     Execution stopped on line 13 of file 'AVANTPY-TESTS:\pyupper\raise_unknown_language.pyupper'.
     
@@ -296,4 +296,4 @@ UnknownLanguageError
 
     lang: 'xx'
     lang: 'xx'
-    self: <avantpy.session._State object at 0x02EFF2B0>
+    self: <avantpy.session._State object at 0x03AB0310>

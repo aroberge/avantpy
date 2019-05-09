@@ -116,7 +116,7 @@ beyond the location indicated below by --&gt; and ^.
    2: if True:
    3:     pass
 --&gt;4: NOBREAK:
-      ^
+            ^
 </pre></div>
 </div>
 </div>
@@ -152,7 +152,7 @@ beyond the location indicated below by --&gt; and ^.
    3:     2,
    4:     3, 4,)
 --&gt;5:     )
-      ^
+          ^
 </pre></div>
 </div>
 </div>
@@ -171,7 +171,7 @@ beyond the location indicated below by --&gt; and ^.
    1: &#39;&#39;&#39;Should raise MissingRepeatColonError&#39;&#39;&#39;
    2: x = 0
 --&gt;3: REPEAT UNTIL (x ==
-      ^
+                        ^
 </pre></div>
 </div>
 </div>
@@ -188,7 +188,7 @@ beyond the location indicated below by --&gt; and ^.
    1: &#39;&#39;&#39;Should raise MissingRepeatError&#39;&#39;&#39;
    2: x = 0
 --&gt;3: UNTIL x == 2:
-      ^
+          ^
 </pre></div>
 </div>
 </div>
@@ -232,7 +232,7 @@ beyond the location indicated below by --&gt; and ^.
    1: &#39;&#39;&#39;Should raise NobreakFirstError&#39;&#39;&#39;
    2: # Need to prevent NOBREAK being replaced by &#39;else&#39; in this situation.
 --&gt;3: a = 1 if True NOBREAK 3
-      ^
+                          ^
 </pre></div>
 </div>
 </div>
@@ -252,7 +252,7 @@ beyond the location indicated below by --&gt; and ^.
    2: # Need to prevent NOBREAK being replaced by &#39;else&#39; in this situation.
    3: a = 1
 --&gt;4: NOBREAK: pass
-      ^
+            ^
 </pre></div>
 </div>
 </div>
@@ -270,7 +270,7 @@ beyond the location indicated below by --&gt; and ^.
    1: &#39;&#39;&#39;Should raise RepeatFirstError&#39;&#39;&#39;
    2: # Catch an early case of using REPEAT not to begin a loop
 --&gt;3: a = REPEAT
-      ^
+               ^
 </pre></div>
 </div>
 </div>
@@ -290,7 +290,7 @@ beyond the location indicated below by --&gt; and ^.
     5:     EXCEPT:
     6:         A = 2
 --&gt; 7:     NOBREAK:
-       ^
+                 ^
 </pre></div>
 </div>
 </div>
@@ -322,7 +322,7 @@ Exception raised on line 133 of file &#39;session.py&#39;.
 
 dialect: &#39;pyxx&#39;
 dialect: &#39;pyxx&#39;
-self: &lt;avantpy.session._State object at 0x02EFF2B0&gt;
+self: &lt;avantpy.session._State object at 0x03AB0310&gt;
 </pre></div>
 </div>
 </div>
@@ -333,7 +333,7 @@ self: &lt;avantpy.session._State object at 0x02EFF2B0&gt;
 
 The following unknown languages was requested: xx.
 
-The known dialects are: {&#39;fr&#39;, &#39;en&#39;}.
+The known dialects are: {&#39;en&#39;, &#39;fr&#39;}.
 
 Execution stopped on line 13 of file &#39;AVANTPY-TESTS:\pyupper\raise_unknown_language.pyupper&#39;.
 
@@ -354,7 +354,7 @@ Exception raised on line 158 of file &#39;session.py&#39;.
 
 lang: &#39;xx&#39;
 lang: &#39;xx&#39;
-self: &lt;avantpy.session._State object at 0x02EFF2B0&gt;
+self: &lt;avantpy.session._State object at 0x03AB0310&gt;
 </pre></div>
 </div>
 </div>

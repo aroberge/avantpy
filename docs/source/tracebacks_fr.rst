@@ -40,7 +40,7 @@ IfNobreakError
        2: si Vrai:
        3:     passer
     -->4: pasinterrompu:
-          ^
+                      ^
 
 MismatchedBracketsError
 -----------------------
@@ -81,7 +81,7 @@ MissingLeftBracketError
        3:     2,
        4:     3, 4,)
     -->5:     )
-          ^
+              ^
 
 MissingRepeatColonError
 -----------------------
@@ -103,7 +103,7 @@ MissingRepeatColonError
        1: '''Should raise MissingRepeatColonError'''
        2: x = 0
     -->3: répéter jusquà (x ==
-          ^
+                              ^
 
 MissingRepeatError
 ------------------
@@ -124,7 +124,7 @@ MissingRepeatError
        1: '''Should raise MissingRepeatError'''
        2: x = 0
     -->3: jusquà x == 2:
-          ^
+               ^
 
 NameError
 ---------
@@ -172,7 +172,7 @@ NobreakFirstError
        1: '''Should raise NobreakFirstError'''
        2: # Need to prevent pasinterrompu being replaced by 'else' in this situation.
     -->3: a = 1 if True pasinterrompu 3
-          ^
+                                    ^
 
 NobreakSyntaxError
 ------------------
@@ -195,7 +195,7 @@ NobreakSyntaxError
        2: # Need to prevent pasinterrompu being replaced by 'else' in this situation.
        3: a = 1
     -->4: pasinterrompu: pass
-          ^
+                      ^
 
 RepeatFirstError
 ----------------
@@ -217,7 +217,7 @@ RepeatFirstError
        1: '''Should raise RepeatFirstError'''
        2: # Catch an early case of using répéter not to begin a loop
     -->3: a = répéter
-          ^
+                    ^
 
 TryNobreakError
 ---------------
@@ -238,7 +238,7 @@ TryNobreakError
         5:     siexception:
         6:         A = 2
     --> 7:     pasinterrompu:
-           ^
+                           ^
 
 UnknownDialectError
 -------------------
@@ -273,7 +273,7 @@ UnknownDialectError
 
     dialect: 'pyxx'
     dialect: 'pyxx'
-    self: <avantpy.session._State object at 0x029602D0>
+    self: <avantpy.session._State object at 0x037B02B0>
 
 UnknownLanguageError
 --------------------
@@ -308,4 +308,4 @@ UnknownLanguageError
 
     lang: 'xx'
     lang: 'xx'
-    self: <avantpy.session._State object at 0x029602D0>
+    self: <avantpy.session._State object at 0x037B02B0>

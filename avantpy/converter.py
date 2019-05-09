@@ -308,6 +308,7 @@ class Converter:
         self.repeat_n = False
         self.repeat_line = False
         self.begin_new_line = True
+        self.last_col = 0
 
     def process_token(self, token):
         """Determines what to do for each individual token."""
@@ -331,17 +332,17 @@ class Converter:
 
         elif self.repeat_n and token.string == ":":
             if self.brackets:
-                self.raise_missing_repeat_colon(token.start_line)
+                self.raise_missing_repeat_colon(token.start_line, token.last_col)
             self.result.append("):")
             self.repeat_line = False
             self.repeat_n = False
 
         elif self.begin_new_line and self.repeat_line:
-            self.raise_missing_repeat_colon(token.start_line - 1)
+            self.raise_missing_repeat_colon(token.start_line - 1, self.last_col)
 
         elif self.repeat_line and token.string == ":":
             if self.brackets:  # Inside a slice or other construct with colon
-                self.raise_missing_repeat_colon(token.start_line)
+                self.raise_missing_repeat_colon(token.start_line, self.last_col)
             self.repeat_line = False
             self.result.append(":")
 
@@ -377,7 +378,7 @@ class Converter:
         else:
             self.result.append(token.string)
 
-    def raise_missing_repeat_colon(self, linenumber):
+    def raise_missing_repeat_colon(self, linenumber, last_col):
         """Raised if a repeat statement does not end with a colon on the same
            line with no other colon appearing on that line.
         """
@@ -389,7 +390,7 @@ class Converter:
                     "linenumber": linenumber,
                     "filename": self.filename,
                     "source": self.source,
-                    "dialect": self.dialect,
+                    "offset": last_col,
                 },
             ),
         )
@@ -407,9 +408,9 @@ class Converter:
                     {
                         "bracket": token.string,
                         "linenumber": token.start_line,
+                        "offset": token.end_col,
                         "filename": self.filename,
                         "source": self.source,
-                        "dialect": self.dialect,
                     },
                 ),
             )
@@ -425,12 +426,12 @@ class Converter:
                 (
                     {
                         "close_bracket": token.string,
+                        "offset": token.end_col,
                         "open_bracket": open_bracket,
                         "open_linenumber": previous_bracket[1],
                         "linenumber": token.start_line,
                         "filename": self.filename,
                         "source": self.source,
-                        "dialect": self.dialect,
                     },
                 ),
             )
@@ -446,6 +447,7 @@ class Converter:
         """
         if not self.just_processed_repeat_kwd:
             if token.start_line > self.prev_lineno:
+                self.last_col = self.prev_col
                 self.prev_col = 0
             if token.start_col > self.prev_col and token.string != "\n":
                 self.result.append(" " * (token.start_col - self.prev_col))
@@ -464,9 +466,9 @@ class Converter:
                 {
                     "keyword": token.string,
                     "linenumber": token.start_line,
+                    "offset": token.end_col,
                     "filename": self.filename,
                     "source": self.source,
-                    "dialect": self.dialect,
                     "repeat_kwd": self.repeat_kwd,
                 },
             ),
@@ -523,10 +525,10 @@ class Converter:
                 (
                     {
                         "repeat keyword": token.string,
+                        "offset": token.end_col,
                         "linenumber": token.start_line,
                         "filename": self.filename,
                         "source": self.source,
-                        "dialect": self.dialect,
                     },
                 ),
             )
@@ -541,6 +543,7 @@ class Converter:
                 (
                     {
                         "nobreak keyword": token.string,
+                        "offset": token.end_col,
                         "linenumber": token.start_line,
                         "filename": self.filename,
                         "source": self.source,
@@ -562,9 +565,9 @@ class Converter:
                         "if_string": self.indentations[token.start_col][0],
                         "if_linenumber": self.indentations[token.start_col][1],
                         "nobreak keyword": token.string,
+                        "offset": token.end_col,
                         "linenumber": token.start_line,
                         "filename": self.filename,
-                        "dialect": self.dialect,
                         "if_kwd": self.if_kwd,
                         "elif_kwd": self.elif_kwd,
                         "else_kwd": self.else_kwd,
@@ -582,9 +585,9 @@ class Converter:
                         "try_string": self.indentations[token.start_col][0],
                         "try_linenumber": self.indentations[token.start_col][1],
                         "nobreak keyword": token.string,
+                        "offset": token.end_col,
                         "linenumber": token.start_line,
                         "filename": self.filename,
-                        "dialect": self.dialect,
                         "try_kwd": self.try_kwd,
                         "except_kwd": self.except_kwd,
                         "else_kwd": self.else_kwd,
@@ -598,10 +601,10 @@ class Converter:
                 (
                     {
                         "nobreak keyword": token.string,
+                        "offset": token.end_col,
                         "linenumber": token.start_line,
                         "filename": self.filename,
                         "source": self.source,
-                        "dialect": self.dialect,
                         "for_kwd": self.for_kwd,
                         "while_kwd": self.while_kwd,
                         "else_kwd": self.else_kwd,
