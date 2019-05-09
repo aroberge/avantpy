@@ -21,6 +21,7 @@ setup(
         "Intended Audience :: Education",
         "Topic :: Education",
     ],
+    install_requires=["friendly-traceback"],
     url="https://github.com/aroberge/avantpy",
     author="André Roberge",
     author_email="Andre.Roberge@gmail.com",

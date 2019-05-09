@@ -77,7 +77,7 @@ class AvantPyInteractiveConsole(friendly_traceback.FriendlyConsole):
             os._exit(1)
         except Exception:
             self.showtraceback()
-            self.reset_buffer()
+            self.resetbuffer()
             return False
 
         if not more:
