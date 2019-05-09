@@ -5,6 +5,7 @@ import os
 import os.path
 import sys
 
+from codeop import CommandCompiler
 from importlib.abc import Loader, MetaPathFinder
 from importlib.util import spec_from_file_location
 
@@ -15,6 +16,7 @@ from . import converter
 from .my_gettext import gettext_lang
 
 MAIN_MODULE_NAME = None
+COUNTER = 0
 
 
 def import_main(name):
@@ -78,10 +80,12 @@ class AvantPyLoader(Loader):
 
     def __init__(self, filename):
         self.filename = filename
+        self.compile = CommandCompiler()
 
     def exec_module(self, module):
         """import the source code, converts it before executing it."""
-
+        global COUNTER
+        COUNTER += 1
         if module.__name__ == MAIN_MODULE_NAME:
             module.__name__ = "__main__"
 
@@ -112,5 +116,13 @@ class AvantPyLoader(Loader):
         try:
             exec(source, vars(module))
         except Exception:
-            friendly_traceback.explain(*sys.exc_info())
-            return
+            friendly_traceback.utils.add_console_source(
+                "<string>", (self.filename, source)
+            )
+            sys.last_type, sys.last_value, last_tb = ei = sys.exc_info()
+            sys.last_traceback = last_tb
+            try:
+                friendly_traceback.explain(ei[0], ei[1], last_tb.tb_next)
+            finally:
+                last_tb = ei = None
+        return

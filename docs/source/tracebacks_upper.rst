@@ -29,7 +29,7 @@ IfNobreakError
     The AvantPy 'NOBREAK' keyword cannot be used in
     an 'IF/ELIF/ELSE' clause (Python: if/elif/else).
     
-    Python could not parse the file '~\github\avantpy\tests\pyupper\raise_if_nobreak.pyupper'
+    Python could not parse the file 'AVANTPY-TESTS:\pyupper\raise_if_nobreak.pyupper'
     beyond the location indicated below by --> and ^.
     
        1: '''Should raise IfNobreakError'''
@@ -49,7 +49,7 @@ MismatchedBracketsError
         
     The opening ( does not match the closing ].
     
-    Python could not parse the file '~\github\avantpy\tests\pyupper\raise_mismatched_brackets.pyupper'
+    Python could not parse the file 'AVANTPY-TESTS:\pyupper\raise_mismatched_brackets.pyupper'
     beyond the location indicated below by --> and ^.
     
         7:     7,
@@ -69,7 +69,7 @@ MissingLeftBracketError
         
     The closing ) does not match anything.
     
-    Python could not parse the file '~\github\avantpy\tests\pyupper\raise_missing_left_bracket.pyupper'
+    Python could not parse the file 'AVANTPY-TESTS:\pyupper\raise_missing_left_bracket.pyupper'
     beyond the location indicated below by --> and ^.
     
        2: a = (1,
@@ -91,7 +91,7 @@ MissingRepeatColonError
     a single line ending with a colon (:) that indicates the beginning of
     an indented block of code, with no other colon appearing on that line.
     
-    Python could not parse the file '~\github\avantpy\tests\pyupper\raise_missing_repeat_colon.pyupper'
+    Python could not parse the file 'AVANTPY-TESTS:\pyupper\raise_missing_repeat_colon.pyupper'
     beyond the location indicated below by --> and ^.
     
        1: '''Should raise MissingRepeatColonError'''
@@ -110,7 +110,7 @@ MissingRepeatError
         
     The AvantPy 'UNTIL'' keyword can be used only whenpreceded by 'REPEAT'.
     
-    Python could not parse the file '~\github\avantpy\tests\pyupper\raise_missing_repeat.pyupper'
+    Python could not parse the file 'AVANTPY-TESTS:\pyupper\raise_missing_repeat.pyupper'
     beyond the location indicated below by --> and ^.
     
        1: '''Should raise MissingRepeatError'''
@@ -136,20 +136,13 @@ NameError
     Likely cause:
         In your program, the unknown name is 'c'.
         
-    Execution stopped on line 115 of file '~\github\avantpy\avantpy\import_hook.py'.
+    Execution stopped on line 4 of file 'AVANTPY-TESTS:\pyupper\raise_name_error.pyupper'.
     
-       113: 
-       114:         try:
-    -->115:             exec(source, vars(module))
-       116:         except Exception:
-
-    source: '"""Should raise NameError"""\n\na = 1\nb = c...'  | len(source): 48
-    module: <module 'raise_name_error' from 'C:\\Users\\a...>
-
-    Exception raised on line 4 of file '<string>'.
-    
-Unfortunately, no additional information is available:
-the content of file '<string>' is not accessible.
+       1: """Should raise NameError"""
+       2: 
+       3: a = 1
+    -->4: b = c
+       5: d = 3
 
 NobreakFirstError
 -----------------
@@ -165,7 +158,7 @@ NobreakFirstError
     'FOR/WHILE' loops (Python: for/while).
     
     
-    Python could not parse the file '~\github\avantpy\tests\pyupper\raise_nobreak_first.pyupper'
+    Python could not parse the file 'AVANTPY-TESTS:\pyupper\raise_nobreak_first.pyupper'
     beyond the location indicated below by --> and ^.
     
        1: '''Should raise NobreakFirstError'''
@@ -186,7 +179,7 @@ NobreakSyntaxError
     of 'ELSE' (Python: else) with a matching 'FOR' or
     'WHILE' loop (Python: for/while).
     
-    Python could not parse the file '~\github\avantpy\tests\pyupper\raise_nobreak_syntax.pyupper'
+    Python could not parse the file 'AVANTPY-TESTS:\pyupper\raise_nobreak_syntax.pyupper'
     beyond the location indicated below by --> and ^.
     
        1: '''Should raise NobreakSyntaxError'''
@@ -207,7 +200,7 @@ RepeatFirstError
     The AvantPy 'REPEAT' keyword can only be used to begin
     a new loop (Python: equivalent to 'for' or 'while' loop).
     
-    Python could not parse the file '~\github\avantpy\tests\pyupper\raise_repeat_first.pyupper'
+    Python could not parse the file 'AVANTPY-TESTS:\pyupper\raise_repeat_first.pyupper'
     beyond the location indicated below by --> and ^.
     
        1: '''Should raise RepeatFirstError'''
@@ -228,7 +221,7 @@ TryNobreakError
     a 'TRY/EXCEPT/ELSE/FINALLY' clause
     (Python: try/except/else/finally).
     
-    Python could not parse the file '~\github\avantpy\tests\pyupper\raise_try_nobreak.pyupper'
+    Python could not parse the file 'AVANTPY-TESTS:\pyupper\raise_try_nobreak.pyupper'
     beyond the location indicated below by --> and ^.
     
         4:         A = 1
@@ -250,26 +243,26 @@ UnknownDialectError
     
     The known dialects are: ['pyen', 'pyes', 'pyfr', 'pyupper'].
     
-    Execution stopped on line 115 of file '~\github\avantpy\avantpy\import_hook.py'.
+    Execution stopped on line 13 of file 'AVANTPY-TESTS:\pyupper\raise_unknown_dialect.pyupper'.
     
-       113: 
-       114:         try:
-    -->115:             exec(source, vars(module))
-       116:         except Exception:
+       10: 
+       11: from avantpy import session
+       12: 
+    -->13: session.state.set_dialect('pyxx')
+       14: 
 
-    source: '\'\'\'Raises UnknownDialectError\'\'\'\nimpo...'  | len(source): 282
-    module: <module 'raise_unknown_dialect' from 'C:\\Use...>
+    session: <module 'avantpy.session' from 'C:\\Users\\an...>
 
-    Exception raised on line 112 of file '~\github\avantpy\avantpy\session.py'.
+    Exception raised on line 133 of file 'session.py'.
     
-       110:         if not self.is_dialect(dialect):
-       111:             raise exceptions.UnknownDialectError(
-    -->112:                 "Unknown dialect %s" % dialect, (dialect, self.all_dialects())
-       113:             )
+       131:         if not self.is_dialect(dialect):
+       132:             raise exceptions.UnknownDialectError(
+    -->133:                 "Unknown dialect %s" % dialect, (dialect, self.all_dialects())
+       134:             )
 
     dialect: 'pyxx'
     dialect: 'pyxx'
-    self: <avantpy.session._State object at 0x0306EBD0>
+    self: <avantpy.session._State object at 0x02EFF2B0>
 
 UnknownLanguageError
 --------------------
@@ -282,25 +275,25 @@ UnknownLanguageError
         
     The following unknown languages was requested: xx.
     
-    The known dialects are: {'en', 'fr'}.
+    The known dialects are: {'fr', 'en'}.
     
-    Execution stopped on line 115 of file '~\github\avantpy\avantpy\import_hook.py'.
+    Execution stopped on line 13 of file 'AVANTPY-TESTS:\pyupper\raise_unknown_language.pyupper'.
     
-       113: 
-       114:         try:
-    -->115:             exec(source, vars(module))
-       116:         except Exception:
+       10: 
+       11: from avantpy import session
+       12: 
+    -->13: session.state.set_lang('xx')
+       14: 
 
-    source: '\'\'\'Raises UnknownLanguageError\'\'\'\nimp...'  | len(source): 278
-    module: <module 'raise_unknown_language' from 'C:\\Us...>
+    session: <module 'avantpy.session' from 'C:\\Users\\an...>
 
-    Exception raised on line 137 of file '~\github\avantpy\avantpy\session.py'.
+    Exception raised on line 158 of file 'session.py'.
     
-       135:         if not self.is_lang(lang):
-       136:             raise exceptions.UnknownLanguageError(
-    -->137:                 "Unknown language %s" % lang, (lang, self.languages)
-       138:             )
+       156:         if not self.is_lang(lang):
+       157:             raise exceptions.UnknownLanguageError(
+    -->158:                 "Unknown language %s" % lang, (lang, self.languages)
+       159:             )
 
     lang: 'xx'
     lang: 'xx'
-    self: <avantpy.session._State object at 0x0306EBD0>
+    self: <avantpy.session._State object at 0x02EFF2B0>

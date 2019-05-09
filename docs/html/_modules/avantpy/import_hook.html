@@ -56,6 +56,7 @@
 <span class="kn">import</span> <span class="nn">os.path</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
+<span class="kn">from</span> <span class="nn">codeop</span> <span class="k">import</span> <span class="n">CommandCompiler</span>
 <span class="kn">from</span> <span class="nn">importlib.abc</span> <span class="k">import</span> <span class="n">Loader</span><span class="p">,</span> <span class="n">MetaPathFinder</span>
 <span class="kn">from</span> <span class="nn">importlib.util</span> <span class="k">import</span> <span class="n">spec_from_file_location</span>
 
@@ -63,11 +64,10 @@
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">session</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">converter</span>
-<span class="kn">from</span> <span class="nn">.exception_handling</span> <span class="k">import</span> <span class="n">write_exception_info</span>
-<span class="kn">from</span> <span class="nn">.session</span> <span class="k">import</span> <span class="n">state</span>
 <span class="kn">from</span> <span class="nn">.my_gettext</span> <span class="k">import</span> <span class="n">gettext_lang</span>
 
 <span class="n">MAIN_MODULE_NAME</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">COUNTER</span> <span class="o">=</span> <span class="mi">0</span>
 
 
 <div class="viewcode-block" id="import_main"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.import_main">[docs]</a><span class="k">def</span> <span class="nf">import_main</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
@@ -131,10 +131,12 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">compile</span> <span class="o">=</span> <span class="n">CommandCompiler</span><span class="p">()</span>
 
 <div class="viewcode-block" id="AvantPyLoader.exec_module"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.AvantPyLoader.exec_module">[docs]</a>    <span class="k">def</span> <span class="nf">exec_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;import the source code, converts it before executing it.&quot;&quot;&quot;</span>
-
+        <span class="k">global</span> <span class="n">COUNTER</span>
+        <span class="n">COUNTER</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="n">module</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="n">MAIN_MODULE_NAME</span><span class="p">:</span>
             <span class="n">module</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;__main__&quot;</span>
 
@@ -165,8 +167,16 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">exec</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="nb">vars</span><span class="p">(</span><span class="n">module</span><span class="p">))</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="n">friendly_traceback</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="o">*</span><span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">())</span>
-            <span class="k">return</span></div></div>
+            <span class="n">friendly_traceback</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">add_console_source</span><span class="p">(</span>
+                <span class="s2">&quot;&lt;string&gt;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">last_type</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">last_value</span><span class="p">,</span> <span class="n">last_tb</span> <span class="o">=</span> <span class="n">ei</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">last_traceback</span> <span class="o">=</span> <span class="n">last_tb</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">friendly_traceback</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="n">ei</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ei</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">last_tb</span><span class="o">.</span><span class="n">tb_next</span><span class="p">)</span>
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="n">last_tb</span> <span class="o">=</span> <span class="n">ei</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span></div></div>
 </pre></div>
 
           </div>

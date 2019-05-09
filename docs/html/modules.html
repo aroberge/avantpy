@@ -95,19 +95,13 @@ it seemed to make sense to “rewrite” every relevant part in
 this single module.</p>
 <dl class="class">
 <dt id="avantpy.console.AvantPyInteractiveConsole">
-<em class="property">class </em><code class="descclassname">avantpy.console.</code><code class="descname">AvantPyInteractiveConsole</code><span class="sig-paren">(</span><em>locals=None</em>, <em>show_python=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">avantpy.console.</code><code class="descname">AvantPyInteractiveConsole</code><span class="sig-paren">(</span><em>locals=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole" title="Permalink to this definition">¶</a></dt>
 <dd><p>A Python console that tries to emulate the normal Python interpreter
 except that it support experimental code transformations.
 It is adapted from cPython’s <code class="docutils literal notranslate"><span class="pre">code.InteractiveConsole</span></code> and its
 parent.</p>
 <p>Like the normal Python interactive console, it attempts to evaluate
 code entered one line at a time by a user.</p>
-<dl class="method">
-<dt id="avantpy.console.AvantPyInteractiveConsole.interact">
-<code class="descname">interact</code><span class="sig-paren">(</span><em>banner=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.interact"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.interact" title="Permalink to this definition">¶</a></dt>
-<dd><p>Emulates the interactive Python console.</p>
-</dd></dl>
-
 <dl class="method">
 <dt id="avantpy.console.AvantPyInteractiveConsole.push">
 <code class="descname">push</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.push"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.push" title="Permalink to this definition">¶</a></dt>
@@ -124,19 +118,14 @@ with in some way (this is the same as run_source()).</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="avantpy.console.AvantPyInteractiveConsole.reset_buffer">
-<code class="descname">reset_buffer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.reset_buffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.reset_buffer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reset the input buffer.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="avantpy.console.AvantPyInteractiveConsole.run_source">
-<code class="descname">run_source</code><span class="sig-paren">(</span><em>source</em>, <em>symbol='single'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.run_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.run_source" title="Permalink to this definition">¶</a></dt>
+<dt id="avantpy.console.AvantPyInteractiveConsole.runsource">
+<code class="descname">runsource</code><span class="sig-paren">(</span><em>source</em>, <em>filename='&lt;input&gt;'</em>, <em>symbol='single'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.runsource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.runsource" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compile and run some source in the interpreter.</p>
 <p>Arguments are as for compile_command().</p>
 <p>One several things can happen:</p>
 <p>1) The input is incorrect; compile_command() raised an
-exception (SyntaxError or OverflowError).</p>
+exception (SyntaxError or OverflowError).  A syntax traceback
+will be printed by calling the showsyntaxerror() method.</p>
 <p>2) The input is incomplete, and more input is required;
 compile_command() returned None.  Nothing happens.</p>
 <p>3) The input is complete; compile_command() returned a code
@@ -144,38 +133,15 @@ object.  The code is executed by calling self.runcode() (which
 also handles run-time exceptions, except for SystemExit).</p>
 <p>The return value is True in case 2, False in the other cases (unless
 an exception is raised).  The return value can be used to
-decide which prompt to use next line.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="avantpy.console.AvantPyInteractiveConsole.runcode">
-<code class="descname">runcode</code><span class="sig-paren">(</span><em>code</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.runcode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.runcode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Execute a code object.</p>
-<p>All exceptions are caught except SystemExit, which is reraised.</p>
-<p>A note about KeyboardInterrupt: this exception may occur
-elsewhere in this code, and may not always be caught.  The
-caller should be prepared to deal with it.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="avantpy.console.AvantPyInteractiveConsole.show_converted">
-<code class="descname">show_converted</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.show_converted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.show_converted" title="Permalink to this definition">¶</a></dt>
-<dd><p>Prints the converted source</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="avantpy.console.AvantPyInteractiveConsole.write">
-<code class="descname">write</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.write" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write a string.</p>
-<p>The base implementation writes to sys.stderr; a subclass may
-replace this with a different implementation.</p>
+decide whether to use sys.ps1 or sys.ps2 to prompt the next
+line.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="function">
 <dt id="avantpy.console.start_console">
-<code class="descclassname">avantpy.console.</code><code class="descname">start_console</code><span class="sig-paren">(</span><em>local_vars=None</em>, <em>show_python=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#start_console"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.start_console" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">avantpy.console.</code><code class="descname">start_console</code><span class="sig-paren">(</span><em>local_vars=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#start_console"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.start_console" title="Permalink to this definition">¶</a></dt>
 <dd><p>Starts a console; modified from code.interact</p>
 </dd></dl>
 

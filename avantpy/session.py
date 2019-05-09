@@ -13,6 +13,27 @@ from . import exceptions
 from .my_gettext import gettext_lang
 
 
+# MonkeyPatching
+_old_shorten_path = friendly_traceback.utils.shorten_path
+this_dir = os.path.dirname(__file__)
+AVANTPY = os.path.abspath(os.path.join(this_dir, "..")).lower()
+AVANTPY_TESTS = os.path.join(AVANTPY, "tests").lower()
+
+
+def shorten_path(path):
+    path_lower = path.lower()
+    if path_lower.startswith(AVANTPY_TESTS):
+        path = "AVANTPY-TESTS:" + path[len(AVANTPY_TESTS) :]  # noqa
+    elif path_lower.startswith(AVANTPY):
+        path = "AVANTPY:" + path[len(AVANTPY) :]  # noqa
+    else:
+        path = _old_shorten_path(path)
+    return path
+
+
+friendly_traceback.utils.shorten_path = shorten_path
+
+
 class _State:
     """Keeps track of dialect and lang parameters which control some of the
        behaviour of AvantPy.

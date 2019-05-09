@@ -33,7 +33,7 @@ IfNobreakError
     dans un énoncé 'si/sinonsi/sinon' (Python: if/elif/else).
     
     
-    Python peut seulement analyser le fichier '~\github\avantpy\tests\pyfr\raise_if_nobreak.pyfr'
+    Python peut seulement analyser le fichier 'AVANTPY-TESTS:\pyfr\raise_if_nobreak.pyfr'
     jusqu'à l'endroit indiqué par --> et ^.
     
        1: '''Should raise IfNobreakError'''
@@ -54,7 +54,7 @@ MismatchedBracketsError
     Le symbole gauche ( ne correspond pas au symbole droit ].
     
     
-    Python peut seulement analyser le fichier '~\github\avantpy\tests\pyfr\raise_mismatched_brackets.pyfr'
+    Python peut seulement analyser le fichier 'AVANTPY-TESTS:\pyfr\raise_mismatched_brackets.pyfr'
     jusqu'à l'endroit indiqué par --> et ^.
     
        3:     2,
@@ -74,7 +74,7 @@ MissingLeftBracketError
         
     Le symbole droit ) n'a pas de symbole gauche correspondant.
     
-    Python peut seulement analyser le fichier '~\github\avantpy\tests\pyfr\raise_missing_left_bracket.pyfr'
+    Python peut seulement analyser le fichier 'AVANTPY-TESTS:\pyfr\raise_missing_left_bracket.pyfr'
     jusqu'à l'endroit indiqué par --> et ^.
     
        2: a = (1,
@@ -97,7 +97,7 @@ MissingRepeatColonError
     le début d'un bloc de code de code indenté, sans qu'il n'y ait
     d'autre deux points qui apparaissent sur cette ligne.
     
-    Python peut seulement analyser le fichier '~\github\avantpy\tests\pyfr\raise_missing_repeat_colon.pyfr'
+    Python peut seulement analyser le fichier 'AVANTPY-TESTS:\pyfr\raise_missing_repeat_colon.pyfr'
     jusqu'à l'endroit indiqué par --> et ^.
     
        1: '''Should raise MissingRepeatColonError'''
@@ -118,7 +118,7 @@ MissingRepeatError
     s'il est précédé de 'répéter'.
     
     
-    Python peut seulement analyser le fichier '~\github\avantpy\tests\pyfr\raise_missing_repeat.pyfr'
+    Python peut seulement analyser le fichier 'AVANTPY-TESTS:\pyfr\raise_missing_repeat.pyfr'
     jusqu'à l'endroit indiqué par --> et ^.
     
        1: '''Should raise MissingRepeatError'''
@@ -144,20 +144,13 @@ NameError
     Cause probable :
         Dans votre programme, le nom inconnu est 'c'.
         
-    L'exécution s'est arrêtée à la ligne 115 du fichier '~\github\avantpy\avantpy\import_hook.py'
+    L'exécution s'est arrêtée à la ligne 4 du fichier 'AVANTPY-TESTS:\pyfr\raise_name_error.pyfr'
     
-       113: 
-       114:         try:
-    -->115:             exec(source, vars(module))
-       116:         except Exception:
-
-    source: '"""Should raise NameError"""\n\na = 1\nb = c...'  | len(source): 48
-    module: <module 'raise_name_error' from 'C:\\Users\\a...>
-
-    Exception levée à la ligne du fichier '<string>'.
-    
-Malheureusement, aucune information supplémentaire n’est disponible:
-le contenu du fichier '<string>' n’est pas accessible.
+       1: """Should raise NameError"""
+       2: 
+       3: a = 1
+    -->4: b = c
+       5: d = 3
 
 NobreakFirstError
 -----------------
@@ -173,7 +166,7 @@ NobreakFirstError
     dans des boucles 'pour' ou 'tantque' (Python: for/while).
     
     
-    Python peut seulement analyser le fichier '~\github\avantpy\tests\pyfr\raise_nobreak_first.pyfr'
+    Python peut seulement analyser le fichier 'AVANTPY-TESTS:\pyfr\raise_nobreak_first.pyfr'
     jusqu'à l'endroit indiqué par --> et ^.
     
        1: '''Should raise NobreakFirstError'''
@@ -195,7 +188,7 @@ NobreakSyntaxError
     dans des boucles 'pour' ou 'tantque' (Python: for/while).
     
     
-    Python peut seulement analyser le fichier '~\github\avantpy\tests\pyfr\raise_nobreak_syntax.pyfr'
+    Python peut seulement analyser le fichier 'AVANTPY-TESTS:\pyfr\raise_nobreak_syntax.pyfr'
     jusqu'à l'endroit indiqué par --> et ^.
     
        1: '''Should raise NobreakSyntaxError'''
@@ -218,7 +211,7 @@ RepeatFirstError
     (équivalent Python: 'for' ou 'while').
     
     
-    Python peut seulement analyser le fichier '~\github\avantpy\tests\pyfr\raise_repeat_first.pyfr'
+    Python peut seulement analyser le fichier 'AVANTPY-TESTS:\pyfr\raise_repeat_first.pyfr'
     jusqu'à l'endroit indiqué par --> et ^.
     
        1: '''Should raise RepeatFirstError'''
@@ -238,7 +231,7 @@ TryNobreakError
     Le mot-clé 'pasinterrompu' spécifique à Avantpy ne peut pas être utilisé dans
     un énoncé 'essayer/siexception/sinon/finalement' (Python: try/except/else/finally).
     
-    Python peut seulement analyser le fichier '~\github\avantpy\tests\pyfr\raise_try_nobreak.pyfr'
+    Python peut seulement analyser le fichier 'AVANTPY-TESTS:\pyfr\raise_try_nobreak.pyfr'
     jusqu'à l'endroit indiqué par --> et ^.
     
         4:         A = 1
@@ -261,26 +254,26 @@ UnknownDialectError
     Les dialectes connus sont : ['pyen', 'pyes', 'pyfr', 'pyupper'].
     
     
-    L'exécution s'est arrêtée à la ligne 115 du fichier '~\github\avantpy\avantpy\import_hook.py'
+    L'exécution s'est arrêtée à la ligne 13 du fichier 'AVANTPY-TESTS:\pyfr\raise_unknown_dialect.pyfr'
     
-       113: 
-       114:         try:
-    -->115:             exec(source, vars(module))
-       116:         except Exception:
+       10: 
+       11: from avantpy import session
+       12: 
+    -->13: session.state.set_dialect('pyxx')
+       14: 
 
-    source: '\'\'\'Raises UnknownDialectError\'\'\'\nimpo...'  | len(source): 282
-    module: <module 'raise_unknown_dialect' from 'C:\\Use...>
+    session: <module 'avantpy.session' from 'C:\\Users\\an...>
 
-    Exception levée à la ligne du fichier '~\github\avantpy\avantpy\session.py'.
+    Exception levée à la ligne du fichier 'session.py'.
     
-       110:         if not self.is_dialect(dialect):
-       111:             raise exceptions.UnknownDialectError(
-    -->112:                 "Unknown dialect %s" % dialect, (dialect, self.all_dialects())
-       113:             )
+       131:         if not self.is_dialect(dialect):
+       132:             raise exceptions.UnknownDialectError(
+    -->133:                 "Unknown dialect %s" % dialect, (dialect, self.all_dialects())
+       134:             )
 
     dialect: 'pyxx'
     dialect: 'pyxx'
-    self: <avantpy.session._State object at 0x032D6030>
+    self: <avantpy.session._State object at 0x029602D0>
 
 UnknownLanguageError
 --------------------
@@ -296,23 +289,23 @@ UnknownLanguageError
     Les langages connus sont : {'fr', 'en'}.
     
     
-    L'exécution s'est arrêtée à la ligne 115 du fichier '~\github\avantpy\avantpy\import_hook.py'
+    L'exécution s'est arrêtée à la ligne 13 du fichier 'AVANTPY-TESTS:\pyfr\raise_unknown_language.pyfr'
     
-       113: 
-       114:         try:
-    -->115:             exec(source, vars(module))
-       116:         except Exception:
+       10: 
+       11: from avantpy import session
+       12: 
+    -->13: session.state.set_lang('xx')
+       14: 
 
-    source: '\'\'\'Raises UnknownLanguageError\'\'\'\nimp...'  | len(source): 278
-    module: <module 'raise_unknown_language' from 'C:\\Us...>
+    session: <module 'avantpy.session' from 'C:\\Users\\an...>
 
-    Exception levée à la ligne du fichier '~\github\avantpy\avantpy\session.py'.
+    Exception levée à la ligne du fichier 'session.py'.
     
-       135:         if not self.is_lang(lang):
-       136:             raise exceptions.UnknownLanguageError(
-    -->137:                 "Unknown language %s" % lang, (lang, self.languages)
-       138:             )
+       156:         if not self.is_lang(lang):
+       157:             raise exceptions.UnknownLanguageError(
+    -->158:                 "Unknown language %s" % lang, (lang, self.languages)
+       159:             )
 
     lang: 'xx'
     lang: 'xx'
-    self: <avantpy.session._State object at 0x032D6030>
+    self: <avantpy.session._State object at 0x029602D0>

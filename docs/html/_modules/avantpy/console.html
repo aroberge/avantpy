@@ -59,20 +59,19 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">platform</span>
-<span class="kn">import</span> <span class="nn">sys</span>
 
-<span class="kn">from</span> <span class="nn">codeop</span> <span class="k">import</span> <span class="n">CommandCompiler</span>
 <span class="kn">from</span> <span class="nn">tokenize</span> <span class="k">import</span> <span class="n">TokenError</span>
+
+<span class="kn">import</span> <span class="nn">friendly_traceback</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">version</span>
 <span class="kn">from</span> <span class="nn">.converter</span> <span class="k">import</span> <span class="n">convert</span>
 <span class="kn">from</span> <span class="nn">.session</span> <span class="k">import</span> <span class="n">state</span>
-<span class="kn">from</span> <span class="nn">.exception_handling</span> <span class="k">import</span> <span class="n">write_exception_info</span>
 <span class="kn">from</span> <span class="nn">.exceptions</span> <span class="k">import</span> <span class="n">AvantPyException</span>
 <span class="kn">from</span> <span class="nn">.my_gettext</span> <span class="k">import</span> <span class="n">gettext_lang</span>
 
 
-<div class="viewcode-block" id="AvantPyInteractiveConsole"><a class="viewcode-back" href="../../modules.html#avantpy.console.AvantPyInteractiveConsole">[docs]</a><span class="k">class</span> <span class="nc">AvantPyInteractiveConsole</span><span class="p">:</span>
+<div class="viewcode-block" id="AvantPyInteractiveConsole"><a class="viewcode-back" href="../../modules.html#avantpy.console.AvantPyInteractiveConsole">[docs]</a><span class="k">class</span> <span class="nc">AvantPyInteractiveConsole</span><span class="p">(</span><span class="n">friendly_traceback</span><span class="o">.</span><span class="n">FriendlyConsole</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A Python console that tries to emulate the normal Python interpreter</span>
 <span class="sd">       except that it support experimental code transformations.</span>
 <span class="sd">       It is adapted from cPython&#39;s ``code.InteractiveConsole`` and its</span>
@@ -82,36 +81,12 @@
 <span class="sd">       code entered one line at a time by a user.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">locals</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show_python</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">show_python</span> <span class="o">=</span> <span class="n">show_python</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">locals</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">locals</span> <span class="o">=</span> <span class="nb">locals</span> <span class="k">if</span> <span class="nb">locals</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">compile</span> <span class="o">=</span> <span class="n">CommandCompiler</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="nb">locals</span><span class="o">=</span><span class="nb">locals</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&lt;AvantPy console&gt;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset_buffer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resetbuffer</span><span class="p">()</span>
         <span class="n">state</span><span class="o">.</span><span class="n">console_active</span> <span class="o">=</span> <span class="kc">True</span>
-
-<div class="viewcode-block" id="AvantPyInteractiveConsole.interact"><a class="viewcode-back" href="../../modules.html#avantpy.console.AvantPyInteractiveConsole.interact">[docs]</a>    <span class="k">def</span> <span class="nf">interact</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">banner</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Emulates the interactive Python console.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">banner</span><span class="p">))</span>
-        <span class="n">more</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">more</span><span class="p">:</span>
-                    <span class="n">prompt</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">prompt2</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">prompt</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">prompt1</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">line</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
-                <span class="k">except</span> <span class="ne">EOFError</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-                    <span class="k">break</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">more</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">KeyboardInterrupt</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">reset_buffer</span><span class="p">()</span>
-                <span class="n">more</span> <span class="o">=</span> <span class="kc">False</span></div>
 
 <div class="viewcode-block" id="AvantPyInteractiveConsole.push"><a class="viewcode-back" href="../../modules.html#avantpy.console.AvantPyInteractiveConsole.push">[docs]</a>    <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Pushes a transformed line to the interpreter.</span>
@@ -134,40 +109,33 @@
 
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">converted</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">identical</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">converted</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">converted</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span>
         <span class="k">except</span> <span class="ne">SystemExit</span><span class="p">:</span>
             <span class="n">os</span><span class="o">.</span><span class="n">_exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">except</span> <span class="n">AvantPyException</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-            <span class="n">write_exception_info</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">reset_buffer</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">AvantPyException</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">showtraceback</span><span class="p">()</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">except</span> <span class="n">TokenError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-            <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;EOF&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;EOF&quot;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">True</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;UNHANDLED EXCEPTION in console.py. This should not happen.&quot;</span><span class="p">))</span>
             <span class="k">raise</span> <span class="n">exc</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">more</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_source</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">converted</span><span class="p">)</span>
+            <span class="n">more</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">runsource</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">converted</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">SystemExit</span><span class="p">:</span>
             <span class="n">os</span><span class="o">.</span><span class="n">_exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-            <span class="n">write_exception_info</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">showtraceback</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">reset_buffer</span><span class="p">()</span>
             <span class="k">return</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">more</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">reset_buffer</span><span class="p">()</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_python</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">identical</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">show_converted</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resetbuffer</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">more</span></div>
 
-<div class="viewcode-block" id="AvantPyInteractiveConsole.reset_buffer"><a class="viewcode-back" href="../../modules.html#avantpy.console.AvantPyInteractiveConsole.reset_buffer">[docs]</a>    <span class="k">def</span> <span class="nf">reset_buffer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Reset the input buffer.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span> <span class="o">=</span> <span class="p">[]</span></div>
-
-<div class="viewcode-block" id="AvantPyInteractiveConsole.run_source"><a class="viewcode-back" href="../../modules.html#avantpy.console.AvantPyInteractiveConsole.run_source">[docs]</a>    <span class="k">def</span> <span class="nf">run_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">symbol</span><span class="o">=</span><span class="s2">&quot;single&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="AvantPyInteractiveConsole.runsource"><a class="viewcode-back" href="../../modules.html#avantpy.console.AvantPyInteractiveConsole.runsource">[docs]</a>    <span class="k">def</span> <span class="nf">runsource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;&lt;input&gt;&quot;</span><span class="p">,</span> <span class="n">symbol</span><span class="o">=</span><span class="s2">&quot;single&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Compile and run some source in the interpreter.</span>
 
 <span class="sd">        Arguments are as for compile_command().</span>
@@ -175,7 +143,8 @@
 <span class="sd">        One several things can happen:</span>
 
 <span class="sd">        1) The input is incorrect; compile_command() raised an</span>
-<span class="sd">        exception (SyntaxError or OverflowError).</span>
+<span class="sd">        exception (SyntaxError or OverflowError).  A syntax traceback</span>
+<span class="sd">        will be printed by calling the showsyntaxerror() method.</span>
 
 <span class="sd">        2) The input is incomplete, and more input is required;</span>
 <span class="sd">        compile_command() returned None.  Nothing happens.</span>
@@ -186,60 +155,33 @@
 
 <span class="sd">        The return value is True in case 2, False in the other cases (unless</span>
 <span class="sd">        an exception is raised).  The return value can be used to</span>
-<span class="sd">        decide which prompt to use next line.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        decide whether to use sys.ps1 or sys.ps2 to prompt the next</span>
+<span class="sd">        line.</span>
 
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">true_filename_plus_source</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;&lt;console&gt;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fake_filename</span> <span class="o">=</span> <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;&lt;console:</span><span class="si">%d</span><span class="s2">&gt;&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">counter</span>
+        <span class="n">friendly_traceback</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">add_console_source</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fake_filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">true_filename_plus_source</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">symbol</span><span class="p">)</span>
-        <span class="k">except</span> <span class="p">(</span><span class="ne">OverflowError</span><span class="p">,</span> <span class="ne">SyntaxError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="n">code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">symbol</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">OverflowError</span><span class="p">,</span> <span class="ne">SyntaxError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
             <span class="c1"># Case 1</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_python</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">identical</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">show_converted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">converted</span><span class="p">)</span>
-            <span class="n">write_exception_info</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">showsyntaxerror</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-        <span class="k">if</span> <span class="n">code</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># Case 2</span>
+        <span class="k">if</span> <span class="n">code</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Case 2</span>
             <span class="k">return</span> <span class="kc">True</span>
 
         <span class="c1"># Case 3</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">runcode</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">False</span></div>
-
-<div class="viewcode-block" id="AvantPyInteractiveConsole.runcode"><a class="viewcode-back" href="../../modules.html#avantpy.console.AvantPyInteractiveConsole.runcode">[docs]</a>    <span class="k">def</span> <span class="nf">runcode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Execute a code object.</span>
-
-<span class="sd">        All exceptions are caught except SystemExit, which is reraised.</span>
-
-<span class="sd">        A note about KeyboardInterrupt: this exception may occur</span>
-<span class="sd">        elsewhere in this code, and may not always be caught.  The</span>
-<span class="sd">        caller should be prepared to deal with it.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">exec</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">locals</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">SystemExit</span><span class="p">:</span>
-            <span class="k">raise</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-            <span class="n">write_exception_info</span><span class="p">(</span><span class="n">exc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="AvantPyInteractiveConsole.show_converted"><a class="viewcode-back" href="../../modules.html#avantpy.console.AvantPyInteractiveConsole.show_converted">[docs]</a>    <span class="k">def</span> <span class="nf">show_converted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Prints the converted source&quot;&quot;&quot;</span>
-        <span class="nb">print</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">converted</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;|&quot;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">identical</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># prevent from showing again</span></div>
-
-<div class="viewcode-block" id="AvantPyInteractiveConsole.write"><a class="viewcode-back" href="../../modules.html#avantpy.console.AvantPyInteractiveConsole.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Write a string.</span>
-
-<span class="sd">        The base implementation writes to sys.stderr; a subclass may</span>
-<span class="sd">        replace this with a different implementation.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="kc">False</span></div></div>
 
 
-<div class="viewcode-block" id="start_console"><a class="viewcode-back" href="../../modules.html#avantpy.console.start_console">[docs]</a><span class="k">def</span> <span class="nf">start_console</span><span class="p">(</span><span class="n">local_vars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show_python</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="start_console"><a class="viewcode-back" href="../../modules.html#avantpy.console.start_console">[docs]</a><span class="k">def</span> <span class="nf">start_console</span><span class="p">(</span><span class="n">local_vars</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Starts a console; modified from code.interact&quot;&quot;&quot;</span>
     <span class="n">console_defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;set_lang&quot;</span><span class="p">:</span> <span class="n">state</span><span class="o">.</span><span class="n">set_lang</span><span class="p">,</span> <span class="s2">&quot;set_dialect&quot;</span><span class="p">:</span> <span class="n">state</span><span class="o">.</span><span class="n">set_dialect</span><span class="p">}</span>
 
@@ -248,10 +190,12 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">local_vars</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">console_defaults</span><span class="p">)</span>
 
-    <span class="n">console</span> <span class="o">=</span> <span class="n">AvantPyInteractiveConsole</span><span class="p">(</span><span class="nb">locals</span><span class="o">=</span><span class="n">local_vars</span><span class="p">,</span> <span class="n">show_python</span><span class="o">=</span><span class="n">show_python</span><span class="p">)</span>
+    <span class="n">console</span> <span class="o">=</span> <span class="n">AvantPyInteractiveConsole</span><span class="p">(</span><span class="nb">locals</span><span class="o">=</span><span class="n">local_vars</span><span class="p">)</span>
 
-    <span class="n">banner</span> <span class="o">=</span> <span class="s2">&quot;AvantPy version </span><span class="si">{}</span><span class="s2">. [Python version: </span><span class="si">{}</span><span class="s2">]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-        <span class="n">version</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span> <span class="n">platform</span><span class="o">.</span><span class="n">python_version</span><span class="p">()</span>
+    <span class="n">banner</span> <span class="o">=</span> <span class="s2">&quot;AvantPy version </span><span class="si">{}</span><span class="s2"> [Python: </span><span class="si">{}</span><span class="s2">; Friendly-traceback: </span><span class="si">{}</span><span class="s2">]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">version</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span>
+        <span class="n">platform</span><span class="o">.</span><span class="n">python_version</span><span class="p">(),</span>
+        <span class="n">friendly_traceback</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">console</span><span class="o">.</span><span class="n">interact</span><span class="p">(</span><span class="n">banner</span><span class="o">=</span><span class="n">banner</span><span class="p">)</span></div>
 </pre></div>
