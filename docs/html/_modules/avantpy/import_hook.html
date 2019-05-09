@@ -167,15 +167,19 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">exec</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="nb">vars</span><span class="p">(</span><span class="n">module</span><span class="p">))</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="n">friendly_traceback</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">add_console_source</span><span class="p">(</span>
+            <span class="c1"># exec() always gives &quot;&lt;string&gt;&quot; as file name</span>
+            <span class="n">friendly_traceback</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">cache_string_source</span><span class="p">(</span>
                 <span class="s2">&quot;&lt;string&gt;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
             <span class="p">)</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">last_type</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">last_value</span><span class="p">,</span> <span class="n">last_tb</span> <span class="o">=</span> <span class="n">ei</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()</span>
+            <span class="c1"># We remove the first stack item because it is our own code.</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">last_type</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">last_value</span><span class="p">,</span> <span class="n">last_tb</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">last_traceback</span> <span class="o">=</span> <span class="n">last_tb</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">friendly_traceback</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="n">ei</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ei</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">last_tb</span><span class="o">.</span><span class="n">tb_next</span><span class="p">)</span>
+                <span class="n">friendly_traceback</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">last_type</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">last_value</span><span class="p">,</span> <span class="n">last_tb</span><span class="o">.</span><span class="n">tb_next</span>
+                <span class="p">)</span>
             <span class="k">finally</span><span class="p">:</span>
-                <span class="n">last_tb</span> <span class="o">=</span> <span class="n">ei</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">last_tb</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">return</span></div></div>
 </pre></div>
 

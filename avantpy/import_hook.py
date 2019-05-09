@@ -116,13 +116,17 @@ class AvantPyLoader(Loader):
         try:
             exec(source, vars(module))
         except Exception:
-            friendly_traceback.utils.add_console_source(
+            # exec() always gives "<string>" as file name
+            friendly_traceback.utils.cache_string_source(
                 "<string>", (self.filename, source)
             )
-            sys.last_type, sys.last_value, last_tb = ei = sys.exc_info()
+            # We remove the first stack item because it is our own code.
+            sys.last_type, sys.last_value, last_tb = sys.exc_info()
             sys.last_traceback = last_tb
             try:
-                friendly_traceback.explain(ei[0], ei[1], last_tb.tb_next)
+                friendly_traceback.explain(
+                    sys.last_type, sys.last_value, last_tb.tb_next
+                )
             finally:
-                last_tb = ei = None
+                last_tb = None
         return

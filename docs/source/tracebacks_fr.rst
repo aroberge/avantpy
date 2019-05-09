@@ -260,11 +260,10 @@ UnknownDialectError
        11: from avantpy import session
        12: 
     -->13: session.state.set_dialect('pyxx')
-       14: 
 
     session: <module 'avantpy.session' from 'C:\\Users\\an...>
 
-    Exception levée à la ligne du fichier 'session.py'.
+    Exception levée à la ligne du fichier 'AVANTPY:\avantpy\session.py'.
     
        131:         if not self.is_dialect(dialect):
        132:             raise exceptions.UnknownDialectError(
@@ -272,8 +271,7 @@ UnknownDialectError
        134:             )
 
     dialect: 'pyxx'
-    dialect: 'pyxx'
-    self: <avantpy.session._State object at 0x037B02B0>
+    self: <avantpy.session._State object at 0x02E902D0>
 
 UnknownLanguageError
 --------------------
@@ -286,7 +284,7 @@ UnknownLanguageError
         
     Le langage inconnu suivant a été demandé : xx.
     
-    Les langages connus sont : {'fr', 'en'}.
+    Les langages connus sont : {'en', 'fr'}.
     
     
     L'exécution s'est arrêtée à la ligne 13 du fichier 'AVANTPY-TESTS:\pyfr\raise_unknown_language.pyfr'
@@ -295,11 +293,10 @@ UnknownLanguageError
        11: from avantpy import session
        12: 
     -->13: session.state.set_lang('xx')
-       14: 
 
     session: <module 'avantpy.session' from 'C:\\Users\\an...>
 
-    Exception levée à la ligne du fichier 'session.py'.
+    Exception levée à la ligne du fichier 'AVANTPY:\avantpy\session.py'.
     
        156:         if not self.is_lang(lang):
        157:             raise exceptions.UnknownLanguageError(
@@ -307,5 +304,4 @@ UnknownLanguageError
        159:             )
 
     lang: 'xx'
-    lang: 'xx'
-    self: <avantpy.session._State object at 0x037B02B0>
+    self: <avantpy.session._State object at 0x02E902D0>
