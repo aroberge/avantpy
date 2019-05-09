@@ -1,8 +1,0 @@
-définir test_except_else():
-    essayer:
-        A = 1
-    siexception:
-        A = 2
-    sinon:
-        affirmer A == 1
-

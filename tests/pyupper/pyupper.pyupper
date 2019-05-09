@@ -7,19 +7,23 @@ It is either the original test_pyupper.pyupper or has been converted
 from it into another dialect.
 """
 
-CONSTANT = -1
+CONSTANT = 1
 
 
 DEF test_singletons():
-    ASSERT FALSE IS False
-    ASSERT TRUE IS True
-    ASSERT NONE IS None
+    ASSERT NOT FALSE
+    ASSERT TRUE
+    ASSERT TRUE IS NOT NONE
+
+test_singletons()
 
 
 DEF test_logical():
-    ASSERT TRUE AND TRUE
-    ASSERT TRUE OR FALSE
-    ASSERT NOT FALSE
+    ASSERT TRUE AND 1
+    ASSERT TRUE OR 0
+    ASSERT NOT 0
+
+test_logical()
 
 
 DEF test_if_elif_else():
@@ -29,6 +33,8 @@ DEF test_if_elif_else():
         PASS
     ELSE:
         PASS
+
+test_if_elif_else()
 
 
 DEF test_while_break_nobreak():
@@ -49,11 +55,15 @@ DEF test_while_break_nobreak():
 
     ASSERT x == 2
 
+test_while_break_nobreak()
+
 
 DEF test_import():
     IMPORT math
-    FROM math import pi AS PI
+    FROM math IMPORT pi AS PI
     ASSERT PI == math.pi
+
+test_import()
 
 
 DEF test_for_in_range_continue():
@@ -63,6 +73,8 @@ DEF test_for_in_range_continue():
             CONTINUE
         result.append(i)
     ASSERT result == [0, 1, 3]
+
+test_for_in_range_continue()
 
 
 DEF test_try_except_else_finally():
@@ -85,6 +97,8 @@ DEF test_try_except_else_finally():
 
     ASSERT a == 2
 
+test_try_except_else_finally()
+
 
 DEF test_del():
     a = 1
@@ -98,30 +112,36 @@ DEF test_del():
 
     ASSERT b == 2
 
+test_del()
+
 
 DEF test_global_nonlocal():
     GLOBAL CONSTANT
-    CONSTANT += 1
-    ASSERT CONSTANT == 0
+    CONSTANT += 2
+    ASSERT CONSTANT == 3
     x = 3
 
-    def inner():
+    DEF inner():
         NONLOCAL x
         x += 1
 
     inner()
     ASSERT x == 4
 
-    def other():
+    DEF other():
         x = 5
 
     other()
     ASSERT x == 4
 
+test_global_nonlocal()
+
 
 DEF test_lambda():
     square = FUNCTION x: x*x
     ASSERT square(3) == 9
+
+test_lambda()
 
 
 DEF test_raise():
@@ -130,12 +150,16 @@ DEF test_raise():
     EXCEPT NameError:
         PASS
 
+test_raise()
+
 
 DEF test_builtins():
     ASSERT INPUT
     ASSERT PRINT
     ASSERT list(RANGE(3)) == [0, 1, 2]
     ASSERT EXIT
+
+test_builtins()
 
 
 DEF test_return():
@@ -144,9 +168,7 @@ DEF test_return():
 
     ASSERT sq(5) == 25
 
-
-DEF test_if_name_eq_main():
-    ASSERT NOT NOTIMPORTED
+test_return()
 
 
 DEF test_repeat():
@@ -169,11 +191,15 @@ DEF test_repeat():
             BREAK
     ASSERT x == 10
 
+test_repeat()
+
 
 DEF test_with():
     WITH open(__file__) AS f:
         lines = f.readlines()
     ASSERT 'pyXX' IN lines[0]
+
+test_with()
 
 
 DEF test_yield():
@@ -187,3 +213,5 @@ DEF test_yield():
         result.append(j)
 
     ASSERT result == [1, 4, 9]
+
+test_yield()

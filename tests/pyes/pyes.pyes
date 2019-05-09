@@ -7,19 +7,23 @@ It is either the original test_pyupper.pyupper or has been converted
 from it into another dialect.
 """
 
-CONSTANT = -1
+CONSTANT = 1
 
 
 def test_singletons():
-    afirmar Falso es False
-    afirmar Verdadero es True
-    afirmar Nada es None
+    afirmar no Falso
+    afirmar Verdadero
+    afirmar Verdadero es no Nada
+
+test_singletons()
 
 
 def test_logical():
-    afirmar Verdadero y Verdadero
-    afirmar Verdadero o Falso
-    afirmar no Falso
+    afirmar Verdadero y 1
+    afirmar Verdadero o 0
+    afirmar no 0
+
+test_logical()
 
 
 def test_if_elif_else():
@@ -29,6 +33,8 @@ def test_if_elif_else():
         seguir
     sino:
         seguir
+
+test_if_elif_else()
 
 
 def test_while_break_nobreak():
@@ -49,11 +55,15 @@ def test_while_break_nobreak():
 
     afirmar x == 2
 
+test_while_break_nobreak()
+
 
 def test_import():
     importar math
-    de math import pi como PI
+    de math importar pi como PI
     afirmar PI == math.pi
+
+test_import()
 
 
 def test_for_in_range_continue():
@@ -63,6 +73,8 @@ def test_for_in_range_continue():
             continuar
         result.append(i)
     afirmar result == [0, 1, 3]
+
+test_for_in_range_continue()
 
 
 def test_try_except_else_finally():
@@ -85,6 +97,8 @@ def test_try_except_else_finally():
 
     afirmar a == 2
 
+test_try_except_else_finally()
+
 
 def test_del():
     a = 1
@@ -98,11 +112,13 @@ def test_del():
 
     afirmar b == 2
 
+test_del()
+
 
 def test_global_nonlocal():
     global CONSTANT
-    CONSTANT += 1
-    afirmar CONSTANT == 0
+    CONSTANT += 2
+    afirmar CONSTANT == 3
     x = 3
 
     def inner():
@@ -118,10 +134,14 @@ def test_global_nonlocal():
     other()
     afirmar x == 4
 
+test_global_nonlocal()
+
 
 def test_lambda():
     square = función x: x*x
     afirmar square(3) == 9
+
+test_lambda()
 
 
 def test_raise():
@@ -130,12 +150,16 @@ def test_raise():
     excepto NameError:
         seguir
 
+test_raise()
+
 
 def test_builtins():
     afirmar entrada
     afirmar imprimir
     afirmar list(intervalo(3)) == [0, 1, 2]
     afirmar salir
+
+test_builtins()
 
 
 def test_return():
@@ -144,9 +168,7 @@ def test_return():
 
     afirmar sq(5) == 25
 
-
-def test_if_name_eq_main():
-    afirmar no noimportado
+test_return()
 
 
 def test_repeat():
@@ -169,11 +191,15 @@ def test_repeat():
             interrumpir
     afirmar x == 10
 
+test_repeat()
+
 
 def test_with():
     con open(__file__) como f:
         lines = f.readlines()
     afirmar 'pyXX' en lines[0]
+
+test_with()
 
 
 def test_yield():
@@ -187,3 +213,5 @@ def test_yield():
         result.append(j)
 
     afirmar result == [1, 4, 9]
+
+test_yield()

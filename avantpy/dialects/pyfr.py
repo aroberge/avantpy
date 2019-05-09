@@ -18,7 +18,7 @@ pyfr = {
     "else": ["sinon", "pasinterrompu"],
     "except": "siexception",
     "finally": "finalement",
-    "for": "pour",
+    "for": "pourchaque",
     "from": "de",
     "global": "global",
     "if": "si",
@@ -35,7 +35,7 @@ pyfr = {
     "try": "essayer",
     "while": "tantque",
     "with": "avec",
-    "yield": "cède",
+    "yield": "céder",
     # Special loop keywords
     "repeat": "répéter",
     "forever": "sansfin",

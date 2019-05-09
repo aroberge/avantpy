@@ -7,19 +7,23 @@ It is either the original test_pyupper.pyupper or has been converted
 from it into another dialect.
 """
 
-CONSTANT = -1
+CONSTANT = 1
 
 
 définir test_singletons():
-    affirmer Faux est False
-    affirmer Vrai est True
-    affirmer Aucun est None
+    affirmer pas Faux
+    affirmer Vrai
+    affirmer Vrai est pas Aucun
+
+test_singletons()
 
 
 définir test_logical():
-    affirmer Vrai et Vrai
-    affirmer Vrai ou Faux
-    affirmer pas Faux
+    affirmer Vrai et 1
+    affirmer Vrai ou 0
+    affirmer pas 0
+
+test_logical()
 
 
 définir test_if_elif_else():
@@ -29,6 +33,8 @@ définir test_if_elif_else():
         passer
     sinon:
         passer
+
+test_if_elif_else()
 
 
 définir test_while_break_nobreak():
@@ -49,20 +55,26 @@ définir test_while_break_nobreak():
 
     affirmer x == 2
 
+test_while_break_nobreak()
+
 
 définir test_import():
     importer math
-    de math import pi comme PI
+    de math importer pi comme PI
     affirmer PI == math.pi
+
+test_import()
 
 
 définir test_for_in_range_continue():
     result = []
-    pour i dans intervalle(4):
+    pourchaque i dans intervalle(4):
         si i == 2:
             continuer
         result.append(i)
     affirmer result == [0, 1, 3]
+
+test_for_in_range_continue()
 
 
 définir test_try_except_else_finally():
@@ -85,6 +97,8 @@ définir test_try_except_else_finally():
 
     affirmer a == 2
 
+test_try_except_else_finally()
+
 
 définir test_del():
     a = 1
@@ -98,30 +112,36 @@ définir test_del():
 
     affirmer b == 2
 
+test_del()
+
 
 définir test_global_nonlocal():
     global CONSTANT
-    CONSTANT += 1
-    affirmer CONSTANT == 0
+    CONSTANT += 2
+    affirmer CONSTANT == 3
     x = 3
 
-    def inner():
+    définir inner():
         nonlocal x
         x += 1
 
     inner()
     affirmer x == 4
 
-    def other():
+    définir other():
         x = 5
 
     other()
     affirmer x == 4
 
+test_global_nonlocal()
+
 
 définir test_lambda():
     square = fonction x: x*x
     affirmer square(3) == 9
+
+test_lambda()
 
 
 définir test_raise():
@@ -130,12 +150,16 @@ définir test_raise():
     siexception NameError:
         passer
 
+test_raise()
+
 
 définir test_builtins():
     affirmer demander
     affirmer afficher
     affirmer list(intervalle(3)) == [0, 1, 2]
     affirmer quitter
+
+test_builtins()
 
 
 définir test_return():
@@ -144,9 +168,7 @@ définir test_return():
 
     affirmer sq(5) == 25
 
-
-définir test_if_name_eq_main():
-    affirmer pas pasimporté
+test_return()
 
 
 définir test_repeat():
@@ -169,21 +191,27 @@ définir test_repeat():
             interrompre
     affirmer x == 10
 
+test_repeat()
+
 
 définir test_with():
     avec open(__file__) comme f:
         lines = f.readlines()
     affirmer 'pyXX' dans lines[0]
 
+test_with()
+
 
 définir test_yield():
     définir sq_gen():
-        pour i dans [1, 2, 3]:
-            cède i*i
+        pourchaque i dans [1, 2, 3]:
+            céder i*i
 
     result = []
     my_sq_gen = sq_gen()
-    pour j dans my_sq_gen:
+    pourchaque j dans my_sq_gen:
         result.append(j)
 
     affirmer result == [1, 4, 9]
+
+test_yield()

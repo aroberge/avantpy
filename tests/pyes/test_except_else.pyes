@@ -1,8 +1,0 @@
-def test_except_else():
-    intentar:
-        A = 1
-    excepto:
-        A = 2
-    sino:
-        afirmar A == 1
-

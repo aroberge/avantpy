@@ -4,9 +4,7 @@ from avantpy import converter
 
 def test_transcoding():
     cwd = os.path.dirname(__file__)
-    source_path = os.path.normpath(
-        os.path.abspath(os.path.join(cwd, "pyfr/test_french.pyfr"))
-    )
+    source_path = os.path.normpath(os.path.abspath(os.path.join(cwd, "pyfr/pyfr.pyfr")))
     assert os.path.isfile(source_path)
 
     with open(source_path, encoding="utf8") as f:

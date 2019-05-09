@@ -1,6 +1,0 @@
-def test_assert():
-    assert True
-
-if __name__ == '__main__':
-    test_assert()
-    print('Success.')
