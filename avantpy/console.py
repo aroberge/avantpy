@@ -110,7 +110,7 @@ class AvantPyInteractiveConsole(friendly_traceback.FriendlyConsole):
         """
         self.true_filename_plus_source = ("<console>", self.source)
         self.filename = self.fake_filename = filename = "<console:%d>" % self.counter
-        friendly_traceback.utils.add_console_source(
+        friendly_traceback.utils.cache_string_source(
             self.fake_filename, self.true_filename_plus_source
         )
         self.counter += 1
