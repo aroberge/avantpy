@@ -13,6 +13,8 @@ sessions = [
 def test_console():
     """Function discoverable and run by pytest"""
     for command, inp, out, err in sessions:
+        print("out = ", out)
+        print("err =", err)
         process = subprocess.Popen(
             command,
             shell=False,
@@ -27,11 +29,15 @@ def test_console():
         # of these tests: if stdout is not as expected, we have a problem.
         stdout, stderr = process.communicate(inp)
         process.wait()
+        print("stdout =", stdout)
+        print("stderr =", stderr)
+
         for item in out:
-            assert item in stdout
+            print("item in out = ", item in stdout)
+            assert item in stdout, f"{item} not in stdout"
         for item in err:
-            assert item in stderr
+            print("iten in err = ", item, item in stderr)
+            assert item in stderr, f"{item} not in stderr"
 
 
-if __name__ == "__main__":
-    test_console()
+# test_console()

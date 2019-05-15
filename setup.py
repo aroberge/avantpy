@@ -1,11 +1,11 @@
 # pylint: skip-file
 from setuptools import setup, find_packages
+from avantpy import version
+
+version_ = version.__version__
 
 with open("README.md", encoding="utf8") as f:
     README = f.read()
-
-with open("avantpy/version.py") as f:
-    version_ = f.read().split("=")[-1].strip()[1:-1]
 
 setup(
     name="avantpy",

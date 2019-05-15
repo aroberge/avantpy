@@ -15,7 +15,7 @@ documenter ici tous les exemples possibles tels qu'interprétés par AvantPy.
      faire des corrections ou des ajouts, avant de faire la mise
      à jour du reste de la documentation avec Sphinx.
 
-AvantPy version: 0.0.9
+AvantPy version: 0.0.13a
 Python version: 3.7.3
 
 
@@ -163,7 +163,7 @@ NobreakFirstError
         
     Le mot-clé 'pasinterrompu' spécifique à Avantpy peut seulement être utilisé
     au lieu de sinon (Python: else) lorsqu'il débute un nouvel énoncé
-    dans des boucles 'pour' ou 'tantque' (Python: for/while).
+    dans des boucles 'pourchaque' ou 'tantque' (Python: for/while).
     
     
     Python peut seulement analyser le fichier 'AVANTPY-TESTS:\pyfr\raise_nobreak_first.pyfr'
@@ -185,7 +185,7 @@ NobreakSyntaxError
         
     Le mot-clé 'pasinterrompu' spécifique à Avantpy peut seulement être utilisé
     au lieu de 'sinon' (Python: else) lorsqu'il débute un nouvel énoncé
-    dans des boucles 'pour' ou 'tantque' (Python: for/while).
+    dans des boucles 'pourchaque' ou 'tantque' (Python: for/while).
     
     
     Python peut seulement analyser le fichier 'AVANTPY-TESTS:\pyfr\raise_nobreak_syntax.pyfr'
@@ -260,10 +260,11 @@ UnknownDialectError
        11: from avantpy import session
        12: 
     -->13: session.state.set_dialect('pyxx')
+       14: 
 
     session: <module 'avantpy.session' from 'C:\\Users\\an...>
 
-    Exception levée à la ligne du fichier 'AVANTPY:\avantpy\session.py'.
+    Exception levée à la ligne 133 du fichier 'AVANTPY:\avantpy\session.py'.
     
        131:         if not self.is_dialect(dialect):
        132:             raise exceptions.UnknownDialectError(
@@ -271,7 +272,7 @@ UnknownDialectError
        134:             )
 
     dialect: 'pyxx'
-    self: <avantpy.session._State object at 0x02E902D0>
+    self: <avantpy.session._State object>
 
 UnknownLanguageError
 --------------------
@@ -293,10 +294,11 @@ UnknownLanguageError
        11: from avantpy import session
        12: 
     -->13: session.state.set_lang('xx')
+       14: 
 
     session: <module 'avantpy.session' from 'C:\\Users\\an...>
 
-    Exception levée à la ligne du fichier 'AVANTPY:\avantpy\session.py'.
+    Exception levée à la ligne 158 du fichier 'AVANTPY:\avantpy\session.py'.
     
        156:         if not self.is_lang(lang):
        157:             raise exceptions.UnknownLanguageError(
@@ -304,4 +306,4 @@ UnknownLanguageError
        159:             )
 
     lang: 'xx'
-    self: <avantpy.session._State object at 0x02E902D0>
+    self: <avantpy.session._State object>

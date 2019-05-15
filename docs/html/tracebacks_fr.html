@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Friendly error messages - en Français &#8212; AvantPy 0.0.13 documentation</title>
+    <title>Friendly error messages - en Français &#8212; AvantPy 0.0.13a documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -28,7 +28,7 @@
         <li class="right" >
           <a href="translations_notes.html" title="Notes on translations - using gettext"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.13 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.13a documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -94,7 +94,7 @@ Ceci a besoin d’être fait de manière explicite lorsqu’on veut
 faire des corrections ou des ajouts, avant de faire la mise
 à jour du reste de la documentation avec Sphinx.</p>
 </div>
-<p>AvantPy version: 0.0.9
+<p>AvantPy version: 0.0.13a
 Python version: 3.7.3</p>
 <div class="section" id="ifnobreakerror">
 <h2>IfNobreakError<a class="headerlink" href="#ifnobreakerror" title="Permalink to this headline">¶</a></h2>
@@ -223,7 +223,7 @@ L&#39;exécution s&#39;est arrêtée à la ligne 4 du fichier &#39;AVANTPY-TESTS
 
 Le mot-clé &#39;pasinterrompu&#39; spécifique à Avantpy peut seulement être utilisé
 au lieu de sinon (Python: else) lorsqu&#39;il débute un nouvel énoncé
-dans des boucles &#39;pour&#39; ou &#39;tantque&#39; (Python: for/while).
+dans des boucles &#39;pourchaque&#39; ou &#39;tantque&#39; (Python: for/while).
 
 
 Python peut seulement analyser le fichier &#39;AVANTPY-TESTS:\pyfr\raise_nobreak_first.pyfr&#39;
@@ -243,7 +243,7 @@ jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
 
 Le mot-clé &#39;pasinterrompu&#39; spécifique à Avantpy peut seulement être utilisé
 au lieu de &#39;sinon&#39; (Python: else) lorsqu&#39;il débute un nouvel énoncé
-dans des boucles &#39;pour&#39; ou &#39;tantque&#39; (Python: for/while).
+dans des boucles &#39;pourchaque&#39; ou &#39;tantque&#39; (Python: for/while).
 
 
 Python peut seulement analyser le fichier &#39;AVANTPY-TESTS:\pyfr\raise_nobreak_syntax.pyfr&#39;
@@ -312,10 +312,11 @@ L&#39;exécution s&#39;est arrêtée à la ligne 13 du fichier &#39;AVANTPY-TEST
    11: from avantpy import session
    12:
 --&gt;13: session.state.set_dialect(&#39;pyxx&#39;)
+   14:
 
 session: &lt;module &#39;avantpy.session&#39; from &#39;C:\\Users\\an...&gt;
 
-Exception levée à la ligne du fichier &#39;AVANTPY:\avantpy\session.py&#39;.
+Exception levée à la ligne 133 du fichier &#39;AVANTPY:\avantpy\session.py&#39;.
 
    131:         if not self.is_dialect(dialect):
    132:             raise exceptions.UnknownDialectError(
@@ -323,7 +324,7 @@ Exception levée à la ligne du fichier &#39;AVANTPY:\avantpy\session.py&#39;.
    134:             )
 
 dialect: &#39;pyxx&#39;
-self: &lt;avantpy.session._State object at 0x02E902D0&gt;
+self: &lt;avantpy.session._State object&gt;
 </pre></div>
 </div>
 </div>
@@ -343,10 +344,11 @@ L&#39;exécution s&#39;est arrêtée à la ligne 13 du fichier &#39;AVANTPY-TEST
    11: from avantpy import session
    12:
 --&gt;13: session.state.set_lang(&#39;xx&#39;)
+   14:
 
 session: &lt;module &#39;avantpy.session&#39; from &#39;C:\\Users\\an...&gt;
 
-Exception levée à la ligne du fichier &#39;AVANTPY:\avantpy\session.py&#39;.
+Exception levée à la ligne 158 du fichier &#39;AVANTPY:\avantpy\session.py&#39;.
 
    156:         if not self.is_lang(lang):
    157:             raise exceptions.UnknownLanguageError(
@@ -354,7 +356,7 @@ Exception levée à la ligne du fichier &#39;AVANTPY:\avantpy\session.py&#39;.
    159:             )
 
 lang: &#39;xx&#39;
-self: &lt;avantpy.session._State object at 0x02E902D0&gt;
+self: &lt;avantpy.session._State object&gt;
 </pre></div>
 </div>
 </div>
@@ -378,7 +380,7 @@ self: &lt;avantpy.session._State object at 0x02E902D0&gt;
         <li class="right" >
           <a href="translations_notes.html" title="Notes on translations - using gettext"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.13 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.13a documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

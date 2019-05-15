@@ -12,7 +12,7 @@ Such feedback will also be available in languages other than English.
      This needs to be done explicitly, independently of updating the
      documentation using Sphinx.
 
-AvantPy version: 0.0.9
+AvantPy version: 0.0.13a
 Python version: 3.7.3
 
 
@@ -249,6 +249,7 @@ UnknownDialectError
        11: from avantpy import session
        12: 
     -->13: session.state.set_dialect('pyxx')
+       14: 
 
     session: <module 'avantpy.session' from 'C:\\Users\\an...>
 
@@ -260,7 +261,7 @@ UnknownDialectError
        134:             )
 
     dialect: 'pyxx'
-    self: <avantpy.session._State object at 0x02E40310>
+    self: <avantpy.session._State object>
 
 UnknownLanguageError
 --------------------
@@ -281,6 +282,7 @@ UnknownLanguageError
        11: from avantpy import session
        12: 
     -->13: session.state.set_lang('xx')
+       14: 
 
     session: <module 'avantpy.session' from 'C:\\Users\\an...>
 
@@ -292,4 +294,4 @@ UnknownLanguageError
        159:             )
 
     lang: 'xx'
-    self: <avantpy.session._State object at 0x02E40310>
+    self: <avantpy.session._State object>

@@ -102,7 +102,7 @@ class AvantPyLoader(Loader):
             session.state.set_dialect(dialect)
             source = converter.convert(source, dialect, filename=self.filename)
         except Exception:
-            friendly_traceback.explain(*sys.exc_info())
+            friendly_traceback.explain()
             return
 
         # ------------------------
@@ -124,7 +124,7 @@ class AvantPyLoader(Loader):
             sys.last_type, sys.last_value, last_tb = sys.exc_info()
             sys.last_traceback = last_tb
             try:
-                friendly_traceback.explain(
+                friendly_traceback._explain(
                     sys.last_type, sys.last_value, last_tb.tb_next
                 )
             finally:
