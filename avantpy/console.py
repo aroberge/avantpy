@@ -58,7 +58,6 @@ class AvantPyInteractiveConsole(friendly_traceback.FriendlyConsole):
 
         try:
             self.converted = convert(self.source, filename=self.name)
-            self.converted == self.source
         except SystemExit:
             os._exit(1)
         except AvantPyException:
@@ -109,10 +108,8 @@ class AvantPyInteractiveConsole(friendly_traceback.FriendlyConsole):
 
         """
         self.fake_filename = filename = "<console:%d>" % self.counter
-        self.fake_filename_plus_source = (self.fake_filename, source)
-        friendly_traceback.utils.cache_string_source(
-            self.fake_filename, self.fake_filename_plus_source
-        )
+        self.source = source
+        friendly_traceback.utils.cache_string_source(self.fake_filename, self.source)
         self.counter += 1
         try:
             code = self.compile(source, filename, symbol)

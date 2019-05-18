@@ -117,9 +117,7 @@ class AvantPyLoader(Loader):
             exec(source, vars(module))
         except Exception:
             # exec() always gives "<string>" as file name
-            friendly_traceback.utils.cache_string_source(
-                "<string>", (self.filename, source)
-            )
+            friendly_traceback.utils.cache_string_source("<string>", source)
             # We remove the first stack item because it is our own code.
             sys.last_type, sys.last_value, last_tb = sys.exc_info()
             sys.last_traceback = last_tb
