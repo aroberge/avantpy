@@ -285,7 +285,7 @@ UnknownLanguageError
         
     Le langage inconnu suivant a été demandé : xx.
     
-    Les langages connus sont : {'en', 'fr'}.
+    Les langages connus sont : {'fr', 'en'}.
     
     
     L'exécution s'est arrêtée à la ligne 13 du fichier 'AVANTPY-TESTS:\pyfr\raise_unknown_language.pyfr'

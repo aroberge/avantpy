@@ -274,7 +274,7 @@ UnknownLanguageError
         
     The following unknown languages was requested: xx.
     
-    The known dialects are: {'fr', 'en'}.
+    The known dialects are: {'en', 'fr'}.
     
     Execution stopped on line 13 of file 'AVANTPY-TESTS:\pyupper\raise_unknown_language.pyupper'.
     

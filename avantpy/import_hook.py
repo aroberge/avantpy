@@ -115,10 +115,14 @@ class AvantPyLoader(Loader):
         # 2. If no error is found, exec the code objects produced by the AST.
         # -------------------------
 
+        friendly_traceback.cache.add(self.filename, source)
         try:
-            exec(source, vars(module))
+            code_obj = compile(source, self.filename, "exec")
         except Exception:
-            # exec() always gives "<string>" as file name
-            friendly_traceback.cache.add(self.filename, source, string=True)
+            friendly_traceback.explain()
+
+        try:
+            exec(code_obj, vars(module))
+        except Exception:
             friendly_traceback.explain()
         return
