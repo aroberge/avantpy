@@ -60,6 +60,7 @@ class _State:
             if os.path.isfile(f) and not f.endswith("__init__.py"):
 
                 dialect = os.path.basename(f).split(".")[0]
+                friendly_traceback.exclude_file_from_traceback(runpy.__file__)
 
                 _module = runpy.run_path(f)
                 from_py = _module[dialect]

@@ -9,14 +9,11 @@ this single module.
 import os
 import platform
 
-from tokenize import TokenError
-
 import friendly_traceback
 
 from . import version
 from .converter import convert
 from .session import state
-from .exceptions import AvantPyException
 from .my_gettext import gettext_lang
 
 
@@ -56,26 +53,24 @@ class AvantPyInteractiveConsole(friendly_traceback.FriendlyConsole):
         self.buffer.append(line)
         self.source = "\n".join(self.buffer)
 
+        self.name = "<avantpy-console:%d>" % self.counter
+        self.counter += 1
+        friendly_traceback.cache.add(self.name, self.source)
         try:
             self.converted = convert(self.source, filename=self.name)
         except SystemExit:
             os._exit(1)
-        except AvantPyException:
-            self.showtraceback()
+        except Exception:
+            friendly_traceback.explain()
+            self.resetbuffer()
             return False
-        except TokenError as exc:
-            if exc.args[0].startswith("EOF"):
-                return True
-        except Exception as exc:
-            print(_("UNHANDLED EXCEPTION in console.py. This should not happen."))
-            raise exc
 
         try:
             more = self.runsource(self.converted)
         except SystemExit:
             os._exit(1)
         except Exception:
-            self.showtraceback()
+            friendly_traceback.explain()
             self.resetbuffer()
             return False
 
@@ -107,15 +102,13 @@ class AvantPyInteractiveConsole(friendly_traceback.FriendlyConsole):
         line.
 
         """
-        self.fake_filename = filename = "<console:%d>" % self.counter
-        self.source = source
-        friendly_traceback.utils.cache_string_source(self.fake_filename, self.source)
-        self.counter += 1
+        filename = "<avantpy-console:%d>" % self.counter
+        friendly_traceback.cache.add(filename, source)
         try:
             code = self.compile(source, filename, symbol)
         except (OverflowError, SyntaxError, ValueError):
             # Case 1
-            self.showsyntaxerror(filename)
+            friendly_traceback.explain()
             return False
 
         if code is None:

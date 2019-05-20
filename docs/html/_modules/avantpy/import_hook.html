@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>avantpy.import_hook &#8212; AvantPy 0.0.13a documentation</title>
+    <title>avantpy.import_hook &#8212; AvantPy 0.0.14a documentation</title>
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -24,7 +24,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.13a documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.14a documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>
@@ -68,6 +68,8 @@
 
 <span class="n">MAIN_MODULE_NAME</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="n">COUNTER</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">friendly_traceback</span><span class="o">.</span><span class="n">exclude_file_from_traceback</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="import_main"><a class="viewcode-back" href="../../modules.html#avantpy.import_hook.import_main">[docs]</a><span class="k">def</span> <span class="nf">import_main</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
@@ -171,15 +173,16 @@
             <span class="n">friendly_traceback</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">cache_string_source</span><span class="p">(</span>
                 <span class="s2">&quot;&lt;string&gt;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
             <span class="p">)</span>
+            <span class="n">friendly_traceback</span><span class="o">.</span><span class="n">explain</span><span class="p">()</span>
             <span class="c1"># We remove the first stack item because it is our own code.</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">last_type</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">last_value</span><span class="p">,</span> <span class="n">last_tb</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">last_traceback</span> <span class="o">=</span> <span class="n">last_tb</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">friendly_traceback</span><span class="o">.</span><span class="n">_explain</span><span class="p">(</span>
-                    <span class="n">sys</span><span class="o">.</span><span class="n">last_type</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">last_value</span><span class="p">,</span> <span class="n">last_tb</span><span class="o">.</span><span class="n">tb_next</span>
-                <span class="p">)</span>
-            <span class="k">finally</span><span class="p">:</span>
-                <span class="n">last_tb</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="c1"># sys.last_type, sys.last_value, last_tb = sys.exc_info()</span>
+            <span class="c1"># sys.last_traceback = last_tb</span>
+            <span class="c1"># try:</span>
+            <span class="c1">#     friendly_traceback._explain(</span>
+            <span class="c1">#         sys.last_type, sys.last_value, last_tb.tb_next</span>
+            <span class="c1">#     )</span>
+            <span class="c1"># finally:</span>
+            <span class="c1">#     last_tb = None</span>
         <span class="k">return</span></div></div>
 </pre></div>
 
@@ -197,7 +200,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.13a documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.14a documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>

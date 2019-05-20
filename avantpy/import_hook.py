@@ -18,6 +18,8 @@ from .my_gettext import gettext_lang
 MAIN_MODULE_NAME = None
 COUNTER = 0
 
+friendly_traceback.exclude_file_from_traceback(__file__)
+
 
 def import_main(name):
     """Imports the module that is to be interpreted as the main module.
@@ -117,14 +119,6 @@ class AvantPyLoader(Loader):
             exec(source, vars(module))
         except Exception:
             # exec() always gives "<string>" as file name
-            friendly_traceback.utils.cache_string_source("<string>", source)
-            # We remove the first stack item because it is our own code.
-            sys.last_type, sys.last_value, last_tb = sys.exc_info()
-            sys.last_traceback = last_tb
-            try:
-                friendly_traceback._explain(
-                    sys.last_type, sys.last_value, last_tb.tb_next
-                )
-            finally:
-                last_tb = None
+            friendly_traceback.cache.add(self.filename, source, string=True)
+            friendly_traceback.explain()
         return

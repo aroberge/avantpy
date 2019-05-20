@@ -15,7 +15,7 @@ documenter ici tous les exemples possibles tels qu'interprétés par AvantPy.
      faire des corrections ou des ajouts, avant de faire la mise
      à jour du reste de la documentation avec Sphinx.
 
-AvantPy version: 0.0.13a
+AvantPy version: 0.0.14a
 Python version: 3.7.3
 
 
