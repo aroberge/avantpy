@@ -170,19 +170,8 @@
             <span class="n">exec</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="nb">vars</span><span class="p">(</span><span class="n">module</span><span class="p">))</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="c1"># exec() always gives &quot;&lt;string&gt;&quot; as file name</span>
-            <span class="n">friendly_traceback</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">cache_string_source</span><span class="p">(</span>
-                <span class="s2">&quot;&lt;string&gt;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
-            <span class="p">)</span>
+            <span class="n">friendly_traceback</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">friendly_traceback</span><span class="o">.</span><span class="n">explain</span><span class="p">()</span>
-            <span class="c1"># We remove the first stack item because it is our own code.</span>
-            <span class="c1"># sys.last_type, sys.last_value, last_tb = sys.exc_info()</span>
-            <span class="c1"># sys.last_traceback = last_tb</span>
-            <span class="c1"># try:</span>
-            <span class="c1">#     friendly_traceback._explain(</span>
-            <span class="c1">#         sys.last_type, sys.last_value, last_tb.tb_next</span>
-            <span class="c1">#     )</span>
-            <span class="c1"># finally:</span>
-            <span class="c1">#     last_tb = None</span>
         <span class="k">return</span></div></div>
 </pre></div>
 

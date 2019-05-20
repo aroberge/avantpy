@@ -264,12 +264,12 @@ UnknownDialectError
 
     session: <module 'avantpy.session' from 'C:\\Users\\an...>
 
-    Exception levée à la ligne 133 du fichier 'AVANTPY:\avantpy\session.py'.
+    Exception levée à la ligne 134 du fichier 'AVANTPY:\avantpy\session.py'.
     
-       131:         if not self.is_dialect(dialect):
-       132:             raise exceptions.UnknownDialectError(
-    -->133:                 "Unknown dialect %s" % dialect, (dialect, self.all_dialects())
-       134:             )
+       132:         if not self.is_dialect(dialect):
+       133:             raise exceptions.UnknownDialectError(
+    -->134:                 "Unknown dialect %s" % dialect, (dialect, self.all_dialects())
+       135:             )
 
     dialect: 'pyxx'
     self: <avantpy.session._State object>
@@ -298,12 +298,12 @@ UnknownLanguageError
 
     session: <module 'avantpy.session' from 'C:\\Users\\an...>
 
-    Exception levée à la ligne 158 du fichier 'AVANTPY:\avantpy\session.py'.
+    Exception levée à la ligne 159 du fichier 'AVANTPY:\avantpy\session.py'.
     
-       156:         if not self.is_lang(lang):
-       157:             raise exceptions.UnknownLanguageError(
-    -->158:                 "Unknown language %s" % lang, (lang, self.languages)
-       159:             )
+       157:         if not self.is_lang(lang):
+       158:             raise exceptions.UnknownLanguageError(
+    -->159:                 "Unknown language %s" % lang, (lang, self.languages)
+       160:             )
 
     lang: 'xx'
     self: <avantpy.session._State object>
