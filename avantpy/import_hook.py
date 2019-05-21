@@ -100,6 +100,7 @@ class AvantPyLoader(Loader):
         # fullname = name + extension
         dialect = extension[1:]
 
+        friendly_traceback.cache.add(self.filename, source)
         try:
             session.state.set_dialect(dialect)
             source = converter.convert(source, dialect, filename=self.filename)
@@ -108,14 +109,18 @@ class AvantPyLoader(Loader):
             return
 
         # ------------------------
-        # Ideally, instead of the following use of exec(source), we would
-        # proceed in two steps:
-        # 1. use a custom AST parser that could generate more detailed
-        #    information when a SyntaxError is found
-        # 2. If no error is found, exec the code objects produced by the AST.
+        # Previously, we did the following essentially in one step:
+        #
+        #     exec(source, vars(module))
+        #
+        # The problem with that approach is that exec() records '<string>'
+        # as the filename, for every file thus loaded; in some cases, the
+        # prevented the traceback from having access to the source of the file.
+        # By doing it in two steps, as we do here by first using compile()
+        # and then exec(), we ensure that the correct filename is attached
+        # to the code objects.
         # -------------------------
 
-        friendly_traceback.cache.add(self.filename, source)
         try:
             code_obj = compile(source, self.filename, "exec")
         except Exception:

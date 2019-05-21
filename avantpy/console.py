@@ -53,8 +53,8 @@ class AvantPyInteractiveConsole(friendly_traceback.FriendlyConsole):
         self.buffer.append(line)
         self.source = "\n".join(self.buffer)
 
-        self.name = "<avantpy-console:%d>" % self.counter
         self.counter += 1
+        self.name = "<avantpy-console:%d>" % self.counter
         friendly_traceback.cache.add(self.name, self.source)
         try:
             self.converted = convert(self.source, filename=self.name)
@@ -66,7 +66,7 @@ class AvantPyInteractiveConsole(friendly_traceback.FriendlyConsole):
             return False
 
         try:
-            more = self.runsource(self.converted)
+            more = self.runsource(self.converted, filename=self.name)
         except SystemExit:
             os._exit(1)
         except Exception:
@@ -102,8 +102,6 @@ class AvantPyInteractiveConsole(friendly_traceback.FriendlyConsole):
         line.
 
         """
-        filename = "<avantpy-console:%d>" % self.counter
-        friendly_traceback.cache.add(filename, source)
         try:
             code = self.compile(source, filename, symbol)
         except (OverflowError, SyntaxError, ValueError):
