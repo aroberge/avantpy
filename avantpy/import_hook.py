@@ -101,6 +101,7 @@ class AvantPyLoader(Loader):
         dialect = extension[1:]
 
         friendly_traceback.cache.add(self.filename, source)
+        friendly_traceback.clear_traceback()
         try:
             session.state.set_dialect(dialect)
             source = converter.convert(source, dialect, filename=self.filename)

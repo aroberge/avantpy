@@ -56,6 +56,7 @@ class AvantPyInteractiveConsole(friendly_traceback.FriendlyConsole):
         self.counter += 1
         self.name = "<avantpy-console:%d>" % self.counter
         friendly_traceback.cache.add(self.name, self.source)
+        friendly_traceback.clear_traceback()
         try:
             self.converted = convert(self.source, filename=self.name)
         except SystemExit:

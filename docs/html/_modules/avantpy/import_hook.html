@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>avantpy.import_hook &#8212; AvantPy 0.0.14a documentation</title>
+    <title>avantpy.import_hook &#8212; AvantPy 0.0.15a documentation</title>
     <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -24,7 +24,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.14a documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.15a documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>
@@ -151,6 +151,7 @@
         <span class="c1"># fullname = name + extension</span>
         <span class="n">dialect</span> <span class="o">=</span> <span class="n">extension</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
+        <span class="n">friendly_traceback</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">session</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">set_dialect</span><span class="p">(</span><span class="n">dialect</span><span class="p">)</span>
             <span class="n">source</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">dialect</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
@@ -159,14 +160,18 @@
             <span class="k">return</span>
 
         <span class="c1"># ------------------------</span>
-        <span class="c1"># Ideally, instead of the following use of exec(source), we would</span>
-        <span class="c1"># proceed in two steps:</span>
-        <span class="c1"># 1. use a custom AST parser that could generate more detailed</span>
-        <span class="c1">#    information when a SyntaxError is found</span>
-        <span class="c1"># 2. If no error is found, exec the code objects produced by the AST.</span>
+        <span class="c1"># Previously, we did the following essentially in one step:</span>
+        <span class="c1">#</span>
+        <span class="c1">#     exec(source, vars(module))</span>
+        <span class="c1">#</span>
+        <span class="c1"># The problem with that approach is that exec() records &#39;&lt;string&gt;&#39;</span>
+        <span class="c1"># as the filename, for every file thus loaded; in some cases, the</span>
+        <span class="c1"># prevented the traceback from having access to the source of the file.</span>
+        <span class="c1"># By doing it in two steps, as we do here by first using compile()</span>
+        <span class="c1"># and then exec(), we ensure that the correct filename is attached</span>
+        <span class="c1"># to the code objects.</span>
         <span class="c1"># -------------------------</span>
 
-        <span class="n">friendly_traceback</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">code_obj</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;exec&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
@@ -193,7 +198,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.14a documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">AvantPy 0.0.15a documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>

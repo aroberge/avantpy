@@ -15,7 +15,7 @@ documenter ici tous les exemples possibles tels qu'interprétés par AvantPy.
      faire des corrections ou des ajouts, avant de faire la mise
      à jour du reste de la documentation avec Sphinx.
 
-AvantPy version: 0.0.14a
+AvantPy version: 0.0.15a
 Python version: 3.7.3
 
 
@@ -285,7 +285,7 @@ UnknownLanguageError
         
     Le langage inconnu suivant a été demandé : xx.
     
-    Les langages connus sont : {'fr', 'en'}.
+    Les langages connus sont : {'en', 'fr'}.
     
     
     L'exécution s'est arrêtée à la ligne 13 du fichier 'AVANTPY-TESTS:\pyfr\raise_unknown_language.pyfr'

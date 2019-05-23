@@ -12,7 +12,7 @@ Such feedback will also be available in languages other than English.
      This needs to be done explicitly, independently of updating the
      documentation using Sphinx.
 
-AvantPy version: 0.0.14a
+AvantPy version: 0.0.15a
 Python version: 3.7.3
 
 
