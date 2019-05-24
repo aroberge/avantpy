@@ -617,8 +617,11 @@ def convert(source, dialect=None, filename=None):
     """Normally used from other functions to call for a conversion
        of a Python source from a given dialect into Python.
     """
-    if dialect is not None and not state.is_dialect(dialect):
-        # we don't know how to convert this
+    if (
+        dialect == "py"
+        or (dialect is None and state.current_dialect == "py")
+        or (dialect is not None and not state.is_dialect(dialect))
+    ):
         return source
 
     converter = Converter(source, dialect=dialect, filename=filename)

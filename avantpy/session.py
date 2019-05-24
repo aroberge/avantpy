@@ -129,6 +129,11 @@ class _State:
 
            Also sets the default prompt.
         """
+        if dialect == "py":
+            self.current_dialect = dialect
+            self.prompt1 = ">>> "
+            self.prompt2 = "... "
+            return
         if not self.is_dialect(dialect):
             raise exceptions.UnknownDialectError(
                 "Unknown dialect %s" % dialect, (dialect, self.all_dialects())
