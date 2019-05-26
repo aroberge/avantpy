@@ -12,6 +12,8 @@ Bienvenue 환영합니다 Bienvenido - ようこそ Welcome  歡迎光臨
     an installed version.
 
 
+The `code is available on Github <https://github.com/aroberge/avantpy>`_
+
 What is AvantPy?
 ----------------
 
