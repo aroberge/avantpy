@@ -1,85 +1,185 @@
 
-<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta charset="utf-8" />
-    <title>Other modules &#8212; AvantPy 0.0.15a documentation</title>
-    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Other modules &mdash; AvantPy 0.0.15a documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Contributing" href="contribute.html" />
     <link rel="prev" title="Testing" href="testing.html" /> 
-  </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="contribute.html" title="Contributing"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="testing.html" title="Testing"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.15a documentation</a> &#187;</li> 
-      </ul>
-    </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Other modules</a><ul>
-<li><a class="reference internal" href="#module-avantpy.console">console</a></li>
-<li><a class="reference internal" href="#module-avantpy.converter">converter</a></li>
-<li><a class="reference internal" href="#module-avantpy.exception_handling">exception_handling</a></li>
-<li><a class="reference internal" href="#module-avantpy.exceptions">exceptions</a></li>
-<li><a class="reference internal" href="#module-avantpy.gui">gui</a></li>
-<li><a class="reference internal" href="#module-avantpy.import_hook">import_hook</a></li>
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> AvantPy
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.15a
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="invocation.html"> Invocation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dialect.html"> Language or dialect?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="principles.html"> Guiding principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repeat.html"> Special keyword: repeat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nobreak.html"> Special keyword: nobreak</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notimported.html"> Special keyword: notimported</a></li>
+<li class="toctree-l1"><a class="reference internal" href="builtins.html"> More than keywords</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tracebacks_upper.html"> Friendly error messages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="works.html"> How does it work?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html"> Testing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Other modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-avantpy.console">console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-avantpy.converter">converter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-avantpy.exception_handling">exception_handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-avantpy.exceptions">exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-avantpy.gui">gui</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-avantpy.import_hook">import_hook</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html"> Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translations_notes.html"> Notes on translations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tracebacks_fr.html"> Friendly error messages - en Français</a></li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="testing.html"
-                        title="previous chapter">Testing</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="contribute.html"
-                        title="next chapter">Contributing</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/modules.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+            
+          
         </div>
       </div>
+    </nav>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AvantPy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Other modules</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/modules.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="contribute.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="testing.html" class="btn btn-neutral float-left" title="Testing" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="other-modules">
 <h1>Other modules<a class="headerlink" href="#other-modules" title="Permalink to this headline">¶</a></h1>
@@ -95,7 +195,7 @@ it seemed to make sense to “rewrite” every relevant part in
 this single module.</p>
 <dl class="class">
 <dt id="avantpy.console.AvantPyInteractiveConsole">
-<em class="property">class </em><code class="descclassname">avantpy.console.</code><code class="descname">AvantPyInteractiveConsole</code><span class="sig-paren">(</span><em>locals=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">avantpy.console.</code><code class="sig-name descname">AvantPyInteractiveConsole</code><span class="sig-paren">(</span><em class="sig-param">locals=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole" title="Permalink to this definition">¶</a></dt>
 <dd><p>A Python console that tries to emulate the normal Python interpreter
 except that it support experimental code transformations.
 It is adapted from cPython’s <code class="docutils literal notranslate"><span class="pre">code.InteractiveConsole</span></code> and its
@@ -104,7 +204,7 @@ parent.</p>
 code entered one line at a time by a user.</p>
 <dl class="method">
 <dt id="avantpy.console.AvantPyInteractiveConsole.push">
-<code class="descname">push</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.push"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.push" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">push</code><span class="sig-paren">(</span><em class="sig-param">line</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.push"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.push" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pushes a transformed line to the interpreter.</p>
 <p>The line should not have a trailing newline; it may have
 internal newlines.  The line is transformed and appended to a buffer.
@@ -119,7 +219,7 @@ with in some way (this is the same as run_source()).</p>
 
 <dl class="method">
 <dt id="avantpy.console.AvantPyInteractiveConsole.runsource">
-<code class="descname">runsource</code><span class="sig-paren">(</span><em>source</em>, <em>filename='&lt;input&gt;'</em>, <em>symbol='single'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.runsource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.runsource" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">runsource</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">filename='&lt;input&gt;'</em>, <em class="sig-param">symbol='single'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#AvantPyInteractiveConsole.runsource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.AvantPyInteractiveConsole.runsource" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compile and run some source in the interpreter.</p>
 <p>Arguments are as for compile_command().</p>
 <p>One several things can happen:</p>
@@ -141,7 +241,7 @@ line.</p>
 
 <dl class="function">
 <dt id="avantpy.console.start_console">
-<code class="descclassname">avantpy.console.</code><code class="descname">start_console</code><span class="sig-paren">(</span><em>local_vars=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#start_console"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.start_console" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.console.</code><code class="sig-name descname">start_console</code><span class="sig-paren">(</span><em class="sig-param">local_vars=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/console.html#start_console"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.console.start_console" title="Permalink to this definition">¶</a></dt>
 <dd><p>Starts a console; modified from code.interact</p>
 </dd></dl>
 
@@ -287,7 +387,7 @@ is raised.</p>
 Python.</p>
 <dl class="class">
 <dt id="avantpy.converter.Converter">
-<em class="property">class </em><code class="descclassname">avantpy.converter.</code><code class="descname">Converter</code><span class="sig-paren">(</span><em>source</em>, <em>dialect=None</em>, <em>filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">avantpy.converter.</code><code class="sig-name descname">Converter</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">dialect=None</em>, <em class="sig-param">filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class uses Python’s <code class="docutils literal notranslate"><span class="pre">tokenize</span></code> module to convert a
 source into a sequence of tokens. A token might be the name
 of a variable, an operator, a parenthesis, a string, etc.</p>
@@ -324,7 +424,7 @@ untokenize function, and explicitly keep track of spacing
 between tokens.</p>
 <dl class="method">
 <dt id="avantpy.converter.Converter.convert">
-<code class="descname">convert</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.convert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.convert" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">convert</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.convert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.convert" title="Permalink to this definition">¶</a></dt>
 <dd><p>Uses Python’s tokenize module to generate tokens from a source.</p>
 <p>It calls a function to process each token in turn, and combine
 the results to returned a transformed source.</p>
@@ -332,14 +432,14 @@ the results to returned a transformed source.</p>
 
 <dl class="method">
 <dt id="avantpy.converter.Converter.do_close_bracket">
-<code class="descname">do_close_bracket</code><span class="sig-paren">(</span><em>token</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.do_close_bracket"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.do_close_bracket" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">do_close_bracket</code><span class="sig-paren">(</span><em class="sig-param">token</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.do_close_bracket"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.do_close_bracket" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines if a closing bracket ), ], or }, matches a previously
 opened one, and raises an error if that is not the case.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="avantpy.converter.Converter.do_until_forever_error">
-<code class="descname">do_until_forever_error</code><span class="sig-paren">(</span><em>token</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.do_until_forever_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.do_until_forever_error" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">do_until_forever_error</code><span class="sig-paren">(</span><em class="sig-param">token</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.do_until_forever_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.do_until_forever_error" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function is called when we see a keyword equivalent to
 <code class="docutils literal notranslate"><span class="pre">until</span></code> or <code class="docutils literal notranslate"><span class="pre">forever</span></code> in a given dialect without them
 being preceeded by the keyword <code class="docutils literal notranslate"><span class="pre">repeat</span></code>. This is not allowed.</p>
@@ -347,25 +447,25 @@ being preceeded by the keyword <code class="docutils literal notranslate"><span 
 
 <dl class="method">
 <dt id="avantpy.converter.Converter.handle_nobreak_error">
-<code class="descname">handle_nobreak_error</code><span class="sig-paren">(</span><em>token</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.handle_nobreak_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.handle_nobreak_error" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">handle_nobreak_error</code><span class="sig-paren">(</span><em class="sig-param">token</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.handle_nobreak_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.handle_nobreak_error" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deals with identified misuses of the <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> keyword.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="avantpy.converter.Converter.init_bookkeeping_vars">
-<code class="descname">init_bookkeeping_vars</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.init_bookkeeping_vars"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.init_bookkeeping_vars" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">init_bookkeeping_vars</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.init_bookkeeping_vars"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.init_bookkeeping_vars" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialises variables that are used for bookkeeping</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="avantpy.converter.Converter.init_dialect_vars">
-<code class="descname">init_dialect_vars</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.init_dialect_vars"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.init_dialect_vars" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">init_dialect_vars</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.init_dialect_vars"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.init_dialect_vars" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialises variables that are dependent on a given dialect.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="avantpy.converter.Converter.preserve_repeat_spacing">
-<code class="descname">preserve_repeat_spacing</code><span class="sig-paren">(</span><em>token</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.preserve_repeat_spacing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.preserve_repeat_spacing" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">preserve_repeat_spacing</code><span class="sig-paren">(</span><em class="sig-param">token</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.preserve_repeat_spacing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.preserve_repeat_spacing" title="Permalink to this definition">¶</a></dt>
 <dd><p>We ensure spacing of original file is preserved,
 including space between tokens.
 When self.just_processed_repeat_kwd is True, it means we just saw
@@ -375,7 +475,7 @@ we don’t need add the space between “repeat” and the next token.</p>
 
 <dl class="method">
 <dt id="avantpy.converter.Converter.process_after_repeat">
-<code class="descname">process_after_repeat</code><span class="sig-paren">(</span><em>token</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.process_after_repeat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.process_after_repeat" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">process_after_repeat</code><span class="sig-paren">(</span><em class="sig-param">token</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.process_after_repeat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.process_after_repeat" title="Permalink to this definition">¶</a></dt>
 <dd><p>After we see the <code class="docutils literal notranslate"><span class="pre">repeat</span></code> keyword, there are four possibilities:</p>
 <ol class="arabic simple">
 <li><p>the keyword <code class="docutils literal notranslate"><span class="pre">until</span></code> follows</p></li>
@@ -388,14 +488,14 @@ to an integer.</p></li>
 
 <dl class="method">
 <dt id="avantpy.converter.Converter.process_nobreak">
-<code class="descname">process_nobreak</code><span class="sig-paren">(</span><em>token</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.process_nobreak"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.process_nobreak" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">process_nobreak</code><span class="sig-paren">(</span><em class="sig-param">token</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.process_nobreak"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.process_nobreak" title="Permalink to this definition">¶</a></dt>
 <dd><p>The <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> keyword is allowed to replace <code class="docutils literal notranslate"><span class="pre">else</span></code> in
 a <code class="docutils literal notranslate"><span class="pre">while</span></code> or <code class="docutils literal notranslate"><span class="pre">for</span></code> loop only.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="avantpy.converter.Converter.process_repeat">
-<code class="descname">process_repeat</code><span class="sig-paren">(</span><em>token</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.process_repeat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.process_repeat" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">process_repeat</code><span class="sig-paren">(</span><em class="sig-param">token</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.process_repeat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.process_repeat" title="Permalink to this definition">¶</a></dt>
 <dd><p>This identifies if <code class="docutils literal notranslate"><span class="pre">repeat</span></code> begins a new line; if so, we
 simply set up a flag to indicate that we just saw this keyword,
 and otherwise drop it.</p>
@@ -404,13 +504,13 @@ and otherwise drop it.</p>
 
 <dl class="method">
 <dt id="avantpy.converter.Converter.process_token">
-<code class="descname">process_token</code><span class="sig-paren">(</span><em>token</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.process_token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.process_token" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">process_token</code><span class="sig-paren">(</span><em class="sig-param">token</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.process_token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.process_token" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines what to do for each individual token.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="avantpy.converter.Converter.raise_missing_repeat_colon">
-<code class="descname">raise_missing_repeat_colon</code><span class="sig-paren">(</span><em>linenumber</em>, <em>last_col</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.raise_missing_repeat_colon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.raise_missing_repeat_colon" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">raise_missing_repeat_colon</code><span class="sig-paren">(</span><em class="sig-param">linenumber</em>, <em class="sig-param">last_col</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#Converter.raise_missing_repeat_colon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.Converter.raise_missing_repeat_colon" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raised if a repeat statement does not end with a colon on the same
 line with no other colon appearing on that line.</p>
 </dd></dl>
@@ -419,14 +519,14 @@ line with no other colon appearing on that line.</p>
 
 <dl class="function">
 <dt id="avantpy.converter.convert">
-<code class="descclassname">avantpy.converter.</code><code class="descname">convert</code><span class="sig-paren">(</span><em>source</em>, <em>dialect=None</em>, <em>filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#convert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.convert" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.converter.</code><code class="sig-name descname">convert</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">dialect=None</em>, <em class="sig-param">filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#convert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.convert" title="Permalink to this definition">¶</a></dt>
 <dd><p>Normally used from other functions to call for a conversion
 of a Python source from a given dialect into Python.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="avantpy.converter.get_unique_variable_names">
-<code class="descclassname">avantpy.converter.</code><code class="descname">get_unique_variable_names</code><span class="sig-paren">(</span><em>source</em>, <em>repeat_kwd</em>, <em>all_count_names=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#get_unique_variable_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.get_unique_variable_names" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.converter.</code><code class="sig-name descname">get_unique_variable_names</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">repeat_kwd</em>, <em class="sig-param">all_count_names=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#get_unique_variable_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.get_unique_variable_names" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of possible variables names that
 are not found in the original source and have not been used
 anywhere.
@@ -442,7 +542,7 @@ These variables will be used in expressions such as</p>
 
 <dl class="function">
 <dt id="avantpy.converter.transcode">
-<code class="descclassname">avantpy.converter.</code><code class="descname">transcode</code><span class="sig-paren">(</span><em>source</em>, <em>from_dialect</em>, <em>to_dialect</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#transcode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.transcode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.converter.</code><code class="sig-name descname">transcode</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">from_dialect</em>, <em class="sig-param">to_dialect</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#transcode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.transcode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transforms a source (string) written in a known dialect into
 an equivalent version written in a different dialect.
 Spacing between tokens is preserved. This means that if a source
@@ -455,7 +555,7 @@ if something prevented the transformation to be successful.</p>
 
 <dl class="function">
 <dt id="avantpy.converter.transcode_file">
-<code class="descclassname">avantpy.converter.</code><code class="descname">transcode_file</code><span class="sig-paren">(</span><em>from_path</em>, <em>to_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#transcode_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.transcode_file" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.converter.</code><code class="sig-name descname">transcode_file</code><span class="sig-paren">(</span><em class="sig-param">from_path</em>, <em class="sig-param">to_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/converter.html#transcode_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.converter.transcode_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience function to be used from the command line.</p>
 </dd></dl>
 
@@ -468,20 +568,20 @@ for beginners than normal Python tracebacks.  These “friendly” tracebacks
 are written so that they can easily be translated into any human language.</p>
 <dl class="function">
 <dt id="avantpy.exception_handling.disable">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">disable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#disable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.disable" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.exception_handling.</code><code class="sig-name descname">disable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#disable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.disable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Disables custom exception handling</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.extract_filename_linenumber">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">extract_filename_linenumber</code><span class="sig-paren">(</span><em>exc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#extract_filename_linenumber"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.extract_filename_linenumber" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.exception_handling.</code><code class="sig-name descname">extract_filename_linenumber</code><span class="sig-paren">(</span><em class="sig-param">exc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#extract_filename_linenumber"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.extract_filename_linenumber" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extracting filename and linenumber where an error occurred based
 on information from traceback.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.get_partial_source">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">get_partial_source</code><span class="sig-paren">(</span><em>source</em>, <em>begin</em>, <em>end</em>, <em>marks=None</em>, <em>nb_digits=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#get_partial_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.get_partial_source" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.exception_handling.</code><code class="sig-name descname">get_partial_source</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">begin</em>, <em class="sig-param">end</em>, <em class="sig-param">marks=None</em>, <em class="sig-param">nb_digits=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#get_partial_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.get_partial_source" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extracts a few relevant lines from a source file.</p>
 <p>If the number of lines would exceed a certain limit (currently 7)
 the function is called recursively to only show the a few lines
@@ -490,54 +590,54 @@ at the beginning and at the end.</p>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.handle_IfNobreakError">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_IfNobreakError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_IfNobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_IfNobreakError" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.exception_handling.</code><code class="sig-name descname">handle_IfNobreakError</code><span class="sig-paren">(</span><em class="sig-param">exc</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_IfNobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_IfNobreakError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles situation where <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> was wrongly use as a
 replacement for <code class="docutils literal notranslate"><span class="pre">else</span></code> in an if/elif/else block.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.handle_IndentationError">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_IndentationError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_IndentationError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_IndentationError" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.exception_handling.</code><code class="sig-name descname">handle_IndentationError</code><span class="sig-paren">(</span><em class="sig-param">exc</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_IndentationError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_IndentationError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles IndentationError.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.handle_MismatchedBracketsError">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_MismatchedBracketsError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_MismatchedBracketsError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_MismatchedBracketsError" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.exception_handling.</code><code class="sig-name descname">handle_MismatchedBracketsError</code><span class="sig-paren">(</span><em class="sig-param">exc</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_MismatchedBracketsError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_MismatchedBracketsError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles situation where a bracket of one kind ‘([{‘
 is closed with a bracket of a different kind.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.handle_MissingLeftBracketError">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_MissingLeftBracketError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_MissingLeftBracketError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_MissingLeftBracketError" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.exception_handling.</code><code class="sig-name descname">handle_MissingLeftBracketError</code><span class="sig-paren">(</span><em class="sig-param">exc</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_MissingLeftBracketError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_MissingLeftBracketError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles situation where at bracket of one kind ),],}
 is closed without a corresponding open bracket.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.handle_MissingRepeatColonError">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_MissingRepeatColonError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_MissingRepeatColonError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_MissingRepeatColonError" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.exception_handling.</code><code class="sig-name descname">handle_MissingRepeatColonError</code><span class="sig-paren">(</span><em class="sig-param">exc</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_MissingRepeatColonError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_MissingRepeatColonError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles situation where a statement beginning with repeat
 does not end with a colon.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.handle_MissingRepeatError">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_MissingRepeatError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_MissingRepeatError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_MissingRepeatError" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.exception_handling.</code><code class="sig-name descname">handle_MissingRepeatError</code><span class="sig-paren">(</span><em class="sig-param">exc</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_MissingRepeatError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_MissingRepeatError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles situation where either <code class="docutils literal notranslate"><span class="pre">until</span></code> or <code class="docutils literal notranslate"><span class="pre">forever</span></code> was
 used without being preceeded by <code class="docutils literal notranslate"><span class="pre">repeat</span></code>.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.handle_NameError">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_NameError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_NameError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_NameError" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.exception_handling.</code><code class="sig-name descname">handle_NameError</code><span class="sig-paren">(</span><em class="sig-param">exc</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_NameError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_NameError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles situation where a NameError is raise.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.handle_NobreakFirstError">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_NobreakFirstError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_NobreakFirstError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_NobreakFirstError" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.exception_handling.</code><code class="sig-name descname">handle_NobreakFirstError</code><span class="sig-paren">(</span><em class="sig-param">exc</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_NobreakFirstError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_NobreakFirstError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles situation where <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> was wrongly use as a
 replacement for <code class="docutils literal notranslate"><span class="pre">else</span></code> in statements like
 var = x if condition else y.</p>
@@ -545,46 +645,46 @@ var = x if condition else y.</p>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.handle_NobreakSyntaxError">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_NobreakSyntaxError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_NobreakSyntaxError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_NobreakSyntaxError" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.exception_handling.</code><code class="sig-name descname">handle_NobreakSyntaxError</code><span class="sig-paren">(</span><em class="sig-param">exc</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_NobreakSyntaxError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_NobreakSyntaxError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles situation where <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> is used without a matching
 <code class="docutils literal notranslate"><span class="pre">for</span></code> or <code class="docutils literal notranslate"><span class="pre">while</span></code> loop and not already raised.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.handle_RepeatFirstError">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_RepeatFirstError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_RepeatFirstError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_RepeatFirstError" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.exception_handling.</code><code class="sig-name descname">handle_RepeatFirstError</code><span class="sig-paren">(</span><em class="sig-param">exc</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_RepeatFirstError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_RepeatFirstError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles situation where <code class="docutils literal notranslate"><span class="pre">repeat</span></code> was uses wrongly as
 it did not appear as the first keyword of a given statement.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.handle_TabError">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_TabError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_TabError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_TabError" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.exception_handling.</code><code class="sig-name descname">handle_TabError</code><span class="sig-paren">(</span><em class="sig-param">exc</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_TabError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_TabError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles TabError.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.handle_TryNobreakError">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_TryNobreakError</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_TryNobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_TryNobreakError" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.exception_handling.</code><code class="sig-name descname">handle_TryNobreakError</code><span class="sig-paren">(</span><em class="sig-param">exc</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_TryNobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_TryNobreakError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles situation where <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> was wrongly use as a
 replacement for <code class="docutils literal notranslate"><span class="pre">else</span></code> in an try/except/else/finally block.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.handle_UnknownDialectError">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_UnknownDialectError</code><span class="sig-paren">(</span><em>exc</em>, <em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_UnknownDialectError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_UnknownDialectError" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.exception_handling.</code><code class="sig-name descname">handle_UnknownDialectError</code><span class="sig-paren">(</span><em class="sig-param">exc</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_UnknownDialectError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_UnknownDialectError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles error raised when an unknown dialect is requested</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.handle_UnknownLanguageError">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_UnknownLanguageError</code><span class="sig-paren">(</span><em>exc</em>, <em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_UnknownLanguageError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_UnknownLanguageError" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.exception_handling.</code><code class="sig-name descname">handle_UnknownLanguageError</code><span class="sig-paren">(</span><em class="sig-param">exc</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_UnknownLanguageError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_UnknownLanguageError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles error raised when an unknown language is requested</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.handle_exception">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">handle_exception</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_exception"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_exception" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.exception_handling.</code><code class="sig-name descname">handle_exception</code><span class="sig-paren">(</span><em class="sig-param">exc</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#handle_exception"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.handle_exception" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generic function to handle exceptions and returns a
 friendlier traceback than Python.</p>
 <p>If the exception is not recognized as one for which a friendlier
@@ -593,13 +693,13 @@ traceback can be provided, None is returned</p>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.write_err">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">write_err</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#write_err"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.write_err" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.exception_handling.</code><code class="sig-name descname">write_err</code><span class="sig-paren">(</span><em class="sig-param">msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#write_err"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.write_err" title="Permalink to this definition">¶</a></dt>
 <dd><p>Writes a string to sys.stderr.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="avantpy.exception_handling.write_exception_info">
-<code class="descclassname">avantpy.exception_handling.</code><code class="descname">write_exception_info</code><span class="sig-paren">(</span><em>exc</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#write_exception_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.write_exception_info" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.exception_handling.</code><code class="sig-name descname">write_exception_info</code><span class="sig-paren">(</span><em class="sig-param">exc</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exception_handling.html#write_exception_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exception_handling.write_exception_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Writes the information we have after processing the exception.</p>
 </dd></dl>
 
@@ -609,25 +709,25 @@ traceback can be provided, None is returned</p>
 <p>Custom exceptions</p>
 <dl class="exception">
 <dt id="avantpy.exceptions.AvantPyException">
-<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">AvantPyException</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#AvantPyException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.AvantPyException" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">avantpy.exceptions.</code><code class="sig-name descname">AvantPyException</code><span class="sig-paren">(</span><em class="sig-param">msg</em>, <em class="sig-param">args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#AvantPyException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.AvantPyException" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for custom exceptions.</p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="avantpy.exceptions.AvantPySyntaxError">
-<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">AvantPySyntaxError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#AvantPySyntaxError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.AvantPySyntaxError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">avantpy.exceptions.</code><code class="sig-name descname">AvantPySyntaxError</code><span class="sig-paren">(</span><em class="sig-param">msg</em>, <em class="sig-param">args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#AvantPySyntaxError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.AvantPySyntaxError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for custom exceptions that are SyntaxErrors</p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="avantpy.exceptions.IfNobreakError">
-<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">IfNobreakError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#IfNobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.IfNobreakError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">avantpy.exceptions.</code><code class="sig-name descname">IfNobreakError</code><span class="sig-paren">(</span><em class="sig-param">msg</em>, <em class="sig-param">args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#IfNobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.IfNobreakError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raised if <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> is used instead of <code class="docutils literal notranslate"><span class="pre">else</span></code> in an <code class="docutils literal notranslate"><span class="pre">if</span></code> statement</p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="avantpy.exceptions.MismatchedBracketsError">
-<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">MismatchedBracketsError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#MismatchedBracketsError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.MismatchedBracketsError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">avantpy.exceptions.</code><code class="sig-name descname">MismatchedBracketsError</code><span class="sig-paren">(</span><em class="sig-param">msg</em>, <em class="sig-param">args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#MismatchedBracketsError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.MismatchedBracketsError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raised if a left parenthesis ‘(‘, or square bracket ‘[‘
 or curly bracket ‘{‘, is closed by a right ‘bracket’ of a different type.</p>
 <p>In standard Python, this would be indicated as:</p>
@@ -638,7 +738,7 @@ or curly bracket ‘{‘, is closed by a right ‘bracket’ of a different type
 
 <dl class="exception">
 <dt id="avantpy.exceptions.MissingLeftBracketError">
-<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">MissingLeftBracketError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#MissingLeftBracketError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.MissingLeftBracketError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">avantpy.exceptions.</code><code class="sig-name descname">MissingLeftBracketError</code><span class="sig-paren">(</span><em class="sig-param">msg</em>, <em class="sig-param">args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#MissingLeftBracketError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.MissingLeftBracketError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raised if a right parenthesis ‘)’, or square bracket ‘]’
 or curly bracket ‘}’, is found without having a matching left bracket
 found previously.</p>
@@ -650,50 +750,50 @@ found previously.</p>
 
 <dl class="exception">
 <dt id="avantpy.exceptions.MissingRepeatColonError">
-<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">MissingRepeatColonError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#MissingRepeatColonError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.MissingRepeatColonError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">avantpy.exceptions.</code><code class="sig-name descname">MissingRepeatColonError</code><span class="sig-paren">(</span><em class="sig-param">msg</em>, <em class="sig-param">args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#MissingRepeatColonError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.MissingRepeatColonError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raised if a line beginning with <code class="docutils literal notranslate"><span class="pre">repeat</span></code> does not end with a colon.</p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="avantpy.exceptions.MissingRepeatError">
-<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">MissingRepeatError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#MissingRepeatError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.MissingRepeatError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">avantpy.exceptions.</code><code class="sig-name descname">MissingRepeatError</code><span class="sig-paren">(</span><em class="sig-param">msg</em>, <em class="sig-param">args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#MissingRepeatError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.MissingRepeatError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raised if <code class="docutils literal notranslate"><span class="pre">until</span></code> or <code class="docutils literal notranslate"><span class="pre">forever</span></code> is used without being preceeded by
 <code class="docutils literal notranslate"><span class="pre">repeat</span></code>.</p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="avantpy.exceptions.NobreakFirstError">
-<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">NobreakFirstError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#NobreakFirstError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.NobreakFirstError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">avantpy.exceptions.</code><code class="sig-name descname">NobreakFirstError</code><span class="sig-paren">(</span><em class="sig-param">msg</em>, <em class="sig-param">args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#NobreakFirstError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.NobreakFirstError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raised if <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> is used somewhere other than at the beginning of a line.</p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="avantpy.exceptions.NobreakSyntaxError">
-<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">NobreakSyntaxError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#NobreakSyntaxError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.NobreakSyntaxError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">avantpy.exceptions.</code><code class="sig-name descname">NobreakSyntaxError</code><span class="sig-paren">(</span><em class="sig-param">msg</em>, <em class="sig-param">args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#NobreakSyntaxError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.NobreakSyntaxError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raised if <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> is without a matching block.</p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="avantpy.exceptions.RepeatFirstError">
-<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">RepeatFirstError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#RepeatFirstError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.RepeatFirstError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">avantpy.exceptions.</code><code class="sig-name descname">RepeatFirstError</code><span class="sig-paren">(</span><em class="sig-param">msg</em>, <em class="sig-param">args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#RepeatFirstError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.RepeatFirstError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raised if <code class="docutils literal notranslate"><span class="pre">repeat</span></code> is used somewhere other than at the beginning of a line.</p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="avantpy.exceptions.TryNobreakError">
-<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">TryNobreakError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#TryNobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.TryNobreakError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">avantpy.exceptions.</code><code class="sig-name descname">TryNobreakError</code><span class="sig-paren">(</span><em class="sig-param">msg</em>, <em class="sig-param">args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#TryNobreakError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.TryNobreakError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raised if <code class="docutils literal notranslate"><span class="pre">nobreak</span></code> is used instead of <code class="docutils literal notranslate"><span class="pre">else</span></code> in <code class="docutils literal notranslate"><span class="pre">try/except</span></code> statement</p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="avantpy.exceptions.UnknownDialectError">
-<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">UnknownDialectError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#UnknownDialectError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.UnknownDialectError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">avantpy.exceptions.</code><code class="sig-name descname">UnknownDialectError</code><span class="sig-paren">(</span><em class="sig-param">msg</em>, <em class="sig-param">args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#UnknownDialectError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.UnknownDialectError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raised when attempting to set <code class="docutils literal notranslate"><span class="pre">dialect</span></code> to unsupported value.</p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="avantpy.exceptions.UnknownLanguageError">
-<em class="property">exception </em><code class="descclassname">avantpy.exceptions.</code><code class="descname">UnknownLanguageError</code><span class="sig-paren">(</span><em>msg</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#UnknownLanguageError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.UnknownLanguageError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">avantpy.exceptions.</code><code class="sig-name descname">UnknownLanguageError</code><span class="sig-paren">(</span><em class="sig-param">msg</em>, <em class="sig-param">args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/exceptions.html#UnknownLanguageError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.exceptions.UnknownLanguageError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raised when attempting to set <code class="docutils literal notranslate"><span class="pre">lang</span></code> to unsupported value.</p>
 </dd></dl>
 
@@ -706,34 +806,34 @@ and convert it into another dialect or into Python, showing both the
 original source and the converted one in two different editor frames,
 with Python keyword, as well as their counterpart in various dialects,
 highlighted.</p>
-<div class="admonition-todo admonition" id="index-0">
+<div class="admonition-todo admonition" id="id1">
 <p class="admonition-title">Todo</p>
 <p>This module needs to be documented properly</p>
 </div>
 <dl class="class">
 <dt id="avantpy.gui.App">
-<em class="property">class </em><code class="descclassname">avantpy.gui.</code><code class="descname">App</code><span class="sig-paren">(</span><em>master=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#App"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.App" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">avantpy.gui.</code><code class="sig-name descname">App</code><span class="sig-paren">(</span><em class="sig-param">master=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#App"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.App" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="avantpy.gui.App.add_ui">
-<code class="descname">add_ui</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#App.add_ui"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.App.add_ui" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_ui</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#App.add_ui"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.App.add_ui" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds UI elements to the main window</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="avantpy.gui.App.convert_source">
-<code class="descname">convert_source</code><span class="sig-paren">(</span><em>event=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#App.convert_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.App.convert_source" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">convert_source</code><span class="sig-paren">(</span><em class="sig-param">event=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#App.convert_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.App.convert_source" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts the content of the source window into the requested dialect.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="avantpy.gui.App.get_conversion_dialect">
-<code class="descname">get_conversion_dialect</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#App.get_conversion_dialect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.App.get_conversion_dialect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_conversion_dialect</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#App.get_conversion_dialect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.App.get_conversion_dialect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the conversion dialect selected from the ComboBox.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="avantpy.gui.App.get_source">
-<code class="descname">get_source</code><span class="sig-paren">(</span><em>event=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#App.get_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.App.get_source" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_source</code><span class="sig-paren">(</span><em class="sig-param">event=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#App.get_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.App.get_source" title="Permalink to this definition">¶</a></dt>
 <dd><p>Opens a file by looking first from the current directory.</p>
 </dd></dl>
 
@@ -741,31 +841,31 @@ highlighted.</p>
 
 <dl class="class">
 <dt id="avantpy.gui.EditorWidget">
-<em class="property">class </em><code class="descclassname">avantpy.gui.</code><code class="descname">EditorWidget</code><span class="sig-paren">(</span><em>parent</em>, <em>parent_frame</em>, <em>other=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#EditorWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.EditorWidget" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">avantpy.gui.</code><code class="sig-name descname">EditorWidget</code><span class="sig-paren">(</span><em class="sig-param">parent</em>, <em class="sig-param">parent_frame</em>, <em class="sig-param">other=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#EditorWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.EditorWidget" title="Permalink to this definition">¶</a></dt>
 <dd><p>A scrollable text editor, that can save files.</p>
 <dl class="method">
 <dt id="avantpy.gui.EditorWidget.colorize">
-<code class="descname">colorize</code><span class="sig-paren">(</span><em>event=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#EditorWidget.colorize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.EditorWidget.colorize" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">colorize</code><span class="sig-paren">(</span><em class="sig-param">event=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#EditorWidget.colorize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.EditorWidget.colorize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Colorizes the Python keywords and a few builtins, as well as the
 corresponding version in other dialects.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="avantpy.gui.EditorWidget.get_text">
-<code class="descname">get_text</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#EditorWidget.get_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.EditorWidget.get_text" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_text</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#EditorWidget.get_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.EditorWidget.get_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the current content and returns it as a string</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="avantpy.gui.EditorWidget.insert_text">
-<code class="descname">insert_text</code><span class="sig-paren">(</span><em>txt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#EditorWidget.insert_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.EditorWidget.insert_text" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">insert_text</code><span class="sig-paren">(</span><em class="sig-param">txt</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#EditorWidget.insert_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.EditorWidget.insert_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inserts the text in the editor, replacing any previously existing
 content.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="avantpy.gui.EditorWidget.save_file">
-<code class="descname">save_file</code><span class="sig-paren">(</span><em>event=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#EditorWidget.save_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.EditorWidget.save_file" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">save_file</code><span class="sig-paren">(</span><em class="sig-param">event=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#EditorWidget.save_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.EditorWidget.save_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Saves the file currently in the Texteditor</p>
 </dd></dl>
 
@@ -773,10 +873,10 @@ content.</p>
 
 <dl class="class">
 <dt id="avantpy.gui.TextLineNumbers">
-<em class="property">class </em><code class="descclassname">avantpy.gui.</code><code class="descname">TextLineNumbers</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#TextLineNumbers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.TextLineNumbers" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">avantpy.gui.</code><code class="sig-name descname">TextLineNumbers</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#TextLineNumbers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.TextLineNumbers" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="avantpy.gui.TextLineNumbers.redraw">
-<code class="descname">redraw</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#TextLineNumbers.redraw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.TextLineNumbers.redraw" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">redraw</code><span class="sig-paren">(</span><em class="sig-param">*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/gui.html#TextLineNumbers.redraw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.gui.TextLineNumbers.redraw" title="Permalink to this definition">¶</a></dt>
 <dd><p>redraw line numbers</p>
 </dd></dl>
 
@@ -788,11 +888,11 @@ content.</p>
 <p>A custom importer making use of the import hook capability</p>
 <dl class="class">
 <dt id="avantpy.import_hook.AvantPyLoader">
-<em class="property">class </em><code class="descclassname">avantpy.import_hook.</code><code class="descname">AvantPyLoader</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#AvantPyLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.AvantPyLoader" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">avantpy.import_hook.</code><code class="sig-name descname">AvantPyLoader</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#AvantPyLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.AvantPyLoader" title="Permalink to this definition">¶</a></dt>
 <dd><p>A custom loader which will transform the source prior to its execution</p>
 <dl class="method">
 <dt id="avantpy.import_hook.AvantPyLoader.exec_module">
-<code class="descname">exec_module</code><span class="sig-paren">(</span><em>module</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#AvantPyLoader.exec_module"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.AvantPyLoader.exec_module" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">exec_module</code><span class="sig-paren">(</span><em class="sig-param">module</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#AvantPyLoader.exec_module"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.AvantPyLoader.exec_module" title="Permalink to this definition">¶</a></dt>
 <dd><p>import the source code, converts it before executing it.</p>
 </dd></dl>
 
@@ -800,13 +900,13 @@ content.</p>
 
 <dl class="class">
 <dt id="avantpy.import_hook.AvantPyMetaFinder">
-<em class="property">class </em><code class="descclassname">avantpy.import_hook.</code><code class="descname">AvantPyMetaFinder</code><a class="reference internal" href="_modules/avantpy/import_hook.html#AvantPyMetaFinder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.AvantPyMetaFinder" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">avantpy.import_hook.</code><code class="sig-name descname">AvantPyMetaFinder</code><a class="reference internal" href="_modules/avantpy/import_hook.html#AvantPyMetaFinder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.AvantPyMetaFinder" title="Permalink to this definition">¶</a></dt>
 <dd><p>A custom finder to locate modules.  The main reason for this code
 is to ensure that our custom loader, which does the code transformations,
 is used.</p>
 <dl class="method">
 <dt id="avantpy.import_hook.AvantPyMetaFinder.find_spec">
-<code class="descname">find_spec</code><span class="sig-paren">(</span><em>fullname</em>, <em>path</em>, <em>target=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#AvantPyMetaFinder.find_spec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.AvantPyMetaFinder.find_spec" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">find_spec</code><span class="sig-paren">(</span><em class="sig-param">fullname</em>, <em class="sig-param">path</em>, <em class="sig-param">target=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#AvantPyMetaFinder.find_spec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.AvantPyMetaFinder.find_spec" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds the appropriate properties (spec) of a module, and sets
 its loader.</p>
 </dd></dl>
@@ -815,7 +915,7 @@ its loader.</p>
 
 <dl class="function">
 <dt id="avantpy.import_hook.import_main">
-<code class="descclassname">avantpy.import_hook.</code><code class="descname">import_main</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#import_main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.import_main" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">avantpy.import_hook.</code><code class="sig-name descname">import_main</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/avantpy/import_hook.html#import_main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#avantpy.import_hook.import_main" title="Permalink to this definition">¶</a></dt>
 <dd><p>Imports the module that is to be interpreted as the main module.</p>
 <p>avantpy is often invoked with a script meant to be run as the
 main module its source is transformed with the -s (or –source) option,
@@ -830,32 +930,52 @@ as in:</p>
 </div>
 
 
+           </div>
+           
           </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="contribute.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="testing.html" class="btn btn-neutral float-left" title="Testing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, André Roberge
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="contribute.html" title="Contributing"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="testing.html" title="Testing"
-             >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">AvantPy 0.0.15a documentation</a> &#187;</li> 
-      </ul>
-    </div>
-    <div class="footer" role="contentinfo">
-        &#169; Copyright 2019, André Roberge.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
-    </div>
-  </body>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
 </html>
