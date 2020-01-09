@@ -34,6 +34,10 @@ AvantPy uses [Friendly-traceback](https://aroberge.github.io/friendly-traceback-
 The main target audience is composed of students who do not know English and are learning programming for the first time, under the guidance of an
 instructor.
 
+## Why
+
+More details to be added, but in the meantime, [read this](http://pgbovine.net/non-native-english-speakers-learning-programming-paper.htm)
+
 ## Executable pseudocode
 
 Python is often described as executable pseudocode. Once people have learned a few idiomatic expressions, like `for variable in range(n)`, translating pseudocode written in English into Python is usually very straightforward.
