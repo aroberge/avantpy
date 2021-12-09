@@ -9,7 +9,9 @@ simplified tracebacks into a project of its own. Since then, it has become clear
 this new project called Friendly-traceback is much more promising in terms of being used by
 many people and in helping beginners learn programming using Python.
 
-Those interested in this new projet should go to https://aroberge.github.io/friendly-traceback-docs/docs/html/index.html  (Code at: https://github.com/aroberge/friendly-traceback)
+Those interested in this new projet should go to https://friendly-traceback.github.io/docs/index.html  (Code at: https://github.com/friendly-traceback)
+
+Due to many changes done since AvantPy has been put on hold, it is very likely that it does not 
 
 The documentation for AvantPy can be found at https://aroberge.github.io/avantpy/docs/html/ .
 AvantPy uses Black.
@@ -29,7 +31,10 @@ editor, or run with a standard Python interpreter from the command line.
 - AvantPy also includes a tool to convert programs written in a given dialect into standard Python, showing the differences between the two, thus helping motivated users to make the transition to using only standard Python.
 - AvantPy also includes a custom REPL that can use any of the existing dialects.
 
-AvantPy uses [Friendly-traceback](https://aroberge.github.io/friendly-traceback-docs/docs/html/) to process Python tracebacks and translate them into easier to understand feedback for beginners.
+Before being put on hold, AvantPy was using an older version of [Friendly-traceback](https://aroberge.github.io/friendly-traceback-docs/docs/html/)
+to process Python tracebacks and translate them into easier to understand feedback for beginners.
+
+However, AvantPy is likely "broken" now due to the many changes done to friendly-traceback.  In the future, I hope to resume work on AvantPy.
 
 ## Who is it for
 
@@ -106,6 +111,9 @@ if commande == 'q':        # si commande == 'q':
 ```
 
 and feel ready to leave AvantPy and only write Python.
+
+English keywords are always supported as they are left unchanged in the translation process that
+takes place prior to execution.
 
 
 ## Code of Conduct
